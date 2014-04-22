@@ -46,19 +46,19 @@ After importing the data from the datafile,
 ```{r LoadData, echo=echoChunks, message=FALSE, results="hide"}
 ```
 we have created the initial wide dataset with
-```{r ,echo=TRUE}
+```{r,echo=TRUE}
 # dsSource  - cointains all imported variables
 length(unique(dsSource$id)) 
 ```
 individuals. Of them,
-``` {r , echo=TRUE}
+``` {r, echo=TRUE}
 # 1 - Cross-sectional
 # 0 - Oversample
 table(dsSource$sample)
 
 ```
 
-``` {r , echo=TRUE}
+``` {r, echo=TRUE}
 # dsSourceLabels - contains the RNUM (NLSY97 Variables codes) and VARIABLE_TITLE used by NLY Investigator 
 print(dsSourceLabels) 
 

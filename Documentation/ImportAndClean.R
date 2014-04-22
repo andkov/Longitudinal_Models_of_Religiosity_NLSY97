@@ -4,7 +4,7 @@
 # Importing the raw data from the NLS Investigator download object
 ###################################
 # Clear memory from previous runs
-# base::rm(list=base::ls(all=TRUE))
+base::rm(list=base::ls(all=TRUE))
 
 #####################################
 ## @knitr LoadData
@@ -17,6 +17,7 @@ base::require(markdown)
 base::require(testit)
 base::require(plyr)
 base::require(reshape2)
+base::require(stringr)
 
   ### Import the data ##
 pathDir<-file.path(getwd()) # define path for project root directory
@@ -215,6 +216,7 @@ dsSource$id <- as.integer(dsSource$id)
 # Variables, which values that DON'T change with time - time invariant (TI) variables 
 TIvars<-c("sample", "id", "sex","race", "byear", "bmonth", 'attendPR', "relprefPR", "relraisedPR")
 
+??str_sub
 
 
 #################################
@@ -260,4 +262,7 @@ dsL_internet$variable<-NULL
 dsL<-merge(x=dsL_agemon,y=dsL_attend,by=c(TIvars,"year"),all.x=TRUE)
 dsL<-arrange(dsL,id)
 
+print(dsL[dsLong$id==1,]) 
+pathdsL <- file.path(getwd(),"Documentation/data/Datasets/dsL.csv")
+write.csv(dsL,pathdsL,  row.names=FALSE)
 

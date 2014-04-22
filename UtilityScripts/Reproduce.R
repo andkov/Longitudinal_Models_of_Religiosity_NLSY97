@@ -40,30 +40,25 @@ base::require(testit)
 # ####
 # 
 # 
-# ###################################
-# # Declare the paths of the necessary files.
-# 
-# # The raw/input data files:
-# pathCensus199x <- base::paste0("./Datasets/CensusIntercensal/STCH-icen199", 0:9, ".txt")
-# pathCensus200x <- "./Datasets/CensusIntercensal/CO-EST00INT-AGESEX-5YR.csv"
-# pathCountyFips <- "./Datasets/CountyFipsCode.csv"
-# 
-# # The derived/intermediate data files (which are produced by the repository's code files):
-# pathCensusYearly <- "./Datasets/CensusIntercensal/CensusCountyYear.csv"
-# pathCensusMonthly <- "./Datasets/CensusIntercensal/CensusCountyMonth.csv"
-# pathDataForAnalaysis2005 <- "./Datasets/CountyMonthBirthRate2005Version.csv"
-# pathDataForAnalaysis2014 <- "./Datasets/CountyMonthBirthRate2014Version.csv"
-# 
-# # Code Files:
-# pathManipulateCensus <- "./UtilityScripts/IsolateCensusPopsForGfr.R"
-# pathCalculateGfr <- "./UtilityScripts/CalculateGfr.R"
+###################################
+# Declare the paths of the necessary files.
+
+# The raw/input data files:
+pathSource <- base::paste0("./Documentation/data/NLSY97_Religiosity_20042014",".csv")
+
+# The derived/intermediate data files (which are produced by the repository's code files):
+pathdsL <- "./Documentation/data/Datasets/dsL.csv"
+
+# Code Files:
+pathImportAndClean <- "./Documentation/ImportAndClean.R"
+pathReproduce <- "./UtilityScripts/Reproduce.R"
 # 
 # #Report Files:
 pathsReports <- base::file.path("./Documentation", c("ImportAndClean.Rmd"))
 # 
 # ###################################
-# # Verify the necessary path can be found.
-#Report Files:
+# Verify the necessary path can be found.
+# Report Files:
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 ###################################
