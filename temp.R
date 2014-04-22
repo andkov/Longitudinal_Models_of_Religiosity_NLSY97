@@ -15,3 +15,17 @@ base::require(reshape2)
 base::require(stringr)
 
 
+###################################
+# Build the reports
+pathsReports <- base::file.path("./", c("README.md"))
+for( pathRmd in pathsReports ) {
+  pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
+  pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
+  knitr::knit(input=pathRmd, output=pathMd)
+  markdown::markdownToHTML(file=pathMd, output=pathHtml)
+}
+
+
+pathMd <- base::file.path("./", c("README.md"))
+pathHtml <- base::gsub(pattern=".md$", replacement=".html", x=pathMd)
+markdown::markdownToHTML(file=pathMd, output=pathHtml)

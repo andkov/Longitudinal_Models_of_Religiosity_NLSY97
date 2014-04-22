@@ -1,12 +1,12 @@
 {
-    "contents" : "# Clear memory from previous runs\nbase::rm(list=base::ls(all=TRUE))\n\n#####################################\n## @knitr LoadData\n\n###################################\n# Load the necessary packages.\nbase::require(base)\nbase::require(knitr)\nbase::require(markdown)\nbase::require(testit)\nbase::require(plyr)\nbase::require(reshape2)\nbase::require(stringr)\n\n\n",
+    "contents" : "# Clear memory from previous runs\nbase::rm(list=base::ls(all=TRUE))\n\n#####################################\n## @knitr LoadData\n\n###################################\n# Load the necessary packages.\nbase::require(base)\nbase::require(knitr)\nbase::require(markdown)\nbase::require(testit)\nbase::require(plyr)\nbase::require(reshape2)\nbase::require(stringr)\n\n\n###################################\n# Build the reports\npathsReports <- base::file.path(\"./\", c(\"README.md\"))\nfor( pathRmd in pathsReports ) {\n  pathMd <- base::gsub(pattern=\".Rmd$\", replacement=\".md\", x=pathRmd)\n  pathHtml <- base::gsub(pattern=\".Rmd$\", replacement=\".html\", x=pathRmd)\n  knitr::knit(input=pathRmd, output=pathMd)\n  markdown::markdownToHTML(file=pathMd, output=pathHtml)\n}\n\n\npathMd <- base::file.path(\"./\", c(\"README.md\"))\npathHtml <- base::gsub(pattern=\".md$\", replacement=\".html\", x=pathMd)\nmarkdown::markdownToHTML(file=pathMd, output=pathHtml)",
     "created" : 1398141270417.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "66126796",
+    "hash" : "623311822",
     "id" : "C8E17620",
-    "lastKnownWriteTime" : 1398189171,
+    "lastKnownWriteTime" : 1398200210,
     "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/temp.R",
     "project_path" : "temp.R",
     "properties" : {
