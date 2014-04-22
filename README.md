@@ -16,8 +16,9 @@ NLYS97 contains several items mapping into the domain of religiosity. The items 
 <img link src="./Documentation/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  
 
 This variable-occasion slice of Cattell's databox, shows at what time points measurement exists for each of the selected variables. This datamap has a direct relationship with the structure of the primary dataset in the study
-# Primary Dataset
+# Primary Dataset : View of one case (id=1)
 <img link src="./Documentation/figure_rmd/variables_layout_dsL.png" alt="Databox slice" style="width:700px;"/>  
 
-in which rotates the previous VO Slice 90 degrees counterclockwise into a common Long dataform.
+in which we rotate the previous VO Slice 90 degrees. Here, we can distinguish time invariate (*TI*) variables, which values do not change with time. You can see their values remaining constant for each individual (id). Column with *year* counter separates *TI* variables from time variant (*TV*) variables, which values are availible for more than one time point.
+
 [Interactive version]("./www/slice-vo.html")
