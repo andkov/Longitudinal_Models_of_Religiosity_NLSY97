@@ -34,7 +34,7 @@ Special report [ImportAndClean]("./Documentation/ImportAndClean.md") narrates ev
 
 ## Modeling
 
-
+Modeling techniques used in the study are listed in "/Models" folder in the root fo the repository. New modeling projects should be added here. 
 
 ## Documentation
 

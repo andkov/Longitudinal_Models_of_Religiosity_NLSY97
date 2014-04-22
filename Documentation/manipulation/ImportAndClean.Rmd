@@ -3,7 +3,7 @@ Reproducibility Instructions
 This report narrates data preparations for the Longitudinal Models of Religiosity in NLSY97
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
-```{r, echo=F, message=F} 
+```{r ch1, echo=F, message=F} 
 opts_knit$set(root.dir='../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 ```
 
@@ -26,7 +26,7 @@ opts_chunk$set(
 )
 echoChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Documentation/ImportAndClean.R") # the file to which knitr calls for the chunks
+read_chunk("./Documentation/manipulation/ImportAndClean.R") # the file to which knitr calls for the chunks
 ```
 
 
@@ -46,19 +46,19 @@ After importing the data from the datafile,
 ```{r LoadData, echo=echoChunks, message=FALSE, results="hide"}
 ```
 we have created the initial wide dataset with
-```{r,echo=TRUE}
+```{r ch2,echo=TRUE}
 # dsSource  - cointains all imported variables
 length(unique(dsSource$id)) 
 ```
 individuals. Of them,
-``` {r, echo=TRUE}
+``` {r ch3, echo=TRUE}
 # 1 - Cross-sectional
 # 0 - Oversample
 table(dsSource$sample)
 
 ```
 
-``` {r, echo=TRUE}
+``` {r ch4, echo=TRUE}
 # dsSourceLabels - contains the RNUM (NLSY97 Variables codes) and VARIABLE_TITLE used by NLY Investigator 
 print(dsSourceLabels) 
 
@@ -82,10 +82,11 @@ The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentati
 <img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
 
 After renaming, we arrive at the basic clean dataset in wide format.
-```{r TweakData, echo=TRUE, message=FALSE, results="hold"}
+```{r TweakData2, echo=TRUE, message=FALSE, results="hold"}
 #dsSource
 print(dsLong[dsLong$id==1,])
 ```
+
 
 
 

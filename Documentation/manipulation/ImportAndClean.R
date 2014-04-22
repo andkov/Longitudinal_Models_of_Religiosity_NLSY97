@@ -23,9 +23,9 @@ base::require(stringr)
 pathDir<-file.path(getwd()) # define path for project root directory
 
 # Links to the data source
-tagset # tagset is defined in "Reproduce.R"
+
 tagset<-c("NLSY97_Religiosity_20042014") #"Database_ResponseOfInterest_DateOfDownload"
-pathDataFolder<-file.path(getwd(),paste0("Documentation/data/",tagset))
+pathDataFolder<-file.path("./",paste0("Documentation/data/",tagset))
 pathDataSource<-file.path(pathDataFolder,paste0(tagset,".csv")) 
 pathDataSourceLabels<-file.path(pathDataFolder,paste0(tagset,".dct"))  
 # reading in the data
@@ -192,7 +192,7 @@ dsSource<-rename(dsSource, c(
 # dsSource$paste0(i,k)=ifelse(( dsSource$paste0(i,k) %in% c(1)),0,ifelse(( dsSource$paste0(i,k) %in% c(0)),1,NA))
 # }
 # }
-dsLong$year <- as.integer(dsLong$year) #Convert to a number.
+# dsLong$year <- as.integer(dsLong$year) #Convert to a number.
 ## ?? How to automate the loop?
 
 # recode negativale worded question:  1 - more religious
@@ -279,5 +279,5 @@ pathdsL <- file.path(getwd(),"Documentation/data/Datasets/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
 
 # # remove all but one dataset
-# rm(list=setdiff(ls(), "dsOBSprop"))
+# rm(list=setdiff(ls(), "dsL"))
 

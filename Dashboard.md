@@ -1,33 +1,13 @@
 <!-- Set the report-wide options, and point to the external code file. -->
-```{r set_options, echo=F, message=T}
-require(knitr)
-opts_chunk$set(
-  results='show', 
-  message = TRUE,
-  comment = NA, 
-  tidy = FALSE,
-  fig.height = 4, 
-  fig.width = 5.5, 
-  out.width = "550px",
-  fig.path = 'figure_rmd/',     
-  dev = "png",
-#   fig.path = 'figure_pdf/',     
-#   dev = "pdf",
-  dpi = 400
-)
-echoChunks <- FALSE
-options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Documentation/manipulation/ImportAndClean.R") # the file to which knitr calls for the chunks
-###################################
-# Load the necessary packages.
-base::require(base)
-base::require(knitr)
-base::require(markdown)
-base::require(testit)
-base::require(plyr)
-base::require(reshape2)
-base::require(stringr)
+
 ```
+## Loading required package: markdown
+## Loading required package: testit
+## Loading required package: plyr
+## Loading required package: reshape2
+## Loading required package: stringr
+```
+
 
 
 Longitudinal Models of Religiosity: NLSY97 sample
@@ -49,15 +29,7 @@ The study investigates how religous behaviour and attitudes of American youth we
 
 **Variables**
 
-```{r, echo=FALSE}
-# Print this *.Rmd as *.md, then turn *.md into *.html
-pathsReports <- base::file.path("./", c("Dashboard.Rmd"))
-for( pathRmd in pathsReports ) {
-  pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
-  pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
-  knitr::knit(input=pathRmd, output=pathMd)
-  markdown::markdownToHTML(file=pathMd, output=pathHtml)
-}
-```
+
+
 
 
