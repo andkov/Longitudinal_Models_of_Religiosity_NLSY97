@@ -3,7 +3,7 @@
 ### Reproducible Research
 ###################################
 # When executed by R, this file will manipulate the original data sources (ie, ZZZZ)
-# to produce a groomed dataset suitable for analysis and graphing.
+# to produce a groomed dataset (dsL) suitable for analysis and graphing. 
 
 ###################################
 # Clear memory from previous runs
@@ -32,37 +32,16 @@ base::require(knitr)
 base::require(markdown)
 base::require(testit)
 
-
-## Will's code
-# #########################################################################################################
-# ####
-# #### The following example comes from https://github.com/wibeasley/Wats.  Rename the paths appropriately.
-# ####
-# 
-# 
-###################################
-# Declare the paths of the necessary files.
-
-# The raw/input data files:
-pathSource <- base::paste0("./Documentation/data/NLSY97_Religiosity_20042014",".csv")
-
-# The derived/intermediate data files (which are produced by the repository's code files):
-pathdsL <- "./Documentation/data/Datasets/dsL.csv"
-
-# Code Files:
-pathImportAndClean <- "./Documentation/ImportAndClean.R"
-pathReproduce <- "./UtilityScripts/Reproduce.R"
-# 
 # #Report Files:
-pathsReports <- base::file.path("./Documentation", c("ImportAndClean.Rmd"))
-# 
-# ###################################
+pathsReports <- base::file.path("./Documentation", c("ImportAndClean.R"))
+
 # Verify the necessary path can be found.
 # Report Files:
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 ###################################
 # Build the reports
+pathsReports <- base::file.path("./Documentation", c("ImportAndClean.Rmd"))
 for( pathRmd in pathsReports ) {
   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)

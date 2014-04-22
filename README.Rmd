@@ -46,6 +46,18 @@ The study investigates how religous behaviour and attitudes of American youth we
 
 <img link src="./Documentation/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  
 [Interactive version]("./www/slice-vo.html")
+
 **Variables**
+
+```{r, echo=FALSE}
+# Print this *.Rmd as *.md, then turn *.md into *.html
+pathsReports <- base::file.path("./", c("README.Rmd"))
+for( pathRmd in pathsReports ) {
+  pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
+  pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
+  knitr::knit(input=pathRmd, output=pathMd)
+  markdown::markdownToHTML(file=pathMd, output=pathHtml)
+}
+```
 
 

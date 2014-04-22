@@ -32,7 +32,7 @@ pathDataSourceLabels<-file.path(pathDataFolder,paste0(tagset,".dct"))
 dsSource<-read.csv(pathDataSource,header=TRUE, skip=0,sep=",")
 varOrig<-ncol(dsSource) # Original number of variables in the NLS download
 dsSource["T6650500"]<-NULL # Remove version number for cleaner dataset
-varnames<-names(dsSource)
+
 
 # NLSY97 variable id are linked to the descriptive label in the file dictionary file "NLSY97_Religiosity_20042014.dtc"
 dsSourceLabels<-read.csv(pathDataSourceLabels,header=TRUE, skip=0,nrow=varOrig, sep="")
@@ -193,6 +193,8 @@ dsSource<-rename(dsSource, c(
 # }
 # }
 dsLong$year <- as.integer(dsLong$year) #Convert to a number.
+## ?? How to automate the loop?
+
 # recode negativale worded question:  1 - more religious
 dsSource$todo_2002=ifelse((dsSource$todo_2002 %in% c(1)),0,ifelse((dsSource$todo_2002 %in% c(0)),1,NA))
 dsSource$todo_2005=ifelse((dsSource$todo_2005 %in% c(1)),0,ifelse((dsSource$todo_2005 %in% c(0)),1,NA))
@@ -213,20 +215,26 @@ dsSource$id <- as.integer(dsSource$id)
 # remove all but one dataset
 #  rm(list=setdiff(ls(), "dsSource"))
 
+#################################
+### Declaration of objects
 # Variables, which values that DON'T change with time - time invariant (TI) variables 
 TIvars<-c("sample", "id", "sex","race", "byear", "bmonth", 'attendPR', "relprefPR", "relraisedPR")
-
-??str_sub
-
+# Declare illegal values. See codebook for description of missingness
+illegal<-c(-5:-1,997,998,999)
 
 #################################
 ## Preparing the common Long dataset
 ds<-dsSource
 ## id.vars declares MEASURED variables (as opposed to RESPONSE variable)
 dsLong <- reshape2::melt(ds, id.vars=TIvars)
+
+##############
+head(dsLong[dsLong$id==1,],20)
 # create varaible "year" by stripping the automatic ending in TV variables' names
+## ?? How to read off 4 characters from right with reshape/plyr?
 dsLong$year<-str_sub(dsLong$variable,-4,-1) 
 # the automatic ending in TV variables' names
+# ?? how to automate the creation of strings?
 timepattern<-c("_1997", "_1998", "_1999", "_2000", "_2001", "_2002", "_2003", "_2004", "_2005", "_2006","_2007", "_2008", "_2009", "_2010", "_2011")
 # Strip off the automatic ending
 for (i in timepattern){
@@ -235,15 +243,18 @@ dsLong$variable <- gsub(pattern=i, replacement="", x=dsLong$variable)
 # Convert to a number.
 dsLong$year <- as.integer(dsLong$year) 
 # Remove illegal values
-illegal<-c(-5:-1,997,998,999)
+
 dsLong$value=ifelse(dsLong$value %in% illegal,NA,dsLong$value)
 # reorder for easier inspection
-dsLong<-dsLong[with(dsLong, order(id,variable)), ]
+dsLong<-dsLong[with(dsLong, order(id,variable)), ] # alternative sorting to plyr
 # view the long data for one person
 print(dsLong[dsLong$id==1,]) 
 
 ##############################
 ## Create individual long datasets, one per TV variable
+## ?? how to loop over the dataset?
+
+TIvars
 TVvars<-unique(dsLong$variable)
 TVvars<-"attend"
 
@@ -259,6 +270,7 @@ dsL_internet<-subset(dsLong,subset=(dsLong$variable=="internet"))
 dsL_internet<-rename(dsL_internet,replace=c("value"="internet"))
 dsL_internet$variable<-NULL
 
+## ?? How to merge multiple datasets, left join.
 dsL<-merge(x=dsL_agemon,y=dsL_attend,by=c(TIvars,"year"),all.x=TRUE)
 dsL<-arrange(dsL,id)
 
