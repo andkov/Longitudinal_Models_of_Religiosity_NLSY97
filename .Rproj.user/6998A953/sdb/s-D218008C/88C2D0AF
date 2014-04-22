@@ -1,0 +1,22 @@
+{
+    "contents" : "",
+    "created" : 1398192319348.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "88C2D0AF",
+    "lastKnownWriteTime" : 7741240723082584096,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "caption" : "dsLong",
+        "contentUrl" : "content?title=dsLong&file=36a3c6e04c624563a2280b27ed572392.htm",
+        "displayedObservations" : 1000,
+        "displayedVariables" : 13,
+        "totalObservations" : 1105032,
+        "variables" : 12
+    },
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}
