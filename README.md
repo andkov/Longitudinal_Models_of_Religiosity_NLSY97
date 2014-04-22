@@ -1,14 +1,3 @@
-<!-- Set the report-wide options, and point to the external code file. -->
-
-```
-## Loading required package: markdown
-## Loading required package: testit
-## Loading required package: plyr
-## Loading required package: reshape2
-## Loading required package: stringr
-```
-
-
 
 Longitudinal Models of Religiosity: NLSY97 sample
 ========================================================
@@ -26,10 +15,3 @@ The study investigates how religous behaviour and attitudes of American youth we
 
 <img link src="./Documentation/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  
 [Interactive version]("./www/slice-vo.html")
-
-**Variables**
-
-
-
-
-

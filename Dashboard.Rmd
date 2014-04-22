@@ -51,7 +51,7 @@ The study investigates how religous behaviour and attitudes of American youth we
 
 ```{r, echo=FALSE}
 # Print this *.Rmd as *.md, then turn *.md into *.html
-pathsReports <- base::file.path("./", c("README.Rmd"))
+pathsReports <- base::file.path("./", c("Dashboard.Rmd"))
 for( pathRmd in pathsReports ) {
   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
