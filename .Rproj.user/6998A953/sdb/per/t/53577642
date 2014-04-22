@@ -1,0 +1,22 @@
+{
+    "contents" : "",
+    "created" : 1398141468758.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "53577642",
+    "lastKnownWriteTime" : 7809644627773191273,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "caption" : "dsL",
+        "contentUrl" : "content?title=dsL&file=71135a5577cb4f3eae39cb4c237119ea.htm",
+        "displayedObservations" : 1000,
+        "displayedVariables" : 12,
+        "totalObservations" : 134760,
+        "variables" : 12
+    },
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

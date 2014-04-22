@@ -38,7 +38,7 @@ Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a
 NLSY97_Religiosity_20042014.cdb - **codebook** containing item descriptions  
 NLSY97_Religiosity_20042014.csv - **data** in comma delimited format  
 NLSY97_Religiosity_20042014.NLSY97 - **tagset**, the list of variables in the downloaded dataset  
-NLSY97_Religiosity_20042014.dtc - STATA® **dictionary** file of selected variables, contains data as well
+NLSY97_Religiosity_20042014.dtc - STATA **dictionary** file of selected variables, contains data as well
   
 
 After importing the data from the datafile,

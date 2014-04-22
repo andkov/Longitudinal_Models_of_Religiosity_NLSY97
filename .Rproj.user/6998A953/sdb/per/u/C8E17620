@@ -1,0 +1,17 @@
+{
+    "contents" : "# Clear memory from previous runs\nbase::rm(list=base::ls(all=TRUE))\n\n#####################################\n## @knitr LoadData\n\n###################################\n# Load the necessary packages.\nbase::require(base)\nbase::require(knitr)\nbase::require(markdown)\nbase::require(testit)\nbase::require(plyr)\nbase::require(reshape2)\nbase::require(stringr)\n\n### Import the data ##\npathDir<-file.path(getwd()) # define path for project root directory\n\n# Variables, which values that DON'T change with time - time invariant (TI) variables \nTIvars<-c(\"sample\", \"id\", \"sex\",\"race\", \"byear\", \"bmonth\", 'attendPR', \"relprefPR\", \"relraisedPR\")\n\n# reading in the data\npathdsL <- file.path(getwd(),\"Documentation/data/Datasets/dsL.csv\")\ndsL<-read.csv(pathdsL,header=TRUE, skip=0,sep=\",\")\ndsL[c[\"attendPR\",relprefPR,relraisedPR,]]",
+    "created" : 1398141270417.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "681894346",
+    "id" : "C8E17620",
+    "lastKnownWriteTime" : 7809644627773191273,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -266,3 +266,6 @@ print(dsL[dsLong$id==1,])
 pathdsL <- file.path(getwd(),"Documentation/data/Datasets/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
 
+# # remove all but one dataset
+# rm(list=setdiff(ls(), "dsOBSprop"))
+
