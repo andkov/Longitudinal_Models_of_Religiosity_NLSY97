@@ -1,0 +1,18 @@
+<manifest alg="2" build="5" opt="false" iceEnabled="true">
+  <folder name="css">
+    <file name="site_global.css" crc="4023935739"/>
+    <file name="master_a-master.css" crc="298340849" ref="index:slice-vo"/>
+    <file name="index.css" crc="3893516033" ref="index"/>
+    <file name="slice-vo.css" crc="355089916" ref="slice-vo"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="209076791" ref="index:slice-vo"/>
+    <file name="museutils.js" crc="4291592202" ref="index:slice-vo"/>
+    <file name="jquery.musemenu.js" crc="3788803530" ref="index:slice-vo"/>
+  </folder>
+  <folder name="images">
+    <file name="variables_layout.jpg" crc="87047946" ref="slice-vo"/>
+  </folder>
+  <file name="index.html" crc="4013857084" mt="1398105227282" redirect="true"/>
+  <file name="slice-vo.html" crc="4183997911" mt="1398105371757" redirect="true"/>
+</manifest>

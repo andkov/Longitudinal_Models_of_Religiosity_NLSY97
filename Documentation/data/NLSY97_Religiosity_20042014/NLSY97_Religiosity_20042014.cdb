@@ -206,6 +206,66 @@ TOTAL =========>    7936   VALID SKIP(-4)    1048     NON-INTERVIEW(-5)       0
 Lead In: R05521.00[Default]
 Default Next Question: R05523.00
 --------------------------------------------------------------------------------
+R05523.00    [P2-014]                                       Survey Year: 1997
+  PRIMARY VARIABLE
+
+ 
+             WHAT IS PRS CURRENT RELIGIOUS PREFERENCE?
+ 
+(HAND CARD B)
+ 
+What is your current religious preference, if any?
+ 
+ENTER ONLY ONE CODE.
+ 
+UNIVERSE: All
+ 
+    2234       1 1.  Roman Catholic
+    1854       2 2.  Baptist
+     524       3 3.  Methodist
+     406       4 4.  Lutheran
+     150       5 5.  Presbyterian
+     103       6 6.  Episcopal/Anglican
+     142       7 7.  United Church of Christ (or Congregationalist or 
+                      Evangelical Reformed)
+     101       8 8.  Disciples of Christ (or the Christian Church)
+      36       9 9.  Reform (or Reformed Church in America or Christian Reformed
+                      Church)
+     129      10 10.  Holiness (Nazarene, Wesleyan, Free Methodist)
+     417      11 11.  Pentecostal (Assembly of God, Pentecostal Holiness)
+     524      12 12.  Nondemonimational Christian (Bible Church)
+     396      13 13.  Other Protestant
+      12      14 14.  Jewish  -  Orthodox
+      22      15 15.  Jewish  -  Conservative
+      31      16 16.  Jewish  -  Reform
+       7      17 17.  Jewish  -  Other Jewish
+      92      18 18.  Mormon (all types of Latter Day Saints)
+      12      19 19.  Eastern Orthodox
+      15      20 20.  Unitarian
+      52      21 21.  Muslim (or Moslem or Islam)
+      20      22 22.  Hindu/Buddhist
+      17      23 23.  Native American Tribal Religion
+      90      25 24.  None, no religion - Agnostic (doesn't know if there is a 
+                      God)
+      29      26 25.  None, no religion - Atheist (confident there is no God)
+     463      27 26.  None, no religion - Personal philosophy
+       0      28 27.  Bah'ai
+       0      30 28.  Greek, Roman, Norse, Etc. Mythology
+       1      31 29.  Satanic
+       8      32 30.  Wicca/Witchcraft/Magic/Pagan
+       1      34 31.  Scientology
+       2      35 32.  Other Eastern (Sikh)
+      24      24 33.  Other (SPECIFY)
+  -------
+    7914
+ 
+Refusal(-1)            8
+Don't Know(-2)        14
+TOTAL =========>    7936   VALID SKIP(-4)    1048     NON-INTERVIEW(-5)       0
+ 
+Lead In: R05522.00[Default]
+Default Next Question: R05524.00
+--------------------------------------------------------------------------------
 R05524.00    [P2-015]                                       Survey Year: 1997
   PRIMARY VARIABLE
 

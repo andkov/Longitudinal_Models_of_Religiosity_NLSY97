@@ -26,7 +26,7 @@ opts_chunk$set(
 )
 echoChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Documentation/Reproduce.R") # the file to which knitr calls for the chunks
+read_chunk("./Documentation/ImportAndClean.R") # the file to which knitr calls for the chunks
 ```
 
 
@@ -42,19 +42,19 @@ NLSY97_Religiosity_20042014.dtc - STATA® **dictionary** file of selected variab
   
 
 After importing the data from the datafile,
-<!-- run initial import from the databank NLSY97_Religiosity_20042014. --> 
+<!-- run initial import from the databank defined by tagset. --> 
 ```{r LoadData, echo=echoChunks, message=FALSE, results="hide"}
 ```
-we have created datasets 
+we have created the initial wide dataset with
 ```{r ,echo=TRUE}
 # dsSource  - cointains all imported variables
-nrow(dsSource) # number of individuals in the total sample
+length(unique(dsSource$id)) 
 ```
-Of them,
+individuals. Of them,
 ``` {r , echo=TRUE}
 # 1 - Cross-sectional
 # 0 - Oversample
-table(dsSource$R1235800)
+table(dsSource$sample)
 
 ```
 
@@ -69,20 +69,22 @@ To explore the variables in the native context of NLS, go to [NLS Investigator](
 ## Variables by Occasions
 To better understand the longitudinal structure of the selected variables, the dataset was re-arranged in the two-dimensional slice of Cattell's databox: variables by occasions.
 ## Figure 1
-<img src="./figure_rmd/variables_layout.png" alt="Databox slice" style="width:1200px;"/>
+<img link src="./figure_rmd/variables_layout.png" alt="Databox slice" style="width:800px;"/>  
+[Interactive version]("./www/slice-vo.html")
 
 This databox slice indicates in what year measurement was taken for selected variables  and describes the variables extracted from NLYS97 for analysis. Three descriptions are given:  
-**Variable Title**, which is verbatim identifier from NLYY97,  
+**Variable Title**, which is verbatim identifier from NLSY97,  
 **Unit**, which attemps to give a brief desription of the scale on which the variable is measured, and  
 **Codename**, which spells the name of the variable, as it is used in R code that services the analysis
 
-The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentation/data" folder, hosts this list, as well as a semi-automated routine (Tab "Renaming") to aid in renaming the automatic variable names for easier coding. The values in the "Variable Title" can be used to copy/paste and locate the item in the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) by copy/pasting it into "Word in Title" search line
+The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentation/data" folder, hosts this list, as well as a semi-automated routine (Tab "Renaming") to aid in renaming the repeated endings in the variable names for easier coding. The values in the "Variable Title" can be used to locate the item in the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) by copy/pasting it into "Word in Title" search line
 ## Figure 2
-<img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:1200px;"/>
+<img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
 
 After renaming, we arrive at the basic clean dataset in wide format.
-```{r TweakData, echo=TRUE, message=FALSE, results="hide"}
+```{r TweakData, echo=TRUE, message=FALSE, results="hold"}
 #dsSource
+print(dsLong[dsLong$id==1,])
 ```
 
 

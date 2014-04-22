@@ -211,11 +211,10 @@ This databox slice indicates in what year measurement was taken for selected var
 **Unit**, which attemps to give a brief desription of the scale on which the variable is measured, and  
 **Codename**, which spells the name of the variable, as it is used in R code that services the analysis
 
-The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentation/data" folder, hosts this list, as well as a semi-automated routine (Tab "Renaming") to aid in renaming the automatic variable names for easier coding. The values in the "Variable Title" can be used to copy/paste and locate the item in the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) by copy/pasting it into "Word in Title" search line
+The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentation/data" folder, hosts this list, as well as a semi-automated routine (Tab "Renaming") to aid in renaming the automatic variable names for easier coding. The values in the "Variable Title" can be used to locate the item in the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) by copy/pasting it into "Word in Title" search line
 ## Figure 2
 <img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:1200px;"/>
 
 After renaming, we arrive at the basic clean dataset in wide format.
-<!-- run initial import from the databank NLSY97_Religiosity_20042014. --> 
 
 
