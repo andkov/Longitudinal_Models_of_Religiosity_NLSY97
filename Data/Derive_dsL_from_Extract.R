@@ -4,7 +4,7 @@
 # Importing the raw data from the NLS Investigator download object
 ###################################
 # Clear memory from previous runs
-base::rm(list=base::ls(all=TRUE))
+# base::rm(list=base::ls(all=TRUE))
 
 #####################################
 ## @knitr LoadData
@@ -51,8 +51,8 @@ dsSourceLabels<-dsSourceLabels[dsSourceLabels$RNUM!="T6650500",] # remove versio
 dsSourceLabels<-arrange(dsSourceLabels,VARIABLE_TITLE) # sort by Variable Title
 write.table(dsSourceLabels, "./Data/ItemMapping/dsSourceLabels.csv", sep=",")
 
-############################
-## @knitr TweakData
+print(nrow(dsSource))
+
 
 # Using renaming template "NLSY97_Religiosity_20042014.xlsx" located in "Documentation\data" folder
 # rename the native variable names of NLSY97 (left) into custom chosen names for programming convenience (right)
@@ -288,5 +288,5 @@ pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
 
 # # remove all but one dataset
-rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
+# rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
 

@@ -26,7 +26,7 @@ opts_chunk$set(
 )
 echoChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Documentation/manipulation/ImportAndClean.R") # the file to which knitr calls for the chunks
+read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls for the chunks
 ```
 
 
@@ -43,7 +43,7 @@ NLSY97_Religiosity_20042014.dtc - STATA **dictionary** file of selected variable
 
 After importing the data from the datafile,
 <!-- run initial import from the databank defined by tagset. --> 
-```{r LoadData, echo=echoChunks, message=FALSE, results="hide"}
+```{r LoadData, echo=TRUE, message=TRUE, results='asis'}
 ```
 we have created the initial wide dataset with
 ```{r ch2,echo=TRUE}
@@ -80,12 +80,6 @@ This databox slice indicates in what year measurement was taken for selected var
 The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentation/data" folder, hosts this list, as well as a semi-automated routine (Tab "Renaming") to aid in renaming the repeated endings in the variable names for easier coding. The values in the "Variable Title" can be used to locate the item in the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) by copy/pasting it into "Word in Title" search line
 ## Figure 2
 <img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
-
-After renaming, we arrive at the basic clean dataset in wide format.
-```{r TweakData2, echo=TRUE, message=FALSE, results="hold"}
-#dsSource
-print(dsLong[dsLong$id==1,])
-```
 
 
 
