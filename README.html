@@ -150,9 +150,9 @@ hr {
 <body>
 <h1>Longitudinal Models of Religiosity: NLSY97 sample</h1>
 
-<h2>Study Goal</h2>
+<h2>Methodological Overview</h2>
 
-<p>The current study analysizes how religiosity changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data. Latent curve modeling (<strong>LCM</strong>) fits  several time effects (linear, quadratic, and cubic ) in search of the best fitting trajectory of  church attendance between 2000 and 2011, regressing random terms on cohort membership. Growth mixture modeling (<strong>GMM</strong>) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed church attendance. Individuals are grouped based on the similarity of their trajectories of change in church attendance over the years. Finally, Markov models (<strong>MM</strong>), such as EMOSA and transition analysis, describe the data in terms of categories (of religious attendance) and transitions between them, instead of trajectories. Treating the outcome scale as categorical, instead of continuous, allows to test out research hypotheses different from that of previous two modeling techniques.</p>
+<p>The current study analysizes how religiosity changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data. Latent curve models (<strong>LCM</strong>) test  certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership. Growth mixture models (<strong>GMM</strong>) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed church attendance. Individuals are grouped based on the similarity of their trajectories, and profiled. Cohort memberships is used as predictor in determining membership in such latent profile.  Finally, Markov models (<strong>MM</strong>), such as EMOSA and transition analysis, describe states and transitions among them. Treating the same outcome (church attendance) as categorical (instead of continuous as in LCM and GMM cases), EMOSA what accounts for the changing ratio of categories in the population, and how the age of the individual affects the likelihood of staying in one (e.g. &ldquo;church goer&rdquo;) or another (e.g.&ldquo;non-goer&rdquo;) category of behavior that quantifies religiosity. </p>
 
 <h2>Sample</h2>
 
@@ -160,19 +160,19 @@ hr {
 
 <h2>Domain of Religiosity</h2>
 
-<p>NLYS97 contains several items mapping into the domain of religiosity. One particular variable, measuring church attendance (Codename:attend) is measured in each year and thus is at the focus of all models. The items selected for analysis and context are shown in the following graph. </p>
+<p>NLYS97 contains several items mapping into the domain of religiosity. One particular variable measuring church attendance (Codename:<strong>attend</strong>) is recorded  uninteruptedly for 12 years (2000-2011) and chosen as the key operationalization of religiosity in all models. Literature on psychology and sociology of religion suggest that church attendance is highly correlated with other facets of religiosity, and might very well be the optimal indicator of broad religiosity in practice. The items selected for analysis and context are shown in the following graph. </p>
 
 <h2>Variable-Occasion Slice (<strong>VO</strong>)</h2>
 
 <p><img link src="./Documentation/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  </p>
 
-<p>The first section of variables gives basic context variables: birth month and year, age at the time of the interview, sex, race, as well as sample indicator (cross-sectional or oversample) and id.</p>
+<p>The first section of variables gives basic context variables: the month and year of birth, age at the time of the interview, sex, race, as well as sample indicator (cross-sectional or oversample).</p>
 
-<p>The second group of variables (in light gray) measures religious behaviors (relpref, attend, pray, decisions) and attitudes (values, todo, obeyed, bornagain, faith) of respondents. Another section (aslo in gray) at the bottom lists availible variables concerning religiosity of the PARENT of the respondent (attendPR, relprefPR, relraisedPR).  Between religiosity sections is a list of potential covariates, in this case a self-reported measures of emotional wellfair (calm, blue, happy, depressed, nervous) and media activities (internet, computer,tv). </p>
-
-<p>This variable-occasion slice of Cattell&#39;s databox, shows at what time points measurement exists for each of the selected variables. This datamap has a direct relationship with the structure of the primary dataset in the study</p>
+<p>The second group of variables (in light gray) hosts variables related to religiosity: behaviors (relpref, attend, pray, decisions) and attitudes (values, todo, obeyed, bornagain, faith) of respondents. Another section (aslo in gray) at the bottom lists availible variables concerning religiosity of the <a href="http://www.bls.gov/nls/quex/r1/y97rd1pquex.htm">PARENT</a> of the respondent (attendPR, relprefPR, relraisedPR).  Between religiosity sections there is a list of covariates that might, in this case a self-report on emotional wellbeing (calm, blue, happy, depressed, nervous) and media activities (internet, computer,tv). </p>
 
 <h2>Primary Dataset : View of one case (id=1)</h2>
+
+<p>This variable-occasion slice of Cattell&#39;s databox, shows at what time points measurement exists for each of the selected variables. This datamap has a direct relationship with the structure of the primary dataset in the study</p>
 
 <p><img link src="./Documentation/figure_rmd/variables_layout_dsL.png" alt="Databox slice" style="width:700px;"/>  </p>
 
@@ -180,9 +180,11 @@ hr {
 
 <h2>Manipulation</h2>
 
-<p>Special report <a href="%22./Documentation/ImportAndClean.md%22">ImportAndClean</a> narrates every step from accessing <a href="https://www.nlsinfo.org/investigator/pages/login.jsp">NLS Investigator</a> to arriving at the <strong>dsL</strong> dataset shown above. When working with individual model class</p>
+<p>Special report <a href="%22./Documentation/ImportAndClean.md%22">ImportAndClean</a> narrates every step in data preparation, from accessing <a href="https://www.nlsinfo.org/investigator/pages/login.jsp">NLS Investigator</a> to arriving at the <strong>dsL</strong> dataset shown above. This dataset (<strong>dsL</strong>) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, MM).</p>
 
 <h2>Modeling</h2>
+
+<p>Modeling techniques used in the study are listed in &ldquo;/Models&rdquo; folder in the root fo the repository. New modeling projects should be added here. </p>
 
 <h2>Documentation</h2>
 

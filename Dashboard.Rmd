@@ -1,5 +1,5 @@
 <!-- Set the report-wide options, and point to the external code file. -->
-```{r set_options, echo=F, message=T}
+```{r set_options, echo=F, message=F}
 require(knitr)
 opts_chunk$set(
   results='show', 

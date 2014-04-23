@@ -38,3 +38,8 @@ pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
 pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
 knitr::knit(input=pathRmd, output=pathMd)
 markdown::markdownToHTML(file=pathMd, output=pathHtml)
+
+# ColumnRenameHeadstart <- function( d ) {
+  cat(paste0(", \"", colnames(d), "\"", " = ", "\"", colnames(d), "\"", "\n")) #Gives a headstart to plyr::rename
+# }
+# ColumnRenameHeadstart(dsSource)

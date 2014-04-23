@@ -2,9 +2,9 @@
 Longitudinal Models of Religiosity: NLSY97 sample
 ========================================================
 
-## Study Goal
+## Methodological Overview
 
-The current study analysizes how religiosity changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data. Latent curve modeling (**LCM**) fits  several time effects (linear, quadratic, and cubic ) in search of the best fitting trajectory of  church attendance between 2000 and 2011, regressing random terms on cohort membership. Growth mixture modeling (**GMM**) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed church attendance. Individuals are grouped based on the similarity of their trajectories of change in church attendance over the years. Finally, Markov models (**MM**), such as EMOSA and transition analysis, describe the data in terms of categories (of religious attendance) and transitions between them, instead of trajectories. Treating the outcome scale as categorical, instead of continuous, allows to test out research hypotheses different from that of previous two modeling techniques.
+The current study analysizes how religiosity changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data. Latent curve models (**LCM**) test  certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership. Growth mixture models (**GMM**) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed church attendance. Individuals are grouped based on the similarity of their trajectories, and profiled. Cohort memberships is used as predictor in determining membership in such latent profile.  Finally, Markov models (**MM**), such as EMOSA and transition analysis, describe states and transitions among them. Treating the same outcome (church attendance) as categorical (and not as continuous like in LCM and GMM cases), EMOSA what accounts for the changing ratio of categories in the population, and how the age of the individual affects the likelihood of staying in one (e.g. "church goer") or another (e.g."non-goer") category of behavior that quantifies religiosity. 
 
 ## Sample
 
@@ -12,14 +12,14 @@ The current study uses the data from the [NLSY97](http://www.bls.gov/nls/nlsy97.
 
 ## Domain of Religiosity  
 
-NLYS97 contains several items mapping into the domain of religiosity. One particular variable, measuring church attendance (Codename:attend) is measured in each year and thus is at the focus of all models. The items selected for analysis and context are shown in the following graph. 
+NLYS97 contains several items mapping into the domain of religiosity. One particular variable measuring church attendance (Codename:**attend**) is recorded  uninteruptedly for 12 years (2000-2011) and chosen as the key operationalization of religiosity in all models. Literature on psychology and sociology of religion suggest that church attendance is highly correlated with other facets of religiosity, and might very well be the optimal indicator of broad religiosity in practice. The items selected for analysis and context are shown in the following graph. 
 
 ## Variable-Occasion Slice (**VO**) 
 <img link src="./Documentation/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  
 
-The first section of variables gives basic context variables: birth month and year, age at the time of the interview, sex, race, as well as sample indicator (cross-sectional or oversample) and id.
+The first section of variables gives basic context variables: the month and year of birth, age at the time of the interview, sex, race, as well as sample indicator (cross-sectional or oversample).
 
-The second group of variables (in light gray) measures religious behaviors (relpref, attend, pray, decisions) and attitudes (values, todo, obeyed, bornagain, faith) of respondents. Another section (aslo in gray) at the bottom lists availible variables concerning religiosity of the PARENT of the respondent (attendPR, relprefPR, relraisedPR).  Between religiosity sections is a list of potential covariates, in this case a self-reported measures of emotional wellfair (calm, blue, happy, depressed, nervous) and media activities (internet, computer,tv). 
+The second group of variables (in light gray) hosts variables related to religiosity: behaviors (relpref, attend, pray, decisions) and attitudes (values, todo, obeyed, bornagain, faith) of respondents. Another section (aslo in gray) at the bottom lists availible variables concerning religiosity of the [PARENT](http://www.bls.gov/nls/quex/r1/y97rd1pquex.htm) of the respondent (attendPR, relprefPR, relraisedPR).  Between religiosity sections there is a list of covariates that might, in this case a self-report on emotional wellbeing (calm, blue, happy, depressed, nervous) and media activities (internet, computer,tv). 
  
  
 ## Primary Dataset : View of one case (id=1) 
