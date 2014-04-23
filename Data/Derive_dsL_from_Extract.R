@@ -33,9 +33,10 @@ pathDir<-file.path(getwd()) # define path for project root directory
 # Links to the data source
 
 tagset<-c("NLSY97_Religiosity_20042014") #"Database_ResponseOfInterest_DateOfDownload"
-pathDataFolder<-file.path("./",paste0("Documentation/data/",tagset))
+pathDataFolder<-file.path("./Data/Extracts",tagset)
 pathDataSource<-file.path(pathDataFolder,paste0(tagset,".csv")) 
-pathDataSourceLabels<-file.path(pathDataFolder,paste0(tagset,".dct"))  
+pathDataSourceLabels<-file.path(pathDataFolder,paste0(tagset,".dct"))
+
 # reading in the data
 dsSource<-read.csv(pathDataSource,header=TRUE, skip=0,sep=",")
 varOrig<-ncol(dsSource) # Original number of variables in the NLS download
@@ -48,7 +49,7 @@ dsSourceLabels$X.<-NULL
 dsSourceLabels<-rename(dsSourceLabels,replace=c("infile"="RNUM","dictionary"="VARIABLE_TITLE")) # rename to match NLS Web Investigator format
 dsSourceLabels<-dsSourceLabels[dsSourceLabels$RNUM!="T6650500",] # remove version number from list of variables
 dsSourceLabels<-arrange(dsSourceLabels,VARIABLE_TITLE) # sort by Variable Title
-write.table(dsSourceLabels, "./Documentation/data/dsSourceLabels.csv", sep=",")
+write.table(dsSourceLabels, "./Data/ItemMapping/dsSourceLabels.csv", sep=",")
 
 ############################
 ## @knitr TweakData
@@ -191,7 +192,8 @@ dsSource<-rename(dsSource, c(
   "T2782300"="pray_2008",
   "T7637900"="pray_2011",
   "R0552300"="relprefPR",
-  "R0552200"="relraisedPR"  
+  "R0552200"="relraisedPR"
+  
 ))
 
 # head(dsSource[,c("id","relprefPR")],20)
@@ -282,7 +284,7 @@ dsL_order<-c("sample"  ,"id"	,"sex"	,"race"	,"bmonth"	,"byear"	,"attendPR"	,"rel
 dsL<-dsLTI[dsL_order]
 
 print(dsL[dsLong$id==1,]) 
-pathdsL <- file.path(getwd(),"Documentation/Data/Derived/dsL.csv")
+pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
 
 # # remove all but one dataset
