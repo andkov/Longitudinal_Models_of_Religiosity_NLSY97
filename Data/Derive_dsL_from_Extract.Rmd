@@ -26,12 +26,12 @@ opts_chunk$set(
 )
 echoChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls for the chunks
+read_chunk("./Documentation/manipulation/ImportAndClean.R") # the file to which knitr calls for the chunks
 ```
 
 
 ## Data Retrieval
-Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder "**/Data/Extract/NLSY97_Religiosity_20042014**", located in the GitHub Repository. 
+Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", located in the GitHub Repository. 
 (The naming convention is "Study_Focus_DDMMYYYofDownload")   
 
 #### The files include:    
@@ -81,22 +81,11 @@ The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentati
 ## Figure 2
 <img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
 
-After renaming, we arrive at the basic clean dataset in long format.
+After renaming, we arrive at the basic clean dataset in wide format.
 ```{r TweakData2, echo=TRUE, message=FALSE, results="hold"}
 #dsSource
-pathdsL<-file.path("./Data/Derived/dsL.csv")
-dsL<-read.csv(pathdsL,header=T,sep=",")
-print(dsL[dsL$id==1,])
+print(dsLong[dsLong$id==1,])
 ```
-
-
-This dataset (dsL) is the starting point for all the models used in this study. The following is a screenshot of what this file looks like in R viewer:
- ** Initial Long dataset **
-<img link src="./figure_rmd/variables_layout_dsL.png" alt="Databox slice" style="width:900px;"/>  
-
-This data structure is the Variable-Occasion Slice, rotated 90 degrees. Here, the time dimension run vertially. We can distinguish time invariate (**TI**) variables, which values do not change with time. You can see their values remaining constant for each individual (id). Column with **year** counter separates **TI** variables from time variant (**TV**) variables, which values are availible for more than one time point. The datasets used in specific modeling are transformations of this initial dataset.
-
-
 
 
 

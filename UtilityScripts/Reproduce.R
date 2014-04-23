@@ -33,7 +33,7 @@ base::require(markdown)
 base::require(testit)
 
 # #Report Files:
-pathsReports <- base::file.path("./Data", c("Derive_dsL_from_Extract.R"))
+pathsReports <- base::file.path("./Documentation", c("ImportAndClean.R"))
 
 # Verify the necessary path can be found.
 # Report Files:
@@ -41,7 +41,7 @@ testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsRepor
 
 ###################################
 # Build the reports
-
+pathsReports <- base::file.path("./Documentation", c("ImportAndClean.Rmd"))
 for( pathRmd in pathsReports ) {
   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)

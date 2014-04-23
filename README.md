@@ -15,7 +15,7 @@ The current study uses the data from the [NLSY97](http://www.bls.gov/nls/nlsy97.
 NLYS97 contains several items mapping into the domain of religiosity. One particular variable measuring church attendance (Codename:**attend**) is recorded  uninteruptedly for 12 years (2000-2011) and chosen as the key operationalization of religiosity in all models. Literature on psychology and sociology of religion suggest that church attendance is highly correlated with other facets of religiosity, and might very well be the optimal indicator of broad religiosity in practice. The items selected for analysis and context are shown in the following graph. 
 
 ## Variable-Occasion Slice (**VO**) 
-<img link src="./Data/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  
+<img link src="./Documentation/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  
 
 The first section of variables gives basic context variables: the month and year of birth, age at the time of the interview, sex, race, as well as sample indicator (cross-sectional or oversample).
 
@@ -25,7 +25,7 @@ The second group of variables (in light gray) hosts variables related to religio
 ## Primary Dataset : View of one case (id=1) 
 This variable-occasion slice of Cattell's databox, shows at what time points measurement exists for each of the selected variables. This datamap has a direct relationship with the structure of the primary dataset in the study
 
-<img link src="./Data/figure_rmd/variables_layout_dsL.png" alt="Databox slice" style="width:700px;"/>  
+<img link src="./Documentation/figure_rmd/variables_layout_dsL.png" alt="Databox slice" style="width:700px;"/>  
 
 in which we rotate the previous VO Slice 90 degrees. Here, we can distinguish time invariate (**TI**) variables, which values do not change with time. You can see their values remaining constant for each individual (id). Column with **year** counter separates **TI** variables from time variant (**TV**) variables, which values are availible for more than one time point. The datasets used in specific modeling are derived from this initial dataset
 
