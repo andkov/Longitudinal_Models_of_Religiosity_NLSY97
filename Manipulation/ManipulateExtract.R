@@ -52,18 +52,17 @@ rm(variableNameMatchedInExtract)
 for( i in seq_along(dsMapping$RNumber) ) {
   rNumber <- dsMapping[i, "RNumber"]  
   variableName <- dsMapping[i, "VariableName"]  
-#   ds <- plyr::rename(ds, replace=c(rNumber=variableName))
-colnames(ds)[colnames(ds)==rNumber] <- variableName
+  colnames(ds)[colnames(ds)==rNumber] <- variableName
   
   #   variableClass <- dsMapping[i, "VariableClass"]
   #   cast_fx <- get(paste0("as.", variableClass))
     
   #   missingCodes <- unlist(strsplit(dsMapping[i, "MissingCodes"], split=";"))
-  #   ds[, rNumber] <- ifelse(ds[, rNumber] %in% missingCodes, NA, ds[, rNumber])
+  #   ds[, variableName] <- ifelse(ds[, variableName] %in% missingCodes, NA, ds[, variableName])
   
   #   if( variableClass[1] %in% c("factor", "ordered") )
-  #     ds[, rNumber] <- ReplaceNAsWithFactorLevel(ds[, rNumber])
-  #   ds[, rNumber] <- cast_fx(ds[, rNumber] )
+  #     ds[, variableName] <- ReplaceNAsWithFactorLevel(ds[, variableName])
+  #   ds[, variableName] <- cast_fx(ds[, variableName] )
 }
 
 # ds$T3043700 <- ordered(ds$T3043700, labels=c("Weeks", "Months", "Years"))
@@ -131,7 +130,7 @@ colnames(ds)[colnames(ds)==rNumber] <- variableName
 
 #####################################
 ## @knitr Metadata
-sapply(sapply(ds, class), FUN=function( x ){ return( x[1] ) })
+base::sapply(base::sapply(ds, class), FUN=function( x ){ return( x[1] ) })
 # str(ds)
 
 #####################################
