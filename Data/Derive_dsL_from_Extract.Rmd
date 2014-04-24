@@ -3,7 +3,7 @@ Reproducibility Instructions
 This report narrates data preparations for the Longitudinal Models of Religiosity in NLSY97
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
-```{r echo=F, message=F} 
+```{r, echo=F, message=F} 
 opts_knit$set(root.dir='../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 ```
 
@@ -29,6 +29,12 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls for the chunks
 ```
 
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+```
+
+```{r LoadPackages, echo=echoChunks, message=FALSE}
+```
+
 
 ## Data Retrieval
 Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", located in the GitHub Repository. 
@@ -45,20 +51,24 @@ After importing the data from the datafile,
 <!-- run initial import from the databank defined by tagset. --> 
 ```{r LoadData, echo=TRUE, message=TRUE, results='asis'}
 ```
+
+```{rTweakData, echo=echoChunks, message=FALSE}
+```
+
 we have created the initial wide dataset with
-```{r echo=TRUE}
+```{r, echo=TRUE}
 # dsSource  - cointains all imported variables
 length(unique(dsSource$id)) 
 ```
 individuals. Of them,
-``` {r  echo=TRUE}
+``` {r,  echo=TRUE}
 # 1 - Cross-sectional
 # 0 - Oversample
 table(dsSource$sample)
 
 ```
 
-``` {r  echo=TRUE}
+``` {r , echo=TRUE}
 # dsSourceLabels - contains the RNUM (NLSY97 Variables codes) and VARIABLE_TITLE used by NLY Investigator 
 print(dsSourceLabels) 
 
