@@ -152,11 +152,11 @@ hr {
 
 <h2>Methodological Overview</h2>
 
-<p>The current study analysizes how religiosity changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data. Latent curve models (<strong>LCM</strong>) test  certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership. Growth mixture models (<strong>GMM</strong>) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed church attendance. Individuals are grouped based on the similarity of their trajectories, and profiled. Cohort memberships is used as predictor in determining membership in such latent profile.  Finally, Markov models (<strong>MM</strong>), such as EMOSA and transition analysis, describe states and transitions among them. Treating the same outcome (church attendance) as categorical (instead of continuous as in LCM and GMM cases), EMOSA what accounts for the changing ratio of categories in the population, and how the age of the individual affects the likelihood of staying in one (e.g. &ldquo;church goer&rdquo;) or another (e.g.&ldquo;non-goer&rdquo;) category of behavior that quantifies religiosity. </p>
+<p>The current study analysizes how religiosity changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data. Latent curve models (<strong>LCM</strong>) test  certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership. Growth mixture models (<strong>GMM</strong>) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed church attendance. Individuals are grouped based on the similarity of their trajectories, and profiled. Cohort memberships is used as predictor in determining membership in such latent profile.  Finally, Markov models (<strong>MM</strong>), such as EMOSA and transition analysis, describe states and transitions among them. Treating the same outcome (church attendance) as categorical (and not as continuous like in LCM and GMM cases), EMOSA accounts for the changing ratio of categories in the population, and how the age of the individual affects the likelihood of staying in one (e.g. &ldquo;church goer&rdquo;) or another (e.g.&ldquo;non-goer&rdquo;)  behavior category that quantifies religiosity. </p>
 
 <h2>Sample</h2>
 
-<p>The current study uses the data from the <a href="http://www.bls.gov/nls/nlsy97.htm">NLSY97</a> study, which is a part of a larger effort of the National Longitudinal Surveys <a href="http://www.bls.gov/nls/">NLS</a>. NLSY97 is a nationally representative sample of households including approximately 9,000 participants. Selected individuals were 12 to 16 years old as of December 31, 1996. They were interviewed annually, starting in 1997 and continuing until today. As of the current date (April 22, 20014), there are 15 publically availible rounds of NLSY97 data (1997-2011).</p>
+<p>The current study uses the data from the <a href="http://www.bls.gov/nls/nlsy97.htm">NLSY97</a> study, which is a part of a larger effort of the National Longitudinal Surveys <a href="http://www.bls.gov/nls/">NLS</a>. NLSY97 is a nationally representative sample of households including approximately 9,000 participants. The NLSY97 was based on a household probability sample in which all adolescents between certain ages were surveyed within sampled households.  Selected individuals, born between 1980 and 1984, were 12 to 16 years old as of December 31, 1996. They were interviewed annually, starting in 1997 and continuing until today. As of the current date (April, 20014), there are 15 publically available rounds of NLSY97 data (1997-2011). The present study focuses on the span of 12 time points (2000 â€“ 2011) for which uninterrupted measure of religious behavior was taken. It starts with (13-17)-yearolds and describes how they change into (27-31)-yearolds.  </p>
 
 <h2>Domain of Religiosity</h2>
 
@@ -164,7 +164,7 @@ hr {
 
 <h2>Variable-Occasion Slice (<strong>VO</strong>)</h2>
 
-<p><img link src="./Documentation/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  </p>
+<p><img link src="./Data/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  </p>
 
 <p>The first section of variables gives basic context variables: the month and year of birth, age at the time of the interview, sex, race, as well as sample indicator (cross-sectional or oversample).</p>
 
@@ -174,13 +174,13 @@ hr {
 
 <p>This variable-occasion slice of Cattell&#39;s databox, shows at what time points measurement exists for each of the selected variables. This datamap has a direct relationship with the structure of the primary dataset in the study</p>
 
-<p><img link src="./Documentation/figure_rmd/variables_layout_dsL.png" alt="Databox slice" style="width:700px;"/>  </p>
+<p><img link src="./Data/figure_rmd/variables_layout_dsL.png" alt="Databox slice" style="width:700px;"/>  </p>
 
 <p>in which we rotate the previous VO Slice 90 degrees. Here, we can distinguish time invariate (<strong>TI</strong>) variables, which values do not change with time. You can see their values remaining constant for each individual (id). Column with <strong>year</strong> counter separates <strong>TI</strong> variables from time variant (<strong>TV</strong>) variables, which values are availible for more than one time point. The datasets used in specific modeling are derived from this initial dataset</p>
 
 <h2>Manipulation</h2>
 
-<p>Special report <a href="%22./Documentation/ImportAndClean.md%22">ImportAndClean</a> narrates every step in data preparation, from accessing <a href="https://www.nlsinfo.org/investigator/pages/login.jsp">NLS Investigator</a> to arriving at the <strong>dsL</strong> dataset shown above. This dataset (<strong>dsL</strong>) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, MM).</p>
+<p>Special report <a href="%22https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md%22">Derive_dsL_from_Extrac</a> narrates every step in data preparation, from accessing <a href="https://www.nlsinfo.org/investigator/pages/login.jsp">NLS Investigator</a> to arriving at the <strong>dsL</strong> dataset shown above. This dataset (<strong>dsL</strong>) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, MM).</p>
 
 <h2>Modeling</h2>
 
