@@ -52,7 +52,7 @@ After importing the data from the datafile,
 ```{r LoadData, echo=TRUE, message=TRUE, results='asis'}
 ```
 
-```{rTweakData, echo=echoChunks, message=FALSE}
+```{r TweakData, echo=echoChunks, message=FALSE}
 ```
 
 we have created the initial wide dataset with
