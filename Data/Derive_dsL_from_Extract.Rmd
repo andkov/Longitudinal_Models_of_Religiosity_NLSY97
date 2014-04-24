@@ -58,7 +58,7 @@ After importing the data from the datafile,
 we have created the initial wide dataset with
 ```{r, echo=TRUE}
 # dsSource  - cointains all imported variables
-length(unique(dsSource$id)) 
+nrow(dsSource)
 ```
 individuals. Of them,
 ``` {r,  echo=TRUE}
