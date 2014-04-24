@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Reproducibility Instructions</title>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Reproducibility Instructions</h1>
+
+<p>This report narrates data preparations for the Longitudinal Models of Religiosity in NLSY97</p>
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+
+<!-- Set the report-wide options, and point to the external code file. -->
+
+<pre><code>Warning: cannot open file &#39;/Data/Derive_dsL_from_Extract.R&#39;: No such file or directory
+</code></pre>
+
+<pre><code>Error: cannot open the connection
+</code></pre>
+
+<h2>Data Retrieval</h2>
+
+<p>Using <a href="https://www.nlsinfo.org/investigator/pages/login.jsp">NLS Investigator</a> a list of variables was downloaded from <a href="http://www.bls.gov/nls/">NLS</a> datasets. All the downloaded materials  were unzipped into  the folder &ldquo;<strong>/Documentation/data/NLSY97_Religiosity_20042014</strong>&rdquo;, located in the GitHub Repository. 
+(The naming convention is &ldquo;Study_Focus_DDMMYYYofDownload&rdquo;)   </p>
+
+<h4>The files include:</h4>
+
+<p>NLSY97_Religiosity_20042014.cdb - <strong>codebook</strong> containing item descriptions<br/>
+NLSY97_Religiosity_20042014.csv - <strong>data</strong> in comma delimited format<br/>
+NLSY97_Religiosity_20042014.NLSY97 - <strong>tagset</strong>, the list of variables in the downloaded dataset<br/>
+NLSY97_Religiosity_20042014.dtc - STATA <strong>dictionary</strong> file of selected variables, contains data as well</p>
+
+<p>After importing the data from the datafile,</p>
+
+<!-- run initial import from the databank defined by tagset. --> 
+
+<pre><code class="r">###################################
+# Load the necessary packages.
+base::require(base)
+base::require(knitr)
+base::require(markdown)
+base::require(testit)
+base::require(plyr)
+base::require(reshape2)
+base::require(stringr)
+
+#################################
+### Declaration of objects
+# Variables, which values that DON&#39;T change with time - time invariant (TI) variables 
+TIvars&lt;-c(&quot;sample&quot;, &quot;id&quot;, &quot;sex&quot;,&quot;race&quot;, &quot;bmonth&quot;,&quot;byear&quot;,  &#39;attendPR&#39;, &quot;relprefPR&quot;, &quot;relraisedPR&quot;)
+
+#test of revert/roll back
+
+###########################
+### Import the data ##
+pathDir&lt;-file.path(getwd()) # define path for project root directory
+
+# Links to the data source
+
+tagset&lt;-c(&quot;NLSY97_Religiosity_20042014&quot;) #&quot;Database_ResponseOfInterest_DateOfDownload&quot;
+pathDataFolder&lt;-file.path(&quot;./Data/Extracts&quot;,tagset)
+pathDataSource&lt;-file.path(pathDataFolder,paste0(tagset,&quot;.csv&quot;)) 
+pathDataSourceLabels&lt;-file.path(pathDataFolder,paste0(tagset,&quot;.dct&quot;))
+
+# reading in the data
+dsSource&lt;-read.csv(pathDataSource,header=TRUE, skip=0,sep=&quot;,&quot;)
+</code></pre>
+
+<pre><code>Warning: cannot open file &#39;./Data/Extracts/NLSY97_Religiosity_20042014/NLSY97_Religiosity_20042014.csv&#39;: No such file
+or directory
+</code></pre>
+
+<pre><code>Error: cannot open the connection
+</code></pre>
+
+<pre><code class="r">varOrig&lt;-ncol(dsSource) # Original number of variables in the NLS download
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">dsSource[&quot;T6650500&quot;]&lt;-NULL # Remove version number for cleaner dataset
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">
+
+# NLSY97 variable id are linked to the descriptive label in the file dictionary file &quot;NLSY97_Religiosity_20042014.dtc&quot;
+dsSourceLabels&lt;-read.csv(pathDataSourceLabels,header=TRUE, skip=0,nrow=varOrig, sep=&quot;&quot;)
+</code></pre>
+
+<pre><code>Warning: cannot open file &#39;./Data/Extracts/NLSY97_Religiosity_20042014/NLSY97_Religiosity_20042014.dct&#39;: No such file
+or directory
+</code></pre>
+
+<pre><code>Error: cannot open the connection
+</code></pre>
+
+<pre><code class="r">dsSourceLabels$X.&lt;-NULL
+</code></pre>
+
+<pre><code>Error: object &#39;dsSourceLabels&#39; not found
+</code></pre>
+
+<pre><code class="r">dsSourceLabels&lt;-rename(dsSourceLabels,replace=c(&quot;infile&quot;=&quot;RNUM&quot;,&quot;dictionary&quot;=&quot;VARIABLE_TITLE&quot;)) # rename to match NLS Web Investigator format
+</code></pre>
+
+<pre><code>Error: object &#39;dsSourceLabels&#39; not found
+</code></pre>
+
+<pre><code class="r">dsSourceLabels&lt;-dsSourceLabels[dsSourceLabels$RNUM!=&quot;T6650500&quot;,] # remove version number from list of variables
+</code></pre>
+
+<pre><code>Error: object &#39;dsSourceLabels&#39; not found
+</code></pre>
+
+<pre><code class="r">dsSourceLabels&lt;-arrange(dsSourceLabels,VARIABLE_TITLE) # sort by Variable Title
+</code></pre>
+
+<pre><code>Error: object &#39;dsSourceLabels&#39; not found
+</code></pre>
+
+<pre><code class="r">write.table(dsSourceLabels, &quot;./Data/ItemMapping/dsSourceLabels.csv&quot;, sep=&quot;,&quot;)
+</code></pre>
+
+<pre><code>Error: object &#39;dsSourceLabels&#39; not found
+</code></pre>
+
+<pre><code class="r">
+print(nrow(dsSource))
+</code></pre>
+
+<pre><code>Error: error in evaluating the argument &#39;x&#39; in selecting a method for function &#39;print&#39;: Error in nrow(dsSource) : object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">
+
+# Using renaming template &quot;NLSY97_Religiosity_20042014.xlsx&quot; located in &quot;Documentation\data&quot; folder
+# rename the native variable names of NLSY97 (left) into custom chosen names for programming convenience (right)
+
+
+
+dsSource&lt;-rename(dsSource, c(
+  &quot;R0323900&quot;=&quot;famrel_1997&quot;,
+  &quot;R2165200&quot;=&quot;famrel_1998&quot;,
+  &quot;R3483100&quot;=&quot;famrel_1999&quot;,
+  &quot;R4881300&quot;=&quot;famrel_2000&quot;,
+  &quot;S2977900&quot;=&quot;internet_2003&quot;,
+  &quot;S4676700&quot;=&quot;internet_2004&quot;,
+  &quot;S6308900&quot;=&quot;internet_2005&quot;,
+  &quot;S8329800&quot;=&quot;internet_2006&quot;,
+  &quot;T0737600&quot;=&quot;internet_2007&quot;,
+  &quot;T2779700&quot;=&quot;internet_2008&quot;,
+  &quot;T4494400&quot;=&quot;internet_2009&quot;,
+  &quot;T6141400&quot;=&quot;internet_2010&quot;,
+  &quot;T7635300&quot;=&quot;internet_2011&quot;,
+  &quot;R1193900&quot;=&quot;agemon_1997&quot;,
+  &quot;R2553400&quot;=&quot;agemon_1998&quot;,
+  &quot;R3876200&quot;=&quot;agemon_1999&quot;,
+  &quot;R5453600&quot;=&quot;agemon_2000&quot;,
+  &quot;R7215900&quot;=&quot;agemon_2001&quot;,
+  &quot;S1531300&quot;=&quot;agemon_2002&quot;,
+  &quot;S2000900&quot;=&quot;agemon_2003&quot;,
+  &quot;S3801000&quot;=&quot;agemon_2004&quot;,
+  &quot;S5400900&quot;=&quot;agemon_2005&quot;,
+  &quot;S7501100&quot;=&quot;agemon_2006&quot;,
+  &quot;T0008400&quot;=&quot;agemon_2007&quot;,
+  &quot;T2011000&quot;=&quot;agemon_2008&quot;,
+  &quot;T3601400&quot;=&quot;agemon_2009&quot;,
+  &quot;T5201300&quot;=&quot;agemon_2010&quot;,
+  &quot;T6651200&quot;=&quot;agemon_2011&quot;,
+  &quot;R1194100&quot;=&quot;ageyear_1997&quot;,
+  &quot;R2553500&quot;=&quot;ageyear_1998&quot;,
+  &quot;R3876300&quot;=&quot;ageyear_1999&quot;,
+  &quot;R5453700&quot;=&quot;ageyear_2000&quot;,
+  &quot;R7216000&quot;=&quot;ageyear_2001&quot;,
+  &quot;S1531400&quot;=&quot;ageyear_2002&quot;,
+  &quot;S2001000&quot;=&quot;ageyear_2003&quot;,
+  &quot;S3801100&quot;=&quot;ageyear_2004&quot;,
+  &quot;S5401000&quot;=&quot;ageyear_2005&quot;,
+  &quot;S7501200&quot;=&quot;ageyear_2006&quot;,
+  &quot;T0008500&quot;=&quot;ageyear_2007&quot;,
+  &quot;T2011100&quot;=&quot;ageyear_2008&quot;,
+  &quot;T3601500&quot;=&quot;ageyear_2009&quot;,
+  &quot;T5201400&quot;=&quot;ageyear_2010&quot;,
+  &quot;T6651300&quot;=&quot;ageyear_2011&quot;,
+  &quot;R1235800&quot;=&quot;sample&quot;,
+  &quot;S0919700&quot;=&quot;todo_2002&quot;,
+  &quot;S6317100&quot;=&quot;todo_2005&quot;,
+  &quot;T2782200&quot;=&quot;todo_2008&quot;,
+  &quot;T7637800&quot;=&quot;todo_2011&quot;,
+  &quot;R4893900&quot;=&quot;happy_2000&quot;,
+  &quot;S0921100&quot;=&quot;happy_2002&quot;,
+  &quot;S4682200&quot;=&quot;happy_2004&quot;,
+  &quot;S8332600&quot;=&quot;happy_2006&quot;,
+  &quot;T2782900&quot;=&quot;happy_2008&quot;,
+  &quot;T6144000&quot;=&quot;happy_2010&quot;,
+  &quot;R4893600&quot;=&quot;nervous_2000&quot;,
+  &quot;S0920800&quot;=&quot;nervous_2002&quot;,
+  &quot;S4681900&quot;=&quot;nervous_2004&quot;,
+  &quot;S8332300&quot;=&quot;nervous_2006&quot;,
+  &quot;T2782600&quot;=&quot;nervous_2008&quot;,
+  &quot;T6143700&quot;=&quot;nervous_2010&quot;,
+  &quot;R4893700&quot;=&quot;calm_2000&quot;,
+  &quot;S0920900&quot;=&quot;calm_2002&quot;,
+  &quot;S4682000&quot;=&quot;calm_2004&quot;,
+  &quot;S8332400&quot;=&quot;calm_2006&quot;,
+  &quot;T2782700&quot;=&quot;calm_2008&quot;,
+  &quot;T6143800&quot;=&quot;calm_2010&quot;,
+  &quot;R4894000&quot;=&quot;depressed_2000&quot;,
+  &quot;S0921200&quot;=&quot;depressed_2002&quot;,
+  &quot;S4682300&quot;=&quot;depressed_2004&quot;,
+  &quot;S8332700&quot;=&quot;depressed_2006&quot;,
+  &quot;T2783000&quot;=&quot;depressed_2008&quot;,
+  &quot;T6144100&quot;=&quot;depressed_2010&quot;,
+  &quot;R4893800&quot;=&quot;blue_2000&quot;,
+  &quot;S0921000&quot;=&quot;blue_2002&quot;,
+  &quot;S4682100&quot;=&quot;blue_2004&quot;,
+  &quot;S8332500&quot;=&quot;blue_2006&quot;,
+  &quot;T2782800&quot;=&quot;blue_2008&quot;,
+  &quot;T6143900&quot;=&quot;blue_2010&quot;,
+  &quot;R0552400&quot;=&quot;attendPR&quot;,
+  &quot;R4893400&quot;=&quot;attend_2000&quot;,
+  &quot;R6520100&quot;=&quot;attend_2001&quot;,
+  &quot;S0919300&quot;=&quot;attend_2002&quot;,
+  &quot;S2987800&quot;=&quot;attend_2003&quot;,
+  &quot;S4681700&quot;=&quot;attend_2004&quot;,
+  &quot;S6316700&quot;=&quot;attend_2005&quot;,
+  &quot;S8331500&quot;=&quot;attend_2006&quot;,
+  &quot;T0739400&quot;=&quot;attend_2007&quot;,
+  &quot;T2781700&quot;=&quot;attend_2008&quot;,
+  &quot;T4495000&quot;=&quot;attend_2009&quot;,
+  &quot;T6143400&quot;=&quot;attend_2010&quot;,
+  &quot;T7637300&quot;=&quot;attend_2011&quot;,
+  &quot;S1225400&quot;=&quot;computer_2002&quot;,
+  &quot;T1049900&quot;=&quot;computer_2007&quot;,
+  &quot;T3145100&quot;=&quot;computer_2008&quot;,
+  &quot;T4565400&quot;=&quot;computer_2009&quot;,
+  &quot;T6209600&quot;=&quot;computer_2010&quot;,
+  &quot;T7707000&quot;=&quot;computer_2011&quot;,
+  &quot;S1225500&quot;=&quot;tv_2002&quot;,
+  &quot;T1050000&quot;=&quot;tv_2007&quot;,
+  &quot;T3145200&quot;=&quot;tv_2008&quot;,
+  &quot;T4565500&quot;=&quot;tv_2009&quot;,
+  &quot;T6209700&quot;=&quot;tv_2010&quot;,
+  &quot;T7707100&quot;=&quot;faith_2011&quot;,
+  &quot;T2782400&quot;=&quot;faith_2008&quot;,
+  &quot;T7638000&quot;=&quot;bmonth&quot;,
+  &quot;R0536401&quot;=&quot;bmonth&quot;,
+  &quot;R0536402&quot;=&quot;byear&quot;,
+  &quot;R1482600&quot;=&quot;race&quot;,
+  &quot;R0536300&quot;=&quot;sex&quot;,
+  &quot;R0000100&quot;=&quot;id&quot;,
+  &quot;T2111500&quot;=&quot;bornagain_2008&quot;,
+  &quot;T6759400&quot;=&quot;bornagain_2011&quot;,
+  &quot;S0919600&quot;=&quot;decisions_2002&quot;,
+  &quot;S6317000&quot;=&quot;decisions_2005&quot;,
+  &quot;T2782100&quot;=&quot;decisions_2008&quot;,
+  &quot;T7637700&quot;=&quot;decisions_2011&quot;,
+  &quot;S0919500&quot;=&quot;obeyed_2002&quot;,
+  &quot;S6316900&quot;=&quot;obeyed_2005&quot;,
+  &quot;T2782000&quot;=&quot;obeyed_2008&quot;,
+  &quot;T7637600&quot;=&quot;obeyed_2011&quot;,
+  &quot;S5532800&quot;=&quot;relpref_2005&quot;,
+  &quot;T2111400&quot;=&quot;relpref_2008&quot;,
+  &quot;T6759300&quot;=&quot;relpref_2011&quot;,
+  &quot;S0919400&quot;=&quot;values_2002&quot;,
+  &quot;S6316800&quot;=&quot;values_2005&quot;,
+  &quot;T2781900&quot;=&quot;values_2008&quot;,
+  &quot;T7637500&quot;=&quot;values_2011&quot;,
+  &quot;S0919800&quot;=&quot;pray_2002&quot;,
+  &quot;S6317200&quot;=&quot;pray_2005&quot;,
+  &quot;T2782300&quot;=&quot;pray_2008&quot;,
+  &quot;T7637900&quot;=&quot;pray_2011&quot;,
+  &quot;R0552300&quot;=&quot;relprefPR&quot;,
+  &quot;R0552200&quot;=&quot;relraisedPR&quot;
+
+))
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">
+# head(dsSource[,c(&quot;id&quot;,&quot;relprefPR&quot;)],20)
+# Remove illegal values. See codebook for description of missingness
+illegal&lt;-as.integer(c(-5:-1,997,998,999))
+SourceVariables&lt;-names(dsSource)
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">
+for( variable in SourceVariables ){
+    dsSource[,variable]=ifelse(dsSource[,variable] %in% c(-5:-1),NA,dsSource[,variable])
+
+}
+</code></pre>
+
+<pre><code>Error: object &#39;SourceVariables&#39; not found
+</code></pre>
+
+<pre><code class="r">
+# recode negativale worded question so that :  1 - more religious, 0 - less religious
+for (item in c(&quot;todo&quot;,&quot;values&quot;)){
+  for (year in c(2002,2005,2008,2011)){
+  itemyear&lt;-(paste0(item , &quot;_&quot; , year))
+  dsSource[,itemyear]=ifelse( (dsSource[,itemyear] %in% c(1)) , 0 ,ifelse((dsSource[,itemyear] %in% c(0)),1,NA))
+}
+}
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">
+# Include only records with a valid birth year
+dsSource &lt;- dsSource[dsSource$byear %in% 1980:1984, ]
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">
+#Include only records with a valid ID
+dsSource &lt;- dsSource[dsSource$id != &quot;V&quot;, ]
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">dsSource$id &lt;- as.integer(dsSource$id)
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r"># remove all but one dataset
+#  rm(list=setdiff(ls(), &quot;dsSource&quot;))
+
+
+
+#################################
+## Preparing the common Long dataset
+ds&lt;-dsSource
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r">## id.vars declares MEASURED variables (as opposed to RESPONSE variable)
+dsLong &lt;- reshape2::melt(ds, id.vars=TIvars)
+</code></pre>
+
+<pre><code>Error: object &#39;ds&#39; not found
+</code></pre>
+
+<pre><code class="r">
+##############
+head(dsLong[dsLong$id==1,],20)
+</code></pre>
+
+<pre><code>Error: error in evaluating the argument &#39;x&#39; in selecting a method for function &#39;head&#39;: Error: object &#39;dsLong&#39; not found
+</code></pre>
+
+<pre><code class="r"># create varaible &quot;year&quot; by stripping the automatic ending in TV variables&#39; names
+## ?? How to read off 4 characters from right with reshape/plyr?
+dsLong$year&lt;-str_sub(dsLong$variable,-4,-1) 
+</code></pre>
+
+<pre><code>Error: object &#39;dsLong&#39; not found
+</code></pre>
+
+<pre><code class="r"># the automatic ending in TV variables&#39; names
+# ?? how to automate the creation of strings?
+timepattern&lt;-c(&quot;_1997&quot;, &quot;_1998&quot;, &quot;_1999&quot;, &quot;_2000&quot;, &quot;_2001&quot;, &quot;_2002&quot;, &quot;_2003&quot;, &quot;_2004&quot;, &quot;_2005&quot;, &quot;_2006&quot;,&quot;_2007&quot;, &quot;_2008&quot;, &quot;_2009&quot;, &quot;_2010&quot;, &quot;_2011&quot;)
+# Strip off the automatic ending
+for (i in timepattern){
+dsLong$variable &lt;- gsub(pattern=i, replacement=&quot;&quot;, x=dsLong$variable) 
+}
+</code></pre>
+
+<pre><code>Error: object &#39;dsLong&#39; not found
+</code></pre>
+
+<pre><code class="r"># Convert to a number.
+dsLong$year &lt;- as.integer(dsLong$year) 
+</code></pre>
+
+<pre><code>Error: object &#39;dsLong&#39; not found
+</code></pre>
+
+<pre><code class="r">
+
+# reorder for easier inspection
+dsLong&lt;-dsLong[with(dsLong, order(id,variable)), ] # alternative sorting to plyr
+</code></pre>
+
+<pre><code>Error: object &#39;dsLong&#39; not found
+</code></pre>
+
+<pre><code class="r"># view the long data for one person
+print(dsLong[dsLong$id==1,]) 
+</code></pre>
+
+<pre><code>Error: error in evaluating the argument &#39;x&#39; in selecting a method for function &#39;print&#39;: Error: object &#39;dsLong&#39; not found
+</code></pre>
+
+<pre><code class="r">
+##############################
+## Create individual long datasets, one per TV variable
+## ?? how to loop over the dataset?
+
+## Time invariant (TI) variables are :
+print (TIvars)
+</code></pre>
+
+<p>[1] &ldquo;sample&rdquo;      &ldquo;id&rdquo;          &ldquo;sex&rdquo;         &ldquo;race&rdquo;        &ldquo;bmonth&rdquo;      &ldquo;byear&rdquo;       &ldquo;attendPR&rdquo;    &ldquo;relprefPR&rdquo;<br/>
+[9] &ldquo;relraisedPR&rdquo;</p>
+
+<pre><code class="r">## Time variant (TV) variables are :
+TVvars&lt;-unique(dsLong$variable)
+</code></pre>
+
+<pre><code>Error: object &#39;dsLong&#39; not found
+</code></pre>
+
+<pre><code class="r"># TVvars&lt;-c(&quot;attend&quot;,&quot;tv&quot;) # to test on a few variables
+# Create a long (L) dataset (ds) with time invariant (TI) variables 
+dsLTI&lt;-subset(dsLong,subset=(dsLong$variable==&quot;agemon&quot;)) # agemon because it has 1997:2011
+</code></pre>
+
+<pre><code>Error: object &#39;dsLong&#39; not found
+</code></pre>
+
+<pre><code class="r">dsLTI&lt;-rename(dsLTI,replace=c(&quot;value&quot;=&quot;agemon&quot;))
+</code></pre>
+
+<pre><code>Error: object &#39;dsLTI&#39; not found
+</code></pre>
+
+<pre><code class="r">dsLTI&lt;-dsLTI[c(TIvars,&quot;year&quot;)] # select only TI variables
+</code></pre>
+
+<pre><code>Error: object &#39;dsLTI&#39; not found
+</code></pre>
+
+<pre><code class="r">
+## Strip off each TV from dsLong to merge later
+for ( i in TVvars){
+dstemp&lt;-subset(dsLong,subset=(dsLong$variable==i))
+dstemp&lt;-rename(dstemp,replace=c(&quot;value&quot;=i))
+dstemp&lt;-dstemp[c(&quot;id&quot;,&quot;year&quot;,i)]
+dsLTI&lt;-merge(x=dsLTI,y=dstemp,by=c(&quot;id&quot;,&quot;year&quot;),all.x=TRUE)
+}
+</code></pre>
+
+<pre><code>Error: object &#39;TVvars&#39; not found
+</code></pre>
+
+<pre><code class="r">## Merging datasets
+# Outer join: merge(x = df1, y = df2, by = &quot;CustomerId&quot;, all = TRUE)
+# Left outer: merge(x = df1, y = df2, by = &quot;CustomerId&quot;, all.x=TRUE)
+# Right outer: merge(x = df1, y = df2, by = &quot;CustomerId&quot;, all.y=TRUE)
+# Cross join: merge(x = df1, y = df2, by = NULL)
+
+# OPTIONAL. Order variables in dsL to match the order in &quot;NLSY97_Religiosity_20042012.xlsx&quot;
+dsL_order&lt;-c(&quot;sample&quot;  ,&quot;id&quot;    ,&quot;sex&quot;  ,&quot;race&quot; ,&quot;bmonth&quot;   ,&quot;byear&quot;    ,&quot;attendPR&quot; ,&quot;relprefPR&quot;    ,&quot;relraisedPR&quot;  ,&quot;year&quot;,&quot;agemon&quot;    ,&quot;ageyear&quot;  ,&quot;famrel&quot;   ,&quot;attend&quot;   ,&quot;values&quot;   ,&quot;todo&quot; ,&quot;obeyed&quot;   ,&quot;pray&quot; ,&quot;decisions&quot;    ,&quot;relpref&quot;  ,&quot;bornagain&quot;    ,&quot;faith&quot;    ,&quot;calm&quot; ,&quot;blue&quot; ,&quot;happy&quot;    ,&quot;depressed&quot;    ,&quot;nervous&quot;  ,&quot;tv&quot;   ,&quot;computer&quot; ,&quot;internet&quot;)
+dsL&lt;-dsLTI[dsL_order]
+</code></pre>
+
+<pre><code>Error: object &#39;dsLTI&#39; not found
+</code></pre>
+
+<pre><code class="r">
+print(dsL[dsLong$id==1,]) 
+</code></pre>
+
+<pre><code>Error: error in evaluating the argument &#39;x&#39; in selecting a method for function &#39;print&#39;: Error: object &#39;dsL&#39; not found
+</code></pre>
+
+<pre><code class="r">pathdsL &lt;- file.path(getwd(),&quot;Data/Derived/dsL.csv&quot;)
+write.csv(dsL,pathdsL,  row.names=FALSE)
+</code></pre>
+
+<pre><code>Error: object &#39;dsL&#39; not found
+</code></pre>
+
+<pre><code class="r">
+# # remove all but one dataset
+# rm(list=setdiff(ls(), c(&quot;TIvars&quot;,&quot;TVvars&quot;,&quot;dsL&quot;)))
+</code></pre>
+
+<p>we have created the initial wide dataset with</p>
+
+<pre><code class="r"># dsSource  - cointains all imported variables
+length(unique(dsSource$id)) 
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<p>individuals. Of them,</p>
+
+<pre><code class="r"># 1 - Cross-sectional
+# 0 - Oversample
+table(dsSource$sample)
+</code></pre>
+
+<pre><code>Error: object &#39;dsSource&#39; not found
+</code></pre>
+
+<pre><code class="r"># dsSourceLabels - contains the RNUM (NLSY97 Variables codes) and VARIABLE_TITLE used by NLY Investigator 
+print(dsSourceLabels) 
+</code></pre>
+
+<pre><code>Error: error in evaluating the argument &#39;x&#39; in selecting a method for function &#39;print&#39;: Error: object &#39;dsSourceLabels&#39; not found
+</code></pre>
+
+<p>To explore the variables in the native context of NLS, go to <a href="https://www.nlsinfo.org/investigator/pages/login.jsp">NLS Investigator</a>, select &ldquo;NLYS97 1997-2011&rdquo; in the first dropdown box and then click on &ldquo;Choose File&rdquo; under &ldquo;Upload Tagset.&rdquo; Select the file &ldquo;NLSY97_Religiosity_20042014.NLSY97&rdquo; from the folder &ldquo;<strong>/Documentation/data/NLSY97_Religiosity_20042014</strong>&rdquo;, in the GitHub repository.</p>
+
+<h2>Variables by Occasions</h2>
+
+<p>To better understand the longitudinal structure of the selected variables, the dataset was re-arranged in the two-dimensional slice of Cattell&#39;s databox: variables by occasions.</p>
+
+<h2>Figure 1</h2>
+
+<p><img link src="./figure_rmd/variables_layout.png" alt="Databox slice" style="width:800px;"/><br/>
+<a href="%22./www/slice-vo.html%22">Interactive version</a></p>
+
+<p>This databox slice indicates in what year measurement was taken for selected variables  and describes the variables extracted from NLYS97 for analysis. Three descriptions are given:<br/>
+<strong>Variable Title</strong>, which is verbatim identifier from NLSY97,<br/>
+<strong>Unit</strong>, which attemps to give a brief desription of the scale on which the variable is measured, and<br/>
+<strong>Codename</strong>, which spells the name of the variable, as it is used in R code that services the analysis</p>
+
+<p>The excel spreadsheet (<em>NLYS97_Religiosity_20042014.xlsx</em>) in the &ldquo;./Documentation/data&rdquo; folder, hosts this list, as well as a semi-automated routine (Tab &ldquo;Renaming&rdquo;) to aid in renaming the repeated endings in the variable names for easier coding. The values in the &ldquo;Variable Title&rdquo; can be used to locate the item in the <a href="https://www.nlsinfo.org/investigator/pages/login.jsp">NLS Investigator</a> by copy/pasting it into &ldquo;Word in Title&rdquo; search line</p>
+
+<h2>Figure 2</h2>
+
+<p><img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/></p>
+
+</body>
+
+</html>

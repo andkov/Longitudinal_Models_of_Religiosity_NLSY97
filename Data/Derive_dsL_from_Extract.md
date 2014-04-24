@@ -1,14 +1,38 @@
-###################################
-### Reproducible Research
-###################################
-# Importing the raw data from the NLS Investigator download object
-###################################
-# Clear memory from previous runs
-# base::rm(list=base::ls(all=TRUE))
+Reproducibility Instructions
+=================================================
+This report narrates data preparations for the Longitudinal Models of Religiosity in NLSY97
 
-#####################################
-## @knitr LoadData
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
+
+
+<!-- Set the report-wide options, and point to the external code file. -->
+
+```
+Warning: cannot open file '/Data/Derive_dsL_from_Extract.R': No such file or directory
+```
+
+```
+Error: cannot open the connection
+```
+
+
+
+## Data Retrieval
+Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", located in the GitHub Repository. 
+(The naming convention is "Study_Focus_DDMMYYYofDownload")   
+
+#### The files include:    
+NLSY97_Religiosity_20042014.cdb - **codebook** containing item descriptions  
+NLSY97_Religiosity_20042014.csv - **data** in comma delimited format  
+NLSY97_Religiosity_20042014.NLSY97 - **tagset**, the list of variables in the downloaded dataset  
+NLSY97_Religiosity_20042014.dtc - STATA **dictionary** file of selected variables, contains data as well
+  
+
+After importing the data from the datafile,
+<!-- run initial import from the databank defined by tagset. --> 
+
+```r
 ###################################
 # Load the necessary packages.
 base::require(base)
@@ -39,19 +63,99 @@ pathDataSourceLabels<-file.path(pathDataFolder,paste0(tagset,".dct"))
 
 # reading in the data
 dsSource<-read.csv(pathDataSource,header=TRUE, skip=0,sep=",")
+```
+
+```
+Warning: cannot open file './Data/Extracts/NLSY97_Religiosity_20042014/NLSY97_Religiosity_20042014.csv': No such file
+or directory
+```
+
+```
+Error: cannot open the connection
+```
+
+```r
 varOrig<-ncol(dsSource) # Original number of variables in the NLS download
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 dsSource["T6650500"]<-NULL # Remove version number for cleaner dataset
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 
 
 # NLSY97 variable id are linked to the descriptive label in the file dictionary file "NLSY97_Religiosity_20042014.dtc"
 dsSourceLabels<-read.csv(pathDataSourceLabels,header=TRUE, skip=0,nrow=varOrig, sep="")
+```
+
+```
+Warning: cannot open file './Data/Extracts/NLSY97_Religiosity_20042014/NLSY97_Religiosity_20042014.dct': No such file
+or directory
+```
+
+```
+Error: cannot open the connection
+```
+
+```r
 dsSourceLabels$X.<-NULL
+```
+
+```
+Error: object 'dsSourceLabels' not found
+```
+
+```r
 dsSourceLabels<-rename(dsSourceLabels,replace=c("infile"="RNUM","dictionary"="VARIABLE_TITLE")) # rename to match NLS Web Investigator format
+```
+
+```
+Error: object 'dsSourceLabels' not found
+```
+
+```r
 dsSourceLabels<-dsSourceLabels[dsSourceLabels$RNUM!="T6650500",] # remove version number from list of variables
+```
+
+```
+Error: object 'dsSourceLabels' not found
+```
+
+```r
 dsSourceLabels<-arrange(dsSourceLabels,VARIABLE_TITLE) # sort by Variable Title
+```
+
+```
+Error: object 'dsSourceLabels' not found
+```
+
+```r
 write.table(dsSourceLabels, "./Data/ItemMapping/dsSourceLabels.csv", sep=",")
+```
+
+```
+Error: object 'dsSourceLabels' not found
+```
+
+```r
 
 print(nrow(dsSource))
+```
+
+```
+Error: error in evaluating the argument 'x' in selecting a method for function 'print': Error in nrow(dsSource) : object 'dsSource' not found
+```
+
+```r
 
 
 # Using renaming template "NLSY97_Religiosity_20042014.xlsx" located in "Documentation\data" folder
@@ -195,16 +299,37 @@ dsSource<-rename(dsSource, c(
   "R0552200"="relraisedPR"
   
 ))
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 
 # head(dsSource[,c("id","relprefPR")],20)
 # Remove illegal values. See codebook for description of missingness
 illegal<-as.integer(c(-5:-1,997,998,999))
 SourceVariables<-names(dsSource)
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 
 for( variable in SourceVariables ){
     dsSource[,variable]=ifelse(dsSource[,variable] %in% c(-5:-1),NA,dsSource[,variable])
 
 }
+```
+
+```
+Error: object 'SourceVariables' not found
+```
+
+```r
 
 # recode negativale worded question so that :  1 - more religious, 0 - less religious
 for (item in c("todo","values")){
@@ -213,13 +338,41 @@ for (item in c("todo","values")){
   dsSource[,itemyear]=ifelse( (dsSource[,itemyear] %in% c(1)) , 0 ,ifelse((dsSource[,itemyear] %in% c(0)),1,NA))
 }
 }
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 
 # Include only records with a valid birth year
 dsSource <- dsSource[dsSource$byear %in% 1980:1984, ]
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 
 #Include only records with a valid ID
 dsSource <- dsSource[dsSource$id != "V", ]
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 dsSource$id <- as.integer(dsSource$id)
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 # remove all but one dataset
 #  rm(list=setdiff(ls(), "dsSource"))
 
@@ -228,14 +381,42 @@ dsSource$id <- as.integer(dsSource$id)
 #################################
 ## Preparing the common Long dataset
 ds<-dsSource
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+```r
 ## id.vars declares MEASURED variables (as opposed to RESPONSE variable)
 dsLong <- reshape2::melt(ds, id.vars=TIvars)
+```
+
+```
+Error: object 'ds' not found
+```
+
+```r
 
 ##############
 head(dsLong[dsLong$id==1,],20)
+```
+
+```
+Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'dsLong' not found
+```
+
+```r
 # create varaible "year" by stripping the automatic ending in TV variables' names
 ## ?? How to read off 4 characters from right with reshape/plyr?
 dsLong$year<-str_sub(dsLong$variable,-4,-1) 
+```
+
+```
+Error: object 'dsLong' not found
+```
+
+```r
 # the automatic ending in TV variables' names
 # ?? how to automate the creation of strings?
 timepattern<-c("_1997", "_1998", "_1999", "_2000", "_2001", "_2002", "_2003", "_2004", "_2005", "_2006","_2007", "_2008", "_2009", "_2010", "_2011")
@@ -243,14 +424,42 @@ timepattern<-c("_1997", "_1998", "_1999", "_2000", "_2001", "_2002", "_2003", "_
 for (i in timepattern){
 dsLong$variable <- gsub(pattern=i, replacement="", x=dsLong$variable) 
 }
+```
+
+```
+Error: object 'dsLong' not found
+```
+
+```r
 # Convert to a number.
 dsLong$year <- as.integer(dsLong$year) 
+```
+
+```
+Error: object 'dsLong' not found
+```
+
+```r
 
 
 # reorder for easier inspection
 dsLong<-dsLong[with(dsLong, order(id,variable)), ] # alternative sorting to plyr
+```
+
+```
+Error: object 'dsLong' not found
+```
+
+```r
 # view the long data for one person
 print(dsLong[dsLong$id==1,]) 
+```
+
+```
+Error: error in evaluating the argument 'x' in selecting a method for function 'print': Error: object 'dsLong' not found
+```
+
+```r
 
 ##############################
 ## Create individual long datasets, one per TV variable
@@ -258,13 +467,47 @@ print(dsLong[dsLong$id==1,])
 
 ## Time invariant (TI) variables are :
 print (TIvars)
+```
+
+[1] "sample"      "id"          "sex"         "race"        "bmonth"      "byear"       "attendPR"    "relprefPR"  
+[9] "relraisedPR"
+
+```r
 ## Time variant (TV) variables are :
 TVvars<-unique(dsLong$variable)
+```
+
+```
+Error: object 'dsLong' not found
+```
+
+```r
 # TVvars<-c("attend","tv") # to test on a few variables
 # Create a long (L) dataset (ds) with time invariant (TI) variables 
 dsLTI<-subset(dsLong,subset=(dsLong$variable=="agemon")) # agemon because it has 1997:2011
+```
+
+```
+Error: object 'dsLong' not found
+```
+
+```r
 dsLTI<-rename(dsLTI,replace=c("value"="agemon"))
+```
+
+```
+Error: object 'dsLTI' not found
+```
+
+```r
 dsLTI<-dsLTI[c(TIvars,"year")] # select only TI variables
+```
+
+```
+Error: object 'dsLTI' not found
+```
+
+```r
 
 ## Strip off each TV from dsLong to merge later
 for ( i in TVvars){
@@ -273,6 +516,13 @@ dstemp<-rename(dstemp,replace=c("value"=i))
 dstemp<-dstemp[c("id","year",i)]
 dsLTI<-merge(x=dsLTI,y=dstemp,by=c("id","year"),all.x=TRUE)
 }
+```
+
+```
+Error: object 'TVvars' not found
+```
+
+```r
 ## Merging datasets
 # Outer join: merge(x = df1, y = df2, by = "CustomerId", all = TRUE)
 # Left outer: merge(x = df1, y = df2, by = "CustomerId", all.x=TRUE)
@@ -282,11 +532,88 @@ dsLTI<-merge(x=dsLTI,y=dstemp,by=c("id","year"),all.x=TRUE)
 # OPTIONAL. Order variables in dsL to match the order in "NLSY97_Religiosity_20042012.xlsx"
 dsL_order<-c("sample"  ,"id"	,"sex"	,"race"	,"bmonth"	,"byear"	,"attendPR"	,"relprefPR"	,"relraisedPR"	,"year","agemon"	,"ageyear"	,"famrel"	,"attend"	,"values"	,"todo"	,"obeyed"	,"pray"	,"decisions"	,"relpref"	,"bornagain"	,"faith"	,"calm"	,"blue"	,"happy"	,"depressed"	,"nervous"	,"tv"	,"computer"	,"internet")
 dsL<-dsLTI[dsL_order]
+```
+
+```
+Error: object 'dsLTI' not found
+```
+
+```r
 
 print(dsL[dsLong$id==1,]) 
+```
+
+```
+Error: error in evaluating the argument 'x' in selecting a method for function 'print': Error: object 'dsL' not found
+```
+
+```r
 pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
+```
+
+```
+Error: object 'dsL' not found
+```
+
+```r
 
 # # remove all but one dataset
-rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
+# rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
+```
+
+we have created the initial wide dataset with
+
+```r
+# dsSource  - cointains all imported variables
+length(unique(dsSource$id)) 
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+individuals. Of them,
+
+```r
+# 1 - Cross-sectional
+# 0 - Oversample
+table(dsSource$sample)
+```
+
+```
+Error: object 'dsSource' not found
+```
+
+
+
+```r
+# dsSourceLabels - contains the RNUM (NLSY97 Variables codes) and VARIABLE_TITLE used by NLY Investigator 
+print(dsSourceLabels) 
+```
+
+```
+Error: error in evaluating the argument 'x' in selecting a method for function 'print': Error: object 'dsSourceLabels' not found
+```
+
+
+To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), select "NLYS97 1997-2011" in the first dropdown box and then click on "Choose File" under "Upload Tagset." Select the file "NLSY97_Religiosity_20042014.NLSY97" from the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", in the GitHub repository.
+
+## Variables by Occasions
+To better understand the longitudinal structure of the selected variables, the dataset was re-arranged in the two-dimensional slice of Cattell's databox: variables by occasions.
+## Figure 1
+<img link src="./figure_rmd/variables_layout.png" alt="Databox slice" style="width:800px;"/>  
+[Interactive version]("./www/slice-vo.html")
+
+This databox slice indicates in what year measurement was taken for selected variables  and describes the variables extracted from NLYS97 for analysis. Three descriptions are given:  
+**Variable Title**, which is verbatim identifier from NLSY97,  
+**Unit**, which attemps to give a brief desription of the scale on which the variable is measured, and  
+**Codename**, which spells the name of the variable, as it is used in R code that services the analysis
+
+The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentation/data" folder, hosts this list, as well as a semi-automated routine (Tab "Renaming") to aid in renaming the repeated endings in the variable names for easier coding. The values in the "Variable Title" can be used to locate the item in the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) by copy/pasting it into "Word in Title" search line
+## Figure 2
+<img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
+
+
+
 
