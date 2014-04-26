@@ -1,6 +1,7 @@
 Reproducibility Instructions
 =================================================
-This report narrates data preparations for the Longitudinal Models of Religiosity in NLSY97
+This report narrates the manipulations of the NLSY97 dataset in preparing it for longitudinal modeling.
+
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
@@ -18,17 +19,17 @@ This report narrates data preparations for the Longitudinal Models of Religiosit
 
 
 ## Data Retrieval
-Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", located in the GitHub Repository. 
+Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder "**/Data/Extracts/NLSY97_Religiosity_20042014**", located in the GitHub Repository. 
 (The naming convention is "Study_Focus_DDMMYYYofDownload")   
 
-#### The files include:    
+#### The forlder includes:    
 NLSY97_Religiosity_20042014.cdb - **codebook** containing item descriptions  
 NLSY97_Religiosity_20042014.csv - **data** in comma delimited format  
 NLSY97_Religiosity_20042014.NLSY97 - **tagset**, the list of variables in the downloaded dataset  
 NLSY97_Religiosity_20042014.dtc - STATA **dictionary** file of selected variables, contains data as well
   
 
-After importing the data from the datafile,
+We import the raw data of NLSY97 and make initial clean up
 <!-- run initial import from the databank defined by tagset. --> 
 
 ```r
@@ -80,6 +81,7 @@ print(nrow(dsSource))
 ############################
 ```
 
+The **dictionary** file is querried to obtain unique NLSY97 item reference numbers (RNUM) connected to descriptive labels. The Excel file "ItemMapping_20042014.xlsx" contains several tabs, the first of which ""
 
 
 

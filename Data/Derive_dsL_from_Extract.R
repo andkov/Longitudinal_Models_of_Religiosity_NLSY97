@@ -19,27 +19,18 @@ base::require(stringr)
 
 ############################
 ## @knitr DeclareGlobals
-
+# Variables, which values that DON'T change with time - time invariant (TI) variables 
+TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefPR", "relraisedPR")
 
 #####################################
 ## @knitr LoadData
 
 
-
-
-#################################
-### Declaration of objects
-# Variables, which values that DON'T change with time - time invariant (TI) variables 
-TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefPR", "relraisedPR")
-
-#test of revert/roll back
-
-###########################
-### Import the data ##
+### Import the data ###
 pathDir<-file.path(getwd()) # define path for project root directory
 
 # Links to the data source # for now keep the link non-dynamic
-pathDataSource <- "./Data/Extracts/NLSY97_Religiosity_20042014/NLSY97_Religiosity_20042014.csv"
+# pathDataSource <- "./Data/Extracts/NLSY97_Religiosity_20042014/NLSY97_Religiosity_20042014.csv"
 tagset<-c("NLSY97_Religiosity_20042014") #"Database_ResponseOfInterest_DateOfDownload"
 pathDataFolder<-file.path("./Data/Extracts",tagset)
 pathDataSource<-file.path(pathDataFolder,paste0(tagset,".csv")) 
@@ -47,20 +38,22 @@ pathDataSourceLabels<-file.path(pathDataFolder,paste0(tagset,".dct"))
 
 # reading in the data
 dsSource<-read.csv(pathDataSource,header=TRUE, skip=0,sep=",")
-
 varOrig<-ncol(dsSource) # Original number of variables in the NLS download
-dsSource$T6650500<-NULL # Remove version number for cleaner dataset
+dsSource$T6650500<-NULL # Remove "Version number"  for cleaner dataset
 
+dim(dsSource)
 
-# NLSY97 variable id are linked to the descriptive label in the file dictionary file "NLSY97_Religiosity_20042014.dtc"
+### NLSY97 variable id are linked to the descriptive label in the file dictionary file "NLSY97_Religiosity_20042014.dtc" ###
 dsSourceLabels<-read.csv(pathDataSourceLabels,header=TRUE, skip=0,nrow=varOrig, sep="")
 dsSourceLabels$X.<-NULL
-dsSourceLabels<-rename(dsSourceLabels,replace=c("infile"="RNUM","dictionary"="VARIABLE_TITLE")) # rename to match NLS Web Investigator format
-dsSourceLabels<-dsSourceLabels[dsSourceLabels$RNUM!="T6650500",] # remove version number from list of variables
+# rename to match NLS Web Investigator format
+dsSourceLabels<-rename(dsSourceLabels,replace=c("infile"="RNUM","dictionary"="VARIABLE_TITLE")) 
+# remove "Version number" from list of variables
+dsSourceLabels<-dsSourceLabels[dsSourceLabels$RNUM!="T6650500",] 
 dsSourceLabels<-arrange(dsSourceLabels,VARIABLE_TITLE) # sort by Variable Title
 write.table(dsSourceLabels, "./Data/ItemMapping/dsSourceLabels.csv", sep=",")
 
-print(nrow(dsSource))
+dim(dsSourceLabels)
 
 
 # Using renaming template "NLSY97_Religiosity_20042014.xlsx" located in "Documentation\data" folder
@@ -207,97 +200,97 @@ dsSource<-rename(dsSource, c(
   
 ))
 
-# # head(dsSource[,c("id","relprefPR")],20)
-# # Remove illegal values. See codebook for description of missingness
-# illegal<-as.integer(c(-5:-1,997,998,999))
-# SourceVariables<-names(dsSource)
-# 
-# for( variable in SourceVariables ){
-#     dsSource[,variable]=ifelse(dsSource[,variable] %in% c(-5:-1),NA,dsSource[,variable])
-# 
-# }
-# 
-# # recode negativale worded question so that :  1 - more religious, 0 - less religious
-# for (item in c("todo","values")){
-#   for (year in c(2002,2005,2008,2011)){
-#   itemyear<-(paste0(item , "_" , year))
-#   dsSource[,itemyear]=ifelse( (dsSource[,itemyear] %in% c(1)) , 0 ,ifelse((dsSource[,itemyear] %in% c(0)),1,NA))
-# }
-# }
-# 
-# # Include only records with a valid birth year
-# dsSource <- dsSource[dsSource$byear %in% 1980:1984, ]
-# 
-# #Include only records with a valid ID
-# dsSource <- dsSource[dsSource$id != "V", ]
-# dsSource$id <- as.integer(dsSource$id)
+# head(dsSource[,c("id","relprefPR")],20)
+# Remove illegal values. See codebook for description of missingness
+illegal<-as.integer(c(-5:-1,997,998,999))
+SourceVariables<-names(dsSource)
+
+for( variable in SourceVariables ){
+    dsSource[,variable]=ifelse(dsSource[,variable] %in% c(-5:-1),NA,dsSource[,variable])
+
+}
+
+# recode negativale worded question so that :  1 - more religious, 0 - less religious
+for (item in c("todo","values")){
+  for (year in c(2002,2005,2008,2011)){
+  itemyear<-(paste0(item , "_" , year))
+  dsSource[,itemyear]=ifelse( (dsSource[,itemyear] %in% c(1)) , 0 ,ifelse((dsSource[,itemyear] %in% c(0)),1,NA))
+}
+}
+
+# Include only records with a valid birth year
+dsSource <- dsSource[dsSource$byear %in% 1980:1984, ]
+
+#Include only records with a valid ID
+dsSource <- dsSource[dsSource$id != "V", ]
+dsSource$id <- as.integer(dsSource$id)
+# remove all but one dataset
+#  rm(list=setdiff(ls(), "dsSource"))
+
+
+
+#################################
+## Preparing the common Long dataset
+ds<-dsSource
+## id.vars declares MEASURED variables (as opposed to RESPONSE variable)
+dsLong <- reshape2::melt(ds, id.vars=TIvars)
+
+##############
+head(dsLong[dsLong$id==1,],20)
+# create varaible "year" by stripping the automatic ending in TV variables' names
+## ?? How to read off 4 characters from right with reshape/plyr?
+dsLong$year<-str_sub(dsLong$variable,-4,-1) 
+# the automatic ending in TV variables' names
+# ?? how to automate the creation of strings?
+timepattern<-c("_1997", "_1998", "_1999", "_2000", "_2001", "_2002", "_2003", "_2004", "_2005", "_2006","_2007", "_2008", "_2009", "_2010", "_2011")
+# Strip off the automatic ending
+for (i in timepattern){
+dsLong$variable <- gsub(pattern=i, replacement="", x=dsLong$variable) 
+}
+# Convert to a number.
+dsLong$year <- as.integer(dsLong$year) 
+
+
+# reorder for easier inspection
+dsLong<-dsLong[with(dsLong, order(id,variable)), ] # alternative sorting to plyr
+# view the long data for one person
+print(dsLong[dsLong$id==1,]) 
+
+##############################
+## Create individual long datasets, one per TV variable
+## ?? how to loop over the dataset?
+
+## Time invariant (TI) variables are :
+print (TIvars)
+## Time variant (TV) variables are :
+TVvars<-unique(dsLong$variable)
+# TVvars<-c("attend","tv") # to test on a few variables
+# Create a long (L) dataset (ds) with time invariant (TI) variables 
+dsLTI<-subset(dsLong,subset=(dsLong$variable=="agemon")) # agemon because it has 1997:2011
+dsLTI<-rename(dsLTI,replace=c("value"="agemon"))
+dsLTI<-dsLTI[c(TIvars,"year")] # select only TI variables
+
+## Strip off each TV from dsLong to merge later
+for ( i in TVvars){
+dstemp<-subset(dsLong,subset=(dsLong$variable==i))
+dstemp<-rename(dstemp,replace=c("value"=i))
+dstemp<-dstemp[c("id","year",i)]
+dsLTI<-merge(x=dsLTI,y=dstemp,by=c("id","year"),all.x=TRUE)
+}
+## Merging datasets
+# Outer join: merge(x = df1, y = df2, by = "CustomerId", all = TRUE)
+# Left outer: merge(x = df1, y = df2, by = "CustomerId", all.x=TRUE)
+# Right outer: merge(x = df1, y = df2, by = "CustomerId", all.y=TRUE)
+# Cross join: merge(x = df1, y = df2, by = NULL)
+
+# OPTIONAL. Order variables in dsL to match the order in "NLSY97_Religiosity_20042012.xlsx"
+dsL_order<-c("sample"  ,"id"	,"sex"	,"race"	,"bmonth"	,"byear"	,"attendPR"	,"relprefPR"	,"relraisedPR"	,"year","agemon"	,"ageyear"	,"famrel"	,"attend"	,"values"	,"todo"	,"obeyed"	,"pray"	,"decisions"	,"relpref"	,"bornagain"	,"faith"	,"calm"	,"blue"	,"happy"	,"depressed"	,"nervous"	,"tv"	,"computer"	,"internet")
+dsL<-dsLTI[dsL_order]
+
+print(dsL[dsLong$id==1,]) 
+pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
+write.csv(dsL,pathdsL,  row.names=FALSE)
+
 # # remove all but one dataset
-# #  rm(list=setdiff(ls(), "dsSource"))
-# 
-# 
-# 
-# #################################
-# ## Preparing the common Long dataset
-# ds<-dsSource
-# ## id.vars declares MEASURED variables (as opposed to RESPONSE variable)
-# dsLong <- reshape2::melt(ds, id.vars=TIvars)
-# 
-# ##############
-# head(dsLong[dsLong$id==1,],20)
-# # create varaible "year" by stripping the automatic ending in TV variables' names
-# ## ?? How to read off 4 characters from right with reshape/plyr?
-# dsLong$year<-str_sub(dsLong$variable,-4,-1) 
-# # the automatic ending in TV variables' names
-# # ?? how to automate the creation of strings?
-# timepattern<-c("_1997", "_1998", "_1999", "_2000", "_2001", "_2002", "_2003", "_2004", "_2005", "_2006","_2007", "_2008", "_2009", "_2010", "_2011")
-# # Strip off the automatic ending
-# for (i in timepattern){
-# dsLong$variable <- gsub(pattern=i, replacement="", x=dsLong$variable) 
-# }
-# # Convert to a number.
-# dsLong$year <- as.integer(dsLong$year) 
-# 
-# 
-# # reorder for easier inspection
-# dsLong<-dsLong[with(dsLong, order(id,variable)), ] # alternative sorting to plyr
-# # view the long data for one person
-# print(dsLong[dsLong$id==1,]) 
-# 
-# ##############################
-# ## Create individual long datasets, one per TV variable
-# ## ?? how to loop over the dataset?
-# 
-# ## Time invariant (TI) variables are :
-# print (TIvars)
-# ## Time variant (TV) variables are :
-# TVvars<-unique(dsLong$variable)
-# # TVvars<-c("attend","tv") # to test on a few variables
-# # Create a long (L) dataset (ds) with time invariant (TI) variables 
-# dsLTI<-subset(dsLong,subset=(dsLong$variable=="agemon")) # agemon because it has 1997:2011
-# dsLTI<-rename(dsLTI,replace=c("value"="agemon"))
-# dsLTI<-dsLTI[c(TIvars,"year")] # select only TI variables
-# 
-# ## Strip off each TV from dsLong to merge later
-# for ( i in TVvars){
-# dstemp<-subset(dsLong,subset=(dsLong$variable==i))
-# dstemp<-rename(dstemp,replace=c("value"=i))
-# dstemp<-dstemp[c("id","year",i)]
-# dsLTI<-merge(x=dsLTI,y=dstemp,by=c("id","year"),all.x=TRUE)
-# }
-# ## Merging datasets
-# # Outer join: merge(x = df1, y = df2, by = "CustomerId", all = TRUE)
-# # Left outer: merge(x = df1, y = df2, by = "CustomerId", all.x=TRUE)
-# # Right outer: merge(x = df1, y = df2, by = "CustomerId", all.y=TRUE)
-# # Cross join: merge(x = df1, y = df2, by = NULL)
-# 
-# # OPTIONAL. Order variables in dsL to match the order in "NLSY97_Religiosity_20042012.xlsx"
-# dsL_order<-c("sample"  ,"id"	,"sex"	,"race"	,"bmonth"	,"byear"	,"attendPR"	,"relprefPR"	,"relraisedPR"	,"year","agemon"	,"ageyear"	,"famrel"	,"attend"	,"values"	,"todo"	,"obeyed"	,"pray"	,"decisions"	,"relpref"	,"bornagain"	,"faith"	,"calm"	,"blue"	,"happy"	,"depressed"	,"nervous"	,"tv"	,"computer"	,"internet")
-# dsL<-dsLTI[dsL_order]
-# 
-# print(dsL[dsLong$id==1,]) 
-# pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
-# write.csv(dsL,pathdsL,  row.names=FALSE)
-# 
-# # # remove all but one dataset
-# rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
+rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
 
