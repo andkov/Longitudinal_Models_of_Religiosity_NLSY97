@@ -32,20 +32,31 @@ base::require(knitr)
 base::require(markdown)
 base::require(testit)
 
-### Don't use this report technology yet. buggy
-# # #Report Files:
-# pathsReports <- base::file.path(getwd(),"Data", c("Derive_dsL_from_Extract.Rmd"))
+# ###################################
+# # Declare the paths of the necessary files.
 # 
-# # Verify the necessary path can be found.
-# # Report Files:
-# testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
+# # The raw/input data files:
+# dsL <- "./Data/Datasets/CountyMonthBirthRate2014Version.csv"
+# 
+# # Code Files:
+# pathManipulateCensus <- "./UtilityScripts/IsolateCensusPopsForGfr.R"
+# pathCalculateGfr <- "./UtilityScripts/CalculateGfr.R"
+# 
+# #Report Files:
+# pathsReports <- base::file.path("./vignettes", c("MbrFigures.Rmd", "OkFertilityWithIntercensalEstimates.Rmd"))
 # 
 # ###################################
-# # Build the reports
-# # pathsReports <- base::file.path("./Documentation", c("ImportAndClean.Rmd"))
-# for( pathRmd in pathsReports ) {
-#   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
-#   pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
-#   knitr::knit(input=pathRmd, output=pathMd)
-#   markdown::markdownToHTML(file=pathMd, output=pathHtml)
-# }
+# # Verify the necessary path can be found.
+# 
+# # The raw/input data files:
+# testit::assert("The 10 census files from 199x should exist.", base::file.exists(pathCensus199x))
+# testit::assert("The 200x census file should exist.", base::file.exists(pathCensus200x))
+# testit::assert("The county FIPS values should exist.", base::file.exists(pathCountyFips))
+# 
+# # Code Files:
+# testit::assert("The file that restructures the census data should exist.", base::file.exists(pathManipulateCensus))
+# testit::assert("The file that calculates the GFR should exist.", base::file.exists(pathCalculateGfr))
+# 
+# #Report Files:
+# testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
+# 
