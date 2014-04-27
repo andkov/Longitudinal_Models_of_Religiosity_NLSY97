@@ -7,6 +7,7 @@ This report tracks down the visualizations of the NLSY97 religiosity data as def
 
 ```r
 opts_knit$set(root.dir = "../")  #Don't combine this call with any other chunk -especially one that uses file paths.
+# This .Rmd is in ./Models/Descriptives/
 getwd()
 ```
 
