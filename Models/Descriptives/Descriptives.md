@@ -21,7 +21,7 @@ getwd()
 
 ```r
 require(knitr)
-opts_chunk$set(root.dir="../",
+opts_chunk$set(
   results='show', 
   message = TRUE,
   comment = NA, 
@@ -50,57 +50,14 @@ getwd()
 
 
 
-```
-Warning: cannot open file
-'C:/Users/inspirion/Documents/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Models/Data/Derived/dsL.csv': No such
-file or directory
-```
-
-```
-Error: cannot open the connection
-```
 
 
 
 
 
 
-```
-Error: object 'dsL' not found
-```
-
-```
-Error: object 'dsDSR' not found
-```
-
-```
-Error: object 'dsDSR' not found
-```
-
-```
-Error: object 'dsDSR' not found
-```
-
-```
-Error: object 'dsDSR' not found
-```
-
-```
-Error: object 'dsDSR' not found
-```
-
-```
-Error: object 'dsDSR' not found
-```
 
 
-
-```
-Error: object 'dsDSR' not found
-```
-
-```
-Error: object 'ds' not found
-```
+<img src="figure_rmd/unnamed-chunk-21.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="550px" /><img src="figure_rmd/unnamed-chunk-22.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="550px" /><img src="figure_rmd/unnamed-chunk-23.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="550px" />
 
 

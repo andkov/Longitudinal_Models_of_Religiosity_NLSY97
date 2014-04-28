@@ -14,7 +14,7 @@ getwd()
 <!-- Set the report-wide options, and point to the external code file. -->
 ```{r set_options, echo=T, message=T}
 require(knitr)
-opts_chunk$set(root.dir="../",
+opts_chunk$set(
   results='show', 
   message = TRUE,
   comment = NA, 
@@ -46,6 +46,8 @@ getwd()
 ```{r TweakData, echo=echoChunks, message=FALSE}
 ```
 
-```{r AnalysisChunk01, echo=echoChunks, message=FALSE}
+```{r, echo=echoChunks, message=FALSE}
+
+
 ```
 

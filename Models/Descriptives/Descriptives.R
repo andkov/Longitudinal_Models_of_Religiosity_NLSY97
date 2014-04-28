@@ -15,32 +15,39 @@ require(ggplot2)
 
 ############################
 ## @knitr LoadData
-pathDir<-getwd()
+pathDir<-"../"
 pathdsL<-file.path(pathDir,"Data/Derived/dsL.csv")
 dsL<-read.csv(file=pathdsL,header=T,sep=",")
 
+str(dsL)
+
+
 # Variables that do not change with time, TI - time invariant
 TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefPR", "relraisedPR")
+labelSex<-c("")
 
 ############################
 ## @knitr TweakData
 ## dsL into...
-dsDSR<-dsL[,c('id',"byear","year","attend","ageyear","agemon")] # take these variables from dsL
-dsDSR<-dsDSR[which(dsDSR$year %in% 2000:2011),] # keep records for these years
+dsDSR<-dsL # take these variables from dsL
 
-dsDSR<-mutate(dsDSR,timec=year-2000) # center time
-dsDSR<-mutate(dsDSR,ageyearmon=(agemon/12))
-dsDSR<-mutate(dsDSR,linear=(0:(length(unique(dsDSR$year))-1))) # increse by 1 every year
-dsDSR<-mutate(dsDSR,quadratic=linear^2) 
-dsDSR<-mutate(dsDSR,cubic=linear^3)
+ds<-dsDSR
 
 ##...dsDSR
 
 ############################
 ## @knitr AnalysisChunk01
-ds<-dsDSR
 
-ggplot(ds, aes(x=byear))+geom_bar(binwidth=1)
+# sample
+ggplot(ds, aes(x=factor(sample)))+geom_bar(binwidth=1)
+# sex
+ggplot(ds, aes(x=factor(sex)))+geom_bar(binwidth=1)
+# race
+ggplot(ds, aes(x=factor(race)))+geom_bar(binwidth=1)
+# bmonth
+ggplot(ds, aes(x=factor(bmonth)))+geom_bar(binwidth=1)
+# years
+ggplot(ds, aes(x=factor(bmonth)))+geom_bar(binwidth=1)
 
 ############################
 ## @knitr AnalysisChunk02
