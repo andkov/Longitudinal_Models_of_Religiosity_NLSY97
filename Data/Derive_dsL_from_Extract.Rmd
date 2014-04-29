@@ -54,6 +54,7 @@ We import the raw data of NLSY97 and make initial clean up
 ```
 The **dictionary** file is querried to obtain unique NLSY97 item reference numbers (RNUM) connected to descriptive labels. The Excel file "ItemMapping_20042014.xlsx" contains several tabs, the first of which ""
 
+
 ```{r TweakData, echo=echoChunks, message=FALSE}
 ```
 
@@ -93,6 +94,8 @@ The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentati
 ## Figure 2
 <img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
 
+```{r CleanUp, echo=echoChunks, message=FALSE}
+```
 
 
 

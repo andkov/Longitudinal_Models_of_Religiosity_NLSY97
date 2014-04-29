@@ -61,7 +61,7 @@ dim(dsSourceLabels)
 
 
 ############################
-# @knitr TweakData
+## @knitr TweakData
 
 dsSource<-rename(dsSource, c(
   "R0323900"="famrel_1997",
@@ -291,6 +291,8 @@ print(dsL[dsLong$id==1,])
 pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
 
+###########################
+## @knitr CleanUp
 # # remove all but one dataset
 rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
 
