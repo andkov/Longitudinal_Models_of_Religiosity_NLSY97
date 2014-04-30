@@ -43,7 +43,7 @@ read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr cal
 
 ```
 
-First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](./Data/Derive_dsL_from_Extract.md). 
+First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md). 
 
 ### Figure 1 : View of the initial **dsL** dataset
 <img link src="./figure_rmd/dsL_view.png" alt="View of dsL" style="width:900px;"/>  
@@ -55,7 +55,7 @@ Observed that this view is obtained by transposing the columns in Figure 1, exce
 
 ```{r TweakData, echo=echoChunks, message=FALSE}
 ```
-
+The following plots are organized into an interactive [display](http://religiositynlys97.businesscatalyst.com/descriptives.html)
 ```{r sample_1997, echo=echoChunks, message=FALSE}
 p<-ggplot(subset(ds,year==1997), aes(x=sample))
 p<-p+geom_bar() 

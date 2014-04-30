@@ -21,7 +21,7 @@ This report tracks down the creation of graphs for basic descriptive statistics 
 
 
 
-First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](./Data/Derive_dsL_from_Extract.md). 
+First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md). 
 
 ### Figure 1 : View of the initial **dsL** dataset
 <img link src="./figure_rmd/dsL_view.png" alt="View of dsL" style="width:900px;"/>  
@@ -33,7 +33,7 @@ Observed that this view is obtained by transposing the columns in Figure 1, exce
 
 
 
-
+The following plots are organized into an interactive [display](http://religiositynlys97.businesscatalyst.com/descriptives.html)
 <img src="figure_rmd/sample_1997.png" title="plot of chunk sample_1997" alt="plot of chunk sample_1997" width="565px" />
 
 
