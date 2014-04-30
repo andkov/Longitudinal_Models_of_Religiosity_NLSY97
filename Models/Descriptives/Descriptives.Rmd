@@ -51,7 +51,7 @@ The view shows all the measurements taken from one individual (id=1) for the sel
 
 ### Figure 2 : **dsL** re-expressed as a Cattell's datacube slice
 <img link src="./figure_rmd/variables_layout.png" alt="Databox slice" style="width:800px;"/>
-Observed that this view is obtained by transposing the columns in Figure 1, except for **year**, which values are used as symbols of intersections of variales and occasions.
+Observed that this view is obtained by transposing the columns in Figure 1, except for **year**, which values are used as symbols for intersections of variales and occasions.
 
 ```{r TweakData, echo=echoChunks, message=FALSE}
 ```
@@ -97,11 +97,12 @@ attcol3<-c("blue2","blue2","snow", "snow", "snow", "red2" ,"red2", "red2")
 
 # ds$attendPR<-factor(ds$attendPR, levels =(rev(levels(ds$attendPR))))
 # attlevels<-rev((levels(ds$attendPR)))
-p<-ggplot(subset(ds,year==1997), aes(x=attendPR, fill=attendPR))
+p<-ggplot(subset(ds,year==1997), aes(x=attendPR))
 p<-p+geom_bar()
 p<-p+scale_fill_manual(values = attcol8,
                        labels = attlevels,
                          name = "Response categories" )
+p<-p+coord_flip()
 # p<-p+scale_color_manual(values=attcol8,breaks = attlevels)
 p
 # ## horizontal stacked bar graph with custom color.
@@ -131,23 +132,145 @@ p
 
 ```{r agemon, echo=echoChunks, message=FALSE}
 # str(ds$byear)
-timepoints<-1997:2000
-for (t in timepoints){
-years<-t
-for(i in years){
+i<-1997
 p<-ggplot(subset(ds,year==i), aes(x=agemon))
 p<-p+geom_bar(bin=1)
 p<-p+xlab(paste0("Age in months"," in ",i)) 
 p<-p+ylab("Count")
 # p<-p+coord_flip()
-}
 p
-}
 
 ```
 
+```{r ageyear, echo=echoChunks, message=FALSE}
+# str(ds$byear)
+i<-1997
+p<-ggplot(subset(ds,year==i), aes(x=factor(ageyear)))
+p<-p+geom_bar(bin=1)
+p<-p+xlab(paste0("Age in years"," in ",i)) 
+p<-p+ylab("Count")
+# p<-p+coord_flip()
+p
 
+```
 
+```{r famrel, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==1997), aes(x=factor(famrel)))
+p<-p+geom_bar()
+p<-p+coord_flip()
+p<-p+xlab("Days per week") 
+p<-p+ylab("Count")
+# p<-p+scale_color_manual(values=attcol8,breaks = attlevels)
+p
+```
+
+```{r attend, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2000), aes(x=attend))
+p<-p+geom_bar()
+p<-p+coord_flip()
+p<-p+xlab("Church attendance") 
+p<-p+ylab("Count")
+# p<-p+scale_color_manual(values=attcol8,breaks = attlevels)
+p
+```
+
+```{r values, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2002), aes(x=values))
+p<-p+geom_bar()
+p
+```
+
+```{r todo, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2002), aes(x=todo))
+p<-p+geom_bar()
+p
+```
+
+```{r obeyed, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2002), aes(x=obeyed))
+p<-p+geom_bar()
+p
+```
+
+```{r decisions, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2002), aes(x=decisions))
+p<-p+geom_bar()
+p
+```
+
+```{r pray, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2002), aes(x=pray))
+p<-p+geom_bar()
+p
+```
+
+```{r relpref, echo=echoChunks, message=FALSE}
+# str(ds$byear)
+p<-ggplot(subset(ds,year==2005), aes(x=relpref))
+p<-p+geom_bar()
+p<-p+coord_flip()
+p
+```
+
+```{r bornagain, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=bornagain))
+p<-p+geom_bar()
+p
+```
+
+```{r faith, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=faith))
+p<-p+geom_bar()
+p
+```
+
+```{r calm, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=calm))
+p<-p+geom_bar()
+p
+```
+
+```{r blue, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=blue))
+p<-p+geom_bar()
+p
+```
+
+```{r happy, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=happy))
+p<-p+geom_bar()
+p
+```
+
+```{r depressed, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=depressed))
+p<-p+geom_bar()
+p
+```
+
+```{r nervous, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=nervous))
+p<-p+geom_bar()
+p
+```
+
+```{r tv, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=tv))
+p<-p+geom_bar()
+p
+```
+
+```{r computer, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=computer))
+p<-p+geom_bar()
+p
+```
+
+```{r internet, echo=echoChunks, message=FALSE}
+p<-ggplot(subset(ds,year==2008), aes(x=internet))
+p<-p+geom_bar()
+p
+```
 
 
 

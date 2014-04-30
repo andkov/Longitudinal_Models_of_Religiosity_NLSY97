@@ -29,7 +29,7 @@ The view shows all the measurements taken from one individual (id=1) for the sel
 
 ### Figure 2 : **dsL** re-expressed as a Cattell's datacube slice
 <img link src="./figure_rmd/variables_layout.png" alt="Databox slice" style="width:800px;"/>
-Observed that this view is obtained by transposing the columns in Figure 1, except for **year**, which values are used as symbols of intersections of variales and occasions.
+Observed that this view is obtained by transposing the columns in Figure 1, except for **year**, which values are used as symbols for intersections of variales and occasions.
 
 
 
@@ -63,13 +63,70 @@ Error: object 'attlevels' not found
 <img src="figure_rmd/relraisedPR_1997.png" title="plot of chunk relraisedPR_1997" alt="plot of chunk relraisedPR_1997" width="565px" />
 
 
+<img src="figure_rmd/agemon.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" />
+
+
+<img src="figure_rmd/ageyear.png" title="plot of chunk ageyear" alt="plot of chunk ageyear" width="565px" />
+
+
+<img src="figure_rmd/famrel.png" title="plot of chunk famrel" alt="plot of chunk famrel" width="565px" />
+
+
+<img src="figure_rmd/attend.png" title="plot of chunk attend" alt="plot of chunk attend" width="565px" />
+
+
+<img src="figure_rmd/values.png" title="plot of chunk values" alt="plot of chunk values" width="565px" />
+
+
+<img src="figure_rmd/todo.png" title="plot of chunk todo" alt="plot of chunk todo" width="565px" />
+
+
+<img src="figure_rmd/obeyed.png" title="plot of chunk obeyed" alt="plot of chunk obeyed" width="565px" />
+
+
+<img src="figure_rmd/decisions.png" title="plot of chunk decisions" alt="plot of chunk decisions" width="565px" />
+
+
+<img src="figure_rmd/pray.png" title="plot of chunk pray" alt="plot of chunk pray" width="565px" />
+
+
+<img src="figure_rmd/relpref.png" title="plot of chunk relpref" alt="plot of chunk relpref" width="565px" />
+
+
+<img src="figure_rmd/bornagain.png" title="plot of chunk bornagain" alt="plot of chunk bornagain" width="565px" />
+
+
+<img src="figure_rmd/faith.png" title="plot of chunk faith" alt="plot of chunk faith" width="565px" />
+
+
+<img src="figure_rmd/calm.png" title="plot of chunk calm" alt="plot of chunk calm" width="565px" />
+
+
+<img src="figure_rmd/blue.png" title="plot of chunk blue" alt="plot of chunk blue" width="565px" />
+
+
+<img src="figure_rmd/happy.png" title="plot of chunk happy" alt="plot of chunk happy" width="565px" />
+
+
+<img src="figure_rmd/depressed.png" title="plot of chunk depressed" alt="plot of chunk depressed" width="565px" />
+
+
+<img src="figure_rmd/nervous.png" title="plot of chunk nervous" alt="plot of chunk nervous" width="565px" />
+
+
+<img src="figure_rmd/tv.png" title="plot of chunk tv" alt="plot of chunk tv" width="565px" />
+
+
+<img src="figure_rmd/computer.png" title="plot of chunk computer" alt="plot of chunk computer" width="565px" />
+
+
+<img src="figure_rmd/internet.png" title="plot of chunk internet" alt="plot of chunk internet" width="565px" />
 
 
 
 
 
-
-
-
-
+```
+Error: 'x' and 'units' must have length > 0
+```
 

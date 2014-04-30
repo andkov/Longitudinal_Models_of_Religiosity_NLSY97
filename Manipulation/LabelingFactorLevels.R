@@ -125,13 +125,85 @@ relprefLabelsSmall<-c(
 )
 
 # Religion/Denomination Name
-relprefs<-c("relprefPR","relraisedPR","relpref")
-for (i in relprefs){
+varlist<-c("relprefPR","relraisedPR","relpref")
+for (i in varlist){
   dsL[,i]<-factor(dsL[,i],
                   levels = c(1:33),
                   labels = relprefLabels33) # relprefLabelsSmall or relprefLabels33 
 }
 
+# Binary True/False Scale
+varlist<-c("values","todo","obeyed","decisions","pray")
+for(i in varlist){
+  dsL[,i]<-factor(dsL[,i],
+                  levels = c(0:1),
+                  labels = c(
+                    "FALSE/less Religious",
+                    "TRUE/more Religious"))
+}
+
+# Binary Yes/No Scale
+varlist<-c("bornagain","internet")
+for(i in varlist){
+  dsL[,i]<-factor(dsL[,i],
+                  levels = c(0:1),
+                  labels = c(
+                    "No",
+                    "Yes"))
+}
+
+# How Important 5-Likert Scale
+varlist<-c("faith")
+for(i in varlist){
+  dsL[,i]<-ordered(dsL[,i],
+                  levels = c(1:5),
+                  labels = c(
+                    "Exrtemely",
+                    "Very",
+                    "Somewhat",
+                    "Not very",
+                    "Not at all"))
+}
+
+# How often. 4-Likert scale
+varlist<-c("calm","blue","happy", "depressed","nervous")
+for(i in varlist){
+  dsL[,i]<-ordered(dsL[,i],
+                  levels = c(1:4),
+                  labels = c(
+                    "All of the time",
+                    "Most..",
+                    "Some..",
+                    "None of the time"))
+}
+
+# How many hours per week. Ordinal
+varlist<-c("tv")
+for(i in varlist){
+  dsL[,i]<-ordered(dsL[,i],
+                  levels = c(1:6),
+                  labels = c(
+                    "<2",
+                    "3-10",
+                    "11-20",
+                    "21-30",
+                    "31-40",
+                    "40>"))
+}
+
+# How many hours per week.  Ordinal
+varlist<-c("computer")
+for(i in varlist){
+  dsL[,i]<-ordered(dsL[,i],
+                  levels = c(1:6),
+                  labels = c(
+                    "None",
+                    "< 1",
+                    "1-3",
+                    "4-6",
+                    "7-9",
+                    "10>"))
+}
 # str(dsL)
 
 
