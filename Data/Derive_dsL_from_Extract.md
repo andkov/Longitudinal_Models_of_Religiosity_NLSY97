@@ -680,6 +680,12 @@ The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentati
 <img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
 
 
+```r
+pathOutputSubject <- file.path(pathDir,"Data/Derived/dsL.rds")
+saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
+
+###########################
+```
 
 
 

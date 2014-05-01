@@ -1,0 +1,86 @@
+Latent Curve Modeling
+=================================================
+This report analyzes a sequence of multilevel curve models of church attendance in the NLSY97 religiosity data as defined by the extract NLSY97_Religiosity_20042014.  
+
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+
+<!-- Set the report-wide options, and point to the external code file. -->
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 4, 
+  fig.width = 5.5, 
+  out.width = "565px",
+  fig.path = 'figure_rmd/',     
+  dev = "png",
+#   fig.path = 'figure_pdf/',     
+#   dev = "pdf",
+  dpi = 400
+)
+echoChunks <- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=FALSE}
+readRDS("./Data/Derived/dsL.rds")
+```
+
+
+```{r TweakData, echo=echoChunks, message=FALSE}
+```
+
+### Data preparation
+We start with the dataset dsL, the preparation of which is surveyed in Chapter 2 and detailed in the [Appendix](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md).
+
+### Figure 1 : View of the initial **dsL** dataset
+<img link src="./figure_rmd/dsL_view.png" alt="View of dsL" style="width:900px;"/>  
+
+The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded at the ordinal scale
+```{r, echo=T, message=T}
+p<-ggplot(subset(ds,year==2000), aes(x=attend))
+p<-p+geom_bar()
+p<-p+coord_flip()
+p<-p+xlab("Church attendance") 
+p<-p+ylab("Count")
+# p<-p+scale_color_manual(values=attcol8,breaks = attlevels)
+p
+```
+its precision allows us to treat it as continuous for the purpose of fitting statistical models. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

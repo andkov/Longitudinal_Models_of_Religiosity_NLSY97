@@ -291,8 +291,16 @@ print(dsL[dsLong$id==1,])
 pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
 
+# Assigns labels to categorical variables
+source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
+
+#############################
+## @knitr SaveDerivedData
+pathOutputSubject <- file.path(pathDir,"Data/Derived/dsL.rds")
+saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
+
 ###########################
 ## @knitr CleanUp
 # # remove all but one dataset
-rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
+# rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
 

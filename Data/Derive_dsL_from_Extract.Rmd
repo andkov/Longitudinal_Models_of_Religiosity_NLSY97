@@ -94,7 +94,7 @@ The excel spreadsheet (*NLYS97_Religiosity_20042014.xlsx*) in the "./Documentati
 ## Figure 2
 <img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
 
-```{r CleanUp, echo=echoChunks, message=FALSE}
+```{r SaveDerivedData, echo=T, message=T}
 ```
 
 

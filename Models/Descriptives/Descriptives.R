@@ -29,8 +29,6 @@ TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefP
 
 ############################
 ## @knitr TweakData
-# Assigns labels to categorical variables
-source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
 
 dsDSR<-dsL # take these variables from dsL
 
@@ -69,12 +67,13 @@ ds<-dsDSR
 ############################
 ## @knitr AnalysisChunk03
 
-# Descriptives <- base::file.path("./Models/Descriptives/Descriptives.Rmd")
-# pathsReports <-c(Descriptives)
-# # Build the reports
-# for( pathRmd in pathsReports ) {
-#   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
-#   pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
-#   knitr::knit(input=pathRmd, output=pathMd)
-#   markdown::markdownToHTML(file=pathMd, output=pathHtml)
-# }
+
+# Run this code manualy, connection doesn't work yet
+Descriptives <- base::file.path("./Models/Descriptives/Descriptives.Rmd")
+pathsReports <-c(Descriptives)
+# Build the reports
+for( pathRmd in pathsReports ) {
+  pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
+  pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
+  markdown::markdownToHTML(file=pathMd, output=pathHtml)
+}
