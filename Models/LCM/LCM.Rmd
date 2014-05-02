@@ -34,44 +34,125 @@ read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
 ```
 
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+# attANDANCE colOUR 8 categories - set up default colors for "attend"
+
 ```
 
 ```{r LoadPackages, echo=echoChunks, message=F}
 ```
 
-```{r LoadData, echo=echoChunks, message=FALSE}
-readRDS("./Data/Derived/dsL.rds")
+```{r LoadData, echo=echoChunks, message=T}
 ```
 
-
-```{r TweakData, echo=echoChunks, message=FALSE}
+```{r TweakData, echo=F, message=T}
 ```
 
 ### Data preparation
-We start with the dataset dsL, the preparation of which is surveyed in Chapter 2 and detailed in the [Appendix](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md).
+We start with the dataset **dsL**, the preparation of which is surveyed in Chapter 2 and detailed in the [Appendix](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md).
 
 ### Figure 1 : View of the initial **dsL** dataset
 <img link src="./figure_rmd/dsL_view.png" alt="View of dsL" style="width:900px;"/>  
 
-The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded at the ordinal scale
-```{r, echo=T, message=T}
+We load this dataset from an __.rds__ file, which contains factor labels not preserved when saving a datafile in a .csv format. 
+
+The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, 
+```{r, echo=echoChunks, message=T, fig.width = 8}
 p<-ggplot(subset(ds,year==2000), aes(x=attend))
 p<-p+geom_bar()
 p<-p+coord_flip()
 p<-p+xlab("Church attendance") 
 p<-p+ylab("Count")
-# p<-p+scale_color_manual(values=attcol8,breaks = attlevels)
+p<-p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 its precision allows us to treat it as continuous for the purpose of fitting statistical models. 
+```{r , echo=T, message=F, results='hold'}
+ds<-(subset(dsLCM, year==2000)) # only for year 2000
+summary(as.numeric(ds$attend)) # summarize as continuous variable
+```
+The basic dataset for current LCM contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**)
+```{r, echo=echoChunks, message=F}
+ds<-dsLCM[,c('id',"byear","year","attend")] # select needed variables
+ds$attend<- as.numeric(ds$attend) # convert into continuous
+print(ds[ds$id==1,])# for a single subject with id=1
+```
+The view lists all the data for a single subjust (id=1). There are 
+```{r, echo=echoChunks, message=F}
+cat(length(unique(dsLCM$id)))
+```
+subjects in total.
 
+We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years.
+#### Figure 2. Relative frequency of responses for each observed wave
+```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+# attcol8 is defined in DeclareGlobal chunk of  the .R file
+ds<- dsLCM
+p<-ggplot(ds, aes(x=factor(year), fill=attend))
+p<-p+ geom_bar(position="fill")
+p<-p+ scale_fill_manual(values = attcol8,
+                    name="Response category" )
+p<-p+ scale_y_continuous("Prevalence: proportion of total",
+                     limits=c(0, 1),
+                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<-p+ scale_x_discrete("Waves of measurement",
+                   limits=as.character(c(2000:2011)))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
 
+```
 
+However, LCM works with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
 
+```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 
+ds<- dsLCM[dsLCM$id %in% c(4, 25, 35, 47),]
+p<-ggplot(ds, aes(x=year,y=as.numeric(attend), color=factor(id) ))
+p<-p+ geom_line()
+# p<-p+ geom_smooth(method=lm)
+p<-p+ geom_point()
+p<-p+ scale_y_continuous("Church attendance",
+                     limits=c(1, 8),
+                     breaks=c(1:8))
+p<-p+ scale_x_continuous("Waves of measurement",
+                   limits=c(2000,2011),
+                   breaks=c(2000:2011))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
+```
 
+The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011. Each of these trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  
 
+Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
 
+```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+
+ds<- dsLCM[dsLCM$id %in% c(4, 25, 35, 47),]
+p<-ggplot(ds, aes(x=ageyear,y=as.numeric(attend), color=factor(id) ))
+p<-p+ geom_line()
+# p<-p+ geom_smooth(method=lm)
+p<-p+ geom_point()
+p<-p+ scale_y_continuous("Church attendance",
+                     limits=c(1, 8),
+                     breaks=c(1:8))
+p<-p+ scale_x_continuous("Age in years",
+                   limits=c(16,31),
+                   breaks=seq(from=12, to=31,by=1))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
+```
+
+Persons **id**=35 and **id**=25 are peers, in 2000 they were both 17.  Respondent **id**=47 is a year older, in 2000 he was 18. The oldest is **id**=4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
+
+(ASIDE NOTE: this figure reveals an important detail about the NLSY97 data. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. For example, for person **id**=25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (age = **year** - **byear**) or as (ageALT = **agemon**/12).
+
+```{r}
+dsLCM<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
+ds<- dsLCM[dsLCM$id %in% c(25),]
+ds$age<-ds$year-ds$byear
+ds$ageALT<- ds$agemon/12
+print(ds)
+
+```
 
 
 

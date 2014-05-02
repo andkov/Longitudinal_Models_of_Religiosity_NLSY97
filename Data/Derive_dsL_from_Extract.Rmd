@@ -38,7 +38,7 @@ read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls f
 
 
 ## Data Retrieval
-Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder "**/Data/Extracts/NLSY97_Religiosity_20042014**", located in the GitHub Repository. 
+Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder [/Data/Extracts/NLSY97_Religiosity_20042014](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data/Extracts/NLSY97_Religiosity_20042014), located in the GitHub Repository. 
 (The naming convention is "Study_Focus_DDMMYYYofDownload")   
 
 #### The forlder includes:    
@@ -83,7 +83,7 @@ To explore the variables in the native context of NLS, go to [NLS Investigator](
 To better understand the longitudinal structure of the selected variables, the dataset was re-arranged in the two-dimensional slice of Cattell's databox: variables by occasions.
 ## Figure 1
 <img link src="./figure_rmd/variables_layout.png" alt="Databox slice" style="width:800px;"/>  
-[Interactive version]("./www/slice-vo.html")
+[Interactive version](http://religiositynlys97.businesscatalyst.com/descriptives.html)
 
 This databox slice indicates in what year measurement was taken for selected variables  and describes the variables extracted from NLYS97 for analysis. Three descriptions are given:  
 **Variable Title**, which is verbatim identifier from NLSY97,  

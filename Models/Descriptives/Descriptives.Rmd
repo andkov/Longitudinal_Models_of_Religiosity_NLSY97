@@ -131,13 +131,11 @@ p
 ```
 
 ```{r agemon, echo=echoChunks, message=FALSE}
-# str(ds$byear)
-# i<-1997
 years <- 1997:2000
 for (year in years){
   p<-ggplot(ds[ds$year==year,], aes(x=agemon))
   p<-p+geom_bar(bin=1)
-  p<-p+xlab(paste0("Age in months"," in ",i)) 
+  p<-p+xlab(paste0("Age in months"," in ",year)) 
   p<-p+ylab("Count")
   # p<-p+coord_flip()
   print(p)
