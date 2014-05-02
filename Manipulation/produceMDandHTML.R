@@ -7,7 +7,7 @@ pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
 
 allreps<- c(pathDerive, pathDescriptives,pathLCM )
 
-pathsReports <-c(pathLCM)
+pathsReports <-c(pathDerive)
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 # Build the reports
