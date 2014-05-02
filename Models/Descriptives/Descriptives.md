@@ -63,7 +63,23 @@ Error: object 'attlevels' not found
 <img src="figure_rmd/relraisedPR_1997.png" title="plot of chunk relraisedPR_1997" alt="plot of chunk relraisedPR_1997" width="565px" />
 
 
-<img src="figure_rmd/agemon1.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon2.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon3.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon4.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" />
+<img src="figure_rmd/agemon1.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon2.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon3.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon4.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon5.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon6.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" />
+
+```
+Warning: cannot create file
+'C:/Users/inspirion/Documents/GitHub/Longitudinal_Models_of_Religiosity_NLSY92003/Models/Descriptives/figure_rmd/agemon2003.png',
+reason 'No such file or directory'
+```
+
+<img src="figure_rmd/agemon7.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon8.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" />
+
+```
+Warning: cannot create file
+'C:/Users/inspirion/Documents/GitHub/Longitudinal_Models_of_Religiosity_NLSY20057/Models/Descriptives/figure_rmd/agemon2005.png',
+reason 'No such file or directory'
+```
+
+<img src="figure_rmd/agemon9.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon10.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon11.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon12.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon13.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon14.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" /><img src="figure_rmd/agemon15.png" title="plot of chunk agemon" alt="plot of chunk agemon" width="565px" />
 
 
 <img src="figure_rmd/ageyear.png" title="plot of chunk ageyear" alt="plot of chunk ageyear" width="565px" />

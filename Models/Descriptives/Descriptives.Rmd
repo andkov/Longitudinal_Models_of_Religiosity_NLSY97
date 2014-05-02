@@ -132,11 +132,11 @@ p
 
 ```{r agemon, echo=echoChunks, message=FALSE}
 pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd") # where images stored
-chunkPNG <- base::file.path(pathImageOut,"agemon") # root of filename, same as chunk name
-years <- 1997:2000
-pgnNum<-c(1:length(years)) # counts how many pngs are produced by the chunk
+ChunkPngRoot <- base::file.path(pathImageOut,"agemon") # root of filename, same as chunk name
+years <- 1997:2011
 
 for (year in years){
+  pngNum <-year-1996 # counts how many pngs are produced by the chunk
   p<-ggplot(ds[ds$year==year,], aes(x=agemon))
   p<-p+geom_bar(bin=1)
   p<-p+xlab(paste0("Age in months"," in ",year)) 
@@ -144,9 +144,11 @@ for (year in years){
   # p<-p+coord_flip()
   print(p)
 
-  pathPNGnum <- paste0(chunkPNG,year,".png") # calls individual pngs produced by chunk
-  pathPNGnew <- base::gsub(pattern=pngNum, replacement=year, x=pathPNGnum) # new name for png file
-
+  pathPngOld <- paste0(ChunkPngRoot,pngNum,".png") # calls individual pngs produced by chunk
+  pathPngNew <- base::gsub(pattern=pngNum, replacement=year, x=pathPngOld) # new name for png file
+  
+  file.copy(pathPngOld, pathPngNew)
+    
 }
 
 ```
