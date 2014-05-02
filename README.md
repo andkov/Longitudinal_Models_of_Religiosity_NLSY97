@@ -25,16 +25,16 @@ The second group of variables (in light gray) hosts variables related to religio
 ## Primary Dataset : View of one case (id=1) 
 This variable-occasion slice of Cattell's databox, shows at what time points measurement exists for each of the selected variables. This datamap has a direct relationship with the structure of the primary dataset in the study
 
-<img link src="./Data/figure_rmd/variables_layout_dsL.png" alt="Databox slice" style="width:700px;"/>  
+<img link src="./Data/figure_rmd/dsL_view.png" alt="Databox slice" style="width:700px;"/>  
 
-in which we rotate the previous VO Slice 90 degrees. Here, we can distinguish time invariate (**TI**) variables, which values do not change with time. You can see their values remaining constant for each individual (id). Column with **year** counter separates **TI** variables from time variant (**TV**) variables, which values are availible for more than one time point. The datasets used in specific modeling are derived from this initial dataset
+in which we rotate the previous VO Slice 90 degrees. Here, we can distinguish time invariate (**TI**) variables, which values do not change with time. You can see their values remaining constant for each individual (**id**). Column with **year** counter separates **TI** variables from time variant (**TV**) variables, which values are availible for more than one time point. The datasets used in specific modeling are derived from this initial dataset
 
 ## Manipulation
-  Special report [Derive_dsL_from_Extrac]("https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md") narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. This dataset (**dsL**) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, MM).
+  Special report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. This dataset (**dsL**) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, MM).
 
 ## Modeling
 
-Modeling techniques used in the study are listed in "/Models" folder in the root fo the repository. New modeling projects should be added here. 
+Modeling techniques used in the study are listed in [/Models](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models) folder in the root fo the repository. New modeling projects should be added here. 
 
 ## Documentation
 
