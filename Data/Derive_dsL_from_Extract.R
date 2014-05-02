@@ -41,7 +41,7 @@ dsSource<-read.csv(pathDataSource,header=TRUE, skip=0,sep=",")
 varOrig<-ncol(dsSource) # Original number of variables in the NLS download
 dsSource$T6650500<-NULL # Remove "Version number"  for cleaner dataset
 
-dim(dsSource)
+# dim(dsSource)
 
 ### NLSY97 variable id are linked to the descriptive label in the file dictionary file "NLSY97_Religiosity_20042014.dtc" ###
 dsSourceLabels<-read.csv(pathDataSourceLabels,header=TRUE, skip=0,nrow=varOrig, sep="")
@@ -53,7 +53,7 @@ dsSourceLabels<-dsSourceLabels[dsSourceLabels$RNUM!="T6650500",]
 dsSourceLabels<-arrange(dsSourceLabels,VARIABLE_TITLE) # sort by Variable Title
 write.table(dsSourceLabels, "./Data/ItemMapping/dsSourceLabels.csv", sep=",")
 
-dim(dsSourceLabels)
+print(dsSourceLabels)
 
 
 # Using renaming template "NLSY97_Religiosity_20042014.xlsx" located in "Documentation\data" folder
@@ -236,7 +236,7 @@ ds<-dsSource
 dsLong <- reshape2::melt(ds, id.vars=TIvars)
 
 ##############
-head(dsLong[dsLong$id==1,],20)
+# head(dsLong[dsLong$id==1,],20)
 # create varaible "year" by stripping the automatic ending in TV variables' names
 ## ?? How to read off 4 characters from right with reshape/plyr?
 dsLong$year<-str_sub(dsLong$variable,-4,-1) 
@@ -254,14 +254,14 @@ dsLong$year <- as.integer(dsLong$year)
 # reorder for easier inspection
 dsLong<-dsLong[with(dsLong, order(id,variable)), ] # alternative sorting to plyr
 # view the long data for one person
-print(dsLong[dsLong$id==1,]) 
+# print(dsLong[dsLong$id==1,]) 
 
 ##############################
 ## Create individual long datasets, one per TV variable
 ## ?? how to loop over the dataset?
 
 ## Time invariant (TI) variables are :
-print (TIvars)
+# print (TIvars)
 ## Time variant (TV) variables are :
 TVvars<-unique(dsLong$variable)
 # TVvars<-c("attend","tv") # to test on a few variables
@@ -287,15 +287,19 @@ dsLTI<-merge(x=dsLTI,y=dstemp,by=c("id","year"),all.x=TRUE)
 dsL_order<-c("sample"  ,"id"	,"sex"	,"race"	,"bmonth"	,"byear"	,"attendPR"	,"relprefPR"	,"relraisedPR"	,"year","agemon"	,"ageyear"	,"famrel"	,"attend"	,"values"	,"todo"	,"obeyed"	,"pray"	,"decisions"	,"relpref"	,"bornagain"	,"faith"	,"calm"	,"blue"	,"happy"	,"depressed"	,"nervous"	,"tv"	,"computer"	,"internet")
 dsL<-dsLTI[dsL_order]
 
-print(dsL[dsLong$id==1,]) 
-pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
-write.csv(dsL,pathdsL,  row.names=FALSE)
 
+
+#############################
+## @knitr LabelFactors
 # Assigns labels to categorical variables
 source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
 
 #############################
 ## @knitr SaveDerivedData
+# print(dsL[dsLong$id==1,]) 
+pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
+write.csv(dsL,pathdsL,  row.names=FALSE)
+
 pathOutputSubject <- file.path(pathDir,"Data/Derived/dsL.rds")
 saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
 

@@ -131,7 +131,11 @@ p
 ```
 
 ```{r agemon, echo=echoChunks, message=FALSE}
+pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd")
+pathPNG <- base::file.path(pathImageOut,"agemon")
 years <- 1997:2000
+pgnNum<-c(1:length(years))
+
 for (year in years){
   p<-ggplot(ds[ds$year==year,], aes(x=agemon))
   p<-p+geom_bar(bin=1)
@@ -139,10 +143,15 @@ for (year in years){
   p<-p+ylab("Count")
   # p<-p+coord_flip()
   print(p)
+
+  pathPNGnum <- paste0(pathPNG,year,".png")
+  pathPNGnew <- base::gsub(pattern=pngNum, replacement=year, x=pathPNGnum)
+
 }
+
 ```
 
-```{r ageyear, echo=echoChunks, message=FALSE}
+```{r ageyear, echo=echoChunks, message=FALSE,}
 # str(ds$byear)
 i<-1997
 p<-ggplot(subset(ds,year==i), aes(x=factor(ageyear)))
