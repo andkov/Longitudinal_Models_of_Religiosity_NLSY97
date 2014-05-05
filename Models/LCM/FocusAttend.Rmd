@@ -1,7 +1,3 @@
-Latent Curve Modeling
-=================================================
-This report analyzes a sequence of multilevel curve models of church attendance in the NLSY97 religiosity data as defined by the extract NLSY97_Religiosity_20042014.  
-
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
@@ -47,17 +43,12 @@ read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
 ```{r TweakData, echo=F, message=T}
 ```
 
-### Data preparation
-We start with the dataset **dsL**, the preparation of which is surveyed in Chapter 2 and detailed in the [Appendix](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md).
-
-### Figure 1 : View of the initial **dsL** dataset
-<img link src="./figure_rmd/dsL_view.png" alt="View of dsL" style="width:900px;"/>  
-
-We load this dataset from an __.rds__ file, which contains factor labels not preserved when saving a datafile in a .csv format. 
+Focus variable : church attendance
+=================================================
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, 
 ```{r, echo=echoChunks, message=T, fig.width = 8}
-p<-ggplot(subset(ds,year==2000), aes(x=attend))
+p<-ggplot(subset(dsL,year==2000), aes(x=attend))
 p<-p+geom_bar()
 p<-p+coord_flip()
 p<-p+xlab("Church attendance") 
@@ -70,26 +61,13 @@ its precision allows us to treat it as continuous for the purpose of fitting sta
 ds<-(subset(dsLCM, year==2000)) # only for year 2000
 summary(as.numeric(ds$attend)) # summarize as continuous variable
 ```
-The basic dataset for current LCM contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**)
+The basic dataset contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
 ```{r, echo=echoChunks, message=F}
 ds<-dsLCM[,c('id',"byear","year","attend")] # select needed variables
+ds$attendCategory<-ds$attend
 ds$attend<- as.numeric(ds$attend) # convert into continuous
-print(ds[ds$id==1,])# for a single subject with id=1
+print(ds[ds$id==47,])# for a single subject with id=1
 ```
-Service variables computed  and time effects are added, encoded as  weights of the Lambda matrix
-```{r, echo=echoChunks, message=F}
-ds<-dsLCM[,c('id',"byear","year","attend")] # select needed variables
-ds$attend<- as.numeric(ds$attend) # convert into continuous
-
-ds<-mutate(ds,timec=year-2000) # creates centered variable
-ds<-mutate(ds,age=year-byear) # computes age in years at time of interview
-# linear<- c(0:length(unique(ds$year)))
-ds<-mutate(ds,linear= c(0:11))
-ds<-mutate(ds,quadratic=linear^2)
-ds<-mutate(ds,cubic=linear^3)
-print(ds[ds$id==1,])# for a single subject with id=1
-```
-
 
 The view lists all the data for a single subjust (id=1). There are 
 ```{r, echo=echoChunks, message=F}
@@ -97,7 +75,7 @@ cat(length(unique(dsLCM$id)))
 ```
 subjects in total.
 
-We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years.
+We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years. 
 #### Figure 2. Relative frequency of responses for each observed wave
 ```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 # attcol8 is defined in DeclareGlobal chunk of  the .R file
@@ -116,7 +94,7 @@ p
 
 ```
 
-However, LCM works with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
+Modeling how the frequencies of endorsing particular response item will be the focus of Markov model, which renders well in cross-sectional representations. However, LCM and GMM work with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
 
 ```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 

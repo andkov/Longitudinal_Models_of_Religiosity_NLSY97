@@ -4,10 +4,11 @@
 pathDerive <- base::file.path("./Data/Derive_dsL_from_Extract.Rmd")
 pathDescriptives <- base::file.path("./Models/Descriptives/Descriptives.Rmd")
 pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
+pathFocusAttend <- base::file.path("./Models/LCM/FocusAttend.Rmd")
 
-allreps<- c(pathDerive, pathDescriptives,pathLCM )
+allreps<- c(pathDerive, pathDescriptives,pathLCM,pathFocusAttend )
 
-pathsReports <-c(pathDerive)
+pathsReports <-c(allreps)
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 # Build the reports

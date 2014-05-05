@@ -1,7 +1,3 @@
-Latent Curve Modeling
-=================================================
-This report analyzes a sequence of multilevel curve models of church attendance in the NLSY97 religiosity data as defined by the extract NLSY97_Religiosity_20042014.  
-
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
@@ -24,13 +20,8 @@ This report analyzes a sequence of multilevel curve models of church attendance 
 
 
 
-### Data preparation
-We start with the dataset **dsL**, the preparation of which is surveyed in Chapter 2 and detailed in the [Appendix](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md).
-
-### Figure 1 : View of the initial **dsL** dataset
-<img link src="./figure_rmd/dsL_view.png" alt="View of dsL" style="width:900px;"/>  
-
-We load this dataset from an __.rds__ file, which contains factor labels not preserved when saving a datafile in a .csv format. 
+Focus variable : church attendance
+=================================================
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, 
 <img src="figure_rmd/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="565px" />
@@ -47,42 +38,23 @@ summary(as.numeric(ds$attend)) # summarize as continuous variable
     1.0     1.0     3.0     3.4     6.0     8.0     965 
 ```
 
-The basic dataset for current LCM contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**)
+The basic dataset contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
 
 ```
-   id byear year attend
-4   1  1981 2000      1
-5   1  1981 2001      6
-6   1  1981 2002      2
-7   1  1981 2003      1
-8   1  1981 2004      1
-9   1  1981 2005      1
-10  1  1981 2006      1
-11  1  1981 2007      1
-12  1  1981 2008      1
-13  1  1981 2009      1
-14  1  1981 2010      1
-15  1  1981 2011      1
+    id byear year attend attendCategory
+694 47  1982 2000      5  ~ twice/month
+695 47  1982 2001      2  Once or Twice
+696 47  1982 2002      4   ~ once/month
+697 47  1982 2003      2  Once or Twice
+698 47  1982 2004      3   < once/month
+699 47  1982 2005      2  Once or Twice
+700 47  1982 2006      2  Once or Twice
+701 47  1982 2007      3   < once/month
+702 47  1982 2008      2  Once or Twice
+703 47  1982 2009      1          Never
+704 47  1982 2010      1          Never
+705 47  1982 2011      1          Never
 ```
-
-Service variables computed  and time effects are added, encoded as  weights of the Lambda matrix
-
-```
-   id byear year attend timec age linear quadratic cubic
-4   1  1981 2000      1     0  19      0         0     0
-5   1  1981 2001      6     1  20      1         1     1
-6   1  1981 2002      2     2  21      2         4     8
-7   1  1981 2003      1     3  22      3         9    27
-8   1  1981 2004      1     4  23      4        16    64
-9   1  1981 2005      1     5  24      5        25   125
-10  1  1981 2006      1     6  25      6        36   216
-11  1  1981 2007      1     7  26      7        49   343
-12  1  1981 2008      1     8  27      8        64   512
-13  1  1981 2009      1     9  28      9        81   729
-14  1  1981 2010      1    10  29     10       100  1000
-15  1  1981 2011      1    11  30     11       121  1331
-```
-
 
 
 The view lists all the data for a single subjust (id=1). There are 
@@ -93,21 +65,21 @@ The view lists all the data for a single subjust (id=1). There are
 
 subjects in total.
 
-We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years.
+We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years. 
 #### Figure 2. Relative frequency of responses for each observed wave
+<img src="figure_rmd/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="700px" />
+
+
+Modeling how the frequencies of endorsing particular response item will be the focus of Markov model, which renders well in cross-sectional representations. However, LCM and GMM work with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
+
 <img src="figure_rmd/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="700px" />
-
-
-However, LCM works with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
-
-<img src="figure_rmd/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="700px" />
 
 
 The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011. Each of these trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  
 
 Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
 
-<img src="figure_rmd/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="700px" />
+<img src="figure_rmd/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="700px" />
 
 
 Persons **id**=35 and **id**=25 are peers, in 2000 they were both 17.  Respondent **id**=47 is a year older, in 2000 he was 18. The oldest is **id**=4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
