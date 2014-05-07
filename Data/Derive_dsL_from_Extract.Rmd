@@ -77,7 +77,7 @@ Dictionary file is imported into Excel file "ItemMapping_20042014.xlsx", where v
 
 
 ### Figure 2. Databox, VO-slice of the selected variables
-<img link src="./figure_rmd/3_Methods_NOCAP_Figure 3.2.png" alt="Databox slice" style="width:900px;"/>  
+<img link src="./figure_rmd/3_Methods_NOCAP_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>  
 [Interactive version](http://statcanvas.net/lmrNLSY97/html/databox/index.html)
 
 
