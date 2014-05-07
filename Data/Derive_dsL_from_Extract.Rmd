@@ -100,7 +100,7 @@ To review original questionnaire cards of NLSY97 as well as descriptive statisti
 ## Ready dataset
 This databox slice corresponds to the dataset **dsL**
 
-<img link src="./figure_rmd/3_Methods_Figure 3.3.png" alt="dsL" style="width:900px;"/>  
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="dsL" style="width:900px;"/>  
 
 which transposes the former, distributing variables on the horizontal axis.  Variable **year** keeps track of measurement round and  separated two kinds of variables: those, which values do not change with time and those that were measured at multiple occasions. This distinction will be of convenience in later discussion of statistical models. The dataset in figure 3.3 is referred to as ***dsL*** throughout this work and the accompanying R code .  It defines the scope of NLSY97 data used in the current study and has a direct correspondence to the databox slice from figure 3.2. While other variables of interest might be added in course or reproduction of this research, it is useful to think of such dataset as a midway point between raw data and model-specific datasets
 
@@ -131,7 +131,7 @@ Alternatively, one can locate the particular item of interest by copying and pas
 ## On age, cohorts, and waves
 
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
-<img src="./figure_rmd/3_Methods_Figure 3.1.png" alt="Looking up items" style="width:700px ;"/>
+<img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Looking up items" style="width:700px ;"/>
 
 There are several indicators of age in NSLY97 that vary in precision. Birth cohort is the most general one, it was recorded once. Two variables were recorded at each interview: age at the time of the interview in months (**agemon**) and years (**ageyear**). Those are not derivatives of each other, but, understandably, are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
 
