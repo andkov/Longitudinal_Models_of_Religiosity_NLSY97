@@ -53,7 +53,7 @@ dsSourceLabels<-dsSourceLabels[dsSourceLabels$RNUM!="T6650500",]
 dsSourceLabels<-arrange(dsSourceLabels,VARIABLE_TITLE) # sort by Variable Title
 write.table(dsSourceLabels, "./Data/ItemMapping/dsSourceLabels.csv", sep=",")
 
-print(dsSourceLabels)
+# print(dsSourceLabels)
 
 
 # Using renaming template "NLSY97_Religiosity_20042014.xlsx" located in "Documentation\data" folder
@@ -296,7 +296,7 @@ source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
 
 #############################
 ## @knitr SaveDerivedData
-# print(dsL[dsLong$id==1,]) 
+
 pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
 

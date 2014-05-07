@@ -8,7 +8,7 @@ pathFocusAttend <- base::file.path("./Models/LCM/FocusAttend.Rmd")
 
 allreps<- c(pathDerive, pathDescriptives,pathLCM,pathFocusAttend )
 
-pathsReports <-c(allreps)
+pathsReports <-c(pathLCM,pathDerive)
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 # Build the reports

@@ -26,10 +26,13 @@ TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefP
 
 ############################
 ## @knitr TweakData
+## keepyears is defined in the  .Rmd file
 
+# Select a few variables for current model or graph
 
-dsLCM<-dsL[,c('id',"byear","year","attend","ageyear")]
-dsLCM<-dsLCM[which(dsLCM$year %in% 2000:2011),]
+# dsLCM<-dsLCM[which(dsLCM$year %in% keepyears),]
+# dsLCM<-dsL[,c('id',"byear","year","attend","ageyear")]
+# 
 
 # dsLCM<-mutate(dsLCM,timec=year-2000) # creates centered variable
 # dsLCM<-mutate(dsLCM,age=year-byear) # computes age in years at time of interview
@@ -37,6 +40,9 @@ dsLCM<-dsLCM[which(dsLCM$year %in% 2000:2011),]
 # dsLCM<-mutate(dsLCM,quadratic=linear^2)
 # dsLCM<-mutate(dsLCM,cubic=linear^3)
 
+## For this report keep only these years
+keepyears<- c(2000:2011)
+dsLCM<-dsL[which(dsL$year %in% keepyears),]
 ds<- dsLCM
 ############################
 ## @knitr AnalysisChunk01

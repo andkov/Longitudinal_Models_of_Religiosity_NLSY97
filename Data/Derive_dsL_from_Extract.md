@@ -18,19 +18,24 @@ This report narrates the manipulations of the NLSY97 dataset in preparing it for
 
 
 
-### Data Retrieval
+## Data Retrieval
 Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder [/Data/Extracts/NLSY97_Religiosity_20042014](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data/Extracts/NLSY97_Religiosity_20042014), located in the GitHub Repository. 
 (The naming convention is "Study_Focus_DDMMYYYofDownload")   
 
-#### The forlder includes:    
+#### The downloaded zip.forlder included:    
 NLSY97_Religiosity_20042014.cdb - **codebook** containing item descriptions  
 NLSY97_Religiosity_20042014.csv - **data** in comma delimited format  
 NLSY97_Religiosity_20042014.NLSY97 - **tagset**, the list of variables in the downloaded dataset  
 NLSY97_Religiosity_20042014.dtc - STATA **dictionary** file of selected variables, contains data as well
   
 
-We import the raw data of NLSY97 and make initial clean up. The STATA **dictionary** file printed below  contains unique NLSY97 reference numbers (RNUM) of the selected items and their descriptive labels (VARIABLE TITLE).
+We import the raw data of NLSY97 from .**csv** file  and make initial clean up. 
 <!-- run initial import from the databank defined by tagset. --> 
+
+
+The STATA **dictionary** file printed below  lists the selected variables : unique NLSY97 reference numbers (RNUM) are paired wtih their descriptive labels (VARIABLE TITLE). 
+
+### Figure 1. Selected variables
 
 ```
         RNUM                                VARIABLE_TITLE
@@ -169,12 +174,21 @@ We import the raw data of NLSY97 and make initial clean up. The STATA **dictiona
 133 R0552200                 WHAT RELIG PR RAISED IN? 1997
 ```
 
-We import this into Excel file "ItemMapping_20042014.xlsx", in which renaming of variables could be done with greater flexibility and convenience. For detailed instructions see documentation on the "Documentation" tab of the Excel file.
 
 
 
 
-After renaming the variables, we transform the data into a long format, arriving at the basis dataset **dsSource** containing observations for
+After renaming the variables, we arrange data in a initial wide format, arranging these
+
+```r
+ncol(dsSource)
+```
+
+```
+[1] 133
+```
+
+variables horizontaly, arriving at the basis dataset **dsSource** containing observations for
 
 ```r
 # dsSource  - cointains all imported variables
@@ -185,44 +199,53 @@ nrow(dsSource)
 [1] 8984
 ```
 
-individuals on  
+respondents.
+
+Dictionary file is imported into Excel file "ItemMapping_20042014.xlsx", where variables are renamed and organized with respect to occasssions of their measurement. The result is Figure 2 : Variable-by-occasion databox slice. 
+
+
+### Figure 2. Databox, VO-slice of the selected variables
+<img link src="./figure_rmd/3_Methods_NOCAP_Figure 3.2.png" alt="Databox slice" style="width:900px;"/>  
+[Interactive version](http://statcanvas.net/lmrNLSY97/html/databox/index.html)
+
+
+Variables on vertical dimension and occasions on horizontal intersect over grey-filled boxes displaying the year of the wave for which data are available.  Variable **attend** is marked by red to indicate that it is the primary quantification of religiosity in the statistical models used in this study. 
+
+The variable dimension of the databox slice is represented by three identifiers adjacent to the left of the grid. 
+
++ **Variable Title** - verbatim identifier from NLSY97    
++ **Unit** - describes the scales used to measure variables  
++ **Codename** - the (new) name of the variable, as it is used in R code  
+
+## Religiosity, Context, and Covariates
+
+The light grey background highlights the variables related to religion and spirituality.  The first section of items (**attendPR**, **relprefPR**, **relraisedPR**) gives data on the religiosity of [parents](http://www.bls.gov/nls/quex/r1/y97rd1pquex.htm) of the respondents, whose households were sampled into NLSY97. Another grey section lists the items related to the religiosity of the youth, which give data on their religious behaviors (**relpref**, **attend**, **pray**, **decisions**) and attitudes (**values**, **todo**, **obeyed**, **bornagain**, **faith**). 
+
+Context variables and covariates are on white background. The top section gives basic demographics: the month (**bmonth**) and year (**byear**) of birth, sex (**sex**), race (**race**), as well as the indicator whether the individual is a member of the cross-sectional sampling or a special oversample of minorities (**sample**).  Two age variables are located between the religiosity sections: age at the time of the interview in months (**agemon**) and years (**ageyear**). At the bottom are self-reports on emotional wellbeing (**calm**, **blue**, **happy**, **depressed**, **nervous**) and media activities (**internet**, **computer**, **tv**) of respondents. 
+
+To review original questionnaire cards of NLSY97 as well as descriptive statistics for the selected variables see the [interactive guide](http://statcanvas.net/lmrNLSY97/html/databox/index.html)
+
+## Ready dataset
+This databox slice corresponds to the dataset **dsL**
+
+<img link src="./figure_rmd/3_Methods_Figure 3.3.png" alt="dsL" style="width:900px;"/>  
+
+which transposes the former, distributing variables on the horizontal axis.  Variable **year** keeps track of measurement round and  separated two kinds of variables: those, which values do not change with time and those that were measured at multiple occasions. This distinction will be of convenience in later discussion of statistical models. The dataset in figure 3.3 is referred to as ***dsL*** throughout this work and the accompanying R code .  It defines the scope of NLSY97 data used in the current study and has a direct correspondence to the databox slice from figure 3.2. While other variables of interest might be added in course or reproduction of this research, it is useful to think of such dataset as a midway point between raw data and model-specific datasets
+
+Categorical variables are assigned meaningful labels by the following script, isolated for convenient referral. 
 
 ```r
-ncol(dsSource)
+# Assigns labels to categorical variables
+source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
+
+#############################
 ```
-
-```
-[1] 133
-```
-
-variables.
-
-To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), select "NLYS97 1997-2011" in the first dropdown box and then click on "Choose File" under "Upload Tagset." Select the file "NLSY97_Religiosity_20042014.NLSY97" from the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", in the GitHub repository. 
-
-## Variables by Occasions
-To better understand the longitudinal structure of the selected variables, they were arranged into a two-dimensional slice of Cattell's databox, showing variables by occasions.
-## Figure 1
-<img link src="./figure_rmd/variables_layout.png" alt="Databox slice" style="width:800px;"/>  
-[Interactive version](http://religiositynlys97.businesscatalyst.com/descriptives.html)
-
-This databox slice indicates in what year measurement was taken for selected variables  and describes the variables extracted from NLYS97 for analysis. Three descriptions are given:  
-**Variable Title**, which is verbatim identifier from NLSY97,  
-**Unit**, which attemps to give a brief desription of the scale on which the variable is measured, and  
-**Codename**, which spells the name of the variable, as it is used in R code that services the analysis
-
- The values in the "Variable Title" can be used to locate the item in the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) by copy/pasting it into "Word in Title" search line
-## Figure 2
-<img src="./figure_rmd/nls_investigator_snapshot.png" alt="Looking up items" style="width:800px ;"/>
-
-
-
 
 
 
 Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R, which preserved factor labels an other variable information.
 
 ```r
-# print(dsL[dsLong$id==1,]) 
 pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
 write.csv(dsL,pathdsL,  row.names=FALSE)
 
@@ -233,5 +256,52 @@ saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
 ```
 
 
+
+
+Additional considerations
+=================================================
+
+## Working with NLS Investigator
+
+To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you will have to register a free account with them to keep track of you progress), select "NLYS97 1997-2011" in the first dropdown box and then click on "Choose File" under "Upload Tagset." Select the file "NLSY97_Religiosity_20042014.NLSY97" from the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", in the GitHub repository. All the variables from this extract will be loaded into NLS Web Investigator.
+
+Alternatively, one can locate the particular item of interest by copying and pasting its "Variable Title" it into "Word in Title" search line of the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as indicated in the graphic below. 
+
+<img src="./figure_rmd/lmrNLY97figures_NLSwebView.png" alt="Looking up items" style="width:800px ;"/>
+
+
+## On age, cohorts, and waves
+
+NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
+<img src="./figure_rmd/3_Methods_Figure 3.1.png" alt="Looking up items" style="width:700px ;"/>
+
+There are several indicators of age in NSLY97 that vary in precision. Birth cohort is the most general one, it was recorded once. Two variables were recorded at each interview: age at the time of the interview in months (**agemon**) and years (**ageyear**). Those are not derivatives of each other, but, understandably, are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
+
+
+```r
+dsLCM<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
+ds<- dsLCM[dsLCM$id %in% c(25),]
+ds$age<-ds$year-ds$byear
+ds$ageALT<- ds$agemon/12
+print(ds)
+```
+
+```
+    id byear year             attend ageyear agemon age ageALT
+364 25  1983 2000      ~ twice/month      17    214  17  17.83
+365 25  1983 2001 Several times/week      18    226  18  18.83
+366 25  1983 2002 Several times/week      19    236  19  19.67
+367 25  1983 2003      Once or Twice      21    254  20  21.17
+368 25  1983 2004 Several times/week      21    261  21  21.75
+369 25  1983 2005      ~ twice/month      22    272  22  22.67
+370 25  1983 2006 Several times/week      23    284  23  23.67
+371 25  1983 2007      ~ twice/month      24    295  24  24.58
+372 25  1983 2008 Several times/week      25    307  25  25.58
+373 25  1983 2009 Several times/week      26    319  26  26.58
+374 25  1983 2010 Several times/week      27    332  27  27.67
+375 25  1983 2011 Several times/week      28    342  28  28.50
+```
+
+For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (age = **year** - **byear**) or as (ageALT = **agemon**/12).
 
 
