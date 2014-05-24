@@ -20,7 +20,7 @@
 
 
 
-Focus variable : church attendance
+Church attendance
 =================================================
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, 

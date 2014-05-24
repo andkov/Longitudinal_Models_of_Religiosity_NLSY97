@@ -43,7 +43,7 @@ read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
 ```{r TweakData, echo=F, message=T}
 ```
 
-Focus variable : church attendance
+Church attendance
 =================================================
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, 

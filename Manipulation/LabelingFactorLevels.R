@@ -52,6 +52,21 @@ dsL[,i]<-factor(dsL[,i],
                        "Everyday"))
 }
 
+attendLabelsFull<-c("attendPR","attend")
+for(i in attendLabelsFull){
+  dsL[,i]<-factor(dsL[,i],
+                  levels = c(1:8),
+                  labels = c(
+                    "Never",
+                    "Once or Twice",
+                    "Less than once/month",
+                    "About once/month",
+                    "About twice/month",
+                    "About once/week",
+                    "Several times/week",
+                    "Everyday"))
+}
+
 relprefLabels33<-c(
   "Catholic",
   "Baptist",

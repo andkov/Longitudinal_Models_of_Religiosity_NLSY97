@@ -48,7 +48,7 @@ This report analyzes a sequence of multilevel latent curve models of church atte
 
 ### Data
 
-The variables selected for current analyses from NLSY97 database are represented in Fig 3.2
+The collection of variables selected from NLSY97 database are shown in Fig 3.2
 
 <img link src="./figure_rmd/3_Methods_Figure 3.2.png" alt="Databox" style="width:900px;"/> 
 
