@@ -141,8 +141,13 @@ ds<- dsLCM[dsLCM$id %in% c(25),]
 ds$age<-ds$year-ds$byear
 ds$ageALT<- ds$agemon/12
 print(ds)
+```
+
+```{r}
+# source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
 
 ```
+
 For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (age = **year** - **byear**) or as (ageALT = **agemon**/12).
 
 

@@ -19,9 +19,9 @@ opts_chunk$set(
   message = TRUE,
   comment = NA, 
   tidy = FALSE,
-  fig.height = 4, 
-  fig.width = 5.5, 
-  out.width = "565px",
+  fig.height = 4.8, 
+  fig.width = 6.5, 
+  out.width = "550px",
   fig.path = 'figure_rmd/',     
   dev = "png",
 #   fig.path = 'figure_pdf/',     
@@ -39,22 +39,50 @@ read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr cal
 ```{r LoadPackages, echo=echoChunks, message=F}
 ```
 
+### 1. Data
+First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
 ```{r LoadData, echo=echoChunks, message=FALSE}
 
 ```
 
-### 1. Load Data
-First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
+```{r TweakData, echo=echoChunks, message=FALSE}
+```
 
-### Figure 3.3 : View of the initial **dsL** dataset
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>  
-The view shows all the measurements taken from one individual (id=1) for the selected variables (columns). All datasets for modeling are derived by subsetting the columns of this one. However, it's easier to see the overall data layout with expressing **dsL** as a slice of Cattell's databox, showing variables across occasions.
+Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/) of the selected sample, described in the [Methods](http://statcanvas.net/thesis/III_Methods) chapter and located in the [Results](http://statcanvas.net/thesis/IV_Results) chapter of the dissertation.
 
-### Figure 3.2 : **dsL** re-expressed as a Cattell's datacube slice
 <img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
+
+This databox corresponds to the dataset **dsL** the screenshot of which is given below
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>  
+
+We don't need all the variables at the moment, so let's select only those we need to describe how respondents' church attendance was changing across time. Looking at the figures above, we type in the names of variables we want to pick
+```{r}
+print (dsL[dsL$id==1,c("id","year","attend")]) # print [ rows, columns/variables]
+selectCols<-c("year","id","byear","agemon","attend") # type in variable name
+ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
+print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
+```
+Generally we can select any desired dataset by formula **dataset[_condition for rows_,_condition for columns_]
+```{r}
+ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
+
+```
+We can apply a full or short label to the values recorded in the variable **attend**, for the definitions of all factor labels see [Manipulate](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) code.
+
+selectRows<-dsL$year %in% c(2000:2011)
+Attend
+print(ds$id[ds$id==1,])  # print first few lines of data
+length(unique(ds$id)) # number of respondents in the dataset
+```
+
+The view shows all the measurements taken from one individual (id=1) for the selected variables (columns). All datasets for modeling are derived by subsetting the columns of this one. However, it's easier to see the overall data layout with expressing **dsL** as a slice of Cattell's databox, showing variables across occasions.
+ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
+ds<- dsLCM[dsLCM$id %in% c(1),]
+ds$age<-ds$year-ds$byear
+ds$ageALT<- ds$agemon/12
+print(ds)
+
 
 Notice that this view is obtained by transposing the columns of the databox slice in Figure 3.3, save for **year**, which values are used as symbols to represent intersections of variables and occasions.
 
-```{r TweakData, echo=echoChunks, message=FALSE}
-```
 

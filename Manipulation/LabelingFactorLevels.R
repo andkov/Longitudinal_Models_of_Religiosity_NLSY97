@@ -19,6 +19,9 @@
 # dsL<-read.csv(file=pathdsL,header=T,sep=",")
 # 
 
+# dsLclean #<-dsL  # made after initial load
+# dsL<-dsLclean
+
 
 dsL$sample<-factor(dsL$sample,
                    levels = c(1,0),
@@ -36,35 +39,38 @@ dsL$bmonth<-factor(dsL$bmonth,
                  levels = c(1:12),
                  labels = c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"))
 
-# Attendance scale
-attendLabels<-c("attendPR","attend")
-for(i in attendLabels){
-dsL[,i]<-factor(dsL[,i],
-                     levels = c(1:8),
-                     labels = c(
-                       "Never",
-                       "Once or Twice",
-                       "< once/month",
-                       "~ once/month",
-                       "~ twice/month",
-                       "~ once/week",
-                       "Several times/week",
-                       "Everyday"))
-}
 
-attendLabelsFull<-c("attendPR","attend")
-for(i in attendLabelsFull){
-  dsL[,i]<-factor(dsL[,i],
-                  levels = c(1:8),
-                  labels = c(
-                    "Never",
+AttendLabelShort<-c("Never",
+                    "Once or Twice",
+                    "< once/month",
+                    "~ once/month",
+                    "~ twice/month",
+                    "~ once/week",
+                    "Several times/week",
+                    "Everyday")
+
+AttendLabelFull<-c( "Never",
                     "Once or Twice",
                     "Less than once/month",
                     "About once/month",
                     "About twice/month",
                     "About once/week",
                     "Several times/week",
-                    "Everyday"))
+                    "Everyday")
+# 
+# # Attendance scale
+# attendLabels<-c("attendPR","attend")
+# for(i in attendLabels){
+# dsL[,i]<-factor(dsL[,i],
+#                      levels = c(1:8),
+#                      labels = AttendLabelShort)
+# }
+
+attendLabelsFull<-c("attendPR","attend")
+for(i in attendLabelsFull){
+  dsL[,i]<-factor(dsL[,i],
+                  levels = c(1:8),
+                  labels = AttendLabelFull)
 }
 
 relprefLabels33<-c(
@@ -100,8 +106,8 @@ relprefLabels33<-c(
   "Witchcraft",
   "Scientology",
   "Sikh",
-  "Other")
-
+  "Other"
+  )
 
 relprefLabelsSmall<-c(
   "Catholic",
@@ -138,7 +144,6 @@ relprefLabelsSmall<-c(
   "Other",
   "Other"
 )
-
 # Religion/Denomination Name
 varlist<-c("relprefPR","relraisedPR","relpref")
 for (i in varlist){
@@ -147,14 +152,14 @@ for (i in varlist){
                   labels = relprefLabels33) # relprefLabelsSmall or relprefLabels33 
 }
 
+OpinionLabelFull<-c("FALSE/less Religious",
+                    "TRUE/more Religious")
 # Binary True/False Scale
 varlist<-c("values","todo","obeyed","decisions","pray")
 for(i in varlist){
   dsL[,i]<-factor(dsL[,i],
                   levels = c(0:1),
-                  labels = c(
-                    "FALSE/less Religious",
-                    "TRUE/more Religious"))
+                  labels = OpinionLabelFull)
 }
 
 # Binary Yes/No Scale
@@ -198,12 +203,12 @@ for(i in varlist){
   dsL[,i]<-ordered(dsL[,i],
                   levels = c(1:6),
                   labels = c(
-                    "<2",
+                    "less than 2",
                     "3-10",
                     "11-20",
                     "21-30",
                     "31-40",
-                    "40>"))
+                    "40 and higher"))
 }
 
 # How many hours per week.  Ordinal
@@ -213,11 +218,11 @@ for(i in varlist){
                   levels = c(1:6),
                   labels = c(
                     "None",
-                    "< 1",
+                    "less than 1",
                     "1-3",
                     "4-6",
                     "7-9",
-                    "10>"))
+                    "10 and more"))
 }
 # str(dsL)
 
