@@ -1,2 +1,2 @@
-Scripts for manipulating data
+General purpose scripts
 ========================================================
