@@ -13,7 +13,7 @@ pathsReports <-c(pathDescriptives, pathFocusAttend)
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 # Build the reports
-for( pathRmd in pathsReports ) {
+for( pathRmd in allreps ) {
   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
 #   knitr::knit(input=pathRmd, output=pathMd)
