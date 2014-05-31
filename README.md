@@ -21,7 +21,9 @@ Data, code, and reproducibility instructions are published as this GitHub reposi
 * Snijders, T. A. B., & Bosker, R. J. (2012). Multilevel analysis: An introduction to basic and advanced multilevel modeling (2 ed.). London: SAGE.
 
 
-### Briefly about the models
+
+
+### About the models
 
 The current study analysizes how religious attendance changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data.   
 Latent curve models (**LCM**) test  certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership.  
@@ -47,12 +49,18 @@ Literature on psychology and sociology of religion suggest that church attendanc
 <img link src="./Data/figure_rmd/dsL_view.png" alt="Basic dataset dsL" style="width:700px;"/>  
 Above is the view  of the study's primary dataset (id=1) for variables depicted in the databox. 
 
+### Where to start
+If you'd rather explore the code directly, the READMEs will direct you to needed *.Rmd and *.R files. You may want to start with start with folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) that narrates the origins of the data.
+
 ### Data Prep
-  Special report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. This dataset (**dsL**) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
+  
+Special report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. 
+**ds** stands for "dataset" and **L** indicates that it is in LONG format, used by by most modeling and graphing packages. 
+This dataset is subsetted and transformed to fit the needs of particular modeling method. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
 
 ### Modeling
 
-Modeling techniques used in the study are listed in [/Models](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models) folder in the root of the repository. New modeling projects should be added there. 
+Modeling techniques used in the study are listed in [/Models](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models) folder in the root of the repository. They include [LCM](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/LCM), [GMM](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/GMM), and [Markov/EMOSA](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/ME). New modeling projects should be added there. 
 
 <!--
 pathMd <- base::file.path("./", c("README.md"))
