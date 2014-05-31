@@ -15,20 +15,20 @@ Data, code, and reproducibility instructions are published as this GitHub reposi
 
 #### References
 
-Bollen, K. A. & Curran, P. J. (2006). Latent curve models: A structural equation perspective (Vol. 467). Wiley. com.
+* Bollen, K. A. & Curran, P. J. (2006). Latent curve models: A structural equation perspective (Vol. 467). Wiley.
 
-Muthén, B., & Asparouhov, T. (2008). Growth mixture modeling: Analysis with non-Gaussian random effects. Longitudinal data analysis, 143-165.
+* Muthén, B., & Asparouhov, T. (2008). Growth mixture modeling: Analysis with non-Gaussian random effects. Longitudinal data analysis, 143-165.
 
-Rodgers, J. L., & Rowe, D. C. (1993). Social contagion and adolescent sexual behavior: A developmental EMOSA model. Psychological Review, 100(3), 479-510. doi: 10.1037/0033-295x.100.3.47
+* Rodgers, J. L., & Rowe, D. C. (1993). Social contagion and adolescent sexual behavior: A developmental EMOSA model. Psychological Review, 100(3), 479-510. doi: 10.1037/0033-295x.100.3.47
 
-Snijders, T. A. B., & Bosker, R. J. (2012). Multilevel analysis: An introduction to basic and advanced multilevel modeling (2 ed.). London: SAGE.
+* Snijders, T. A. B., & Bosker, R. J. (2012). Multilevel analysis: An introduction to basic and advanced multilevel modeling (2 ed.). London: SAGE.
 
 ### Briefly about the models
 
 The current study analysizes how religious attendance changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data.   
 Latent curve models (**LCM**) test  certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership.  
 Growth mixture models (**GMM**) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed trajectory of church attendance. Individuals are grouped based on the similarity of their trajectories, and profiled. Cohort memberships is used as predictor in determining membership in such latent profile.    
-Finally, Markov models (**MM**), such as EMOSA and transition analysis, describe states and transitions among them. Treating the same outcome (church attendance) as categorical (and not as continuous like in LCM and GMM cases), EMOSA accounts for the changing ratio of categories in the population, predicting how the age of the individual affects the likelihood of staying in one (e.g. “church goer”) or another (e.g. “non-goer”) behavior category that quantifies religiosity.
+Finally, Markov models (**M/E**), such as EMOSA and transition analysis, describe states and transitions among them. Treating the same outcome (church attendance) as categorical (and not as continuous like in LCM and GMM cases), EMOSA accounts for the changing ratio of categories in the population, predicting how the age of the individual affects the likelihood of staying in one (e.g. “church goer”) or another (e.g. “non-goer”) behavior category that quantifies religiosity.
 
 ### Sample
 
@@ -56,7 +56,7 @@ This variable-occasion slice of Cattell's databox, shows at what time points mea
 in which we rotate the previous VO Slice 90 degrees. Here, we can distinguish time invariate (**TI**) variables, which values do not change with time. You can see their values remaining constant for each individual (**id**). Column with **year** counter separates **TI** variables from time variant (**TV**) variables, which values are availible for more than one time point. The datasets used in specific modeling are derived from this initial dataset
 
 ### Manipulation
-  Special report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. This dataset (**dsL**) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, MM).
+  Special report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. This dataset (**dsL**) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
 
 ### Modeling
 
