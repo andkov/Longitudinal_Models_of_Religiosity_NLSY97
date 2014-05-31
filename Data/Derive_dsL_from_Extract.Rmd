@@ -104,13 +104,9 @@ This databox slice corresponds to the dataset **dsL**
 
 which transposes the former, distributing variables on the horizontal axis.  Variable **year** keeps track of measurement round and  separated two kinds of variables: those, which values do not change with time and those that were measured at multiple occasions. This distinction will be of convenience in later discussion of statistical models. The dataset in figure 3.3 is referred to as ***dsL*** throughout this work and the accompanying R code .  It defines the scope of NLSY97 data used in the current study and has a direct correspondence to the databox slice from figure 3.2. While other variables of interest might be added in course or reproduction of this research, it is useful to think of such dataset as a midway point between raw data and model-specific datasets
 
-Categorical variables are assigned meaningful labels by the following script, isolated for convenient referral. 
-```{r LabelFactors,echo=TRUE, message=FALSE}
+We do not convert categorical variables into factors with assigned levels yet. This will be done at the beginning of each modeling exercise to ensure that 
 
-```
-
-
-Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R, which preserved factor labels an other variable information.
+Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R.
 ```{r SaveDerivedData, echo=T, message=T}
 ```
 
@@ -141,11 +137,6 @@ ds<- dsLCM[dsLCM$id %in% c(25),]
 ds$age<-ds$year-ds$byear
 ds$ageALT<- ds$agemon/12
 print(ds)
-```
-
-```{r}
-# source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
-
 ```
 
 For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (age = **year** - **byear**) or as (ageALT = **agemon**/12).

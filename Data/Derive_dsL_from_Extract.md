@@ -206,7 +206,7 @@ Dictionary file is imported into Excel file "ItemMapping_20042014.xlsx", where v
 
 ### Figure 2. Databox, VO-slice of the selected variables
 <img link src="./figure_rmd/3_Methods_NOCAP_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>  
-[Interactive version](http://statcanvas.net/lmrNLSY97/html/databox/index.html)
+[Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
 
 Variables on vertical dimension and occasions on horizontal intersect over grey-filled boxes displaying the year of the wave for which data are available.  Variable **attend** is marked by red to indicate that it is the primary quantification of religiosity in the statistical models used in this study. 
@@ -223,7 +223,7 @@ The light grey background highlights the variables related to religion and spiri
 
 Context variables and covariates are on white background. The top section gives basic demographics: the month (**bmonth**) and year (**byear**) of birth, sex (**sex**), race (**race**), as well as the indicator whether the individual is a member of the cross-sectional sampling or a special oversample of minorities (**sample**).  Two age variables are located between the religiosity sections: age at the time of the interview in months (**agemon**) and years (**ageyear**). At the bottom are self-reports on emotional wellbeing (**calm**, **blue**, **happy**, **depressed**, **nervous**) and media activities (**internet**, **computer**, **tv**) of respondents. 
 
-To review original questionnaire cards of NLSY97 as well as descriptive statistics for the selected variables see the [interactive guide](http://statcanvas.net/lmrNLSY97/html/databox/index.html)
+To review original questionnaire cards of NLSY97 as well as descriptive statistics for the selected variables see the [Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
 ## Ready dataset
 This databox slice corresponds to the dataset **dsL**
@@ -232,18 +232,9 @@ This databox slice corresponds to the dataset **dsL**
 
 which transposes the former, distributing variables on the horizontal axis.  Variable **year** keeps track of measurement round and  separated two kinds of variables: those, which values do not change with time and those that were measured at multiple occasions. This distinction will be of convenience in later discussion of statistical models. The dataset in figure 3.3 is referred to as ***dsL*** throughout this work and the accompanying R code .  It defines the scope of NLSY97 data used in the current study and has a direct correspondence to the databox slice from figure 3.2. While other variables of interest might be added in course or reproduction of this research, it is useful to think of such dataset as a midway point between raw data and model-specific datasets
 
-Categorical variables are assigned meaningful labels by the following script, isolated for convenient referral. 
+We do not convert categorical variables into factors with assigned levels yet. This will be done at the beginning of each modeling exercise to ensure that 
 
-```r
-# Assigns labels to categorical variables
-source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
-
-#############################
-```
-
-
-
-Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R, which preserved factor labels an other variable information.
+Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R.
 
 ```r
 pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
@@ -287,20 +278,21 @@ print(ds)
 ```
 
 ```
-    id byear year             attend ageyear agemon age ageALT
-364 25  1983 2000      ~ twice/month      17    214  17  17.83
-365 25  1983 2001 Several times/week      18    226  18  18.83
-366 25  1983 2002 Several times/week      19    236  19  19.67
-367 25  1983 2003      Once or Twice      21    254  20  21.17
-368 25  1983 2004 Several times/week      21    261  21  21.75
-369 25  1983 2005      ~ twice/month      22    272  22  22.67
-370 25  1983 2006 Several times/week      23    284  23  23.67
-371 25  1983 2007      ~ twice/month      24    295  24  24.58
-372 25  1983 2008 Several times/week      25    307  25  25.58
-373 25  1983 2009 Several times/week      26    319  26  26.58
-374 25  1983 2010 Several times/week      27    332  27  27.67
-375 25  1983 2011 Several times/week      28    342  28  28.50
+    id byear year attend ageyear agemon age ageALT
+364 25  1983 2000      5      17    214  17  17.83
+365 25  1983 2001      7      18    226  18  18.83
+366 25  1983 2002      7      19    236  19  19.67
+367 25  1983 2003      2      21    254  20  21.17
+368 25  1983 2004      7      21    261  21  21.75
+369 25  1983 2005      5      22    272  22  22.67
+370 25  1983 2006      7      23    284  23  23.67
+371 25  1983 2007      5      24    295  24  24.58
+372 25  1983 2008      7      25    307  25  25.58
+373 25  1983 2009      7      26    319  26  26.58
+374 25  1983 2010      7      27    332  27  27.67
+375 25  1983 2011      7      28    342  28  28.50
 ```
+
 
 For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (age = **year** - **byear**) or as (ageALT = **agemon**/12).
 

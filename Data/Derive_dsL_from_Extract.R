@@ -292,7 +292,7 @@ dsL<-dsLTI[dsL_order]
 #############################
 ## @knitr LabelFactors
 # Assigns labels to categorical variables
-source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
+# source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
 #############################
 ## @knitr SaveDerivedData
 
