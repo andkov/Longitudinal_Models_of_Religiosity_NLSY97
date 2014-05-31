@@ -38,22 +38,22 @@ read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr cal
 
 ```{r LoadPackages, echo=echoChunks, message=F}
 ```
-
-### 1. Data
 First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
-```{r LoadData, echo=echoChunks, message=FALSE}
 
+```{r LoadData, echo=echoChunks, message=FALSE}
 ```
 
 ```{r TweakData, echo=echoChunks, message=FALSE}
 ```
 
-Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/) of the selected sample, described in the [Methods](http://statcanvas.net/thesis/III_Methods) chapter and located in the [Results](http://statcanvas.net/thesis/IV_Results) chapter of the dissertation.
+```{r} 
+# see code in .Rmd file
+```
 
+Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/) of the selected sample, described in the [Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm) chapter and located in the [Results](http://statcanvas.net/thesis/IV_Results/04_Results.htm) chapter of the dissertation.
 <img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
-
 This databox corresponds to the dataset **dsL** the screenshot of which is given below
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>  
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/>  
 
 We don't need all the variables at the moment, so let's select only those we need to describe how respondents' church attendance was changing across time. Looking at the figures above, we type in the names of variables we want to pick
 ```{r}
@@ -65,15 +65,21 @@ print(ds[ds$id==1,])  # print all availible data for respondent with ID number o
 Generally we can select any desired dataset by formula **dataset[_condition for rows_,_condition for columns_]
 ```{r}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
+print(ds[ds$id==1,]) 
+```
+
+```{r,echo=FALSE}
+# print (dsL[dsL$id==1,c("id","year","attend")]) # print [ rows, columns/variables]
 
 ```
+
+
 We can apply a full or short label to the values recorded in the variable **attend**, for the definitions of all factor labels see [Manipulate](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) code.
 
 selectRows<-dsL$year %in% c(2000:2011)
 Attend
 print(ds$id[ds$id==1,])  # print first few lines of data
 length(unique(ds$id)) # number of respondents in the dataset
-```
 
 The view shows all the measurements taken from one individual (id=1) for the selected variables (columns). All datasets for modeling are derived by subsetting the columns of this one. However, it's easier to see the overall data layout with expressing **dsL** as a slice of Cattell's databox, showing variables across occasions.
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
@@ -85,4 +91,8 @@ print(ds)
 
 Notice that this view is obtained by transposing the columns of the databox slice in Figure 3.3, save for **year**, which values are used as symbols to represent intersections of variables and occasions.
 
+```{r}
+source(file.path(pathDir,"UtilityScripts/produceMDandHTML.R"))
+
+```
 
