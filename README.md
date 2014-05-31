@@ -40,14 +40,14 @@ As of the current date (April, 20014), there are 15 publically available rounds 
 NLYS97 contains several items mapping into the domain of religiosity. One particular variable measuring church attendance (Codename:**attend**) is recorded  uninteruptedly for 12 years (2000-2011) and chosen as the key operationalization of religiosity in all models. 
 Literature on psychology and sociology of religion suggest that church attendance is highly correlated with other facets of religiosity, and might very well be the optimal indicator of broad religiosity in practice. The items selected for analysis and context are shown in the form of a databox slice. 
 
-### Variable-Occasion Slice (**VOS**) 
+### Databox
 <img link src="./Data/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  
  
-### Primary Dataset : View of one case (id=1)  
+###  Dataset
 <img link src="./Data/figure_rmd/dsL_view.png" alt="Basic dataset dsL" style="width:700px;"/>  
-Above is the view of the dataset for variables in the databox.
+Above is the view  of the study's primary dataset (id=1) for variables depicted in the databox. 
 
-### Manipulation
+### Data Prep
   Special report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. This dataset (**dsL**) is subsetted and transformed to fit the needs of particular modeling techinique. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
 
 ### Modeling
