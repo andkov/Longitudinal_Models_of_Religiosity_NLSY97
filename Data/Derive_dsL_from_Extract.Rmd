@@ -95,7 +95,7 @@ The light grey background highlights the variables related to religion and spiri
 
 Context variables and covariates are on white background. The top section gives basic demographics: the month (**bmonth**) and year (**byear**) of birth, sex (**sex**), race (**race**), as well as the indicator whether the individual is a member of the cross-sectional sampling or a special oversample of minorities (**sample**).  Two age variables are located between the religiosity sections: age at the time of the interview in months (**agemon**) and years (**ageyear**). At the bottom are self-reports on emotional wellbeing (**calm**, **blue**, **happy**, **depressed**, **nervous**) and media activities (**internet**, **computer**, **tv**) of respondents. 
 
-To review original questionnaire cards of NLSY97 as well as descriptive statistics for the selected variables see the [interactive guide](http://statcanvas.net/lmrNLSY97/html/databox/index.html)
+To review original questionnaire cards of NLSY97 as well as descriptive statistics for the selected variables see the [Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
 ## Ready dataset
 This databox slice corresponds to the dataset **dsL**
