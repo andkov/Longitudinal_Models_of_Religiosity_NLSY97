@@ -144,19 +144,19 @@ hr {
 <body>
 <h1>Graphical Methods for Evaluating Longitudinal Models: Application to NLSY97 Religiosity Data.</h1>
 
-<p>The study proposes several graphical innovations for fitting, evaluating, and reporting longitudinal models in social sciences.  The graphical methods demonstrated here address practical issues that arise in evaluating sequences of statistical models. A meaningful dimension of complexity, formed by a progression of nested or otherwise related models in a sequence, creates a context for model comparisons. The proposed graphical methods provide the researcher with visualization tools to facilitate model evaluation through data mapping and interactive document design. Here you would fine illustrations for three type of models:</p>
+<p>The study proposes several graphical innovations for fitting, evaluating, and reporting longitudinal models in social sciences.  The graphical methods demonstrated here address practical issues that arise in evaluating <strong>sequences</strong> of statistical models. A meaningful dimension of complexity, formed by a progression of nested or otherwise related models in a sequence, creates a context for model comparisons. The proposed graphical methods provide the researcher with visualization tools to facilitate model evaluation through data mapping and interactive document design. Here you would fine illustrations for three type of models:</p>
 
 <ol>
-<li>Latent curve models (Bollen &amp; Curran, 2006),(Snijders &amp; Bosker, 2012) </li>
-<li>Growth mixture models (Muthen &amp; Asparouhov, 2008)</li>
-<li>Markov/EMOSA (Rodgers &amp; Row, 1993)<br/></li>
+<li>Latent curve models (Bollen &amp; Curran, 2006),(Snijders &amp; Bosker, 2012) <strong>LCM</strong></li>
+<li>Growth mixture models (Muthen &amp; Asparouhov, 2008) <strong>GMM</strong></li>
+<li>Markov/EMOSA (Rodgers &amp; Row, 1993) <strong>M/E</strong> </li>
 </ol>
 
-<p>The study applies these methods to examine empirical trends of religious involvement using a nationally representative household sample of American youth, the National Longitudinal Survey of Youth, 1997 (NLSY97). Annual measures in the NLSY97 from 2000 to 2011 provided panel data on church attendance from approximately 9,000 individuals born between 1980 and 1984.These data are examined with the help of latent curve models (LCM), growth mixture models (GMM), and Markov models (MM), each giving a different perspective on the nature of change in religious involvement between ages 13 and 31. </p>
+<p>The study applies these methods to examine empirical trends of religious involvement using a nationally representative household sample of American youth, the National Longitudinal Survey of Youth, 1997 (<strong>NLSY97</strong>). Annual measures in the NLSY97 from 2000 to 2011 provided panel data on church attendance from approximately 9,000 individuals born between 1980 and 1984.These data are examined with the help LCM, GMM, and M/E each giving a different perspective on the nature of change in religious involvement between ages 13 and 31. </p>
 
 <p>Graphical methods to facilitate each modeling approach are demonstrated and discussed.</p>
 
-<p>Data, code, and reproducibility instructions for this study are published as this GitHub repository.</p>
+<p>Data, code, and reproducibility instructions are published as this GitHub repository.</p>
 
 <h4>References</h4>
 
@@ -168,9 +168,12 @@ hr {
 
 <p>Snijders, T. A. B., &amp; Bosker, R. J. (2012). Multilevel analysis: An introduction to basic and advanced multilevel modeling (2 ed.). London: SAGE.</p>
 
-<h3>Methodological Overview</h3>
+<h3>Briefly about the models</h3>
 
-<p>The current study analysizes how religiosity changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data. Latent curve models (<strong>LCM</strong>) test  certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership. Growth mixture models (<strong>GMM</strong>) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed trajectory of church attendance. Individuals are grouped based on the similarity of their trajectories, and profiled. Cohort memberships is used as predictor in determining membership in such latent profile.  Finally, Markov models (<strong>MM</strong>), such as EMOSA and transition analysis, describe states and transitions among them. Treating the same outcome (church attendance) as categorical (and not as continuous like in LCM and GMM cases), EMOSA accounts for the changing ratio of categories in the population, predicting how the age of the individual affects the likelihood of staying in one (e.g. “church goer”) or another (e.g. “non-goer”) behavior category that quantifies religiosity.</p>
+<p>The current study analysizes how religious attendance changes during adolescence and young adulthood. Three different classes of models are considered to explain the same data. 
+Latent curve models (<strong>LCM</strong>) test  certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership.<br/>
+Growth mixture models (<strong>GMM</strong>) selects the best fitting solutions of LCM and searchers for latent classes underlying the observed trajectory of church attendance. Individuals are grouped based on the similarity of their trajectories, and profiled. Cohort memberships is used as predictor in determining membership in such latent profile.<br/>
+Finally, Markov models (<strong>MM</strong>), such as EMOSA and transition analysis, describe states and transitions among them. Treating the same outcome (church attendance) as categorical (and not as continuous like in LCM and GMM cases), EMOSA accounts for the changing ratio of categories in the population, predicting how the age of the individual affects the likelihood of staying in one (e.g. “church goer”) or another (e.g. “non-goer”) behavior category that quantifies religiosity.</p>
 
 <h3>Sample</h3>
 
@@ -202,7 +205,7 @@ hr {
 
 <h3>Modeling</h3>
 
-<p>Modeling techniques used in the study are listed in <a href="https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models">/Models</a> folder in the root fo the repository. New modeling projects should be added here. </p>
+<p>Modeling techniques used in the study are listed in <a href="https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models">/Models</a> folder in the root of the repository. New modeling projects should be added there. </p>
 
 <h2>Documentation</h2>
 
