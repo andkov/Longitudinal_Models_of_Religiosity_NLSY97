@@ -1,46 +1,34 @@
-# #These first few lines run only when the file is run in RStudio, !!NOT when an Rmd/Rnw file calls it!!
-# rm(list=ls(all=TRUE))  #Clear the variables from previous runs.
-# 
-# 
-# ############################
-# ## @knitr DeclareGlobals
-#  
-# 
-# ############################
-# ## @knitr LoadPackages
-# require(RODBC)
-# require(plyr)
-# require(ggplot2)
-# 
-# ############################
-# ## @knitr LoadData
-# pathDir<-getwd()
-# pathdsL<-file.path(pathDir,"Data/Derived/dsL.csv")
-# dsL<-read.csv(file=pathdsL,header=T,sep=",")
-# 
+#  The following script declares the factor labels to be used with  **dsL**
+#
+###########################################################################
 
-# dsLclean #<-dsL  # made after initial load
-# dsL<-dsLclean
+#### SCALES  ####
 
+## sample ##
+sampleLevels<-  c(1,0)
+sampleLabels<-  c("Cross-Sectional","Oversample")
 
-dsL$sample<-factor(dsL$sample,
-                   levels = c(1,0),
-                   labels = c("Cross-Sectional","Oversample"))
+## sex ##
+sexLevels<- c(1,2,0)
+sexLabels<- c("Male","Female","No Information")
 
-dsL$sex<-factor(dsL$sex,
-                   levels = c(1,2,0),
-                   labels = c("Male","Female","No Information"))
-
+## race ##
+raceLevels<- c(1,2,3,4)
+raceLabels<- c("Black","Hispanic","Mixed (Non-H)","Non-B/Non-H")
 dsL$race<-factor(dsL$race,
-                levels = c(1,2,3,4),
-                labels = c("Black","Hispanic","Mixed (Non-H)","Non-B/Non-H"))
+                levels = raceLevels,
+                labels = raceLabels)
 
+## birth month ##
+bmonthLevels<- c(1:12)
+bmonthLabels<- c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 dsL$bmonth<-factor(dsL$bmonth,
-                 levels = c(1:12),
-                 labels = c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"))
+                 levels = bmonthLevels,
+                 labels = bmonthLabels)
 
-
-AttendLabelShort<-c("Never",
+## church attendance ##
+attendLevels<- c(1:8)
+attendLabelsShort<-c("Never",
                     "Once or Twice",
                     "< once/month",
                     "~ once/month",
@@ -48,8 +36,7 @@ AttendLabelShort<-c("Never",
                     "~ once/week",
                     "Several times/week",
                     "Everyday")
-
-AttendLabelFull<-c( "Never",
+attendLabels<-c( "Never",
                     "Once or Twice",
                     "Less than once/month",
                     "About once/month",
@@ -57,22 +44,11 @@ AttendLabelFull<-c( "Never",
                     "About once/week",
                     "Several times/week",
                     "Everyday")
-# 
-# # Attendance scale
-# attendLabels<-c("attendPR","attend")
-# for(i in attendLabels){
-# dsL[,i]<-factor(dsL[,i],
-#                      levels = c(1:8),
-#                      labels = AttendLabelShort)
-# }
 
-attendLabelsFull<-c("attendPR","attend")
-for(i in attendLabelsFull){
-  dsL[,i]<-factor(dsL[,i],
-                  levels = c(1:8),
-                  labels = AttendLabelFull)
-}
+attendLabelsVars<-c("attendPR","attend")
 
+## religious preference ##
+relprefLevels<- c(1:33)
 relprefLabels33<-c(
   "Catholic",
   "Baptist",
@@ -108,7 +84,7 @@ relprefLabels33<-c(
   "Sikh",
   "Other"
   )
-
+# some responses are combined for simplicity #
 relprefLabelsSmall<-c(
   "Catholic",
   "Baptic",
@@ -144,65 +120,49 @@ relprefLabelsSmall<-c(
   "Other",
   "Other"
 )
-# Religion/Denomination Name
-varlist<-c("relprefPR","relraisedPR","relpref")
-for (i in varlist){
-  dsL[,i]<-factor(dsL[,i],
-                  levels = c(1:33),
-                  labels = relprefLabels33) # relprefLabelsSmall or relprefLabels33 
-}
 
-OpinionLabelFull<-c("FALSE/less Religious",
+relprefLabelsVars<-c("relprefPR","relraisedPR","relpref")
+
+
+## Binary True/False Scale for religous attitude items ##
+truefalseLevels< - c(0,1)
+truefalseLabels<-c("FALSE/less Religious",
                     "TRUE/more Religious")
-# Binary True/False Scale
-varlist<-c("values","todo","obeyed","decisions","pray")
-for(i in varlist){
-  dsL[,i]<-factor(dsL[,i],
-                  levels = c(0:1),
-                  labels = OpinionLabelFull)
-}
 
-# Binary Yes/No Scale
-varlist<-c("bornagain","internet")
-for(i in varlist){
-  dsL[,i]<-factor(dsL[,i],
-                  levels = c(0:1),
-                  labels = c(
-                    "No",
-                    "Yes"))
-}
 
-# How Important 5-Likert Scale
-varlist<-c("faith")
-for(i in varlist){
-  dsL[,i]<-ordered(dsL[,i],
-                  levels = c(1:5),
-                  labels = c(
-                    "Exrtemely",
-                    "Very",
-                    "Somewhat",
-                    "Not very",
-                    "Not at all"))
-}
+truefalseLevelsVars<-c("values","todo","obeyed","decisions","pray")
 
-# How often. 4-Likert scale
-varlist<-c("calm","blue","happy", "depressed","nervous")
-for(i in varlist){
-  dsL[,i]<-ordered(dsL[,i],
-                  levels = c(1:4),
-                  labels = c(
-                    "All of the time",
+## basic binary No/Yes Scale ##
+noyesLevels< - c(0,1)
+noyesLabels<-c("NO", "YES")
+
+noyesLevelsVars<-c("bornagain","internet")
+
+## How Important 5-Likert Scale ##
+importantLevels<- c(1:5)
+importantLevels<- c("Exrtemely",   
+                "Very",   
+                "Somewhat",   
+                "Not very",   
+                "Not at all")
+
+importantLevelsVars<-c("faith")
+
+## How often. 4-Likert scale ##
+importantLevels<- c(1:4)
+importantLevels<- c("All of the time",
                     "Most..",
                     "Some..",
                     "None of the time"))
-}
 
-# How many hours per week. Ordinal
+
+
+##  hours of tv per week. Ordinal ##
 varlist<-c("tv")
 for(i in varlist){
   dsL[,i]<-ordered(dsL[,i],
                   levels = c(1:6),
-                  labels = c(
+tvhoursLabels c(
                     "less than 2",
                     "3-10",
                     "11-20",
@@ -212,21 +172,26 @@ for(i in varlist){
 }
 
 # How many hours per week.  Ordinal
-varlist<-c("computer")
-for(i in varlist){
-  dsL[,i]<-ordered(dsL[,i],
-                  levels = c(1:6),
-                  labels = c(
-                    "None",
+computerLevels<- c(1:6)
+computerLabels<- c( "None",
                     "less than 1",
                     "1-3",
                     "4-6",
                     "7-9",
-                    "10 and more"))
+                    "10 and more")
+
+varlist<-c("computer")
+for(i in varlist){
+  dsL[,i]<-ordered(dsL[,i],
+                  levels = c(1:6),
+                  labels = )
 }
 # str(dsL)
 
-
+listLevels<- c(all objects with *Levels suffix)
+listLabels<- c( all objects with *Labels suffix)
+  
+listFactors<- c(listLevels, listLabels)  
 # sample
 # ds<-dsL
 

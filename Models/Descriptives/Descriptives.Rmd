@@ -38,7 +38,8 @@ read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr cal
 
 ```{r LoadPackages, echo=echoChunks, message=F}
 ```
-First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
+
+We load the dataset **dsL**, which was obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
 
 ```{r LoadData, echo=echoChunks, message=FALSE}
 ```
@@ -67,7 +68,7 @@ Generally we can select any desired dataset by formula **dataset[_condition for 
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
 print(ds[ds$id==1,]) 
 ```
-
+Script [LabelingFactorLevel](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) loads the definitions of the factor levels that can be applied to retained variables. 
 ```{r,echo=FALSE}
 # print (dsL[dsL$id==1,c("id","year","attend")]) # print [ rows, columns/variables]
 

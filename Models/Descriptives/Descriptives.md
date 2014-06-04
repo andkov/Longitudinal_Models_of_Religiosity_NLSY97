@@ -17,7 +17,8 @@ This report offers basic statical graphs describing  NLSY97 religiosity data. Fo
 
 
 
-First we load the data, specifically the dataset **dsL**, obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
+
+We load the dataset **dsL**, which was obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
 
 
 
@@ -43,22 +44,22 @@ print (dsL[dsL$id==1,c("id","year","attend")]) # print [ rows, columns/variables
 ```
 
 ```
-   id year          attend
-1   1 1997            <NA>
-2   1 1998            <NA>
-3   1 1999            <NA>
-4   1 2000           Never
-5   1 2001 About once/week
-6   1 2002   Once or Twice
-7   1 2003           Never
-8   1 2004           Never
-9   1 2005           Never
-10  1 2006           Never
-11  1 2007           Never
-12  1 2008           Never
-13  1 2009           Never
-14  1 2010           Never
-15  1 2011           Never
+   id year attend
+1   1 1997     NA
+2   1 1998     NA
+3   1 1999     NA
+4   1 2000      1
+5   1 2001      6
+6   1 2002      2
+7   1 2003      1
+8   1 2004      1
+9   1 2005      1
+10  1 2006      1
+11  1 2007      1
+12  1 2008      1
+13  1 2009      1
+14  1 2010      1
+15  1 2011      1
 ```
 
 ```r
@@ -68,28 +69,45 @@ print(ds[ds$id==1,])  # print all availible data for respondent with ID number o
 ```
 
 ```
-   year id byear agemon          attend
-1  1997  1  1981    190            <NA>
-2  1998  1  1981    206            <NA>
-3  1999  1  1981    219            <NA>
-4  2000  1  1981    231           Never
-5  2001  1  1981    243 About once/week
-6  2002  1  1981    256   Once or Twice
-7  2003  1  1981    266           Never
-8  2004  1  1981    279           Never
-9  2005  1  1981    290           Never
-10 2006  1  1981    302           Never
-11 2007  1  1981    313           Never
-12 2008  1  1981    325           Never
-13 2009  1  1981    337           Never
-14 2010  1  1981    350           Never
-15 2011  1  1981    360           Never
+   year id byear agemon attend
+1  1997  1  1981    190     NA
+2  1998  1  1981    206     NA
+3  1999  1  1981    219     NA
+4  2000  1  1981    231      1
+5  2001  1  1981    243      6
+6  2002  1  1981    256      2
+7  2003  1  1981    266      1
+8  2004  1  1981    279      1
+9  2005  1  1981    290      1
+10 2006  1  1981    302      1
+11 2007  1  1981    313      1
+12 2008  1  1981    325      1
+13 2009  1  1981    337      1
+14 2010  1  1981    350      1
+15 2011  1  1981    360      1
 ```
 
 Generally we can select any desired dataset by formula **dataset[_condition for rows_,_condition for columns_]
 
 ```r
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
+print(ds[ds$id==1,]) 
+```
+
+```
+   id byear year attend ageyear agemon
+4   1  1981 2000      1      19    231
+5   1  1981 2001      6      20    243
+6   1  1981 2002      2      21    256
+7   1  1981 2003      1      22    266
+8   1  1981 2004      1      23    279
+9   1  1981 2005      1      24    290
+10  1  1981 2006      1      25    302
+11  1  1981 2007      1      26    313
+12  1  1981 2008      1      27    325
+13  1  1981 2009      1      28    337
+14  1  1981 2010      1      29    350
+15  1  1981 2011      1      29    360
 ```
 
 

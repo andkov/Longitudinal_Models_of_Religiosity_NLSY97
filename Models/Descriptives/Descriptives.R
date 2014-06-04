@@ -29,9 +29,6 @@ TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefP
 ############################
 ## @knitr TweakData
 
-dsDSR<-dsL # take these variables from dsL
-
-ds<-dsDSR
 
 ##...dsDSR
 
