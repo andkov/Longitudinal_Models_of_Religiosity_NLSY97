@@ -19,7 +19,7 @@ pathDir<-getwd()
 pathdsL<-file.path(pathDir,"Data/Derived/dsL.rds") # labeled factors, clean ds
 pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd") # to store .pngs
 dsL<-readRDS("./Data/Derived/dsL.rds")
-
+dsLF<-readRDS("./Data/Derived/dsLF.rds")
 # str(dsL)
 
 # Variables that do not change with time, TI - time invariant

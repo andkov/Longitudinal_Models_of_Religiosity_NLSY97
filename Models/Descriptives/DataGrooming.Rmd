@@ -1,7 +1,6 @@
-Descriptive statistics
+Data Grooming
 =================================================
-This report offers basic statical graphs describing  NLSY97 religiosity data. For list of graphs pupulating the interactive databox, see "**Descriptives List**" report
-
+This report offers several technical explanations about the properties of data and how work with it during modeling and graphing. 
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
@@ -39,9 +38,11 @@ read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr cal
 ```{r LoadPackages, echo=echoChunks, message=F}
 ```
 
-We load the dataset **dsL**, which was obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
 
-```{r LoadData, echo=echoChunks, message=FALSE}
+
+```{r echo=echoChunks, message=FALSE}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+dsLF<-readRDS("./Data/Derived/dsLF.rds")
 ```
 
 ```{r TweakData, echo=echoChunks, message=FALSE}
@@ -53,17 +54,18 @@ We load the dataset **dsL**, which was obtained by the report [Derive_dsL_from_E
 
 Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/) of the selected sample, described in the [Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm) chapter and located in the [Results](http://statcanvas.net/thesis/IV_Results/04_Results.htm) chapter of the dissertation.
 <img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
-This databox corresponds to the dataset **dsL** the screenshot of which is given below
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/>  
+This [databox](http://statcanvas.net/thesis/databox/) corresponds to the dataset **dsL** the screenshot of which is given below
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/> 
+We load the dataset **dsL**, which was obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
+
 ### Organizing the metrics 
 Review of the item reference [cards](http://statcanvas.net/thesis/databox/) shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger
 ```{r}
 str(dsL)
-
 ```
-Estimations routines such as lm4 or graphing  functions such as ggplot sometimes get fussy about passing factors as opposed to integers or number. It's convenient to have quick access to both. Instead of replacing the initial variables with factors, we'll create parallel set of variables. The script [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) augments the initial dataset **dsL** with such. The new data set **dsLF** (ds - dataset, L - in long format, F - with copy of variables as factors) contains both raw and labeled variables.
+Estimations routines such as lm4 or graphing  functions such as ggplot sometimes get fussy about passing factors as opposed to integers or numbers. It's convenient to have quick access to both. So instead of replacing the initial variables with factors and decode them back later when we need access to raw values, we'll create parallel set of variables in the original dataset. The script [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) augments the initial dataset **dsL** with a copy variables as factors, with mannually assigned factor labels. See the script in "./Manipulation/LabelingFactorLevels.R". Now each variable in the dataset **dsL** contains a twin - marked by suffix "F" attached to end of the variable name. 
 ```{r}
-str(dsLF)
+str(dsL)
 ```
 This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels.
 ```{r}
@@ -73,7 +75,7 @@ print(ds[ds$id==1,])  # print all availible data for respondent with ID number o
 ```
 Having quick access to factor labels will come especially handy during graph production.
 
-### Mapping Church Attendance
+### Selecting working datasets
 We don't need all the variables at the moment, so let's select only those we need to describe how respondents' church attendance was changing across time. Let's start with picking person's id, wave of measurement, and church attendance
 ```{r}
 print (dsL[dsL$id==1,c("id","year","attend")])

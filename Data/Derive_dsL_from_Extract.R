@@ -292,7 +292,7 @@ dsL<-dsLTI[dsL_order]
 #############################
 ## @knitr LabelFactors
 # Assigns labels to categorical variables
-# source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
+source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
 #############################
 ## @knitr SaveDerivedData
 
@@ -301,7 +301,8 @@ write.csv(dsL,pathdsL,  row.names=FALSE)
 
 pathOutputSubject <- file.path(pathDir,"Data/Derived/dsL.rds")
 saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
-
+pathOutputSubject2 <- file.path(pathDir,"Data/Derived/dsLF.rds")
+saveRDS(object=dsLF, file=pathOutputSubject2, compress="xz")
 ###########################
 ## @knitr CleanUp
 # # remove all but one dataset
