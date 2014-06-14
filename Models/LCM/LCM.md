@@ -24,7 +24,7 @@ This report analyzes a sequence of multilevel latent curve models of church atte
 
 ### Data
 
-The variables selected for current analyses from NLSY97 database are represented in Fig 3.2
+The collection of variables selected from NLSY97 database are shown in Fig 3.2
 
 <img link src="./figure_rmd/3_Methods_Figure 3.2.png" alt="Databox" style="width:900px;"/> 
 
@@ -64,8 +64,12 @@ The total number of respondents in the current data set is
 
 
 
-
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on an ordinal scale, 
+
+```
+stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+```
+
 <img src="figure_rmd/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="400px" />
 
 the integers used to record the response (1 through 8) are treated as measurements on the continuous scale when fit in these statistical models. The interpretations of the estimates, therefore, should be done in the context of this scale.
@@ -90,8 +94,6 @@ Service variables computed  and time effects are added, encoded as  weights of t
 ```
 
 
-
-
 We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years.
 #### Figure 2. Relative frequency of responses for each observed wave
 <img src="figure_rmd/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="700px" />
@@ -102,16 +104,6 @@ However, LCM works with longitudinal data, modeling the trajectory of each indiv
 <img src="figure_rmd/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="700px" />
 
 
-The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011. Each of these trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  
-
-Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
-
-<img src="figure_rmd/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="700px" />
-
-
-Persons **id**=35 and **id**=25 are peers, in 2000 they were both 17.  Respondent **id**=47 is a year older, in 2000 he was 18. The oldest is **id**=4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
-
-
 
 
 
@@ -119,6 +111,14 @@ Persons **id**=35 and **id**=25 are peers, in 2000 they were both 17.  Responden
 
 ```r
 source("./Manipulation/produceMDandHTML.R")
+```
+
+```
+Warning: cannot open file './Manipulation/produceMDandHTML.R': No such file or directory
+```
+
+```
+Error: cannot open the connection
 ```
 
 

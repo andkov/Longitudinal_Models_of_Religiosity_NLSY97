@@ -199,7 +199,7 @@ hr {
 
 <h3>Data</h3>
 
-<p>The variables selected for current analyses from NLSY97 database are represented in Fig 3.2</p>
+<p>The collection of variables selected from NLSY97 database are shown in Fig 3.2</p>
 
 <p><img link src="./figure_rmd/3_Methods_Figure 3.2.png" alt="Databox" style="width:900px;"/> </p>
 
@@ -234,8 +234,12 @@ hr {
 <pre><code>8984
 </code></pre>
 
-<p>The focal variable of interest is <strong>attend</strong>, an item measuring church attendance in the current year. Although it was recorded on an ordinal scale, 
-<img src="figure_rmd/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="400px" /></p>
+<p>The focal variable of interest is <strong>attend</strong>, an item measuring church attendance in the current year. Although it was recorded on an ordinal scale, </p>
+
+<pre><code>stat_bin: binwidth defaulted to range/30. Use &#39;binwidth = x&#39; to adjust this.
+</code></pre>
+
+<p><img src="figure_rmd/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" width="400px" /></p>
 
 <p>the integers used to record the response (1 through 8) are treated as measurements on the continuous scale when fit in these statistical models. The interpretations of the estimates, therefore, should be done in the context of this scale.</p>
 
@@ -266,15 +270,13 @@ hr {
 
 <p><img src="figure_rmd/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="700px" /></p>
 
-<p>The respondent  <strong>id</strong>=35 reported attending no worship services in any of the years, while respodent <strong>id</strong>=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual <strong>id</strong>=47 started as a fairly regular attendee of religious services in 2000 (5= &ldquo;about twice a month&rdquo;), then gradually declined his involvement to nill in 2009 and on. Respondent <strong>id</strong>=4, on the other hand started off with a rather passive involvement, reporting  attended church only &ldquo;Once or twice&rdquo;  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011. Each of these trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  </p>
-
-<p>Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.</p>
-
-<p><img src="figure_rmd/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="700px" /></p>
-
-<p>Persons <strong>id</strong>=35 and <strong>id</strong>=25 are peers, in 2000 they were both 17.  Respondent <strong>id</strong>=47 is a year older, in 2000 he was 18. The oldest is <strong>id</strong>=4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?</p>
-
 <pre><code class="r">source(&quot;./Manipulation/produceMDandHTML.R&quot;)
+</code></pre>
+
+<pre><code>Warning: cannot open file &#39;./Manipulation/produceMDandHTML.R&#39;: No such file or directory
+</code></pre>
+
+<pre><code>Error: cannot open the connection
 </code></pre>
 
 </body>
