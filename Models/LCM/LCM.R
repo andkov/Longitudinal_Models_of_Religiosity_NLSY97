@@ -33,6 +33,8 @@ TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefP
 
 ############################
 ## @knitr TweakData
+
+dsL<- dsLF[dsLF$sample==1,]
 ## keepyears is defined in the  .Rmd file
 
 # Select a few variables for current model or graph

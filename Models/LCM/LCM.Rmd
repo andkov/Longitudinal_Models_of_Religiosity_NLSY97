@@ -61,7 +61,6 @@ The preparation of this dataset is surveyed [here](https://github.com/andkov/Lon
 Basic LCM relies on four variables from **dsL**: identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the variable of interest - worship attendance (**attend**). This is how the data look for one respondent 
 ```{r, echo=echoChunks, message=F}
 ds<-dsL[,c('id',"byear","year","attend")] # select needed variables
-ds$attend<- as.numeric(ds$attend) # convert into continuous
 print(ds[ds$id==1,])# for a single subject with id=1
 ```
 The total number of respondents in the current data set is
@@ -76,7 +75,7 @@ The focal variable of interest is **attend**, an item measuring church attendanc
 
 Service variables computed  and time effects are added, encoded as  weights of the Lambda matrix
 ```{r, echo=echoChunks, message=F}
-ds<-dsLCM[,c('id',"byear","year","attend")] # select needed variables
+ds<-dsL[,c('id',"byear","year","attend")] # select needed variables
 ds$attend<- as.numeric(ds$attend) # convert into continuous
 
 ds<-mutate(ds,timec=year-2000) # creates centered variable
@@ -92,7 +91,7 @@ We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cro
 #### Figure 2. Relative frequency of responses for each observed wave
 ```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 # attcol8 is defined in DeclareGlobal chunk of  the .R file
-ds<- dsLCM
+ds<- dsL
 p<-ggplot(ds, aes(x=factor(year), fill=attend))
 p<-p+ geom_bar(position="fill")
 p<-p+ scale_fill_manual(values = attcol8,
@@ -111,7 +110,7 @@ However, LCM works with longitudinal data, modeling the trajectory of each indiv
 
 ```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 
-ds<- dsLCM[dsLCM$id %in% c(4, 25, 35, 47),]
+ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
 p<-ggplot(ds, aes(x=year,y=as.numeric(attend), color=factor(id) ))
 p<-p+ geom_line()
 # p<-p+ geom_smooth(method=lm)

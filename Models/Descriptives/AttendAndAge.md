@@ -1,150 +1,131 @@
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
-```{r, echo=F, message=F} 
-opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 
-```
+
 
 
 <!-- Set the report-wide options, and point to the external code file. -->
-```{r set_options, echo=F, message=F}
-require(knitr)
-# getwd()
-opts_chunk$set(
-  results='show', 
-  message = TRUE,
-  comment = NA, 
-  tidy = FALSE,
-  fig.height = 4, 
-  fig.width = 5.5, 
-  out.width = "565px",
-  fig.path = 'figure_rmd/',     
-  dev = "png",
-#   fig.path = 'figure_pdf/',     
-#   dev = "pdf",
-  dpi = 400
-)
-echoChunks <- FALSE
-options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
-```
 
-```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-# attANDANCE colOUR 8 categories - set up default colors for "attend"
 
-```
 
-```{r LoadPackages, echo=echoChunks, message=F}
-```
 
-```{r LoadData, echo=echoChunks, message=T}
-```
 
-```{r TweakData, echo=F, message=T}
-# Cross-sectional sample only
-```
+
+
+
+
+
+
+
+
+
 
 Church attendance
 =================================================
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, 
-```{r, echo=echoChunks, message=T, fig.width = 8}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF))
-p<-p+geom_bar()
-p<-p+coord_flip()
-p<-p+xlab("Church attendance") 
-p<-p+ylab("Count")
-p<-p+labs(title="How often did you attend a place of worship in the last year? (2000)")
-p
-```
+<img src="figure_rmd/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" width="565px" />
+
 its resolution allows us to treat it as continuous for the purpose of fitting statistical models. 
-```{r , echo=T, message=F, results='hold'}
+
+```r
 ds<-(subset(dsL, year==2000)) # only for year 2000
 summary(as.numeric(ds$attend)) # summarize as continuous variable
 ```
-The basic dataset contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
-```{r, echo=echoChunks, message=F}
-ds<-dsL[,c('id',"byear","year","attend","attendF")] # select needed variables
-print(ds[ds$id==47,])# for a single subject with id=1
+
+```
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    1.0     1.0     3.0     3.3     6.0     8.0     733 
 ```
 
-The view lists all the data for a single subjust (id=1). There are 
-```{r, echo=echoChunks, message=F}
-cat(length(unique(dsL$id)))
+The basic dataset contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
+
 ```
+    id byear year attend              attendF
+691 47  1982 1997     NA                 <NA>
+692 47  1982 1998     NA                 <NA>
+693 47  1982 1999     NA                 <NA>
+694 47  1982 2000      5    About twice/month
+695 47  1982 2001      2        Once or Twice
+696 47  1982 2002      4     About once/month
+697 47  1982 2003      2        Once or Twice
+698 47  1982 2004      3 Less than once/month
+699 47  1982 2005      2        Once or Twice
+700 47  1982 2006      2        Once or Twice
+701 47  1982 2007      3 Less than once/month
+702 47  1982 2008      2        Once or Twice
+703 47  1982 2009      1                Never
+704 47  1982 2010      1                Never
+705 47  1982 2011      1                Never
+```
+
+
+The view lists all the data for a single subjust (id=1). There are 
+
+```
+6748
+```
+
 subjects in total.
 
 We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years. 
 #### Figure 2. Relative frequency of responses for each observed wave
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
-# attcol8 is defined in DeclareGlobal chunk of  the .R file
-ds<- dsL
-p<-ggplot(ds, aes(x=factor(year), fill=attendF))
-p<-p+ geom_bar(position="fill")
-p<-p+ scale_fill_manual(values = attcol8,
-                    name="Response category" )
-p<-p+ scale_y_continuous("Prevalence: proportion of total",
-                     limits=c(0, 1),
-                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
-p<-p+ scale_x_discrete("Waves of measurement",
-                   limits=as.character(c(2000:2011)))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p
+<img src="figure_rmd/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="700px" />
 
-```
 
 Modeling how the frequencies of endorsing particular response item will be the focus of Markov model, which renders well in cross-sectional representations. However, LCM and GMM work with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
 
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 
-ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
-p<-ggplot(ds, aes(x=year,y=attend, color=idF))
-p<-p+ geom_line()
-# p<-p+ geom_smooth(method=lm)
-p<-p+ geom_point()
-p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(1, 8),
-                     breaks=c(1:8))
-p<-p+ scale_x_continuous("Waves of measurement",
-                   limits=c(2000,2011),
-                   breaks=c(2000:2011))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p
 ```
+Warning: Removed 12 rows containing missing values (geom_path).
+Warning: Removed 12 rows containing missing values (geom_point).
+```
+
+<img src="figure_rmd/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="700px" />
+
 
 The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011. Each of these trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  
 
 Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
 
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 
-ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
-p<-ggplot(ds, aes(x=ageyear,y=as.numeric(attend), color=factor(id) ))
-p<-p+ geom_line()
-# p<-p+ geom_smooth(method=lm)
-p<-p+ geom_point()
-p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(1, 8),
-                     breaks=c(1:8))
-p<-p+ scale_x_continuous("Age in years",
-                   limits=c(16,31),
-                   breaks=seq(from=12, to=31,by=1))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p
 ```
+Warning: Removed 12 rows containing missing values (geom_path).
+Warning: Removed 12 rows containing missing values (geom_point).
+```
+
+<img src="figure_rmd/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="700px" />
+
 
 Persons **id**=35 and **id**=25 are peers, in 2000 they were both 17.  Respondent **id**=47 is a year older, in 2000 he was 18. The oldest is **id**=4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
 
 (ASIDE NOTE: this figure reveals an important detail about the NLSY97 data. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. For example, for person **id**=25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (age = **year** - **byear**) or as (ageALT = **agemon**/12).
 
-```{r}
+
+```r
 ds<- dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
 ds<- ds[ds$id %in% c(25),]
 ds$age<-ds$year-ds$byear
 ds$ageALT<- ds$agemon/12
 print(ds)
+```
 
 ```
+    id byear year attend ageyear agemon age ageALT
+364 25  1983 2000      5      17    214  17  17.83
+365 25  1983 2001      7      18    226  18  18.83
+366 25  1983 2002      7      19    236  19  19.67
+367 25  1983 2003      2      21    254  20  21.17
+368 25  1983 2004      7      21    261  21  21.75
+369 25  1983 2005      5      22    272  22  22.67
+370 25  1983 2006      7      23    284  23  23.67
+371 25  1983 2007      5      24    295  24  24.58
+372 25  1983 2008      7      25    307  25  25.58
+373 25  1983 2009      7      26    319  26  26.58
+374 25  1983 2010      7      27    332  27  27.67
+375 25  1983 2011      7      28    342  28  28.50
+```
+
 
 
 
