@@ -11,11 +11,11 @@ pathLabelFactors<- base::file.path("./Models/Descriptives/LabelFactors")
 
 allreps<- c(pathDerive, pathDescriptives, pathLCM, pathAAA, pathLabelFactors )
 
-pathsReports <-c(pathLabelFactorssssssss)
+pathsReports <-c(allreps)
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 # Build the reports
-for( pathRmd in pathDerive ) {
+for( pathRmd in pathsReports ) {
   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   pathHtml <- base::gsub(pattern=".Rmd$", replacement=".html", x=pathRmd)
 #   knitr::knit(input=pathRmd, output=pathMd)
