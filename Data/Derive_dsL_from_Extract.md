@@ -29,7 +29,7 @@ NLSY97_Religiosity_20042014.NLSY97 - **tagset**, the list of variables in the do
 NLSY97_Religiosity_20042014.dtc - STATA **dictionary** file of selected variables, contains data as well
   
 
-We import the raw data of NLSY97 from .**csv** file  and make initial clean up. 
+We import the raw data of NLSY97 from .**csv** file  and conduct initial clean up. 
 <!-- run initial import from the databank defined by tagset. --> 
 
 
@@ -200,7 +200,7 @@ nrow(dsSource)
 
 respondents.
 
-Dictionary file is imported into Excel file "ItemMapping_20042014.xlsx", where variables are renamed and organized with respect to occasssions of their measurement. The result Variable-by-occasion databox slice. 
+Dictionary file was imported into Excel file "ItemMapping_20042014.xlsx", where variables were renamed and organized with respect to occasssions of their measurement. The result are shown in the Variable-by-occasion databox slice. 
 
 
 ###  Databox, VO-slice of the selected variables
