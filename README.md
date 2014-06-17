@@ -1,18 +1,14 @@
 Graphical Methods for Evaluating Longitudinal Models: Application to NLSY97 Religiosity Data.
 ========================================================
-  The study proposes several graphical innovations for fitting, evaluating, and reporting longitudinal models in social sciences.  The graphical methods demonstrated here address practical issues that arise in evaluating **sequences** of statistical models. A meaningful dimension of complexity, formed by a progression of nested or otherwise related models in a sequence, creates a context for model comparisons. The proposed graphical methods provide the researcher with visualization tools to facilitate model evaluation through data mapping and interactive document design. Ultimately, sequence report mechanism would accomodate three type of models:
+  The study proposes several graphical innovations for  evaluating and reporting longitudinal models in social sciences.  The graphical methods demonstrated here address practical issues that arise in evaluating **sequences** of statistical models. A meaningful dimension of complexity, formed by a progression of nested or otherwise related models in a sequence, creates a context for model comparisons. The proposed graphical methods provide the researcher with visualization tools to facilitate model evaluation through data mapping and dynamic document design. Ultimately, sequence report mechanism would accomodate three type of models:
   
   1. Latent curve models (Bollen & Curran, 2006),(Snijders & Bosker, 2012) **LCM**
   2. Growth mixture models (Muthen & Asparouhov, 2008) **GMM**
   3. Markov/EMOSA (Rodgers & Row, 1993) **M/E** 
   
 The scope of the dissertation work, however, is limited to LCM case. 
-The study will apply these methods to examine empirical trends of religious involvement using a nationally representative household sample of American youth, the National Longitudinal Survey of Youth, 1997 (**NLSY97**). Annual measures in the NLSY97 from 2000 to 2011 provided panel data on church attendance from approximately 9,000 individuals born between 1980 and 1984.These data are examined with the help of LCM sequence exploring the nature of change in religious involvement between ages 13 and 31. 
+The study will apply these methods to examine empirical trends of religious involvement using a nationally representative household sample of American youth, the National Longitudinal Survey of Youth, 1997 (**NLSY97**). Annual measures in the NLSY97 from 2000 to 2011 provided panel data on church attendance from approximately 9,000 individuals born between 1980 and 1984.These data are examined with the help of LCM, GMM, and M/E sequences to explore the nature of change in religious involvement between ages 13 and 31. 
   
-Graphical methods to facilitate each modeling approach are demonstrated and discussed.
-  
-Data, code, and reproducibility instructions are published as this GitHub repository.
-
 #### References
 
 * Bollen, K. A. & Curran, P. J. (2006). Latent curve models: A structural equation perspective (Vol. 467). Wiley.
@@ -50,7 +46,7 @@ Literature on psychology and sociology of religion suggest that church attendanc
 Above is the view  of the study's primary dataset (id=1) for variables depicted in the databox. 
 
 ### Where to start
-If you'd rather explore the code directly, the READMEs will direct you to needed *.Rmd and *.R files. You may want to start with the folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) that narrates the origins of the dataset. There, a 
+If you'd rather explore the code directly, the READMEs in the root of each directory will direct you to needed *.Rmd and *.R files. Rmd file creates the report in Markdown format that is published to GitHub. It integrates text and images with R code chunks (marked by "## @knitr ChunkName" identifiers) You may want to start with the folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) that narrates the origins of the dataset. There, a 
 special report [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. 
 **ds** stands for "dataset" and **L** indicates that it is in LONG format, used by by most modeling and graphing packages. 
 This dataset, **dsL** is later subsetted and transformed to fit the needs of particular modeling method. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
