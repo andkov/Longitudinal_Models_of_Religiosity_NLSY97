@@ -1,7 +1,7 @@
-Label Factors
+Data Grooming
 =================================================
-This report describes how the values of the variables in **dsL** are labeled.
-
+This report  offers several technical explanations about the properties of dataset and how to work with it during modeling and graphing.
+s
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
 opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
@@ -49,6 +49,9 @@ Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/
 This [databox](http://statcanvas.net/thesis/databox/) corresponds to the dataset **dsL** the screenshot of which is given below
 <img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/> 
 We load the dataset **dsL**, which was obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
+
+
+
 
 ### Organizing the metrics 
 Review of the item reference [cards](http://statcanvas.net/thesis/databox/) shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger. 
