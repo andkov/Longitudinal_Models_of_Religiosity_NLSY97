@@ -1,4 +1,4 @@
-Data Grooming
+Label Factors
 =================================================
 This report offers several technical explanations about the properties of data and how work with it during modeling and graphing. 
 

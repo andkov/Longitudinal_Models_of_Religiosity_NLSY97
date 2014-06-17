@@ -7,11 +7,11 @@ pathDescriptivesList <- base::file.path("./Models/Descriptives/DescriptivesList.
 pathDescriptives <- base::file.path("./Models/Descriptives/Descriptives.Rmd")
 pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
 pathAAA <- base::file.path("./Models/Descriptives/AttendAndAge.Rmd")
-pathDataGrooming <- base::file.path("./Models/Descriptives/DataGrooming.Rmd")
+pathLabelFactors<- base::file.path("./Models/Descriptives/LabelFactors")
 
-allreps<- c(pathDescriptives, pathLCM,pathAAA, pathDataGrooming )
+allreps<- c(pathDerive, pathDescriptives, pathLCM, pathAAA, pathLabelFactors )
 
-pathsReports <-c(pathDerive )
+pathsReports <-c(pathLabelFactorssssssss)
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 # Build the reports
