@@ -50,10 +50,10 @@ Literature on psychology and sociology of religion suggest that church attendanc
 Above is the view  of the study's primary dataset (id=1) for variables depicted in the databox. 
 
 ### Where to start
-If you'd rather explore the code directly, the READMEs will direct you to needed *.Rmd and *.R files. You may want to start with the folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) that narrates the origins of the dataset. There, 
-Special report [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. 
+If you'd rather explore the code directly, the READMEs will direct you to needed *.Rmd and *.R files. You may want to start with the folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) that narrates the origins of the dataset. There, a 
+special report [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. 
 **ds** stands for "dataset" and **L** indicates that it is in LONG format, used by by most modeling and graphing packages. 
-This dataset is subsetted and transformed to fit the needs of particular modeling method. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
+This dataset, **dsL** is later subsetted and transformed to fit the needs of particular modeling method. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
 
 ### Modeling
 
