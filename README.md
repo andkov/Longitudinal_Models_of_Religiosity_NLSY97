@@ -30,7 +30,7 @@ Finally, Markov/EMOSA models (**M/E**), such as EMOSA and transition analysis, d
 
 The current study uses the data from the [NLSY97](http://www.bls.gov/nls/nlsy97.htm) study, which is a part of a larger effort of the National Longitudinal Surveys [NLS](http://www.bls.gov/nls/). NLSY97 is a nationally representative sample of households including approximately 9,000 participants. 
 The NLSY97 was based on a household probability sample in which all adolescents between certain ages were surveyed within sampled households.  Selected individuals, born between 1980 and 1984, were 12 to 16 years old as of December 31, 1996. They were interviewed annually, starting in 1997 and continuing until today.  
-As of the current date (April, 20014), there are 15 publically available rounds of NLSY97 data (1997-2011). The present study focuses on the span of 12 time points (2000 – 2011) for which uninterrupted measure of religious behavior was taken. It starts with (13-17)-yearolds and describes how they change into (27-31)-yearolds.    
+As of the current date (April, 20014), there are 15 publically available rounds of NLSY97 data (1997-2011). The present study focuses on the span of 12 time points (2000 – 2011) for which uninterrupted measure of self-reported religious worship attendance was taken. It starts with (13-17)-yearolds and describes how they change into (27-31)-yearolds.    
 
 
 ### Domain of Religiosity  
@@ -46,7 +46,7 @@ Literature on psychology and sociology of religion suggest that church attendanc
 Above is the view  of the study's primary dataset (id=1) for variables depicted in the databox. 
 
 ### Where to start
-If you'd rather explore the code directly, the READMEs in the root of each directory will direct you to needed *.Rmd and *.R files. Rmd file creates the report in Markdown format that is published to GitHub. It integrates text and images with R code chunks (marked by "## @knitr ChunkName" identifiers) You may want to start with the folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) that narrates the origins of the dataset. There, a 
+If you'd rather explore the code directly, the READMEs in the root of each directory will direct you to needed .Rmd and .R files. Rmd file creates the report in Markdown format that is published to GitHub. It integrates text and images with R code chunks (marked by "## @knitr ChunkName" identifiers) You may want to start with the folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) that narrates the origins of the dataset. There, a 
 special report [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset shown above. 
 **ds** stands for "dataset" and **L** indicates that it is in LONG format, used by by most modeling and graphing packages. 
 This dataset, **dsL** is later subsetted and transformed to fit the needs of particular modeling method. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
