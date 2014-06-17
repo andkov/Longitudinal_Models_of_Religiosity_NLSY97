@@ -7,7 +7,7 @@ pathDescriptivesList <- base::file.path("./Models/Descriptives/DescriptivesList.
 pathDescriptives <- base::file.path("./Models/Descriptives/Descriptives.Rmd")
 pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
 pathAAA <- base::file.path("./Models/Descriptives/AttendAndAge.Rmd")
-pathLabelFactors<- base::file.path("./Models/Descriptives/LabelFactors")
+pathLabelFactors<- base::file.path("./Models/Descriptives/LabelFactors.Rmd")
 
 allreps<- c(pathDerive, pathDescriptives, pathLCM, pathAAA, pathLabelFactors )
 
