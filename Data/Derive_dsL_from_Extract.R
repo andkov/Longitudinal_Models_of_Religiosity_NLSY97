@@ -25,7 +25,6 @@ TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefP
 #####################################
 ## @knitr LoadData
 
-
 ### Import the data ###
 pathDir<-file.path(getwd()) # define path for project root directory
 
@@ -62,6 +61,8 @@ write.table(dsSourceLabels, "./Data/ItemMapping/dsSourceLabels.csv", sep=",")
 
 ############################
 ## @knitr TweakData
+
+## The following code is assembled in accompanied Excel file ( ItemMap_20042014.xlsx) and pasted in here
 
 dsSource<-rename(dsSource, c(
   "R0323900"="famrel_1997",
@@ -258,7 +259,7 @@ dsLong<-dsLong[with(dsLong, order(id,variable)), ] # alternative sorting to plyr
 
 ##############################
 ## Create individual long datasets, one per TV variable
-## ?? how to loop over the dataset?
+## NOTE: for development: loop over the dataset
 
 ## Time invariant (TI) variables are :
 # print (TIvars)
@@ -270,7 +271,7 @@ dsLTI<-subset(dsLong,subset=(dsLong$variable=="agemon")) # agemon because it has
 dsLTI<-rename(dsLTI,replace=c("value"="agemon"))
 dsLTI<-dsLTI[c(TIvars,"year")] # select only TI variables
 
-## Strip off each TV from dsLong to merge later
+## Strip off each  TV (Time Invariant covariate) from dsLong to merge later
 for ( i in TVvars){
 dstemp<-subset(dsLong,subset=(dsLong$variable==i))
 dstemp<-rename(dstemp,replace=c("value"=i))
@@ -292,6 +293,10 @@ dsL<-dsLTI[dsL_order]
 #############################
 ## @knitr LabelFactors
 # Assigns labels to categorical variables
+# This code adds an alternative record for each variable in dsL- labeled as factors
+# To call a variable as a factor (as opposed to the raw value from NLSY97) add a suffix "F" for "FACTOR" to the end of selected variable
+# dsL$sample - selects raw values
+# dsL$sampleF - selects labeled levels of a factor
 source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
 #############################
 ## @knitr SaveDerivedData
@@ -301,10 +306,9 @@ write.csv(dsL,pathdsL,  row.names=FALSE)
 
 pathOutputSubject <- file.path(pathDir,"Data/Derived/dsL.rds")
 saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
-pathOutputSubject2 <- file.path(pathDir,"Data/Derived/dsLF.rds")
-saveRDS(object=dsLF, file=pathOutputSubject2, compress="xz")
+
 ###########################
 ## @knitr CleanUp
-# # remove all but one dataset
-# rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
+# # remove all but specified dataset
+rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))
 

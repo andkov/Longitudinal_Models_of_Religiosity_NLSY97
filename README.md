@@ -1,13 +1,8 @@
 Graphical Methods for Evaluating Longitudinal Models: Application to NLSY97 Religiosity Data.
 ========================================================
-  The study proposes several graphical innovations for fitting, evaluating, and reporting longitudinal models in social sciences.  The graphical methods demonstrated here address practical issues that arise in evaluating **sequences** of statistical models. A meaningful dimension of complexity, formed by a progression of nested or otherwise related models in a sequence, creates a context for model comparisons. The proposed graphical methods provide the researcher with visualization tools to facilitate model evaluation through data mapping and interactive document design. Here you would fine illustrations for three type of models:
-  
-  1. Latent curve models (Bollen & Curran, 2006),(Snijders & Bosker, 2012) **LCM**
-  2. Growth mixture models (Muthen & Asparouhov, 2008) **GMM**
-  3. Markov/EMOSA (Rodgers & Row, 1993) **M/E** 
-  
+  The study proposes several graphical innovations for fitting, evaluating, and reporting longitudinal models in social sciences.  The graphical methods demonstrated here address practical issues that arise in evaluating **sequences** of statistical models. A meaningful dimension of complexity, formed by a progression of nested or otherwise related models in a sequence, creates a context for model comparisons. The proposed graphical methods provide the researcher with visualization tools to facilitate model evaluation through data mapping and interactive document design.
 
-The study applies these methods to examine empirical trends of religious involvement using a nationally representative household sample of American youth, the National Longitudinal Survey of Youth, 1997 (**NLSY97**). Annual measures in the NLSY97 from 2000 to 2011 provided panel data on church attendance from approximately 9,000 individuals born between 1980 and 1984.These data are examined with the help LCM, GMM, and M/E each giving a different perspective on the nature of change in religious involvement between ages 13 and 31. 
+The study applies LCM to examine empirical trends of religious involvement using a nationally representative household sample of American youth, the National Longitudinal Survey of Youth, 1997 (**NLSY97**). Annual measures in the NLSY97 from 2000 to 2011 provided panel data on church attendance from approximately 9,000 individuals born between 1980 and 1984.These data are examined with the help of LCM sequences. 
   
 Graphical methods to facilitate each modeling approach are demonstrated and discussed.
   

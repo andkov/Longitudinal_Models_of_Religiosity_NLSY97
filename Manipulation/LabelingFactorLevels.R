@@ -253,10 +253,10 @@ for (i in varlist){
   dsLF[,paste0(i,"F")]<- factor(dsLF[,i])
 }
 
-
+# this must match the definition of "dsL_order" object given in "Derive_dsL_from_Extract.R"
 dsL_orderF<- c("sampleF"  ,"idF"  ,"sexF"	,"raceF"	,"bmonthF"	,"byearF"	,"attendPRF"	,"relprefPRF"	,"relraisedPRF"	,"yearF","agemonF"	,"ageyearF"	,"famrelF"	,"attendF"	,"valuesF"	,"todoF"	,"obeyedF"	,"prayF"	,"decisionsF"	,"relprefF"	,"bornagainF"	,"faithF"	,"calmF"	,"blueF"	,"happyF"	,"depressedF"	,"nervousF"	,"tvF"	,"computerF"	,"internetF")
 dsLF<- dsLF[,dsL_orderF]
-dsLF<- cbind(dsL,dsLF)
+dsL<- cbind(dsL,dsLF)
 
 
 
