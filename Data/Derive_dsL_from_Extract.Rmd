@@ -1,7 +1,9 @@
-Reproducibility Instructions
+---
+output: html_document
+---
+Deriving clean dataset **dsL** from NLSY97 extract
 =================================================
-This report narrates the manipulations of the NLSY97 dataset in preparing it for longitudinal modeling.
-
+This report narrates the origin of dataset used in the study. 
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
@@ -38,7 +40,7 @@ read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls f
 ```
 
 
-## Data Retrieval
+### Data Retrieval
 Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder [/Data/Extracts/NLSY97_Religiosity_20042014](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data/Extracts/NLSY97_Religiosity_20042014), located in the GitHub Repository. 
 (The naming convention is "Study_Focus_DDMMYYYofDownload")   
 
@@ -63,7 +65,7 @@ print(dsSourceLabels)
 ```{r TweakData, echo=echoChunks, message=FALSE, results='hide'}
 ```
 
-After renaming the variables, we arrange data in a initial wide format (variable-occasions as column), arriving at the basis dataset **dsSource**, which contains 
+After renaming the variables, we arrange data in a initial wide format (variable-occasions as columns), arriving at the basis dataset **dsSource**, which contains 
 ```{r, echo=TRUE}
 ncol(dsSource)
 ```
@@ -89,7 +91,7 @@ The variable dimension of the databox slice is represented by three identifiers 
 + **Unit** - describes the scales used to measure variables  
 + **Codename** - the (new) name of the variable, as it is used in R code  
 
-## Religiosity, Context, and Covariates
+### Religiosity, Context, and Covariates
 
 The light grey background highlights the variables related to religion and spirituality.  The first section of items (**attendPR**, **relprefPR**, **relraisedPR**) gives data on the religiosity of [parents](http://www.bls.gov/nls/quex/r1/y97rd1pquex.htm) of the respondents, whose households were sampled into NLSY97. Another grey section lists the items related to the religiosity of the youth, which give data on their religious behaviors (**relpref**, **attend**, **pray**, **decisions**) and attitudes (**values**, **todo**, **obeyed**, **bornagain**, **faith**). 
 

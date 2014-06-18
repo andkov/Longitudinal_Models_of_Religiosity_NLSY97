@@ -1,3 +1,12 @@
+---
+output:
+  html_document:
+    fig_caption: yes
+    highlight: textmate
+    number_sections: yes
+    theme: journal
+    toc: yes
+---
 Data Grooming
 =================================================
 This report  offers several technical explanations about the properties of dataset and how to work with it during modeling and graphing.
@@ -73,7 +82,7 @@ Having quick access to factor labels will come especially handy during graph pro
 
 
 ### Selecting working datasets
-We don't need all the variables at the moment, so let's select only those we need to describe how respondents' church attendance was changing across time. Let's start with picking person's id, wave of measurement, and church attendance
+We need only a few variables at any given moment in the process of modeling, so let's select only those we need to describe how respondents' church attendance was changing across time and age. Let's start with picking person's id, wave of measurement, and church attendance
 ```{r}
 print (dsL[dsL$id==1,c("id","year","attend")])
 ```
