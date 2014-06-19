@@ -2,6 +2,7 @@
 Models of the data
 ========================================================
 
+This folder contains modeling projects. 
 
 In [Models/Descriptives](./Descriptives), report [Metrics.md](./Descriptives/Metrics.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance. Another report [Databox.md](./Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that are s in the interactive [databox](http://statcanvas.net/thesis/databox/index.html)
 

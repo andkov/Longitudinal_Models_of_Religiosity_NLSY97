@@ -1,5 +1,5 @@
 
-Latent Curve Models
+LCM Specificaton
 ========================================================
 
 
