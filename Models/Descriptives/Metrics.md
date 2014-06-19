@@ -1,3 +1,10 @@
+-   Metrics: labeling factors and exploring scales
+    -   Data In
+    -   1. Labeling Factor Levels
+    -   2. Time metrics : Age, Period, Cohort
+    -   3. Mapping Church Attendance
+    -   4. Selecting and Augmenting data for modeling
+
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
 
@@ -5,43 +12,32 @@
 Metrics: labeling factors and exploring scales
 ==============================================
 
-Report explains how the response categories from NLSY97 questionnaire
-are labeled and demonstrates application of labeled factors in data
-operations and graphing.
+Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
-Sections:  
-1. Labeling Factor Levels  
-2. Age-Period-Cohort structure  
-3. Mapping Church Attendance  
+Sections:
+1. Labeling Factor Levels
+2. Age-Period-Cohort structure
+3. Mapping Church Attendance
 4. Selecting & Augmenting datasets for modeling
 
 ### Data In
 
-Initial point of departure - the
-[databox](http://statcanvas.net/thesis/databox/) of the selected sample,
-described in the
-[Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm)
-chapter.
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
-This [databox](http://statcanvas.net/thesis/databox/) corresponds to the
-dataset **dsL** produced by
-[Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
-report.
+Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/) of the selected sample, described in the [Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm) chapter. <img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/> This [databox](http://statcanvas.net/thesis/databox/) corresponds to the dataset **dsL** produced by [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) report.
 
-    dsL<-readRDS("./Data/Derived/dsL.rds")
+``` {.r}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+```
 
 \<<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/>
 
 1. Labeling Factor Levels
 -------------------------
 
-Review of the item reference
-[cards](http://statcanvas.net/thesis/databox/) shows that initially, all
-items were recorded on some discrete scale, either counting occasions or
-assigning an intiger to a category of response. However, in the original
-dataset they are recorded as either a numerical value or an intiger
+Review of the item reference [cards](http://statcanvas.net/thesis/databox/) shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger
 
-    str(dsL)
+``` {.r}
+str(dsL)
+```
 
     'data.frame':   134760 obs. of  60 variables:
      $ sample      : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -105,16 +101,11 @@ dataset they are recorded as either a numerical value or an intiger
      $ computerF   : Ord.factor w/ 6 levels "None"<"less than 1"<..: NA NA NA NA NA 5 NA NA NA NA ...
      $ internetF   : Ord.factor w/ 2 levels "No"<"Yes": NA NA NA NA NA NA 2 1 2 2 ...
 
-For estimations routines such as lm4 or graphing functions such as
-ggplot, the data type (string,numeric, factor) is a meaningful input, so
-a quick access to both formats frequently proves to be convenience.
-Instead of replacing the initial variables with factors, we'll create
-parallel set of variables. The script at the end of
-[LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R)
-augments the initial dataset **dsL** with copy of initial variables
-saved as labeled factors.
+For estimations routines such as lm4 or graphing functions such as ggplot, the data type (string,numeric, factor) is a meaningful input, so a quick access to both formats frequently proves to be convenience. Instead of replacing the initial variables with factors, we'll create parallel set of variables. The script at the end of [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) augments the initial dataset **dsL** with copy of initial variables saved as labeled factors.
 
-    str(dsL)
+``` {.r}
+str(dsL)
+```
 
     'data.frame':   134760 obs. of  60 variables:
      $ sample      : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -178,12 +169,13 @@ saved as labeled factors.
      $ computerF   : Ord.factor w/ 6 levels "None"<"less than 1"<..: NA NA NA NA NA 5 NA NA NA NA ...
      $ internetF   : Ord.factor w/ 2 levels "No"<"Yes": NA NA NA NA NA NA 2 1 2 2 ...
 
-This give a certain flexibiity to assemble needed dataset quickly and
-have access to factor labels.
+This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels.
 
-    selectCols<-c("year","id","byear","attend","attendF") # type in variable name
-    ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
-    print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
+``` {.r}
+selectCols<-c("year","id","byear","attend","attendF") # type in variable name
+ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
+print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
+```
 
        year id byear attend         attendF
     1  1997  1  1981     NA            <NA>
@@ -202,31 +194,22 @@ have access to factor labels.
     14 2010  1  1981      1           Never
     15 2011  1  1981      1           Never
 
-Having quick access to factor labels will come especially handy during
-graph production.
+Having quick access to factor labels will come especially handy during graph production.
 
 2. Time metrics : Age, Period, Cohort
 -------------------------------------
 
-NLSY97 sample includes individuals from five cohorts, born between 1980
-and 1984.The following graphics shows how birth cohort, age of
-respondents, and round of observation are related in NSLY97.
-<img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Looking up items" style="width:700px ;"/>
+NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97. <img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Looking up items" style="width:700px ;"/>
 
-There are several indicators of age in NSLY97 that vary in precision.
-Birth cohort is the most general one, it was recorded once. Two
-variables were recorded at each interview: age at the time of the
-interview in months (**agemon**) and years (**ageyear**). Those are not
-derivatives of each other, but, understandably, are closely related. The
-variable **ageyear** records the full number of years a respondent
-reached at the time of the interview. Due to difficulties of
-administering the survey, time intervals between the waves could differ.
+There are several indicators of age in NSLY97 that vary in precision. Birth cohort is the most general one, it was recorded once. Two variables were recorded at each interview: age at the time of the interview in months (**agemon**) and years (**ageyear**). Those are not derivatives of each other, but, understandably, are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ.
 
-    ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
-    ds<- ds[ds$id %in% c(25),]
-    ds$age<-ds$year-ds$byear
-    ds$ageALT<- ds$agemon/12
-    print(ds)
+``` {.r}
+ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
+ds<- ds[ds$id %in% c(25),]
+ds$age<-ds$year-ds$byear
+ds$ageALT<- ds$agemon/12
+print(ds)
+```
 
         id byear year attend ageyear agemon age ageALT
     364 25  1983 2000      5      17    214  17  17.83
@@ -242,34 +225,22 @@ administering the survey, time intervals between the waves could differ.
     374 25  1983 2010      7      27    332  27  27.67
     375 25  1983 2011      7      28    342  28  28.50
 
-For example, for one person **id**=25 the age was recorded as 21 years
-for both 2003 and 2004 (see **ageyear**). However, when you examine age
-in months (**agemon**) you can see this is rounding issue that
-disappears once a more precise scale is used. To avoid this potentially
-confusing peculiarity, age in years will be either calculated as
-computed as (**age** = **year** - **byear**) or as (**ageALT** =
-**agemon**/12).
+For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
 
 3. Mapping Church Attendance
 ----------------------------
 
-The focal variable of interest is **attend**, an item measuring church
-attendance in the current year. Although it was recorded on ordinal
-scale,
-<img src="figure_rmd/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="550px" />
-its resolution allows us to treat it as continuous for the purpose of
-fitting statistical models.
+The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, <img src="figure_rmd/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="550px" /> its resolution allows us to treat it as continuous for the purpose of fitting statistical models.
 
-    ds<-(subset(dsL, year==2000)) # only for year 2000
-    summary(as.numeric(ds$attend)) # summarize as continuous variable
+``` {.r}
+ds<-(subset(dsL, year==2000)) # only for year 2000
+summary(as.numeric(ds$attend)) # summarize as continuous variable
+```
 
        Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
         1.0     1.0     3.0     3.4     6.0     8.0     965 
 
-The basic dataset contains personal identifyer (**id**), birth year
-which is also used as cohort indicator (**byear**), wave of measurement
-(**year**) and the focal variable of interest - worship attendance
-(**attend**).
+The basic dataset contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**).
 
         id byear year attend              attendF
     691 47  1982 1997     NA                 <NA>
@@ -294,70 +265,35 @@ The view lists all the data for a single subjust (id=1). There are
 
 subjects in total.
 
-We have data on attendance for 12 years, from 2000 to 2011. Figure 2
-gives a cross-sectional frequency distribution of the data across the
-years. \#\#\#\# Figure 2. Relative frequency of responses for each
-observed wave
-<img src="figure_rmd/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="700px" />
+We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years. \#\#\#\# Figure 2. Relative frequency of responses for each observed wave <img src="figure_rmd/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="700px" />
 
-Modeling how the frequencies of endorsing particular response item will
-be the focus of Markov model, which renders well in cross-sectional
-representations. However, LCM and GMM work with longitudinal data,
-modeling the trajectory of each individual. The trajectories of subjects
-with **id**s of 4, 25, 35, and 47 are plotted in the next graph
+Modeling how the frequencies of endorsing particular response item will be the focus of Markov model, which renders well in cross-sectional representations. However, LCM and GMM work with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
 
     Warning: Removed 12 rows containing missing values (geom_path).
     Warning: Removed 12 rows containing missing values (geom_point).
 
 <img src="figure_rmd/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="700px" />
 
-The respondent **id**=35 reported attending no worship services in any
-of the years, while respodent **id**=25 seemed to frequent it,
-indicating weekly attendance in 8 out of the 12 years. Individual
-**id**=47 started as a fairly regular attendee of religious services in
-2000 (5= "about twice a month"), then gradually declined his involvement
-to nill in 2009 and on. Respondent **id**=4, on the other hand started
-off with a rather passive involvement, reporting attended church only
-"Once or twice" in 2000, maintained a low level of participation
-throughout the years, only to surge his attendance in 2011. Each of
-these trajectories imply a story, a life scenario. Why one person grows
-in his religious involvement, while other declines, or never develops an
-interest in the first place? Latent curve models will describe
-intraindividual trajectories of change, while summarizinig the
-interindividual similarities and trends.
+The respondent **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting attended church only "Once or twice" in 2000, maintained a low level of participation throughout the years, only to surge his attendance in 2011. Each of these trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.
 
-Previous research in religiousity indicated that age might be one of the
-primary factors explaining interindividual differences in church
-attendance. To examine the role of age, we change the metric of time
-from waves of measurement, as in the previous graph, to biological age.
+Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
 
     Warning: Removed 12 rows containing missing values (geom_path).
     Warning: Removed 12 rows containing missing values (geom_point).
 
 <img src="figure_rmd/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="700px" />
 
-Persons **id**=35 and **id**=25 are peers, in 2000 they were both 17.
-Respondent **id**=47 is a year older, in 2000 he was 18. The oldest is
-**id**=4, who by the last round of measurement in 2011 is 30 years of
-age. Perhaps, his increased church attendance could be explained by
-starting a family of his own?
+Persons **id**=35 and **id**=25 are peers, in 2000 they were both 17. Respondent **id**=47 is a year older, in 2000 he was 18. The oldest is **id**=4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
 
-(ASIDE NOTE: this figure reveals an important detail about the NLSY97
-data. The variable **ageyear** records the full number of years a
-respondent reached at the time of the interview. Due to difficulties of
-administering the survey, time intervals between the waves could differ.
-For example, for person **id**=25 the age was recorded as 21 years for
-both 2003 and 2004. However, when you examine age in months (**agemon**)
-you can see this is rounding issue that disappears once a more precise
-scale is used. To avoid this potentially confusing peculiarity, age in
-years will be either calculated as computed as (age = **year** -
-**byear**) or as (ageALT = **agemon**/12).
+(ASIDE NOTE: this figure reveals an important detail about the NLSY97 data. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. For example, for person **id**=25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (age = **year** - **byear**) or as (ageALT = **agemon**/12).
 
-    ds<- dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
-    ds<- ds[ds$id %in% c(25),]
-    ds$age<-ds$year-ds$byear
-    ds$ageALT<- ds$agemon/12
-    print(ds)
+``` {.r}
+ds<- dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
+ds<- ds[ds$id %in% c(25),]
+ds$age<-ds$year-ds$byear
+ds$ageALT<- ds$agemon/12
+print(ds)
+```
 
         id byear year attend ageyear agemon age ageALT
     364 25  1983 2000      5      17    214  17  17.83
@@ -376,13 +312,11 @@ years will be either calculated as computed as (age = **year** -
 4. Selecting and Augmenting data for modeling
 ---------------------------------------------
 
-We need only a few variables at any given moment in the process of
-modeling, so let's select only those we need to describe how
-respondents' church attendance was changing across time and age. Let's
-start with picking person's id, wave of measurement, and church
-attendance
+We need only a few variables at any given moment in the process of modeling, so let's select only those we need to describe how respondents' church attendance was changing across time and age. Let's start with picking person's id, wave of measurement, and church attendance
 
-    print (dsL[dsL$id==1,c("id","year","attend")])
+``` {.r}
+print (dsL[dsL$id==1,c("id","year","attend")])
+```
 
        id year attend
     1   1 1997     NA
@@ -401,12 +335,13 @@ attendance
     14  1 2010      1
     15  1 2011      1
 
-Now, let's add to the selection person's year of birth and age in months
-at the time of the interview
+Now, let's add to the selection person's year of birth and age in months at the time of the interview
 
-    selectCols<-c("year","id","byear","agemon","attend") # type in variable name
-    ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
-    print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
+``` {.r}
+selectCols<-c("year","id","byear","agemon","attend") # type in variable name
+ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
+print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
+```
 
        year id byear agemon attend
     1  1997  1  1981    190     NA
@@ -425,11 +360,12 @@ at the time of the interview
     14 2010  1  1981    350      1
     15 2011  1  1981    360      1
 
-Generally we can select any desired dataset by formula **dataset**[
-*condition for rows* , *condition for columns* ]
+Generally we can select any desired dataset by formula **dataset**[ *condition for rows* , *condition for columns* ]
 
-    ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
-    print(ds[ds$id==1,]) 
+``` {.r}
+ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
+print(ds[ds$id==1,]) 
+```
 
        id byear year         attendF ageyearF agemon
     4   1  1981 2000           Never       19    231

@@ -6,6 +6,9 @@ output:
     number_sections: yes
     theme: journal
     toc: yes
+  md_document:
+    toc: yes
+    variant: markdown_github
 ---
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->

@@ -14,10 +14,11 @@ allreps<- c(pathDerive, pathDatabox,pathMetrics, pathLCM )
 buildthese <- c(pathMetrics)
 #####################
 
-testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
+testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
 # Build the reports
 for( pathRmd in buildthese ) {
   rmarkdown::render(input = pathRmd, 
                     output_format=c( "html_document","md_document"),
+                    
                     clean=TRUE)
 }
