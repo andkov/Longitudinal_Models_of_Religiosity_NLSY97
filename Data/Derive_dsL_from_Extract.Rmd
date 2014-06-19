@@ -1,14 +1,13 @@
 ---
 output:
-  pdf_document:
-    toc: yes
   html_document:
     fig_caption: yes
-    number_sections: no
+    number_sections: yes
+    theme: journal
     toc: yes
-  word_document:
-    fig_height: 5
-    fig_width: 7
+  md_document:
+    toc: yes
+    variant: markdown_github
 ---
 Deriving clean dataset **dsL** from NLSY97 extract
 =================================================
@@ -92,7 +91,7 @@ nrow(dsSource)
 ```
 respondents.
 
-Dictionary file is imported into Excel file "ItemMapping_20042014.xlsx", where variables are renamed and organized with respect to occasssions of their measurement. Renaming and data additional data grooming is described in **@knitr TweakData** chunk of the associated .R file. The result is Variable-by-occasion databox slice. 
+Dictionary file is imported into Excel file "ItemMapping_20042014.xlsx", where variables are renamed and organized with respect to occasssions of their measurement. Renaming and  additional data grooming are described in **@knitr TweakData** chunk of the sourced .R file. The result is variable-by-occasion databox slice. 
 
 
 ###  Databox, VO-slice of the selected variables

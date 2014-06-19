@@ -11,7 +11,7 @@ pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
 descriptives<-c(pathDatabox,pathMetrics)
 allreps<- c(pathDerive, pathDatabox,pathMetrics, pathLCM )
 # Select  report or group of reports to build:
-buildthese <- c(pathDerive, pathMetric )
+buildthese <- c(pathMetrics, pathDerive )
 #####################
 
 testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
