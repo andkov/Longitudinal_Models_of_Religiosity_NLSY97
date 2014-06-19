@@ -1,11 +1,12 @@
 This folder contains modeling projects.  
 
-In [Models/Descriptives](./Descriptives), report [Metrics.md](./Descriptives/Metrics.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance.Another report [Databox.md](./Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that populate the interactive [databox](http://statcanvas.net/thesis/databox/index.html)
+In [Models/Descriptives](./Descriptives), report [Metrics.md](./Descriptives/Metrics.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance. Another report [Databox.md](./Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that populate the interactive [databox](http://statcanvas.net/thesis/databox/index.html)
 
  [Models/LCM](./LCM) fits a sequence of LCM models and organizes models for synthesis.  
  [Models/GMM](./GMM) fits a sequence of GMM models and organizes models for synthesis.  
  [Models/ME](./ME) fits a sequence of M/E models and organizes models for synthesis.  
 
+Folder [figure_rmd](./figure_rmd) hosts the images used by knitr reports nested in this folder.
 ### About the models
 
 Latent curve models (**LCM**) test certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership. 
