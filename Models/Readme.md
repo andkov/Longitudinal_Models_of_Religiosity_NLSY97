@@ -1,9 +1,14 @@
 
-Research Methodology
+Models of the data
 ========================================================
 
 
-Three different classes of models are considered in relation to the same same data of religious attendance.
+In [Models/Descriptives](./Models/Descriptives), report [Metrics.md](./Models/Descriptives/Metrics.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance. Another report [Databox.md](./Models/Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that are s in the interactive [databox](http://statcanvas.net/thesis/databox/index.html)
+
+In [Models/LCM](./Models/LCM), fits a sequence of LCM models and organizes models for synthesis.
+
+
+### About the models
 
 Latent curve models (**LCM**) test certain shapes of the time effect (linear, quadratic, and cubic ) in search of the best fitting common trajectory that describes church attendance between 2000 and 2011, regressing random terms on cohort membership. 
 
