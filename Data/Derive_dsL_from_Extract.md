@@ -18,13 +18,12 @@ This report narrates the origin of dataset used in the study.
 
 To explore the variables in the native context of NLS, go to [NLS
 Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you
-will have to register a free account with them to keep track of you
-progress), select "NLYS97 1997-2011" in the first dropdown box and then
-click on "Choose File" under "Upload Tagset." Select the file
-"NLSY97\_Religiosity\_20042014.NLSY97" from the folder
-"**/Documentation/data/NLSY97\_Religiosity\_20042014**", in the GitHub
-repository. All the variables from this extract will be loaded into NLS
-Web Investigator.
+will have to register a free account to keep track of your progress),
+select "NLYS97 1997-2011" in the first dropdown box and then click
+"Choose File" under "Upload Tagset." Select the file
+**NLSY97\_Religiosity\_20042014.NLSY97** from the folder
+**/Data/Extract/NLSY97\_Religiosity\_20042014**. All the variables from
+this extract will be loaded into NLS Web Investigator.
 
 Alternatively, one can locate the particular item of interest by copying
 and pasting its "Variable Title" it into "Word in Title" search line of
@@ -207,7 +206,7 @@ After renaming the variables, we arrange data in wide format
 
     [1] 133
 
-observations and
+variables and
 
     nrow(dsSource)
 
@@ -224,7 +223,7 @@ slice.
 
 ### Databox, VO-slice of the selected variables
 
-<img link src="./figure_rmd/3_Methods_NOCAP_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>  
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>  
 [Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
 Variables on vertical dimension and occasions on horizontal intersect

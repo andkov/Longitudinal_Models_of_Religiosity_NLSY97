@@ -74,7 +74,7 @@ After renaming the variables, we arrange data in wide format (variable/occasions
 ```{r, echo=TRUE}
 ncol(dsSource)
 ```
-observations and
+variables and
 ```{r, echo=TRUE}
 nrow(dsSource)
 ```
@@ -84,7 +84,7 @@ Dictionary file is imported into Excel file "ItemMapping_20042014.xlsx", where v
 
 
 ###  Databox, VO-slice of the selected variables
-<img link src="./figure_rmd/3_Methods_NOCAP_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>  
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>  
 [Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
 
