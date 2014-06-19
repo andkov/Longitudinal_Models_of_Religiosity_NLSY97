@@ -1,11 +1,5 @@
-##### Quick Start  
-Folder [Data](./Data) contains files involved with data import and preparation. [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset.  
 
-Folder [Models](./Models) contains modeling projects. In [Descriptives](./Models/Descriptives), report [Metrics.md](./Models/Descriptives/Metrics.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance. [Databox.md](./Models/Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that are s in the interactive [databox](http://statcanvas.net/thesis/databox/index.html).
-
-Folder [Scripts](./Scripts) contains files with R code used in various parts of the project.
-
-Folder [wwww](./www) host web templates for assembling results of data analyis and model synthesis.
+Folder [Data](./Data) contains files involved with data import and preparation. [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset. Folder [Models](./Models) contains modeling projects. In [Descriptives](./Models/Descriptives), report [Metrics.md](./Models/Descriptives/Metrics.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance. Another report [Databox.md](./Models/Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that are s in the interactive [databox](http://statcanvas.net/thesis/databox/index.html).Folder [Scripts](./Scripts) contains files with R code used in various parts of the project. Folder [wwww](./www) host web templates for assembling results of data analyis and model synthesis.
 
 Graphical Methods for Evaluating Longitudinal Models: Application to NLSY97 Religiosity Data.
 ========================================================
