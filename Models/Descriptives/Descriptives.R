@@ -16,6 +16,7 @@ require(ggplot2)
 
 ############################
 ## @knitr LoadData
+pathDir<- getwd()
 pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd") # to store .pngs
 dsL<-readRDS("./Data/Derived/dsL.rds")
 

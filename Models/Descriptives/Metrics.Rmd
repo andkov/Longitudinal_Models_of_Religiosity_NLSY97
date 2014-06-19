@@ -31,8 +31,8 @@ echoChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
 ```
-
-
+Metrics: labeling factors and exploring scales
+==============================================
 Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
 Sections:  
@@ -49,7 +49,6 @@ Sections:
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
-dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 
 

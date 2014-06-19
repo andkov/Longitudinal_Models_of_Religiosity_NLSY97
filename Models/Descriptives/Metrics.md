@@ -2,7 +2,8 @@
 
 
 
-
+Metrics: labeling factors and exploring scales
+==============================================
 
 Report explains how the response categories from NLSY97 questionnaire
 are labeled and demonstrates application of labeled factors in data
