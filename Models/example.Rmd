@@ -1,5 +1,7 @@
 ---
 title: "Untitled"
+output: md_document:
+variant: markdown_github
 ---
 ```{r, echo=F, message=F} 
 require(knitr)
