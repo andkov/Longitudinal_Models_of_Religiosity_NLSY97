@@ -294,7 +294,7 @@ report explains how script
 sourced here augementes **dsL** with a copy of initial variables saved
 as labeled factors.
 
-    source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
+    source(file.path(pathDir,"Scripts/Data/LabelingFactorLevels.R"))
     #############################
 
 One can alternate between the raw metric and labeled factors by adding

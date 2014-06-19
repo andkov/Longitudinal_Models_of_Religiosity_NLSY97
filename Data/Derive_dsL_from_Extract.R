@@ -292,7 +292,7 @@ dsL<-dsLTI[dsL_order]
 
 #############################
 ## @knitr LabelFactors
-source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
+source(file.path(pathDir,"Scripts/Data/LabelingFactorLevels.R"))
 #############################
 ## @knitr SaveDerivedData
 
