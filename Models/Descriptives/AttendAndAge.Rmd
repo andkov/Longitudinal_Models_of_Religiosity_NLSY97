@@ -38,6 +38,7 @@ read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
+dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 
 ```{r TweakData, echo=F, message=T}

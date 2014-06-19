@@ -5,6 +5,8 @@ This report offers basic statical graphs describing  NLSY97 religiosity data. Fo
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
+require(knitr)
+require(rmarkdown)
 opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 
 ```
@@ -42,6 +44,7 @@ read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr cal
 We load the dataset **dsL**, which was obtained by the report [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) and saved as a **.rds** dataset file, native to R.
 
 ```{r LoadData, echo=echoChunks, message=FALSE}
+dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 
 ```{r TweakData, echo=echoChunks, message=FALSE}

@@ -1,7 +1,6 @@
 #  The following script declares the factor labels to be used with  **dsL**
 #
 ###########################################################################
-dsL<-readRDS("./Data/Derived/dsL.rds")
 dsLF<- dsL
 #### SCALES  ####
 
@@ -258,5 +257,5 @@ dsL_orderF<- c("sampleF"  ,"idF"  ,"sexF"	,"raceF"	,"bmonthF"	,"byearF"	,"attend
 dsLF<- dsLF[,dsL_orderF]
 dsL<- cbind(dsL,dsLF)
 
-
+rm(dsLF)
 

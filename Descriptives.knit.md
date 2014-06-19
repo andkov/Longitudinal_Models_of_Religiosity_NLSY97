@@ -7,11 +7,7 @@ This report offers basic statical graphs describing  NLSY97 religiosity data. Fo
 
 
 
-
 <!-- Set the report-wide options, and point to the external code file. -->
-
-
-
 
 
 
@@ -25,12 +21,9 @@ We load the dataset **dsL**, which was obtained by the report [Derive_dsL_from_E
 
 
 
-
-
 ```r
 # see code in .Rmd file
 ```
-
 
 Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/) of the selected sample, described in the [Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm) chapter and located in the [Results](http://statcanvas.net/thesis/IV_Results/04_Results.htm) chapter of the dissertation.
 <img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
@@ -76,7 +69,6 @@ str(dsL)
  $ computer   : num  NA NA NA NA NA 5 NA NA NA NA ...
  $ internet   : num  NA NA NA NA NA NA 1 0 1 1 ...
 ```
-
 Estimations routines such as lm4 or graphing  functions such as ggplot sometimes get fussy about passing factors as opposed to integers or number. It's convenient to have quick access to both. Instead of replacing the initial variables with factors, we'll create parallel set of variables. The script [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) augments the initial dataset **dsL** with such. The new data set **dsLF** (ds - dataset, L - in long format, F - with copy of variables as factors) contains both raw and labeled variables.
 
 ```r
@@ -146,7 +138,6 @@ str(dsLF)
  $ computerF   : Ord.factor w/ 6 levels "None"<"less than 1"<..: NA NA NA NA NA 5 NA NA NA NA ...
  $ internetF   : Ord.factor w/ 2 levels "No"<"Yes": NA NA NA NA NA NA 2 1 2 2 ...
 ```
-
 This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels.
 
 ```r
@@ -173,7 +164,6 @@ print(ds[ds$id==1,])  # print all availible data for respondent with ID number o
 14 2010  1  1981      1           Never
 15 2011  1  1981      1           Never
 ```
-
 Having quick access to factor labels will come especially handy during graph production.
 
 ### Mapping Church Attendance
@@ -201,7 +191,6 @@ print (dsL[dsL$id==1,c("id","year","attend")])
 14  1 2010      1
 15  1 2011      1
 ```
-
 Now, let's add to the selection person's year of birth and age in months at the time of the interview
 
 ```r
@@ -228,50 +217,10 @@ print(ds[ds$id==1,])  # print all availible data for respondent with ID number o
 14 2010  1  1981    350      1
 15 2011  1  1981    360      1
 ```
-
 Generally we can select any desired dataset by formula **dataset**[  _condition for rows_  ,  _condition for columns_  ]
 
-```r
-ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
-```
-
-```
-Error: undefined columns selected
-```
-
-```r
-print(ds[ds$id==1,]) 
-```
-
-```
-   year id byear agemon attend
-1  1997  1  1981    190     NA
-2  1998  1  1981    206     NA
-3  1999  1  1981    219     NA
-4  2000  1  1981    231      1
-5  2001  1  1981    243      6
-6  2002  1  1981    256      2
-7  2003  1  1981    266      1
-8  2004  1  1981    279      1
-9  2005  1  1981    290      1
-10 2006  1  1981    302      1
-11 2007  1  1981    313      1
-12 2008  1  1981    325      1
-13 2009  1  1981    337      1
-14 2010  1  1981    350      1
-15 2011  1  1981    360      1
-```
 
 
 
-
-
-
-
-
-
-```r
-source(file.path(pathDir,"UtilityScripts/produceMDandHTML.R"))
-```
 
 
