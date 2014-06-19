@@ -37,7 +37,7 @@ read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls f
 ```
 
 
-## Working with NLS Investigator
+### Working with NLS Investigator
 
 To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you will have to register a free account with them to keep track of you progress), select "NLYS97 1997-2011" in the first dropdown box and then click on "Choose File" under "Upload Tagset." Select the file "NLSY97_Religiosity_20042014.NLSY97" from the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", in the GitHub repository. All the variables from this extract will be loaded into NLS Web Investigator.
 
@@ -104,7 +104,7 @@ Context variables and covariates are on white background. The top section gives 
 
 To review original questionnaire cards of NLSY97 as well as descriptive statistics for the selected variables see the [Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
-## Clean dataset
+### dsL - initial dataset
 This databox slice corresponds to the dataset **dsL**
 
 <img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="dsL" style="width:900px;"/>  
@@ -112,17 +112,12 @@ This databox slice corresponds to the dataset **dsL**
 which transposes the former, distributing variables on the horizontal axis.  Variable **year** keeps track of measurement round and  separated two kinds of variables: those, which values do not change with time and those that were measured at multiple occasions. This distinction will be of convenience in later discussion of statistical models. The dataset in figure 3.3 is referred to as ***dsL*** throughout this work and the accompanying R code .  It defines the scope of NLSY97 data used in the current study and has a direct correspondence to the databox slice from figure 3.2. While other variables of interest might be added in course or reproduction of this research, it is useful to think of such dataset as a midway point between raw data and model-specific datasets
 
 ### Factor labels
+The first section **Labeling Factors** of the [Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Metrics.md) report explains how script [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) sourced here augementes  **dsL** with copy of initial variables saved as labeled factors. One can 
 
-In graph production with R, the scale of the variables is indicative of mapping fucntion applied to it. Therefore it is frequently of great convenience to 
 
+
+### Saving clean dataset
 Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R.
 ```{r SaveDerivedData, echo=T, message=T}
 ```
-
-
-
-Additional considerations
-=================================================
-
-
 

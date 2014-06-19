@@ -11,7 +11,7 @@ pathMetrics<- base::file.path("./Models/Descriptives/Metrics.Rmd")
 
 allreps<- c(pathDerive, pathDescriptives, pathLCM, pathAAA, pathLabelFactors )
 
-pathsReports <-c(pathMetrics)
+pathsReports <-c(pathMetrics, pathDerive)
 testit::assert("The knitr Rmd files should exist.", base::file.exists(pathsReports))
 
 # Build the reports

@@ -58,40 +58,6 @@ Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/
 <img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
 This databox corresponds to the dataset **dsL** the screenshot of which is given below
 <img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/>  
-### Organizing the metrics 
-Review of the item reference [cards](http://statcanvas.net/thesis/databox/) shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger
-```{r}
-str(dsL)
-
-```
-Estimations routines such as lm4 or graphing  functions such as ggplot sometimes get fussy about passing factors as opposed to integers or number. It's convenient to have quick access to both. Instead of replacing the initial variables with factors, we'll create parallel set of variables. The script [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) augments the initial dataset **dsL** with such. The new data set **dsLF** (ds - dataset, L - in long format, F - with copy of variables as factors) contains both raw and labeled variables.
-```{r}
-str(dsLF)
-```
-This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels.
-```{r}
-selectCols<-c("year","id","byear","attend","attendF") # type in variable name
-ds<-dsLF[,selectCols] # select all rows and only columns listed in the object selectCols
-print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
-```
-Having quick access to factor labels will come especially handy during graph production.
-
-### Mapping Church Attendance
-We don't need all the variables at the moment, so let's select only those we need to describe how respondents' church attendance was changing across time. Let's start with picking person's id, wave of measurement, and church attendance
-```{r}
-print (dsL[dsL$id==1,c("id","year","attend")])
-```
-Now, let's add to the selection person's year of birth and age in months at the time of the interview
-```{r, echo=TRUE}
-selectCols<-c("year","id","byear","agemon","attend") # type in variable name
-ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
-print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
-```
-Generally we can select any desired dataset by formula **dataset**[  _condition for rows_  ,  _condition for columns_  ]
-```{r}
-ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
-print(ds[ds$id==1,]) 
-```
 
 
 

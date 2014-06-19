@@ -10,17 +10,29 @@ opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk 
 
 ```
 
-<!-- Set the report-wide options, and point to the external code file. -->
 ```{r set_options, echo=F, message=F}
 require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 4.8, 
+  fig.width = 6.5, 
+  out.width = "550px",
+  fig.path = 'figure_rmd/',     
+  dev = "png",
+#   fig.path = 'figure_pdf/',     
+#   dev = "pdf",
+  dpi = 400
+)
 echoChunks <- FALSE
 options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Models/Descriptives/Metrics.R") # the file to which knitr calls for the chunks
 ```
 
 
-======================================
-explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
+Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
 Sections:
 1. Labeling Factor Levels
@@ -39,14 +51,38 @@ Sections:
 dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 
+[Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
+
+
+
+
+### Labeling Factor Levels
+Review of the item reference [cards](http://statcanvas.net/thesis/databox/) shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger
+```{r}
+str(dsL)
+
+```
+For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves to be convenience. Instead of replacing the initial variables with factors, we'll create parallel set of variables. The script  at the end of [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) augments the initial dataset **dsL** with copy of initial variables saved as labeled factors. 
+```{r}
+str(dsL)
+```
+This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels.
+```{r}
+selectCols<-c("year","id","byear","attend","attendF") # type in variable name
+ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
+print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
+```
+Having quick access to factor labels will come especially handy during graph production.
+
+
+
+
 
 ## Age-Period-Cohort Structure
-
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
 <img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Looking up items" style="width:700px ;"/>
 
 There are several indicators of age in NSLY97 that vary in precision. Birth cohort is the most general one, it was recorded once. Two variables were recorded at each interview: age at the time of the interview in months (**agemon**) and years (**ageyear**). Those are not derivatives of each other, but, understandably, are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
-
 ```{r}
 dsLCM<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
 ds<- dsLCM[dsLCM$id %in% c(25),]
@@ -54,5 +90,24 @@ ds$age<-ds$year-ds$byear
 ds$ageALT<- ds$agemon/12
 print(ds)
 ```
-
 For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
+
+
+
+
+### Mapping Church Attendance
+We don't need all the variables at the moment, so let's select only those we need to describe how respondents' church attendance was changing across time. Let's start with picking person's id, wave of measurement, and church attendance
+```{r}
+print (dsL[dsL$id==1,c("id","year","attend")])
+```
+Now, let's add to the selection person's year of birth and age in months at the time of the interview
+```{r, echo=TRUE}
+selectCols<-c("year","id","byear","agemon","attend") # type in variable name
+ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
+print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
+```
+Generally we can select any desired dataset by formula **dataset**[  _condition for rows_  ,  _condition for columns_  ]
+```{r}
+ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
+print(ds[ds$id==1,]) 
+```
