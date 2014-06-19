@@ -289,7 +289,7 @@ as a midway point between raw data and model-specific datasets
 ### Factor labels
 
 The first section **Labeling Factors** of the
-[Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Metrics.md)
+[Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md)
 report explains how script
 [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R)
 sourced here augementes **dsL** with a copy of initial variables saved
@@ -333,10 +333,10 @@ an "F" suffix to the end of the variable name:
 
 Finally, we output the created clean dataset **dsL** as a .cvs file.
 Also, it is saved in an .rds format, native to R, which preserves factor
-levels, not saved in .csv. This report is the most computation and time
-consuming, so it is typically omitted from the reproduction cycle.
-Instead, from now on, the initial point of departure for data projects
-will be an import of **dsL.rds** file produced by this report.
+levels, not saved in .csv. This report is computation and time costly,
+so it is typically omitted from the reproduction cycle. Instead, from
+now on, the initial point of departure for data projects will be the
+import of **dsL.rds** file produced by this report.
 
     pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
     write.csv(dsL,pathdsL,  row.names=FALSE)

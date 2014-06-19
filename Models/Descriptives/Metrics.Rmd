@@ -51,9 +51,15 @@ Sections:
 dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 
-[Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
 
-
+### Data In
+Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/) of the selected sample, described in the [Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm) chapter.
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
+This [databox](http://statcanvas.net/thesis/databox/) corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) report. 
+```{r echo=T, message=T}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+```
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/> 
 
 
 ### Labeling Factor Levels
@@ -76,9 +82,7 @@ Having quick access to factor labels will come especially handy during graph pro
 
 
 
-
-
-## Age-Period-Cohort Structure
+## Time metrics : Age, Period, Cohort
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
 <img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Looking up items" style="width:700px ;"/>
 
@@ -96,7 +100,16 @@ For example, for one person **id**=25 the age was recorded as 21 years for both 
 
 
 ### Mapping Church Attendance
-We don't need all the variables at the moment, so let's select only those we need to describe how respondents' church attendance was changing across time. Let's start with picking person's id, wave of measurement, and church attendance
+
+
+
+
+
+
+
+
+### Selecting and Augmenting data for modeling
+We need only a few variables at any given moment in the process of modeling, so let's select only those we need to describe how respondents' church attendance was changing across time and age. Let's start with picking person's id, wave of measurement, and church attendance
 ```{r}
 print (dsL[dsL$id==1,c("id","year","attend")])
 ```

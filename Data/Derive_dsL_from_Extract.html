@@ -253,7 +253,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="factor-labels" class="section level3">
 <h3>Factor labels</h3>
-<p>The first section <strong>Labeling Factors</strong> of the <a href="https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Metrics.md">Metrics</a> report explains how script <a href="https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R">LabelingFactorLevels</a> sourced here augementes <strong>dsL</strong> with a copy of initial variables saved as labeled factors.</p>
+<p>The first section <strong>Labeling Factors</strong> of the <a href="https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md">Metrics</a> report explains how script <a href="https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R">LabelingFactorLevels</a> sourced here augementes <strong>dsL</strong> with a copy of initial variables saved as labeled factors.</p>
 <pre class="r"><code>source(file.path(pathDir,&quot;Manipulation/LabelingFactorLevels.R&quot;))
 #############################</code></pre>
 <p>One can alternate between the raw metric and labeled factors by adding an “F” suffix to the end of the variable name:</p>
@@ -284,7 +284,7 @@ str(ds)</code></pre>
 </div>
 <div id="saving-clean-dataset" class="section level3">
 <h3>Saving clean dataset</h3>
-<p>Finally, we output the created clean dataset <strong>dsL</strong> as a .cvs file. Also, it is saved in an .rds format, native to R, which preserves factor levels, not saved in .csv. This report is the most computation and time consuming, so it is typically omitted from the reproduction cycle. Instead, from now on, the initial point of departure for data projects will be an import of <strong>dsL.rds</strong> file produced by this report.</p>
+<p>Finally, we output the created clean dataset <strong>dsL</strong> as a .cvs file. Also, it is saved in an .rds format, native to R, which preserves factor levels, not saved in .csv. This report is computation and time costly, so it is typically omitted from the reproduction cycle. Instead, from now on, the initial point of departure for data projects will be the import of <strong>dsL.rds</strong> file produced by this report.</p>
 <pre class="r"><code>pathdsL &lt;- file.path(getwd(),&quot;Data/Derived/dsL.csv&quot;)
 write.csv(dsL,pathdsL,  row.names=FALSE)
 

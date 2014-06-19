@@ -3,7 +3,8 @@ rm(list=ls(all=TRUE))  #Clear the variables from previous runs.
 
 ############################
 ## @knitr DeclareGlobals
-
+# Palett for attendance
+attcol8<-c("#4575b4","#74add1","#abd9e9", "#e0f3f8", "#fee090", "#fdae61" ,"#f46d43", "#d73027")
 
 ############################
 ## @knitr LoadPackages
@@ -19,7 +20,7 @@ pathDir<-getwd()
 pathdsL<-file.path(pathDir,"Data/Derived/dsL.rds") # labeled factors, clean ds
 pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd") # to store .pngs
 dsL<-readRDS("./Data/Derived/dsL.rds")
-dsLF<-readRDS("./Data/Derived/dsLF.rds")
+
 # str(dsL)
 
 # Variables that do not change with time, TI - time invariant
