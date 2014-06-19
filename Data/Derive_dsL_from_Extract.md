@@ -14,8 +14,7 @@ This report narrates the origin of dataset used in the study.
 
 
 
-Working with NLS Investigator
------------------------------
+### Working with NLS Investigator
 
 To explore the variables in the native context of NLS, go to [NLS
 Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you
@@ -269,8 +268,7 @@ To review original questionnaire cards of NLSY97 as well as descriptive
 statistics for the selected variables see the [Interactive
 version](http://statcanvas.net/thesis/databox/index.html)
 
-Clean dataset
--------------
+### dsL - initial dataset
 
 This databox slice corresponds to the dataset **dsL**
 
@@ -290,12 +288,55 @@ as a midway point between raw data and model-specific datasets
 
 ### Factor labels
 
-In graph production with R, the scale of the variables is indicative of
-mapping fucntion applied to it. Therefore it is frequently of great
-convenience to
+The first section **Labeling Factors** of the
+[Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Metrics.md)
+report explains how script
+[LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R)
+sourced here augementes **dsL** with a copy of initial variables saved
+as labeled factors.
+
+    source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
+    #############################
+
+One can alternate between the raw metric and labeled factors by adding
+an "F" suffix to the end of the variable name:
+
+    ds<- dsL[dsL$id==1,c("id","year","attend","attendF")]
+    str(ds)
+
+    'data.frame':   15 obs. of  4 variables:
+     $ id     : int  1 1 1 1 1 1 1 1 1 1 ...
+     $ year   : int  1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 ...
+     $ attend : num  NA NA NA 1 6 2 1 1 1 1 ...
+     $ attendF: Ord.factor w/ 8 levels "Never"<"Once or Twice"<..: NA NA NA 1 6 2 1 1 1 1 ...
+
+    print(ds)
+
+       id year attend         attendF
+    1   1 1997     NA            <NA>
+    2   1 1998     NA            <NA>
+    3   1 1999     NA            <NA>
+    4   1 2000      1           Never
+    5   1 2001      6 About once/week
+    6   1 2002      2   Once or Twice
+    7   1 2003      1           Never
+    8   1 2004      1           Never
+    9   1 2005      1           Never
+    10  1 2006      1           Never
+    11  1 2007      1           Never
+    12  1 2008      1           Never
+    13  1 2009      1           Never
+    14  1 2010      1           Never
+    15  1 2011      1           Never
+
+### Saving clean dataset
 
 Finally, we output the created clean dataset **dsL** as a .cvs file.
-Also, it is saved in an .rds format, native to R.
+Also, it is saved in an .rds format, native to R, which preserves factor
+levels, not saved in .csv. This report is the most computation and time
+consuming, so it is typically omitted from the reproduction cycle.
+Instead, from now on, the initial point of departure for data projects
+will be an import of **dsL.rds** file produced by this report.
 
     pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
     write.csv(dsL,pathdsL,  row.names=FALSE)
@@ -304,6 +345,3 @@ Also, it is saved in an .rds format, native to R.
     saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
 
     ###########################
-
-Additional considerations
-=========================

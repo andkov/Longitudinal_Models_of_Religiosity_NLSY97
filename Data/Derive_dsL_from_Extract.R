@@ -292,11 +292,6 @@ dsL<-dsLTI[dsL_order]
 
 #############################
 ## @knitr LabelFactors
-# Assigns labels to categorical variables
-# This code adds an alternative record for each variable in dsL- labeled as factors
-# To call a variable as a factor (as opposed to the raw value from NLSY97) add a suffix "F" for "FACTOR" to the end of selected variable
-# dsL$sample - selects raw values
-# dsL$sampleF - selects labeled levels of a factor
 source(file.path(pathDir,"Manipulation/LabelingFactorLevels.R"))
 #############################
 ## @knitr SaveDerivedData
