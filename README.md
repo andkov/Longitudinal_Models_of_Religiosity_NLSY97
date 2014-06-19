@@ -1,5 +1,5 @@
 Quick Start  
-Folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) contains files involved with data import and preparation. [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset. [Metrics.md](./Models/Descriptives/Metricsssssssssssss.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance. [Databox.md](./Models/Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that are assebled in the interactive [databox](http://statcanvas.net/thesis/databox/index.html).
+Folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) contains files involved with data import and preparation. [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset. [Metrics.md](./Models/Descriptives/Metrics.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance. [Databox.md](./Models/Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that are assebled in the interactive [databox](http://statcanvas.net/thesis/databox/index.html).
 
 
 Graphical Methods for Evaluating Longitudinal Models: Application to NLSY97 Religiosity Data.
@@ -46,7 +46,7 @@ Literature on psychology and sociology of religion suggest that church attendanc
 <img link src="./Data/figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
  
 ###  Dataset dsL
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/> 
+<img link src="./Data/figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/> 
 
 
 
