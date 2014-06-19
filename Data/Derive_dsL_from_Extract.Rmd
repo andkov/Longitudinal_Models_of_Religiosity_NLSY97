@@ -1,3 +1,15 @@
+---
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    fig_caption: yes
+    number_sections: no
+    toc: yes
+  word_document:
+    fig_height: 5
+    fig_width: 7
+---
 Deriving clean dataset **dsL** from NLSY97 extract
 =================================================
 This report narrates the origin of dataset used in the study. 

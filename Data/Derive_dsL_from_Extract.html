@@ -52,6 +52,19 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
+<div id="TOC">
+<ul>
+<li><a href="#deriving-clean-dataset-dsl-from-nlsy97-extract">Deriving clean dataset <strong>dsL</strong> from NLSY97 extract</a><ul>
+<li><a href="#working-with-nls-investigator">Working with NLS Investigator</a></li>
+<li><a href="#data-retrieval">Data Retrieval</a></li>
+<li><a href="#databox-vo-slice-of-the-selected-variables">Databox, VO-slice of the selected variables</a></li>
+<li><a href="#religiosity-context-and-covariates">Religiosity, Context, and Covariates</a></li>
+<li><a href="#dsl---initial-dataset">dsL - initial dataset</a></li>
+<li><a href="#factor-labels">Factor labels</a></li>
+<li><a href="#saving-clean-dataset">Saving clean dataset</a></li>
+</ul></li>
+</ul>
+</div>
 
 <div id="deriving-clean-dataset-dsl-from-nlsy97-extract" class="section level1">
 <h1>Deriving clean dataset <strong>dsL</strong> from NLSY97 extract</h1>
@@ -254,7 +267,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="factor-labels" class="section level3">
 <h3>Factor labels</h3>
 <p>The first section <strong>Labeling Factors</strong> of the <a href="https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md">Metrics</a> report explains how script <a href="https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R">LabelingFactorLevels</a> sourced here augementes <strong>dsL</strong> with a copy of initial variables saved as labeled factors.</p>
-<pre class="r"><code>source(file.path(pathDir,&quot;Manipulation/LabelingFactorLevels.R&quot;))
+<pre class="r"><code>source(file.path(pathDir,&quot;Scripts/Data/LabelingFactorLevels.R&quot;))
 #############################</code></pre>
 <p>One can alternate between the raw metric and labeled factors by adding an “F” suffix to the end of the variable name:</p>
 <pre class="r"><code>ds&lt;- dsL[dsL$id==1,c(&quot;id&quot;,&quot;year&quot;,&quot;attend&quot;,&quot;attendF&quot;)]
