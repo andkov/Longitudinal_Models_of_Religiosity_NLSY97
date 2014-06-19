@@ -16,8 +16,6 @@ require(ggplot2)
 
 ############################
 ## @knitr LoadData
-pathDir<-getwd() 
-pathdsL<-file.path(pathDir,"Data/Derived/dsL.rds") # labeled factors, clean ds
 pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd") # to store .pngs
 dsL<-readRDS("./Data/Derived/dsL.rds")
 
@@ -31,7 +29,6 @@ TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefP
 ## @knitr TweakData
 
 
-##...dsDSR
 
 ############################
 ## @knitr AnalysisChunk01
