@@ -4,7 +4,7 @@ Working with NLSY97 Extract
 
 ## Trace the origins of datasets - prepare for modeling
 
-The folder [Extracts](./Extracts) contains the original objects downloaded from [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp). The downloaded extract file is transformed into the dataset ***dsL***  by manipulations of the code in [Desrive_dsL_from_Extract.R](./Derive_dsL_from_Extract.R) sourced by the report [Desrive_dsL_from_Extract.md](./Derive_dsL_from_Extract.md), which narrates the reproducibility instructions. As the result of running this report, a clean dataset **dsL** is stored in the folder [/Derived](./Derived). 
+The folder [Extracts](./Extracts) contains the original objects downloaded from [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp). The downloaded extract file is transformed into the dataset ***dsL***  by manipulations of the code in [Derive_dsL_from_Extract.R](./Derive_dsL_from_Extract.R) sourced by the report [Desrive_dsL_from_Extract.md](./Derive_dsL_from_Extract.md), which narrates the reproducibility instructions. As the result of running this report, a clean dataset **dsL** is stored in the folder [/Derived](./Derived). 
 
 
 

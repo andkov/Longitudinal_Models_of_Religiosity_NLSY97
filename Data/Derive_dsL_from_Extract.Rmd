@@ -39,7 +39,7 @@ read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls f
 
 ### Working with NLS Investigator
 
-To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you will have to register a free account with them to keep track of you progress), select "NLYS97 1997-2011" in the first dropdown box and then click on "Choose File" under "Upload Tagset." Select the file "NLSY97_Religiosity_20042014.NLSY97" from the folder "**/Documentation/data/NLSY97_Religiosity_20042014**", in the GitHub repository. All the variables from this extract will be loaded into NLS Web Investigator.
+To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you will have to register a free account to keep track of your progress), select "NLYS97 1997-2011" in the first dropdown box and then click  "Choose File" under "Upload Tagset." Select the file __NLSY97_Religiosity_20042014.NLSY97__ from the folder __/Data/Extract/NLSY97_Religiosity_20042014__. All the variables from this extract will be loaded into NLS Web Investigator.
 
 Alternatively, one can locate the particular item of interest by copying and pasting its "Variable Title" it into "Word in Title" search line of the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as indicated in the graphic below. 
 

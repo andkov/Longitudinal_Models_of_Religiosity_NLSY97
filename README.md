@@ -1,3 +1,7 @@
+### Quick Start
+Folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) contains files involved with data import and preparation. [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) narrates every step in data preparation, from accessing [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) to arriving at the **dsL** dataset. [Metrics.md](./Models/Descriptives/Metricx.md) explains how raw values of selected variables are labeled, focusing the on the metrics of time and church attendance. [Databox.md](./Models/Descriptives/Databox.md)  produces the graphs and statistics for all selected variables that are assebled in the interactive [databox](http://statcanvas.net/thesis/databox/index.html).
+
+
 Graphical Methods for Evaluating Longitudinal Models: Application to NLSY97 Religiosity Data.
 ========================================================
   The study proposes several graphical innovations for  evaluating and reporting longitudinal models in social sciences.  The graphical methods demonstrated here address practical issues that arise in evaluating **sequences** of statistical models. A meaningful dimension of complexity, formed by a progression of nested or otherwise related models in a sequence, creates a context for model comparisons. The proposed graphical methods provide the researcher with visualization tools to facilitate model evaluation through data mapping and dynamic document design. Ultimately, sequence report mechanism would accomodate three type of models:
@@ -39,11 +43,12 @@ NLYS97 contains several items mapping into the domain of religiosity. One partic
 Literature on psychology and sociology of religion suggest that church attendance is highly correlated with other facets of religiosity, and might very well be the optimal indicator of broad religiosity in practice. The items selected for analysis and context are shown in the form of a databox slice. 
 
 ### Databox
-<img link src="./Data/figure_rmd/variables_layout.png" alt="Databox slice" style="width:700px;"/>  
+<img link src="./Data/figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
  
-###  Dataset
-<img link src="./Data/figure_rmd/dsL_view.png" alt="Basic dataset dsL" style="width:700px;"/>  
-Above is the view  of the study's primary dataset (id=1) for variables depicted in the databox. 
+###  Dataset dsL
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/> 
+
+
 
 ### Where to start
 If you'd rather explore the code directly, the READMEs in the root of each directory will direct you to needed .Rmd and .R files. Rmd file creates the report in Markdown format that is published to GitHub. It integrates text and images with R code chunks (marked by "## @knitr ChunkName" identifiers) You may want to start with the folder [Data](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) that narrates the origins of the dataset. There, a 
@@ -51,9 +56,8 @@ special report [Derive_dsL_from_Extract.md](https://github.com/andkov/Longitudin
 **ds** stands for "dataset" and **L** indicates that it is in LONG format, used by by most modeling and graphing packages. 
 This dataset, **dsL** is later subsetted and transformed to fit the needs of particular modeling method. Reports of these transormations are given inside corresponding model analyses (LCM, GMM, M/E).
 
-### Modeling
 
-Modeling techniques used in the study are listed in [/Models](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models) folder in the root of the repository. They include [LCM](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/LCM), [GMM](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/GMM), and [Markov/EMOSA](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/ME). New modeling projects should be added there. 
+Modeling techniques used in the study are listed in [/Models](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models) folder in the root of the repository. Dissertation work applies only [LCM](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/LCM), but [GMM](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/GMM), and [Markov/EMOSA](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models/ME) are added to indicate future extensions. New modeling projects also should be added to this directory. 
 
 <!--
 pathMd <- base::file.path("./", c("README.md"))
