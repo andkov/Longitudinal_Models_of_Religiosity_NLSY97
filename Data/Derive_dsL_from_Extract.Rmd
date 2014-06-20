@@ -1,4 +1,5 @@
 ---
+title: "Derive dsL"
 output:
   html_document:
     fig_caption: yes
@@ -94,7 +95,7 @@ respondents.
 Dictionary file is imported into Excel file "ItemMapping_20042014.xlsx", where variables are renamed and organized with respect to occasssions of their measurement. Renaming and  additional data grooming are described in **@knitr TweakData** chunk of the sourced .R file. The result is variable-by-occasion databox slice. 
 
 
-###  Databox, VO-slice of the selected variables
+###  Databox, variable-by-occasion slice 
 <img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>  
 [Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
@@ -123,7 +124,7 @@ This databox slice corresponds to the dataset **dsL**
 which transposes the former, distributing variables on the horizontal axis.  Variable **year** keeps track of measurement round and  separated two kinds of variables: those, which values do not change with time and those that were measured at multiple occasions. This distinction will be of convenience in later discussion of statistical models. The dataset in figure 3.3 is referred to as ***dsL*** throughout this work and the accompanying R code .  It defines the scope of NLSY97 data used in the current study and has a direct correspondence to the databox slice from figure 3.2. While other variables of interest might be added in course or reproduction of this research, it is useful to think of such dataset as a midway point between raw data and model-specific datasets
 
 ### Factor labels
-The first section **Labeling Factors** of the [Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md) report explains how script [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) sourced here augementes **dsL** with a copy of initial variables saved as labeled factors.
+The first section **Labeling Factors** of the [Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md) report explains how script [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) sourced in this report augementes **dsL** with a copy of initial variables saved as labeled factors.
 ```{r LabelFactors, echo=T, message=T}
 ```
 One can alternate between the raw metric and labeled factors by adding an "F" suffix to the end of the variable name:
@@ -134,7 +135,7 @@ print(ds)
 ```
 
 ### Saving clean dataset
-Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R, which preserves factor levels, not saved in .csv. This report is computation and time costly, so it is typically omitted from the reproduction cycle. Instead, from now on, the initial point of departure for data projects will be the import of **dsL.rds** file produced by this report.
+Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R, which preserves factor levels, not saved in .csv. This report is computationally intensive, so it is typically omitted from the reproduction cycle. Instead, from now on, the initial point of departure for data projects will be the import of **dsL.rds** file produced by this report.
 ```{r SaveDerivedData, echo=T, message=T}
 ```
 

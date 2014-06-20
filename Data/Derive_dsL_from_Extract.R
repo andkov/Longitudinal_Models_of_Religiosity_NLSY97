@@ -290,10 +290,10 @@ dsL<-dsLTI[dsL_order]
 
 
 
-#############################
+
 ## @knitr LabelFactors
 source(file.path(pathDir,"Scripts/Data/LabelingFactorLevels.R"))
-#############################
+
 ## @knitr SaveDerivedData
 
 pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
@@ -302,7 +302,6 @@ write.csv(dsL,pathdsL,  row.names=FALSE)
 pathOutputSubject <- file.path(pathDir,"Data/Derived/dsL.rds")
 saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
 
-###########################
 ## @knitr CleanUp
 # # remove all but specified dataset
 rm(list=setdiff(ls(), c("TIvars","TVvars","dsL")))

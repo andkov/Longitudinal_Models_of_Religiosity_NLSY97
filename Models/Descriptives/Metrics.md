@@ -1,9 +1,9 @@
 -   Metrics: labeling factors and exploring scales
     -   Data In
-    -   1. Labeling Factor Levels
-    -   2. Time metrics : Age, Period, Cohort
-    -   3. Mapping Church Attendance
-    -   4. Selecting and Augmenting data for modeling
+    -   Labeling Factor Levels
+    -   Time metrics : Age, Period, Cohort
+    -   Mapping Church Attendance
+    -   Selecting and Augmenting data for modeling
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
@@ -14,13 +14,8 @@ Metrics: labeling factors and exploring scales
 
 Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
-Sections:
-1. Labeling Factor Levels
-2. Age-Period-Cohort structure
-3. Mapping Church Attendance
-4. Selecting & Augmenting datasets for modeling
-
-### Data In
+Data In
+-------
 
 Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/) of the selected sample, described in the [Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm) chapter. <img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/> This [databox](http://statcanvas.net/thesis/databox/) corresponds to the dataset **dsL** produced by [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) report.
 
@@ -30,8 +25,8 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 
 \<<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/>
 
-1. Labeling Factor Levels
--------------------------
+Labeling Factor Levels
+----------------------
 
 Review of the item reference [cards](http://statcanvas.net/thesis/databox/) shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger
 
@@ -196,8 +191,8 @@ print(ds[ds$id==1,])  # print all availible data for respondent with ID number o
 
 Having quick access to factor labels will come especially handy during graph production.
 
-2. Time metrics : Age, Period, Cohort
--------------------------------------
+Time metrics : Age, Period, Cohort
+----------------------------------
 
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97. <img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Looking up items" style="width:700px ;"/>
 
@@ -227,8 +222,8 @@ print(ds)
 
 For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
 
-3. Mapping Church Attendance
-----------------------------
+Mapping Church Attendance
+-------------------------
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, <img src="figure_rmd/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="550px" /> its resolution allows us to treat it as continuous for the purpose of fitting statistical models.
 
@@ -309,8 +304,8 @@ print(ds)
     374 25  1983 2010      7      27    332  27  27.67
     375 25  1983 2011      7      28    342  28  28.50
 
-4. Selecting and Augmenting data for modeling
----------------------------------------------
+Selecting and Augmenting data for modeling
+------------------------------------------
 
 We need only a few variables at any given moment in the process of modeling, so let's select only those we need to describe how respondents' church attendance was changing across time and age. Let's start with picking person's id, wave of measurement, and church attendance
 
