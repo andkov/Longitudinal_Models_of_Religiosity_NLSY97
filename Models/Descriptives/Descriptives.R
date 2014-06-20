@@ -4,7 +4,14 @@ rm(list=ls(all=TRUE))  #Clear the variables from previous runs.
 ############################
 ## @knitr DeclareGlobals
 # Palett for attendance
-attcol8<-c("#4575b4","#74add1","#abd9e9", "#e0f3f8", "#fee090", "#fdae61" ,"#f46d43", "#d73027")
+attcol8<-c("Never"="#4575b4",
+           "Once or Twice"="#74add1",
+           "Less than once/month"="#abd9e9",
+           "About once/month"="#e0f3f8",
+           "About twice/month"="#fee090",
+           "About once/week"="#fdae61",
+           "Several times/week"="#f46d43",
+           "Everyday"="#d73027")
 
 ############################
 ## @knitr LoadPackages
@@ -19,7 +26,7 @@ require(ggplot2)
 pathDir<- getwd()
 pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd") # to store .pngs
 dsL<-readRDS("./Data/Derived/dsL.rds")
-
+# dsL<- dsL[dsL$sample==1,] # select only the cross-sample
 # str(dsL)
 
 # Variables that do not change with time, TI - time invariant

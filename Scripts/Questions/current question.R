@@ -1,25 +1,23 @@
 dsL<-readRDS("./Data/Derived/dsL.rds")
-attcol8<-c("#4575b4","#74add1","#abd9e9", "#e0f3f8", "#fee090", "#fdae61" ,"#f46d43", "#d73027")
+attcol8<-c("Never"="#4575b4",
+           "Once or Twice"="#74add1",
+           "Less than once/month"="#abd9e9",
+           "About once/month"="#e0f3f8",
+           "About twice/month"="#fee090",
+           "About once/week"="#fdae61",
+           "Several times/week"="#f46d43",
+           "Everyday"="#d73027")
 
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<-p+geom_bar()
-p + scale_fill_manual(values=attcol8)
-p<-p+coord_flip()
-p<-p+xlab("Church attendance") 
-p<-p+ylab("Count")
-p<-p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+ds<- dsL
+p<-ggplot(ds, aes(x=factor(year), fill=attendF))
+p<-p+ geom_bar(position="fill")
+p<-p+ scale_fill_manual(values = attcol8,
+                        name="Response category" )
+p<-p+ scale_y_continuous("Prevalence: proportion of total",
+                         limits=c(0, 1),
+                         breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<-p+ scale_x_discrete("Waves of measurement",
+                       limits=as.character(c(2000:2011)))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
 p
 
-
-
-# from Chang:
-# The order of the items in the values vector matches the order of the factor levels for the
-# discrete scale. In the preceding example, the order of sex is f, then m, so the first item
-# in values goes with f and the second goes with m. Here’s how to see the order of factor
-# levels:
-#   levels(heightweight$sex)
-# "f" "m"
-# If the variable is a character vector, not a factor, it will automatically be converted to a
-# factor, and by default the levels will appear in alphabetical order.
-# It’s possible to specify the colors in a different order by using a named vector:
-#   h + scale_colour_manual(values=c(m="blue", f="red"))

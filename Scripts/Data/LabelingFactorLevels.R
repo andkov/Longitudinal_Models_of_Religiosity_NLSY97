@@ -72,6 +72,14 @@ for(i in varlist){
                                levels = attendLevels,
                                labels = attendLabels)
 }
+attcol8<-c("Never"="#4575b4",
+           "Once or Twice"="#74add1",
+           "Less than once/month"="#abd9e9",
+           "About once/month"="#e0f3f8",
+           "About twice/month"="#fee090",
+           "About once/week"="#fdae61",
+           "Several times/week"="#f46d43",
+           "Everyday"="#d73027")
 ## religious preference ##################################################
 relprefLevels<- c(1:33)
 relprefLabels33<-c(

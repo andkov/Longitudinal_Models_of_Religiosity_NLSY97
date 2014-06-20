@@ -56,6 +56,8 @@ Report explains how the response categories from NLSY97 questionnaire are labele
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
+# select only respondence in the cross-sectional sample
+
 ```
 
 
@@ -65,6 +67,7 @@ Initial point of departure - the [databox][1] of the selected sample, described 
 This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][3] report. 
 ```{r echo=T, message=T}
 dsL<-readRDS("./Data/Derived/dsL.rds")
+dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
 ![View of dsL](./figure_rmd/3_Methods_Figure_3_3.png)
 
@@ -97,7 +100,7 @@ Having quick access to factor labels will be especially useful during graph prod
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
 <img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Age, Peridod, Cohort" style="width:700px ;"/>
 
-There are several indicators of age in NSLY97 that vary in precision. Birth cohort (**byear**) is the most general one, it was recorded once. Two variables were recorded at each interview: age at the time of the interview in months (**agemon**) and years (**ageyear**). Those are not derivatives of each other, but, understandably, are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
+There are several indicators of age in NSLY97 that vary in precision. Birth cohort (**byear**) is the most general one, it was recorded once. Two age variables were recorded at each interview: age at the time of the interview in months (**agemon**) and in years (**ageyear**). Those are not derivatives of each other, but are are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
 For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this  rounding issue  disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be  calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
 ```{r}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
@@ -112,33 +115,35 @@ print(ds)
 ---
 ## Mapping Church Attendance
 
-The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, 
-```{r, echo=echoChunks, message=T, fig.width = 8}
+The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
+```{r, echo=echoChunks, message=T, out.width="700px", fig.width = 8}
 p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<-p+geom_bar()
-p + scale_fill_manual(values=attcol8)
-p<-p+coord_flip()
-p<-p+xlab("Church attendance") 
-p<-p+ylab("Count")
-p<-p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
-its resolution allows us to treat it as continuous for the purpose of fitting statistical models. 
+
+However, its resolution allows us to treat it as continuous for the purpose of fitting statistical models. 
 ```{r , echo=T, message=F, results='hold'}
-ds<-(subset(dsL, year==2000)) # only for year 2000
-summary(as.numeric(ds$attend)) # summarize as continuous variable
+ds<-(subset(dsL, year==2000)) # select obs for year 2000
+summary(ds$attend) # summarize as continuous variable
 ```
-The basic dataset contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
+
+To map church attendance to time, let's select a manageble dataset that would include personal identifyer (**id**), cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
 ```{r, echo=echoChunks, message=F}
 ds<-dsL[,c('id',"byear","year","attend","attendF")] # select needed variables
 print(ds[ds$id==47,])# for a single subject with id=1
 ```
 
 The view lists all the data for a single subjust (id=1). There are 
-```{r, echo=echoChunks, message=F}
+```{r, echo=T, message=F}
 cat(length(unique(dsL$id)))
 ```
-subjects in total.
+subjects in total. Unless specified otherwise, only individuals from the cross-sample will be used in the model to increase external validity.
 
 We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years. 
 #### Figure 2. Relative frequency of responses for each observed wave
@@ -156,7 +161,23 @@ p<-p+ scale_x_discrete("Waves of measurement",
                    limits=as.character(c(2000:2011)))
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
 p
+```
 
+Without missing values
+```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+# attcol8 is defined in DeclareGlobal chunk of  the .R file
+ds<- dsL
+p<-ggplot(ds, aes(x=factor(year), fill=attendF))
+p<-p+ geom_bar(position="fill")
+p<-p+ scale_fill_manual(values = attcol8,
+                    name="Response category" )
+p<-p+ scale_y_continuous("Prevalence: proportion of total",
+                     limits=c(0, 1),
+                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<-p+ scale_x_discrete("Waves of measurement",
+                   limits=as.character(c(2000:2011)))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
 ```
 
 Modeling how the frequencies of endorsing particular response change is handled by Markov type models. However, LCM works with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph
