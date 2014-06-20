@@ -28,10 +28,10 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 Labeling Factor Levels
 ----------------------
 
-Review of the item reference [cards](http://statcanvas.net/thesis/databox/) shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger:
+Review of the item reference [cards](http://statcanvas.net/thesis/databox/) shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, data were saved as a numerical value or an intigers to optimize storage
 
 ``` {.r}
-ds<- dsL[,1:(ncol(dsL)/2)]# select the first half of variables
+ds<- dsL[,1:(ncol(dsL)/2)]# selects the first half of variables
 str(ds)
 ```
 
@@ -67,7 +67,7 @@ str(ds)
      $ computer   : num  NA NA NA NA NA 5 NA NA NA NA ...
      $ internet   : num  NA NA NA NA NA NA 1 0 1 1 ...
 
-For estimations routines such as lm4 or graphing functions such as ggplot, the data type (string,numeric, factor) is a meaningful input, so a quick access to both formats frequently proves to be convenience. [LabelingFactorLevels.R](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) sourced at the end of [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) augmented the initial dataset **dsL** with a copy of initial variables saved as labeled factors. It is convenient to think that **dsL** has really only
+[LabelingFactorLevels.R](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) sourced at the end of [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md) matches numeric values with response labels from the questionnaire and adds to **dsL** copy of variables saved as labeled factors. For estimations routines such as lm4 or graphing functions such as ggplot, the data type (string,numeric, factor) is a meaningful input, so a quick access to both formats frequently proves to be useful. It is convenient to think that **dsL** has really only
 
 ``` {.r}
 ncol(dsL)/2
@@ -75,7 +75,7 @@ ncol(dsL)/2
 
     [1] 30
 
-variables, but each of them has a double with labeled factor levels.
+variables, but each of them has a double, an ordered factor.
 
 ``` {.r}
 str(dsL)

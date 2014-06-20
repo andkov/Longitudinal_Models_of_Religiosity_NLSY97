@@ -1,14 +1,16 @@
 ---
 title: "Derive dsL"
 output:
+  pdf_document:
+    toc: yes
+  md_document:
+    toc: yes
+    variant: markdown_github
   html_document:
     fig_caption: yes
     number_sections: yes
     theme: journal
     toc: yes
-  md_document:
-    toc: yes
-    variant: markdown_github
 ---
 Deriving clean dataset **dsL** from NLSY97 extract
 =================================================

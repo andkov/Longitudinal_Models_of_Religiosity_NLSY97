@@ -68,16 +68,16 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 
 
 ##  Labeling Factor Levels
-Review of the item reference [cards][1] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger:
+Review of the item reference [cards][1] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, data were saved as a numerical value or an intigers to optimize storage
 ```{r}
-ds<- dsL[,1:(ncol(dsL)/2)]# select the first half of variables
+ds<- dsL[,1:(ncol(dsL)/2)]# selects the first half of variables
 str(ds)
 ```
-For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves to be convenience. [LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] augmented the initial dataset **dsL** with a copy of initial variables saved as labeled factors. It is convenient to think that **dsL** has really only
+[LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] matches numeric values with response labels from the questionnaire and adds to **dsL** copy of variables saved as labeled factors. For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves to be useful.  It is convenient to think that **dsL** has really only
 ```{r}
 ncol(dsL)/2
 ```
-variables, but each of them has a double with labeled factor levels.
+variables, but each of them has a double, an ordered factor.
 ```{r}
 str(dsL)
 ```

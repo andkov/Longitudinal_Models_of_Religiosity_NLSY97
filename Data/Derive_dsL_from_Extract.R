@@ -296,11 +296,11 @@ source(file.path(pathDir,"Scripts/Data/LabelingFactorLevels.R"))
 
 ## @knitr SaveDerivedData
 
-pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
-write.csv(dsL,pathdsL,  row.names=FALSE)
+pathdsLcvs <- file.path(getwd(),"Data/Derived/dsL.csv")
+write.csv(dsL,pathdsLcvs,  row.names=FALSE)
 
-pathOutputSubject <- file.path(pathDir,"Data/Derived/dsL.rds")
-saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
+pathdsLrds <- file.path(pathDir,"Data/Derived/dsL.rds")
+saveRDS(object=dsL, file=pathdsLrds, compress="xz")
 
 ## @knitr CleanUp
 # # remove all but specified dataset
