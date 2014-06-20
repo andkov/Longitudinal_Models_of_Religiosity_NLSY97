@@ -47,7 +47,7 @@ Metrics: labeling factors and exploring scales
 Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-# attANDANCE colOUR 8 categories - set up default colors for "attend"
+# attcol8 - attANDANCE colOUR 8 categories - set up default colors for "attend"
 ```
 
 ```{r LoadPackages, echo=echoChunks, message=F}
@@ -64,16 +64,20 @@ This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_fro
 ```{r echo=T, message=T}
 dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
-<<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:1200px;"/> 
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/> 
 
 
 ##  Labeling Factor Levels
-Review of the item reference [cards][1] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger
+Review of the item reference [cards][1] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, in the original dataset they are recorded as either a numerical value or an intiger:
 ```{r}
-str(dsL)
-
+ds<- dsL[,1:(ncol(dsL)/2)]# select the first half of variables
+str(ds)
 ```
-For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves to be convenience. Instead of replacing the initial variables with factors, we'll create parallel set of variables. The script  at the end of [LabelingFactorLevels][4] augments the initial dataset **dsL** with copy of initial variables saved as labeled factors. 
+For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves to be convenience. [LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] augmented the initial dataset **dsL** with a copy of initial variables saved as labeled factors. It is convenient to think that **dsL** has really only
+```{r}
+ncol(dsL)/2
+```
+variables, but each of them has a double with labeled factor levels.
 ```{r}
 str(dsL)
 ```
@@ -83,7 +87,7 @@ selectCols<-c("year","id","byear","attend","attendF") # type in variable name
 ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
 print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
 ```
-Having quick access to factor labels will come especially handy during graph production.
+Having quick access to factor labels will be especially useful during graph production.
 
 
 
