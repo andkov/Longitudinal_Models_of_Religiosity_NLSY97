@@ -10,7 +10,7 @@ attcol8<-c("Never"="#4575b4",
 
 ds<- dsL
 p<-ggplot(ds, aes(x=factor(year), fill=attendF))
-p<-p+ geom_bar(position="fill")
+p<-p+ geom_bar(position="fill", na.rm=TRUE)
 p<-p+ scale_fill_manual(values = attcol8,
                         name="Response category" )
 p<-p+ scale_y_continuous("Prevalence: proportion of total",
