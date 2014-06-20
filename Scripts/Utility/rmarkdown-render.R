@@ -21,8 +21,8 @@ for( pathRmd in buildthese ) {
   rmarkdown::render(input = pathRmd, 
                     output_format=c(
                       "md_document"
-#                       "html_document"
-#                       "word_document"
+                      ,"html_document"
+#                       ,"word_document"
 #                       "pdf_document"
                                     ),
 #                     output_file=pathMd,
