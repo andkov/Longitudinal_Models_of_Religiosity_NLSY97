@@ -20,9 +20,10 @@ for( pathRmd in buildthese ) {
 #   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   rmarkdown::render(input = pathRmd, 
                     output_format=c(
-#                       "md_document"
-#                       ,"html_document"
-                      "pdf_document"
+                      "md_document"
+#                       "html_document"
+#                       "word_document"
+#                       "pdf_document"
                                     ),
 #                     output_file=pathMd,
                     clean=TRUE)

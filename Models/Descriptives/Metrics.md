@@ -23,7 +23,7 @@ Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/
 dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>
+![View of dsL](./figure_rmd/3_Methods_Figure_3_3.png)
 
 Labeling Factor Levels
 ----------------------
@@ -75,7 +75,7 @@ ncol(dsL)/2
 
     [1] 30
 
-variables, but each of them has a double, an ordered factor.
+variables, but each of them has a double, a labeled factor.
 
 ``` {.r}
 str(dsL)
@@ -143,12 +143,12 @@ str(dsL)
      $ computerF   : Ord.factor w/ 6 levels "None"<"less than 1"<..: NA NA NA NA NA 5 NA NA NA NA ...
      $ internetF   : Ord.factor w/ 2 levels "No"<"Yes": NA NA NA NA NA NA 2 1 2 2 ...
 
-This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels.
+This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels. One can alternate between the raw metric and labeled factor by adding "F" suffix to the end of the variable name:
 
 ``` {.r}
-selectCols<-c("year","id","byear","attend","attendF") # type in variable name
-ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
-print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
+selectCols<-c("year","id","byear","attend","attendF") # select the columns with these names
+ds<-dsL[,selectCols] # select all rows for the columns listed  selectCols"
+print(ds[ds$id==1,]) # print all availible data for respondent with ID 1
 ```
 
        year id byear attend         attendF
