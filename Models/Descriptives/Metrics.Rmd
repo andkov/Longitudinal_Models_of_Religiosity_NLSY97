@@ -41,6 +41,7 @@ opts_chunk$set(
   dpi = 400
 )
 echoChunks <- FALSE
+warningChunks<- FALSE
 options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
 ```
@@ -101,7 +102,7 @@ NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984
 <img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Age, Peridod, Cohort" style="width:700px ;"/>
 
 There are several indicators of age in NSLY97 that vary in precision. Birth cohort (**byear**) is the most general one, it was recorded once. Two age variables were recorded at each interview: age at the time of the interview in months (**agemon**) and in years (**ageyear**). Those are not derivatives of each other, but are are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
-For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this  rounding issue  disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be  calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
+For example, for one person **id** = 25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this  rounding issue  disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be  calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
 ```{r}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
 ds<- ds[ds$id %in% c(25),]
@@ -127,60 +128,63 @@ p<- p+labs(title="How often did you attend a place of worship in the last year? 
 p
 ```
 
-However, its resolution allows us to treat it as continuous for the purpose of fitting statistical models. 
-```{r , echo=T, message=F, results='hold'}
-ds<-(subset(dsL, year==2000)) # select obs for year 2000
-summary(ds$attend) # summarize as continuous variable
+Creating frequency distributions for each of the measurement wave we have:  
+```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+# attcol8 is defined in DeclareGlobal chunk of  the .R file
+ds<- dsL
+p<-ggplot(ds, aes(x=factor(year), fill=attendF))
+p<-p+ geom_bar(position="fill")
+p<-p+ scale_fill_manual(values = attcol8,
+                    name="Response category" )
+p<-p+ scale_y_continuous("Prevalence: proportion of total",
+                     limits=c(0, 1),
+                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<-p+ scale_x_discrete("Waves of measurement",
+                   limits=as.character(c(2000:2011)))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
+```
+Missing values are used in the calculation of total responses to show the natural attrition in the study. 
+
+Graph above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov  models.  LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.
+
+To demonstrate mapping of individual trajectories to time, let's select a  dataset that would include personal identifyer (**id**), cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
+```{r, echo=echoChunks, message=F, warning=warningChunks}
+ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","attendF")] # select needed variables
+print(ds[ds$id==47,])# for a single subject with id=47
 ```
 
-To map church attendance to time, let's select a manageble dataset that would include personal identifyer (**id**), cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
-```{r, echo=echoChunks, message=F}
-ds<-dsL[,c('id',"byear","year","attend","attendF")] # select needed variables
-print(ds[ds$id==47,])# for a single subject with id=1
-```
+The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have 
+```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8, warning=warningChunks }
+ds<-dsL[dsL$year %in% c(2000:2011),c('idF',"byear","year","attend","attendF")] # select needed variables
+ds<- ds[ds$id==47,]
+p<-ggplot(ds, aes(x=year,y=attend, color=idF))
+p<-p+ geom_line(color="purple")
+# p<-p+ geom_smooth(method=lm)
+p<-p+ geom_point(color="purple")
+p<-p+ scale_y_continuous("Church attendance",
+                     limits=c(1, 8),
+                     breaks=c(1:8))
+p<-p+ scale_x_continuous("Waves of measurement",
+                   limits=c(2000,2011),
+                   breaks=c(2000:2011))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
+```  
 
-The view lists all the data for a single subjust (id=1). There are 
-```{r, echo=T, message=F}
+where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the 
+```{r, echo=T, message=F, warning=warningChunks}
 cat(length(unique(dsL$id)))
 ```
 subjects in total. Unless specified otherwise, only individuals from the cross-sample will be used in the model to increase external validity.
-
-We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years. 
-#### Figure 2. Relative frequency of responses for each observed wave
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
-# attcol8 is defined in DeclareGlobal chunk of  the .R file
-ds<- dsL
-p<-ggplot(ds, aes(x=factor(year), fill=attendF))
-p<-p+ geom_bar(position="fill")
-p<-p+ scale_fill_manual(values = attcol8,
-                    name="Response category" )
-p<-p+ scale_y_continuous("Prevalence: proportion of total",
-                     limits=c(0, 1),
-                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
-p<-p+ scale_x_discrete("Waves of measurement",
-                   limits=as.character(c(2000:2011)))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p
+```{r}
+ds<- dsL[dsL$sample==1,]
 ```
 
-Without missing values
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
-# attcol8 is defined in DeclareGlobal chunk of  the .R file
-ds<- dsL
-p<-ggplot(ds, aes(x=factor(year), fill=attendF))
-p<-p+ geom_bar(position="fill")
-p<-p+ scale_fill_manual(values = attcol8,
-                    name="Response category" )
-p<-p+ scale_y_continuous("Prevalence: proportion of total",
-                     limits=c(0, 1),
-                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
-p<-p+ scale_x_discrete("Waves of measurement",
-                   limits=as.character(c(2000:2011)))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p
-```
 
-Modeling how the frequencies of endorsing particular response change is handled by Markov type models. However, LCM works with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph
+Each of such trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? To demostrate how interpretations of trajectories can vary among individuals consider the following scenario.
+
+Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph
 
 ```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 
@@ -199,7 +203,7 @@ p<-p+ labs(title=paste0("In the past year, how often have you attended a worship
 p
 ```
 
-The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011. Each of these trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  
+The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011.  Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  
 
 Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
 

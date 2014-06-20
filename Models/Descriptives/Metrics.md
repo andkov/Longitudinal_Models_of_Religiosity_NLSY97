@@ -20,6 +20,7 @@ Initial point of departure - the [databox](http://statcanvas.net/thesis/databox/
 
 ``` {.r}
 dsL<-readRDS("./Data/Derived/dsL.rds")
+dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
 
 ![View of dsL](./figure_rmd/3_Methods_Figure_3_3.png)
@@ -29,7 +30,7 @@ Time metrics : Age, Period, Cohort
 
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97. <img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Age, Peridod, Cohort" style="width:700px ;"/>
 
-There are several indicators of age in NSLY97 that vary in precision. Birth cohort (**byear**) is the most general one, it was recorded once. Two variables were recorded at each interview: age at the time of the interview in months (**agemon**) and years (**ageyear**). Those are not derivatives of each other, but, understandably, are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
+There are several indicators of age in NSLY97 that vary in precision. Birth cohort (**byear**) is the most general one, it was recorded once. Two age variables were recorded at each interview: age at the time of the interview in months (**agemon**) and in years (**ageyear**). Those are not derivatives of each other, but are are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. For example, for one person **id** = 25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this rounding issue disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
 
 ``` {.r}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
@@ -58,22 +59,17 @@ print(ds)
 Mapping Church Attendance
 -------------------------
 
-The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, <img src="figure_rmd/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="550px" /> its resolution allows us to treat it as continuous for the purpose of fitting statistical models.
+The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.
+<img src="figure_rmd/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="700px" />
 
-``` {.r}
-ds<-(subset(dsL, year==2000)) # only for year 2000
-summary(as.numeric(ds$attend)) # summarize as continuous variable
-```
+Creating frequency distributions for each of the measurement wave we have:
+<img src="figure_rmd/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="700px" /> Missing values are used in the calculation of total responses to show the natural attrition in the study.
 
-       Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-        1.0     1.0     3.0     3.4     6.0     8.0     965 
+Graph above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov models. LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.
 
-The basic dataset contains personal identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**).
+To demonstrate mapping of individual trajectories to time, let's select a dataset that would include personal identifyer (**id**), cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**).
 
         id byear year attend              attendF
-    691 47  1982 1997     NA                 <NA>
-    692 47  1982 1998     NA                 <NA>
-    693 47  1982 1999     NA                 <NA>
     694 47  1982 2000      5    About twice/month
     695 47  1982 2001      2        Once or Twice
     696 47  1982 2002      4     About once/month
@@ -87,35 +83,45 @@ The basic dataset contains personal identifyer (**id**), birth year which is als
     704 47  1982 2010      1                Never
     705 47  1982 2011      1                Never
 
-The view lists all the data for a single subjust (id=1). There are
+The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have <img src="figure_rmd/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="700px" />
 
-    8984
+where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the
 
-subjects in total.
+``` {.r}
+cat(length(unique(dsL$id)))
+```
 
-We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years. \#\#\#\# Figure 2. Relative frequency of responses for each observed wave <img src="figure_rmd/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="700px" />
+    6748
 
-Modeling how the frequencies of endorsing particular response change is handled by Markov type models. However, LCM works with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s 4, 25, 35, and 47 are plotted in the next graph
+subjects in total. Unless specified otherwise, only individuals from the cross-sample will be used in the model to increase external validity.
 
-    Warning: Removed 12 rows containing missing values (geom_path).
-    Warning: Removed 12 rows containing missing values (geom_point).
+``` {.r}
+ds<- dsL[dsL$sample==1,]
+```
 
-<img src="figure_rmd/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="700px" />
+Each of such trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? To demostrate how interpretations of trajectories can vary among individuals consider the following scenario.
 
-The respondent **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting attended church only "Once or twice" in 2000, maintained a low level of participation throughout the years, only to surge his attendance in 2011. Each of these trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.
-
-Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
+Attendance trajectories of subjects with **id**s 4, 25, 35, and 47 are plotted in the next graph
 
     Warning: Removed 12 rows containing missing values (geom_path).
     Warning: Removed 12 rows containing missing values (geom_point).
 
 <img src="figure_rmd/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="700px" />
 
+The respondent **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting attended church only "Once or twice" in 2000, maintained a low level of participation throughout the years, only to surge his attendance in 2011. Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.
+
+Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
+
+    Warning: Removed 12 rows containing missing values (geom_path).
+    Warning: Removed 12 rows containing missing values (geom_point).
+
+<img src="figure_rmd/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="700px" />
+
 Persons **id** = 35 and **id** = 25 are peers, in 2000 they were both 17. Respondent **id** = 47 is a year older, in 2000 he was 18. The oldest is **id** = 4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
 
 Note that for person **id** = 25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12). See "Mime metrics" section of this report for details.
 
-<img src="figure_rmd/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="700px" />
+<img src="figure_rmd/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="700px" />
 
 Selecting and Augmenting data for modeling
 ------------------------------------------
