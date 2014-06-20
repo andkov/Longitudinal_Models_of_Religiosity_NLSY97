@@ -17,11 +17,16 @@ buildthese <- c(pathMetrics)
 testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
 # Build the reports
 for( pathRmd in buildthese ) {
+#   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   rmarkdown::render(input = pathRmd, 
-                    output_format=c( "html_document"),
-                    
+                    output_format=c(
+#                       "md_document"
+#                       ,"html_document"
+                      "pdf_document"
+                                    ),
+#                     output_file=pathMd,
                     clean=TRUE)
 }
 
-library(extrafont)
-font_import()
+# library(extrafont)
+# font_import()
