@@ -2,12 +2,12 @@
 title: "Metrics"
 output:
   html_document:
-    keep_md: true
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
     fig_height: 4.5
     fig_width: 6.5
     highlight: textmate
+    keep_md: yes
     toc: yes
   md_document:
     toc: yes
@@ -68,14 +68,14 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 ![View of dsL](./figure_rmd/3_Methods_Figure_3_3.png)
 
-
+---
 ##  Labeling Factor Levels
 Review of the item reference [cards][1] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, data were saved as numerical values or  intigers
 ```{r}
 ds<- dsL[,1:(ncol(dsL)/2)]# selects the first half of variables
 str(ds)
 ```
-[LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] matches numeric values with response labels from the questionnaire and adds to **dsL** copies of the variables, saved as labeled factors. For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves to be useful.  It is convenient to think that **dsL** has really only
+[LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] matches numeric values with response labels from the questionnaire and adds to **dsL** copies of the variables, saved as labeled factors. For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves useful.  It is convenient to think that **dsL** has really only
 ```{r}
 ncol(dsL)/2
 ```
@@ -86,18 +86,19 @@ str(dsL)
 This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels. One can alternate between the raw metric and labeled factor by adding "F" suffix to the end of the variable name:
 ```{r}
 selectCols<-c("year","id","byear","attend","attendF") # select the columns with these names
-ds<-dsL[,selectCols] # select all rows for the columns listed  selectCols"
+ds<-dsL[,selectCols] # select all rows for the columns listed  selectCols
 print(ds[ds$id==1,]) # print all availible data for respondent with ID 1
 ```
 Having quick access to factor labels will be especially useful during graph production.
 
 
-
+---
 ## Time metrics : Age, Period, Cohort
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
-<img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Looking up items" style="width:700px ;"/>
+<img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Age, Peridod, Cohort" style="width:700px ;"/>
 
-There are several indicators of age in NSLY97 that vary in precision. Birth cohort is the most general one, it was recorded once. Two variables were recorded at each interview: age at the time of the interview in months (**agemon**) and years (**ageyear**). Those are not derivatives of each other, but, understandably, are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
+There are several indicators of age in NSLY97 that vary in precision. Birth cohort (**byear**) is the most general one, it was recorded once. Two variables were recorded at each interview: age at the time of the interview in months (**agemon**) and years (**ageyear**). Those are not derivatives of each other, but, understandably, are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
+For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this  rounding issue  disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be  calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
 ```{r}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
 ds<- ds[ds$id %in% c(25),]
@@ -105,18 +106,17 @@ ds$age<-ds$year-ds$byear
 ds$ageALT<- ds$agemon/12
 print(ds)
 ```
-For example, for one person **id**=25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
 
 
 
-
+---
 ## Mapping Church Attendance
-
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on ordinal scale, 
 ```{r, echo=echoChunks, message=T, fig.width = 8}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF))
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
 p<-p+geom_bar()
+p + scale_fill_manual(values=attcol8)
 p<-p+coord_flip()
 p<-p+xlab("Church attendance") 
 p<-p+ylab("Count")
@@ -159,7 +159,7 @@ p
 
 ```
 
-Modeling how the frequencies of endorsing particular response item will be the focus of Markov model, which renders well in cross-sectional representations. However, LCM and GMM work with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
+Modeling how the frequencies of endorsing particular response change is handled by Markov type models. However, LCM works with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph
 
 ```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 
@@ -185,7 +185,7 @@ Previous research in religiousity indicated that age might be one of the primary
 ```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 
 ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
-p<-ggplot(ds, aes(x=ageyear,y=as.numeric(attend), color=factor(id) ))
+p<-ggplot(ds, aes(x=ageyear,y=as.numeric(attend), color=idF ))
 p<-p+ geom_line()
 # p<-p+ geom_smooth(method=lm)
 p<-p+ geom_point()
@@ -199,25 +199,27 @@ p<-p+ labs(title=paste0("In the past year, how often have you attended a worship
 p
 ```
 
-Persons **id**=35 and **id**=25 are peers, in 2000 they were both 17.  Respondent **id**=47 is a year older, in 2000 he was 18. The oldest is **id**=4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
+Persons **id** = 35 and **id** = 25 are peers, in 2000 they were both 17.  Respondent **id** = 47 is a year older, in 2000 he was 18. The oldest is **id** = 4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
 
-(ASIDE NOTE: this figure reveals an important detail about the NLSY97 data. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. For example, for person **id**=25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be either calculated as computed as (age = **year** - **byear**) or as (ageALT = **agemon**/12).
+Note that for person **id** = 25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used.  To avoid this potentially confusing peculiarity, age in years will be either calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12). See "Mime metrics" section of this report for details.
 
-```{r}
-ds<- dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
-ds<- ds[ds$id %in% c(25),]
+```{r,echo=echoChunks, message=F, error=FALSE, warning=FALSE, out.width="700px", fig.width = 8 }
+
+ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
 ds$age<-ds$year-ds$byear
-ds$ageALT<- ds$agemon/12
-print(ds)
-
+p<-ggplot(ds, aes(x=age,y=as.numeric(attend), color=idF ))
+p<-p+ geom_line()
+# p<-p+ geom_smooth(method=lm)
+p<-p+ geom_point()
+p<-p+ scale_y_continuous("Church attendance",
+                     limits=c(1, 8),
+                     breaks=c(1:8))
+p<-p+ scale_x_continuous("Age in years",
+                   limits=c(16,31),
+                   breaks=seq(from=12, to=31,by=1))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
 ```
-
-
-
-
-
-
-
 
 ## Selecting and Augmenting data for modeling
 We need only a few variables at any given moment in the process of modeling, so let's select only those we need to describe how respondents' church attendance was changing across time and age. Let's start with picking person's id, wave of measurement, and church attendance

@@ -1,11 +1,7 @@
-
- /* Font Definitions */
+/* Font Definitions */
  @font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
 @font-face
 	{font-family:"Calibri Light";
 	panose-1:2 15 3 2 2 2 4 3 2 4;}
@@ -21,6 +17,14 @@
 @font-face
 	{font-family:Tahoma;
 	panose-1:2 11 6 4 3 5 4 4 2 4;}
+/*	
+@font-face {
+  font-family: 'Calibri';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Calibri'), url(http://themes.googleusercontent.com/licensed/font?kit=OFGrPxRCHuS74TTXlqi_Iw) format('woff');
+}
+*/
  /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin-top:0in;
@@ -28,10 +32,10 @@
 	margin-bottom:8.0pt;
 	margin-left:0in;
 	line-height:150%;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
-	color:black;
-	background:white;}
+	color:black;}
 h1
 	{mso-style-link:"Heading 1 Char";
 	margin-top:12.0pt;
@@ -42,10 +46,10 @@ h1
 	text-align:center;
 	line-height:200%;
 	page-break-after:avoid;
+	background:white;
 	font-size:16.0pt;
 	font-family:"Calibri Light","sans-serif";
 	text-transform:uppercase;
-	background:white;
 	font-weight:normal;}
 h2
 	{mso-style-link:"Heading 2 Char";
@@ -56,10 +60,10 @@ h2
 	margin-bottom:.0001pt;
 	line-height:200%;
 	page-break-after:avoid;
+	background:white;
 	font-size:13.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:black;
-	background:white;
 	font-weight:bold;}
 h3
 	{mso-style-link:"Heading 3 Char";
@@ -70,9 +74,9 @@ h3
 	margin-bottom:.0001pt;
 	line-height:200%;
 	page-break-after:avoid;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
-	background:white;
 	font-weight:normal;
 	text-decoration:underline;}
 h4
@@ -84,10 +88,10 @@ h4
 	margin-bottom:.0001pt;
 	line-height:200%;
 	page-break-after:avoid;
+	background:white;
 	font-size:11.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:#4DAF4A;
-	background:white;
 	font-weight:normal;
 	font-style:italic;}
 h5
@@ -99,10 +103,10 @@ h5
 	margin-bottom:.0001pt;
 	line-height:200%;
 	page-break-after:avoid;
+	background:white;
 	font-size:11.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:#2E74B5;
-	background:white;
 	font-weight:normal;}
 h6
 	{mso-style-name:"Heading 6\,title of paragraphs";
@@ -114,10 +118,10 @@ h6
 	margin-bottom:.0001pt;
 	line-height:200%;
 	page-break-after:avoid;
+	background:white;
 	font-size:11.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:#1F4D78;
-	background:white;
 	font-weight:normal;}
 p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
 	{mso-style-link:"Heading 7 Char";
@@ -128,46 +132,45 @@ p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
 	margin-bottom:.0001pt;
 	line-height:150%;
 	page-break-after:avoid;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:#1F4D78;
-	background:white;
 	font-style:italic;}
 p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
 	{mso-style-link:"Footnote Text Char";
 	margin:0in;
 	margin-bottom:.0001pt;
+	background:white;
 	font-size:10.0pt;
 	font-family:"Calibri Light","sans-serif";
-	color:black;
-	background:white;}
+	color:black;}
 p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
 	{mso-style-link:"Comment Text Char";
 	margin-top:0in;
 	margin-right:0in;
 	margin-bottom:8.0pt;
 	margin-left:0in;
+	background:white;
 	font-size:10.0pt;
 	font-family:"Calibri Light","sans-serif";
-	color:black;
-	background:white;}
+	color:black;}
 p.MsoHeader, li.MsoHeader, div.MsoHeader
 	{mso-style-link:"Header Char";
 	margin:0in;
 	margin-bottom:.0001pt;
+	background:white;
 	font-size:11.0pt;
 	font-family:"Calibri","sans-serif";
-	color:black;
-	background:white;}
+	color:black;}
 p.MsoFooter, li.MsoFooter, div.MsoFooter
 	{mso-style-link:"Footer Char";
 	margin:0in;
 	margin-bottom:.0001pt;
+	background:white;
 	font-size:11.0pt;
 	font-family:"Calibri","sans-serif";
-	color:black;
-
-	background:white;}
+	color:black;}
 span.MsoFootnoteReference
 	{vertical-align:super;}
 span.MsoEndnoteReference
@@ -176,46 +179,19 @@ p.MsoEndnoteText, li.MsoEndnoteText, div.MsoEndnoteText
 	{mso-style-link:"Endnote Text Char";
 	margin:0in;
 	margin-bottom:.0001pt;
+	background:white;
 	font-size:10.0pt;
 	font-family:"Calibri Light","sans-serif";
-	color:black;
-	background:white;}
+	color:black;}
 p.MsoTitle, li.MsoTitle, div.MsoTitle
 	{mso-style-link:"Title Char";
 	margin:0in;
 	margin-bottom:.0001pt;
+	background:white;
 	font-size:28.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:black;
-	letter-spacing:-.5pt;
-	background:white;}
-p.MsoTitleCxSpFirst, li.MsoTitleCxSpFirst, div.MsoTitleCxSpFirst
-	{mso-style-link:"Title Char";
-	margin:0in;
-	margin-bottom:.0001pt;
-	font-size:28.0pt;
-	font-family:"Calibri Light","sans-serif";
-	color:black;
-	letter-spacing:-.5pt;
-	background:white;}
-p.MsoTitleCxSpMiddle, li.MsoTitleCxSpMiddle, div.MsoTitleCxSpMiddle
-	{mso-style-link:"Title Char";
-	margin:0in;
-	margin-bottom:.0001pt;
-	font-size:28.0pt;
-	font-family:"Calibri Light","sans-serif";
-	color:black;
-	letter-spacing:-.5pt;
-	background:white;}
-p.MsoTitleCxSpLast, li.MsoTitleCxSpLast, div.MsoTitleCxSpLast
-	{mso-style-link:"Title Char";
-	margin:0in;
-	margin-bottom:.0001pt;
-	font-size:28.0pt;
-	font-family:"Calibri Light","sans-serif";
-	color:black;
-	letter-spacing:-.5pt;
-	background:white;}
+	letter-spacing:-.5pt;}
 p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
 	{mso-style-link:"Subtitle Char";
 	margin-top:0in;
@@ -223,14 +199,14 @@ p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
 	margin-bottom:8.0pt;
 	margin-left:0in;
 	line-height:150%;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:#5A5A5A;
-	letter-spacing:.75pt;
-	background:white;}
+	letter-spacing:.75pt;}
 a:link, span.MsoHyperlink
 	{color:#7030A0;
-	text-decoration:none;}
+	text-decoration:none none;}
 a:visited, span.MsoHyperlinkFollowed
 	{color:#954F72;
 	text-decoration:underline;}
@@ -255,19 +231,19 @@ p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
 	margin-right:0in;
 	margin-bottom:8.0pt;
 	margin-left:0in;
+	background:white;
 	font-size:10.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:black;
-	background:white;
 	font-weight:bold;}
 p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
 	{mso-style-link:"Balloon Text Char";
 	margin:0in;
 	margin-bottom:.0001pt;
+	background:white;
 	font-size:8.0pt;
 	font-family:"Tahoma","sans-serif";
-	color:black;
-	background:white;}
+	color:black;}
 span.MsoPlaceholderText
 	{color:gray;}
 p.MsoNoSpacing, li.MsoNoSpacing, div.MsoNoSpacing
@@ -281,42 +257,10 @@ p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
 	margin-bottom:8.0pt;
 	margin-left:.5in;
 	line-height:200%;
+	background:white;
 	font-size:11.0pt;
 	font-family:"Calibri","sans-serif";
-	color:black;
-	background:white;}
-p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	line-height:200%;
-	font-size:11.0pt;
-	font-family:"Calibri","sans-serif";
-	color:black;
-	background:white;}
-p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	line-height:200%;
-	font-size:11.0pt;
-	font-family:"Calibri","sans-serif";
-	color:black;
-	background:white;}
-p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:.5in;
-	line-height:200%;
-	font-size:11.0pt;
-	font-family:"Calibri","sans-serif";
-	color:black;
-	background:white;}
+	color:black;}
 p.MsoQuote, li.MsoQuote, div.MsoQuote
 	{mso-style-link:"Quote Char";
 	margin-top:10.0pt;
@@ -325,10 +269,10 @@ p.MsoQuote, li.MsoQuote, div.MsoQuote
 	margin-left:.6in;
 	text-align:center;
 	line-height:200%;
+	background:white;
 	font-size:11.0pt;
 	font-family:"Minion Pro","serif";
 	color:#7030A0;
-	background:white;
 	font-style:italic;}
 p.MsoIntenseQuote, li.MsoIntenseQuote, div.MsoIntenseQuote
 	{mso-style-link:"Intense Quote Char";
@@ -338,12 +282,10 @@ p.MsoIntenseQuote, li.MsoIntenseQuote, div.MsoIntenseQuote
 	margin-left:.6in;
 	text-align:center;
 	line-height:150%;
-	border:none;
-	padding:0in;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:#5B9BD5;
-	background:white;
 	font-style:italic;}
 span.MsoSubtleEmphasis
 	{mso-style-name:"Subtle Emphasis\,Accent";
@@ -368,136 +310,47 @@ span.Heading3Char
 	mso-style-link:"Heading 3";
 	font-family:"Calibri Light","sans-serif";
 	text-decoration:underline;}
-span.BalloonTextChar
-	{mso-style-name:"Balloon Text Char";
-	mso-style-link:"Balloon Text";
-	font-family:"Tahoma","sans-serif";}
 span.Heading4Char
 	{mso-style-name:"Heading 4 Char";
 	mso-style-link:"Heading 4";
 	font-family:"Calibri Light","sans-serif";
 	color:#4DAF4A;
 	font-style:italic;}
-span.TitleChar
-	{mso-style-name:"Title Char";
-	mso-style-link:Title;
-	font-family:"Calibri Light","sans-serif";
-	letter-spacing:-.5pt;}
-span.apple-style-span
-	{mso-style-name:apple-style-span;}
 span.Heading5Char
 	{mso-style-name:"Heading 5 Char";
 	mso-style-link:"Heading 5";
 	font-family:"Calibri Light","sans-serif";
 	color:#2E74B5;}
-span.QuoteChar
-	{mso-style-name:"Quote Char";
-	mso-style-link:Quote;
-	font-family:"Minion Pro","serif";
-	color:#7030A0;
-	font-style:italic;}
-p.FirstWord, li.FirstWord, div.FirstWord
-	{mso-style-name:"First Word";
-	mso-style-link:"First Word Char";
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:0in;
-	line-height:150%;
-	font-size:12.0pt;
-	font-family:"Calibri Light","sans-serif";
-	color:#ED7D31;
-	background:white;}
-p.directquote, li.directquote, div.directquote
-	{mso-style-name:"direct quote";
-	mso-style-link:"direct quote Char";
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:0in;
-	line-height:150%;
-	font-size:12.0pt;
-	font-family:"Calibri Light","sans-serif";
-	background:white;
-	font-style:italic;}
-span.FirstWordChar
-	{mso-style-name:"First Word Char";
-	mso-style-link:"First Word";
-	font-family:"Calibri Light","sans-serif";
-	color:#ED7D31;}
-span.directquoteChar
-	{mso-style-name:"direct quote Char";
-	mso-style-link:"direct quote";
-	font-family:"Calibri Light","sans-serif";
-	font-style:italic;}
 span.Heading6Char
 	{mso-style-name:"Heading 6 Char\,title of paragraphs Char";
 	mso-style-link:"Heading 6\,title of paragraphs";
 	font-family:"Calibri Light","sans-serif";
 	color:#1F4D78;}
-span.apple-converted-space
-	{mso-style-name:apple-converted-space;}
-p.EndNoteBibliographyTitle, li.EndNoteBibliographyTitle, div.EndNoteBibliographyTitle
-	{mso-style-name:"EndNote Bibliography Title";
-	mso-style-link:"EndNote Bibliography Title Char";
-	margin:0in;
-	margin-bottom:.0001pt;
-	text-align:center;
-	line-height:200%;
-	font-size:11.0pt;
-	font-family:"Calibri","sans-serif";
-	color:black;
-	background:white;}
-span.EndNoteBibliographyTitleChar
-	{mso-style-name:"EndNote Bibliography Title Char";
-	mso-style-link:"EndNote Bibliography Title";
-	font-family:"Calibri","sans-serif";
-	color:black;}
-p.EndNoteBibliography, li.EndNoteBibliography, div.EndNoteBibliography
-	{mso-style-name:"EndNote Bibliography";
-	mso-style-link:"EndNote Bibliography Char";
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:0in;
-	font-size:11.0pt;
-	font-family:"Calibri","sans-serif";
-	color:black;
-	background:white;}
-span.EndNoteBibliographyChar
-	{mso-style-name:"EndNote Bibliography Char";
-	mso-style-link:"EndNote Bibliography";
-	font-family:"Calibri","sans-serif";
-	color:black;}
-p.Code, li.Code, div.Code
-	{mso-style-name:Code;
-	mso-style-link:"Code Char";
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:8.0pt;
-	margin-left:0in;
-	line-height:200%;
-	font-size:12.0pt;
+span.Heading6Char1
+	{mso-style-name:"Heading 6 Char1\,title of paragraphs Char1";
 	font-family:"Calibri Light","sans-serif";
+	color:#1F4D78;
 	background:white;}
-span.CodeChar
-	{mso-style-name:"Code Char";
-	mso-style-link:Code;
-	font-family:"Calibri Light","sans-serif";}
 span.HTMLPreformattedChar
 	{mso-style-name:"HTML Preformatted Char";
 	mso-style-link:"HTML Preformatted";
 	font-family:"Courier New";}
-span.identifier
-	{mso-style-name:identifier;}
-span.operator
-	{mso-style-name:operator;}
-span.paren
-	{mso-style-name:paren;}
-span.number
-	{mso-style-name:number;}
-span.comment
-	{mso-style-name:comment;}
+span.Heading7Char
+	{mso-style-name:"Heading 7 Char";
+	mso-style-link:"Heading 7";
+	font-family:"Calibri Light","sans-serif";
+	color:#1F4D78;
+	font-style:italic;}
+span.FootnoteTextChar
+	{mso-style-name:"Footnote Text Char";
+	mso-style-link:"Footnote Text";
+	font-family:"Calibri Light","sans-serif";
+	color:black;}
+span.CommentTextChar
+	{mso-style-name:"Comment Text Char";
+	mso-style-link:"Comment Text";
+	font-family:"Calibri Light","sans-serif";
+	color:black;}
 span.HeaderChar
 	{mso-style-name:"Header Char";
 	mso-style-link:Header;
@@ -508,22 +361,189 @@ span.FooterChar
 	mso-style-link:Footer;
 	font-family:"Arial","sans-serif";
 	color:black;}
-span.Heading7Char
-	{mso-style-name:"Heading 7 Char";
-	mso-style-link:"Heading 7";
-	font-family:"Calibri Light","sans-serif";
-	color:#1F4D78;
-	font-style:italic;}
 span.EndnoteTextChar
 	{mso-style-name:"Endnote Text Char";
 	mso-style-link:"Endnote Text";
 	font-family:"Calibri Light","sans-serif";
 	color:black;}
-span.FootnoteTextChar
-	{mso-style-name:"Footnote Text Char";
-	mso-style-link:"Footnote Text";
+span.TitleChar
+	{mso-style-name:"Title Char";
+	mso-style-link:Title;
 	font-family:"Calibri Light","sans-serif";
+	letter-spacing:-.5pt;}
+p.msotitlecxspfirst, li.msotitlecxspfirst, div.msotitlecxspfirst
+	{mso-style-name:msotitlecxspfirst;
+	mso-style-link:"Title Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	background:white;
+	font-size:28.0pt;
+	font-family:"Calibri Light","sans-serif";
+	color:black;
+	letter-spacing:-.5pt;}
+p.msotitlecxspmiddle, li.msotitlecxspmiddle, div.msotitlecxspmiddle
+	{mso-style-name:msotitlecxspmiddle;
+	mso-style-link:"Title Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	background:white;
+	font-size:28.0pt;
+	font-family:"Calibri Light","sans-serif";
+	color:black;
+	letter-spacing:-.5pt;}
+p.msotitlecxsplast, li.msotitlecxsplast, div.msotitlecxsplast
+	{mso-style-name:msotitlecxsplast;
+	margin:0in;
+	margin-bottom:.0001pt;
+	background:white;
+	font-size:28.0pt;
+	font-family:"Calibri Light","sans-serif";
+	color:black;
+	letter-spacing:-.5pt;}
+span.SubtitleChar
+	{mso-style-name:"Subtitle Char";
+	mso-style-link:Subtitle;
+	font-family:"Calibri Light","sans-serif";
+	color:#5A5A5A;
+	letter-spacing:.75pt;}
+span.CommentSubjectChar
+	{mso-style-name:"Comment Subject Char";
+	mso-style-link:"Comment Subject";
+	font-family:"Calibri Light","sans-serif";
+	color:black;
+	font-weight:bold;}
+span.BalloonTextChar
+	{mso-style-name:"Balloon Text Char";
+	mso-style-link:"Balloon Text";
+	font-family:"Tahoma","sans-serif";}
+p.msolistparagraphcxspfirst, li.msolistparagraphcxspfirst, div.msolistparagraphcxspfirst
+	{mso-style-name:msolistparagraphcxspfirst;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:200%;
+	background:white;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
 	color:black;}
+p.msolistparagraphcxspmiddle, li.msolistparagraphcxspmiddle, div.msolistparagraphcxspmiddle
+	{mso-style-name:msolistparagraphcxspmiddle;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:200%;
+	background:white;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:black;}
+p.msolistparagraphcxsplast, li.msolistparagraphcxsplast, div.msolistparagraphcxsplast
+	{mso-style-name:msolistparagraphcxsplast;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:.5in;
+	line-height:200%;
+	background:white;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:black;}
+span.QuoteChar
+	{mso-style-name:"Quote Char";
+	mso-style-link:Quote;
+	font-family:"Minion Pro","serif";
+	color:#7030A0;
+	font-style:italic;}
+span.IntenseQuoteChar
+	{mso-style-name:"Intense Quote Char";
+	mso-style-link:"Intense Quote";
+	font-family:"Calibri Light","sans-serif";
+	color:#5B9BD5;
+	font-style:italic;}
+span.FirstWordChar
+	{mso-style-name:"First Word Char";
+	mso-style-link:"First Word";
+	font-family:"Calibri Light","sans-serif";
+	color:#ED7D31;}
+p.FirstWord, li.FirstWord, div.FirstWord
+	{mso-style-name:"First Word";
+	mso-style-link:"First Word Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:150%;
+	background:white;
+	font-size:12.0pt;
+	font-family:"Calibri Light","sans-serif";
+	color:#ED7D31;}
+span.directquoteChar
+	{mso-style-name:"direct quote Char";
+	mso-style-link:"direct quote";
+	font-family:"Calibri Light","sans-serif";
+	font-style:italic;}
+p.directquote, li.directquote, div.directquote
+	{mso-style-name:"direct quote";
+	mso-style-link:"direct quote Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:150%;
+	background:white;
+	font-size:12.0pt;
+	font-family:"Calibri Light","sans-serif";
+	font-style:italic;}
+span.EndNoteBibliographyTitleChar
+	{mso-style-name:"EndNote Bibliography Title Char";
+	mso-style-link:"EndNote Bibliography Title";
+	font-family:"Calibri","sans-serif";
+	color:black;}
+p.EndNoteBibliographyTitle, li.EndNoteBibliographyTitle, div.EndNoteBibliographyTitle
+	{mso-style-name:"EndNote Bibliography Title";
+	mso-style-link:"EndNote Bibliography Title Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	line-height:200%;
+	background:white;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:black;}
+span.EndNoteBibliographyChar
+	{mso-style-name:"EndNote Bibliography Char";
+	mso-style-link:"EndNote Bibliography";
+	font-family:"Calibri","sans-serif";
+	color:black;}
+p.EndNoteBibliography, li.EndNoteBibliography, div.EndNoteBibliography
+	{mso-style-name:"EndNote Bibliography";
+	mso-style-link:"EndNote Bibliography Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	background:white;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	color:black;}
+span.CodeChar
+	{mso-style-name:"Code Char";
+	mso-style-link:Code;
+	font-family:"Calibri Light","sans-serif";}
+p.Code, li.Code, div.Code
+	{mso-style-name:Code;
+	mso-style-link:"Code Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:200%;
+	background:white;
+	font-size:12.0pt;
+	font-family:"Calibri Light","sans-serif";}
 p.Default, li.Default, div.Default
 	{mso-style-name:Default;
 	margin:0in;
@@ -531,6 +551,11 @@ p.Default, li.Default, div.Default
 	text-autospace:none;
 	font-size:12.0pt;
 	font-family:"Arial","sans-serif";
+	color:black;}
+span.MTDisplayEquationChar
+	{mso-style-name:"MTDisplayEquation Char";
+	mso-style-link:MTDisplayEquation;
+	font-family:"Calibri Light","sans-serif";
 	color:black;}
 p.MTDisplayEquation, li.MTDisplayEquation, div.MTDisplayEquation
 	{mso-style-name:MTDisplayEquation;
@@ -540,42 +565,15 @@ p.MTDisplayEquation, li.MTDisplayEquation, div.MTDisplayEquation
 	margin-bottom:8.0pt;
 	margin-left:0in;
 	line-height:150%;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
-	color:black;
-	background:white;}
-span.MTDisplayEquationChar
-	{mso-style-name:"MTDisplayEquation Char";
-	mso-style-link:MTDisplayEquation;
-	font-family:"Calibri Light","sans-serif";
 	color:black;}
-span.MTEquationSection
-	{mso-style-name:MTEquationSection;
-	color:red;
-	display:none;}
-span.CommentTextChar
-	{mso-style-name:"Comment Text Char";
-	mso-style-link:"Comment Text";
+span.Emphasis-BoldChar
+	{mso-style-name:"Emphasis - Bold Char";
+	mso-style-link:"Emphasis - Bold";
 	font-family:"Calibri Light","sans-serif";
-	color:black;}
-span.CommentSubjectChar
-	{mso-style-name:"Comment Subject Char";
-	mso-style-link:"Comment Subject";
-	font-family:"Calibri Light","sans-serif";
-	color:black;
 	font-weight:bold;}
-span.IntenseQuoteChar
-	{mso-style-name:"Intense Quote Char";
-	mso-style-link:"Intense Quote";
-	font-family:"Calibri Light","sans-serif";
-	color:#5B9BD5;
-	font-style:italic;}
-span.SubtitleChar
-	{mso-style-name:"Subtitle Char";
-	mso-style-link:Subtitle;
-	font-family:"Calibri Light","sans-serif";
-	color:#5A5A5A;
-	letter-spacing:.75pt;}
 p.Emphasis-Bold, li.Emphasis-Bold, div.Emphasis-Bold
 	{mso-style-name:"Emphasis - Bold";
 	mso-style-link:"Emphasis - Bold Char";
@@ -584,14 +582,15 @@ p.Emphasis-Bold, li.Emphasis-Bold, div.Emphasis-Bold
 	margin-bottom:8.0pt;
 	margin-left:0in;
 	line-height:150%;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
-	background:white;
 	font-weight:bold;}
-span.Emphasis-BoldChar
-	{mso-style-name:"Emphasis - Bold Char";
-	mso-style-link:"Emphasis - Bold";
+span.EndNoteCategoryHeadingChar
+	{mso-style-name:"EndNote Category Heading Char";
+	mso-style-link:"EndNote Category Heading";
 	font-family:"Calibri Light","sans-serif";
+	color:black;
 	font-weight:bold;}
 p.EndNoteCategoryHeading, li.EndNoteCategoryHeading, div.EndNoteCategoryHeading
 	{mso-style-name:"EndNote Category Heading";
@@ -601,17 +600,16 @@ p.EndNoteCategoryHeading, li.EndNoteCategoryHeading, div.EndNoteCategoryHeading
 	margin-bottom:6.0pt;
 	margin-left:0in;
 	line-height:150%;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
 	color:black;
-	background:white;
 	font-weight:bold;}
-span.EndNoteCategoryHeadingChar
-	{mso-style-name:"EndNote Category Heading Char";
-	mso-style-link:"EndNote Category Heading";
+span.CitationChar
+	{mso-style-name:"Citation Char";
+	mso-style-link:Citation;
 	font-family:"Calibri Light","sans-serif";
-	color:black;
-	font-weight:bold;}
+	color:#AEAAAA;}
 p.Citation, li.Citation, div.Citation
 	{mso-style-name:Citation;
 	mso-style-link:"Citation Char";
@@ -620,26 +618,43 @@ p.Citation, li.Citation, div.Citation
 	margin-bottom:8.0pt;
 	margin-left:0in;
 	line-height:150%;
+	background:white;
 	font-size:12.0pt;
 	font-family:"Calibri Light","sans-serif";
-	color:#AEAAAA;
-	background:white;}
-span.CitationChar
-	{mso-style-name:"Citation Char";
-	mso-style-link:Citation;
-	font-family:"Calibri Light","sans-serif";
 	color:#AEAAAA;}
+p.msopapdefault, li.msopapdefault, div.msopapdefault
+	{mso-style-name:msopapdefault;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:106%;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+span.apple-style-span
+	{mso-style-name:apple-style-span;}
+span.apple-converted-space
+	{mso-style-name:apple-converted-space;}
+span.identifier
+	{mso-style-name:identifier;}
+span.operator
+	{mso-style-name:operator;}
+span.paren
+	{mso-style-name:paren;}
+span.number
+	{mso-style-name:number;}
+span.comment
+	{mso-style-name:comment;}
+span.MTEquationSection
+	{mso-style-name:MTEquationSection;
+	color:red;
+	display:none;}
+.MsoChpDefault
+	{font-size:10.0pt;}
 .MsoPapDefault
 	{margin-bottom:8.0pt;
-	line-height:107%;}
- /* Page Definitions */
- @page WordSection1
+	line-height:106%;}
+@page WordSection1
 	{size:8.5in 11.0in;
 	margin:1.0in 1.0in 1.0in 1.0in;}
 div.WordSection1
 	{page:WordSection1;}
- /* List Definitions */
- ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
