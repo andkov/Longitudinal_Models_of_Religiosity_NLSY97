@@ -11,10 +11,26 @@ opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk 
 ```
 
 
-```{r, echo=F, message=F}
+```{r set_options, echo=F, message=F}
 require(plyr)
 require(ggplot2)
 require(rmarkdown)
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 4.8, 
+  fig.width = 6.5, 
+  out.width = "550px",
+  fig.path = 'figure_rmd',     
+  dev = "png",
+#   fig.path = 'figure_pdf/',     
+#   dev = "pdf",
+  dpi = 400
+)
 ```
 
 ```{r}

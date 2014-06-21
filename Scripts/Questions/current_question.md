@@ -17,22 +17,22 @@
 
     print (dsL[dsL$id==1,c("id","year","attend","attendF")])
 
-    ##    id year attend         attendF
-    ## 1   1 1997     NA            <NA>
-    ## 2   1 1998     NA            <NA>
-    ## 3   1 1999     NA            <NA>
-    ## 4   1 2000      1           Never
-    ## 5   1 2001      6 About once/week
-    ## 6   1 2002      2   Once or Twice
-    ## 7   1 2003      1           Never
-    ## 8   1 2004      1           Never
-    ## 9   1 2005      1           Never
-    ## 10  1 2006      1           Never
-    ## 11  1 2007      1           Never
-    ## 12  1 2008      1           Never
-    ## 13  1 2009      1           Never
-    ## 14  1 2010      1           Never
-    ## 15  1 2011      1           Never
+       id year attend         attendF
+    1   1 1997     NA            <NA>
+    2   1 1998     NA            <NA>
+    3   1 1999     NA            <NA>
+    4   1 2000      1           Never
+    5   1 2001      6 About once/week
+    6   1 2002      2   Once or Twice
+    7   1 2003      1           Never
+    8   1 2004      1           Never
+    9   1 2005      1           Never
+    10  1 2006      1           Never
+    11  1 2007      1           Never
+    12  1 2008      1           Never
+    13  1 2009      1           Never
+    14  1 2010      1           Never
+    15  1 2011      1           Never
 
 Creating frequency distributions for each of the measurement wave we
 have:
@@ -50,7 +50,7 @@ have:
     p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
     p
 
-<img src="./current_question_files/figure-markdown_strict/attend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="700px" />
+<img src="figure_rmdattend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="700px" />
 
 Missing values are used in the calculation of total responses to show
 the natural attrition in the study. Assumming that attrition is not
@@ -72,4 +72,4 @@ percentages that each response was endorsed at each time point.
     p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
     p
 
-<img src="./current_question_files/figure-markdown_strict/attend_2000_2011_na.png" title="plot of chunk attend_2000_2011_na" alt="plot of chunk attend_2000_2011_na" width="700px" />
+<img src="figure_rmdattend_2000_2011_na.png" title="plot of chunk attend_2000_2011_na" alt="plot of chunk attend_2000_2011_na" width="700px" />
