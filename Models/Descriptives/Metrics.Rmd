@@ -144,13 +144,12 @@ p<-p+ scale_x_discrete("Waves of measurement",
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
 p
 ```
-Missing values are used in the calculation of total responses to show the natural attrition in the study. 
-Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and at look at percentages that each response was endorsed at each time point. 
-```{r attend_2000_2011_na,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
-# attcol8 is defined in DeclareGlobal chunk of  the .R file
-ds<- dsL
 
-p<-ggplot(ds, aes(x=yearF, fill=attendF))
+Missing values are used in the calculation of total responses to show the natural attrition in the study. 
+Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and  look at percentages that each response was endorsed at each time point. 
+```{r attend_2000_2011_na,echo=T, message=F, out.width="700px", fig.width = 8 }
+ds<- dsL
+p<-ggplot(subset(ds, !is.na(attendF)), aes(x=yearF, fill=attendF))
 p<-p+ geom_bar(position="fill")
 p<-p+ scale_fill_manual(values = attcol8,
                     name="Response category" )
@@ -163,13 +162,10 @@ p<-p+ labs(title=paste0("In the past year, how often have you attended a worship
 p
 ```
 
-
-
-
 Graphs above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov  models.  LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.
 
 To demonstrate mapping of individual trajectories to time, let's select a  dataset that would include personal identifyer (**id**), cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
-```{r, echo=echoChunks, message=F, warning=warningChunks}
+```{r, echo=T, message=F, warning=warningChunks}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","attendF")] # select needed variables
 print(ds[ds$id==47,])# for a single subject with id=47
 ```
