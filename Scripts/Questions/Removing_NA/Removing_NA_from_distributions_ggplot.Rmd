@@ -25,16 +25,17 @@ opts_chunk$set(
   fig.height = 4.8, 
   fig.width = 6.5, 
   out.width = "550px",
-  fig.path = 'figure_rmd',     
+  fig.path = 'figure_rmd/',     
   dev = "png",
 #   fig.path = 'figure_pdf/',     
 #   dev = "pdf",
   dpi = 400
 )
 ```
-
+My data
 ```{r}
 dsL<-readRDS("./Data/Derived/dsL.rds")
+# color palette for the outcome
 attcol8<-c("Never"="#4575b4",
            "Once or Twice"="#74add1",
            "Less than once/month"="#abd9e9",
@@ -46,6 +47,7 @@ attcol8<-c("Never"="#4575b4",
 ```
 
 ```{r}
+# view for one respondent
 print (dsL[dsL$id==1,c("id","year","attend","attendF")])
 ```
 
@@ -67,9 +69,11 @@ p
 
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
 Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and at look at percentages that each response was endorsed at each time point. 
+
+The question is, what can be done produce the graph i just described? and do it most efficiently? I tried na.rm=TRUE  in various places, but it didn't go the trick. Any ideas?
 ```{r attend_2000_2011_na,echo=T, message=F, out.width="700px", fig.width = 8 }
 ds<- dsL
-### ?
+### ???
 p<-ggplot(ds, aes(x=yearF, fill=attendF))
 p<-p+ geom_bar(position="fill")
 p<-p+ scale_fill_manual(values = attcol8,
@@ -80,5 +84,5 @@ p<-p+ scale_y_continuous("Prevalence: proportion of total",
 p<-p+ scale_x_discrete("Waves of measurement",
                    limits=as.character(c(2000:2011)))
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p
+#p
 ```

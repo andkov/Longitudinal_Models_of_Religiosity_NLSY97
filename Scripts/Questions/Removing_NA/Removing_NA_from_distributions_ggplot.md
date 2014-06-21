@@ -3,9 +3,10 @@
 
 
 
-
+My data
 
     dsL<-readRDS("./Data/Derived/dsL.rds")
+    # color palette for the outcome
     attcol8<-c("Never"="#4575b4",
                "Once or Twice"="#74add1",
                "Less than once/month"="#abd9e9",
@@ -15,6 +16,7 @@
                "Several times/week"="#f46d43",
                "Everyday"="#d73027")
 
+    # view for one respondent
     print (dsL[dsL$id==1,c("id","year","attend","attendF")])
 
        id year attend         attendF
@@ -50,7 +52,7 @@ have:
     p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
     p
 
-<img src="figure_rmdattend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="700px" />
+<img src="figure_rmd/attend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="700px" />
 
 Missing values are used in the calculation of total responses to show
 the natural attrition in the study. Assumming that attrition is not
@@ -58,8 +60,12 @@ significantly associated with the outcome measure, we can remove missing
 values from the calculation of the total of responses and at look at
 percentages that each response was endorsed at each time point.
 
+The question is, what can be done produce the graph i just described?
+and do it most efficiently? I tried na.rm=TRUE in various places, but it
+didn't go the trick. Any ideas?
+
     ds<- dsL
-    ### ?
+    ### ???
     p<-ggplot(ds, aes(x=yearF, fill=attendF))
     p<-p+ geom_bar(position="fill")
     p<-p+ scale_fill_manual(values = attcol8,
@@ -70,6 +76,4 @@ percentages that each response was endorsed at each time point.
     p<-p+ scale_x_discrete("Waves of measurement",
                        limits=as.character(c(2000:2011)))
     p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-    p
-
-<img src="figure_rmdattend_2000_2011_na.png" title="plot of chunk attend_2000_2011_na" alt="plot of chunk attend_2000_2011_na" width="700px" />
+    #p
