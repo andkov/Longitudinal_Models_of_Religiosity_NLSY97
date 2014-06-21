@@ -34,7 +34,7 @@ opts_chunk$set(
   fig.height = 4.8, 
   fig.width = 6.5, 
   out.width = "550px",
-  fig.path = 'figure_rmd/',     
+  fig.path = 'figure_rmd/automatic_report',     
   dev = "png",
 #   fig.path = 'figure_pdf/',     
 #   dev = "pdf",
@@ -70,7 +70,7 @@ This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_fro
 dsL<-readRDS("./Data/Derived/dsL.rds")
 dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
-![View of dsL](./figure_rmd/3_Methods_Figure_3_3.png)
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>
 
 ---
 ##  Labeling Factor Levels
@@ -117,7 +117,7 @@ print(ds)
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-```{r, echo=echoChunks, message=T, out.width="700px", fig.width = 8}
+```{r attend_2000, echo=echoChunks, message=T, out.width="700px", fig.width = 8}
 p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
 p<- p+geom_bar(color="black")
 p<- p+scale_fill_manual(values=attcol8, na.value="white")
@@ -129,10 +129,10 @@ p
 ```
 
 Creating frequency distributions for each of the measurement wave we have:  
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+```{r attend_2000_2011,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
 # attcol8 is defined in DeclareGlobal chunk of  the .R file
 ds<- dsL
-p<-ggplot(ds, aes(x=factor(year), fill=attendF))
+p<-ggplot(ds, aes(x=yearF, fill=attendF))
 p<-p+ geom_bar(position="fill")
 p<-p+ scale_fill_manual(values = attcol8,
                     name="Response category" )
@@ -145,8 +145,28 @@ p<-p+ labs(title=paste0("In the past year, how often have you attended a worship
 p
 ```
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
+Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and at look at percentages that each response was endorsed at each time point. 
+```{r attend_2000_2011_na,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+# attcol8 is defined in DeclareGlobal chunk of  the .R file
+ds<- dsL
 
-Graph above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov  models.  LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.
+p<-ggplot(ds, aes(x=yearF, fill=attendF))
+p<-p+ geom_bar(position="fill")
+p<-p+ scale_fill_manual(values = attcol8,
+                    name="Response category" )
+p<-p+ scale_y_continuous("Prevalence: proportion of total",
+                     limits=c(0, 1),
+                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<-p+ scale_x_discrete("Waves of measurement",
+                   limits=as.character(c(2000:2011)))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
+```
+
+
+
+
+Graphs above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov  models.  LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.
 
 To demonstrate mapping of individual trajectories to time, let's select a  dataset that would include personal identifyer (**id**), cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
 ```{r, echo=echoChunks, message=F, warning=warningChunks}

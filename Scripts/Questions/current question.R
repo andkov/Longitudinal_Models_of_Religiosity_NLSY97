@@ -20,4 +20,3 @@ p<-p+ scale_x_discrete("Waves of measurement",
                        limits=as.character(c(2000:2011)))
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
 p
-

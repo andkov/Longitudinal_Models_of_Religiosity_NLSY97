@@ -1,0 +1,68 @@
+---
+title: "Current Question"
+output:
+  html_document:
+    keep_md: true
+---
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+```
+
+
+```{r, echo=F, message=F}
+require(plyr)
+require(ggplot2)
+require(rmarkdown)
+```
+
+```{r}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+attcol8<-c("Never"="#4575b4",
+           "Once or Twice"="#74add1",
+           "Less than once/month"="#abd9e9",
+           "About once/month"="#e0f3f8",
+           "About twice/month"="#fee090",
+           "About once/week"="#fdae61",
+           "Several times/week"="#f46d43",
+           "Everyday"="#d73027")
+```
+
+```{r}
+print (dsL[dsL$id==1,c("id","year","attend","attendF")])
+```
+
+Creating frequency distributions for each of the measurement wave we have:  
+```{r attend_2000_2011,echo=T, message=F, out.width="700px", fig.width = 8 }
+ds<- dsL
+p<-ggplot(ds, aes(x=yearF, fill=attendF))
+p<-p+ geom_bar(position="fill")
+p<-p+ scale_fill_manual(values = attcol8,
+                    name="Response category" )
+p<-p+ scale_y_continuous("Prevalence: proportion of total",
+                     limits=c(0, 1),
+                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<-p+ scale_x_discrete("Waves of measurement",
+                   limits=as.character(c(2000:2011)))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
+```
+
+Missing values are used in the calculation of total responses to show the natural attrition in the study. 
+Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and at look at percentages that each response was endorsed at each time point. 
+```{r attend_2000_2011_na,echo=T, message=F, out.width="700px", fig.width = 8 }
+ds<- dsL
+### ?
+p<-ggplot(ds, aes(x=yearF, fill=attendF))
+p<-p+ geom_bar(position="fill")
+p<-p+ scale_fill_manual(values = attcol8,
+                    name="Response category" )
+p<-p+ scale_y_continuous("Prevalence: proportion of total",
+                     limits=c(0, 1),
+                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<-p+ scale_x_discrete("Waves of measurement",
+                   limits=as.character(c(2000:2011)))
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p
+```
