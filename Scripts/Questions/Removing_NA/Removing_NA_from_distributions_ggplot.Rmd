@@ -69,9 +69,6 @@ p
 
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
 Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and  look at percentages that each response was endorsed at each time point. 
-
-###The question is
-what can be done produce the graph i just described? and do it most efficiently? I tried na.rm=TRUE  in various places, but it didn't go the trick. Any ideas?
 ```{r attend_2000_2011_na,echo=T, message=F, out.width="700px", fig.width = 8 }
 ds<- dsL
 p<-ggplot(subset(ds, !is.na(attendF)), aes(x=yearF, fill=attendF))

@@ -33,7 +33,7 @@ opts_chunk$set(
   tidy = FALSE,
   fig.height = 4.8, 
   fig.width = 6.5, 
-  out.width = "550px",
+  out.width = "300px",
   fig.path = 'figure_rmd/automatic_report/',     
   dev = "png",
 #   fig.path = 'figure_pdf/',     
@@ -117,7 +117,7 @@ print(ds)
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-```{r attend_2000, echo=echoChunks, message=T, out.width="700px", fig.width = 8}
+```{r attend_2000, echo=echoChunks, message=T, out.width="300px", fig.width = 8}
 p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
 p<- p+geom_bar(color="black")
 p<- p+scale_fill_manual(values=attcol8, na.value="white")
@@ -129,7 +129,7 @@ p
 ```
 
 Creating frequency distributions for each of the measurement wave we have:  
-```{r attend_2000_2011,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+```{r attend_2000_2011,echo=echoChunks, message=F, out.width="300px", fig.width = 8 }
 # attcol8 is defined in DeclareGlobal chunk of  the .R file
 ds<- dsL
 p<-ggplot(ds, aes(x=yearF, fill=attendF))
@@ -147,7 +147,7 @@ p
 
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
 Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and  look at percentages that each response was endorsed at each time point. 
-```{r attend_2000_2011_na,echo=T, message=F, out.width="700px", fig.width = 8 }
+```{r attend_2000_2011_na,echo=F, message=F, out.width="300px", fig.width = 8 }
 ds<- dsL
 p<-ggplot(subset(ds, !is.na(attendF)), aes(x=yearF, fill=attendF))
 p<-p+ geom_bar(position="fill")
@@ -171,12 +171,12 @@ print(ds[ds$id==47,])# for a single subject with id=47
 ```
 
 The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have 
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8, warning=warningChunks }
+```{r,echo=echoChunks, message=F, out.width="300px", fig.width = 8, warning=warningChunks }
 ds<-dsL[dsL$year %in% c(2000:2011),c('idF',"byear","year","attend","attendF")] # select needed variables
 ds<- ds[ds$id==47,]
 p<-ggplot(ds, aes(x=year,y=attend, color=idF))
 p<-p+ geom_line(color="purple")
-# p<-p+ geom_smooth(method=lm)
+p<-p+ geom_smooth(method=lm)
 p<-p+ geom_point(color="purple")
 p<-p+ scale_y_continuous("Church attendance",
                      limits=c(1, 8),
@@ -202,7 +202,7 @@ Each of such trajectories imply a story, a life scenario. Why one person grows i
 
 Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph
 
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+```{r,echo=echoChunks, message=F, out.width="300px", fig.width = 8 }
 
 ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
 p<-ggplot(ds, aes(x=year,y=attend, color=idF))
@@ -223,7 +223,7 @@ The respondent  **id**=35 reported attending no worship services in any of the y
 
 Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
 
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+```{r,echo=echoChunks, message=F, out.width="300px", fig.width = 8 }
 
 ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
 p<-ggplot(ds, aes(x=ageyear,y=as.numeric(attend), color=idF ))
