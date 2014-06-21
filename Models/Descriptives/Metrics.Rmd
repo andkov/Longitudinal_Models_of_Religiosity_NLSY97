@@ -34,7 +34,7 @@ opts_chunk$set(
   fig.height = 4.8, 
   fig.width = 6.5, 
   out.width = "550px",
-  fig.path = 'figure_rmd/automatic_report',     
+  fig.path = 'figure_rmd/automatic_report/',     
   dev = "png",
 #   fig.path = 'figure_pdf/',     
 #   dev = "pdf",
