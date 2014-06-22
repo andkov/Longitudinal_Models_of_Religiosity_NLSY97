@@ -60,12 +60,6 @@ significantly associated with the outcome measure, we can remove missing
 values from the calculation of the total of responses and look at
 percentages that each response was endorsed at each time point.
 
-### The question is
-
-what can be done produce the graph i just described? and do it most
-efficiently? I tried na.rm=TRUE in various places, but it didn't go the
-trick. Any ideas?
-
     ds<- dsL
     p<-ggplot(subset(ds, !is.na(attendF)), aes(x=yearF, fill=attendF))
     p<-p+ geom_bar(position="fill")

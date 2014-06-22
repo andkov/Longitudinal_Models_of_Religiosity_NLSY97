@@ -1,0 +1,9 @@
+\contentsline {section}{Data Manipulation}{1}{section*.2}
+\contentsline {subsection}{Five basic functions in data handling}{1}{section*.3}
+\contentsline {subsubsection}{select()}{1}{section*.4}
+\contentsline {subsubsection}{filter()}{2}{section*.5}
+\contentsline {subsubsection}{arrange()}{2}{section*.6}
+\contentsline {subsubsection}{mutate()}{3}{section*.7}
+\contentsline {subsubsection}{summarize()}{4}{section*.8}
+\contentsline {subsection}{Grouping and Combining}{4}{section*.9}
+\contentsline {subsection}{Base subsetting}{5}{section*.10}

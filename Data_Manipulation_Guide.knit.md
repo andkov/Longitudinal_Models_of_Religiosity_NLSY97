@@ -1,6 +1,13 @@
 ---
 title: "Data Manipulation"
 output:
+  pdf_document:
+    fig_crop: no
+    latex_engine: lualatex
+    toc: yes
+  md_document:
+    toc: yes
+    variant: markdown_github
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
@@ -9,11 +16,6 @@ output:
     highlight: textmate
     keep_md: yes
     theme: united
-    toc: yes
-  md_document:
-    toc: yes
-    variant: markdown_github
-  pdf_document:
     toc: yes
 ---
 
