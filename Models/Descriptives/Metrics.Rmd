@@ -265,23 +265,6 @@ p<-p+ labs(title=paste0("In the past year, how often have you attended a worship
 p
 ```
 
-## Selecting and Augmenting data for modeling
-We need only a few variables at any given moment in the process of modeling, so let's select only those we need to describe how respondents' church attendance was changing across time and age. Let's start with picking person's id, wave of measurement, and church attendance
-```{r}
-print (dsL[dsL$id==1,c("id","year","attend")])
-```
-Now, let's add to the selection person's year of birth and age in months at the time of the interview
-```{r, echo=TRUE}
-selectCols<-c("year","id","byear","agemon","attend") # type in variable name
-ds<-dsL[,selectCols] # select all rows and only columns listed in the object selectCols
-print(ds[ds$id==1,])  # print all availible data for respondent with ID number of 1
-```
-Generally we can select any desired dataset by formula **dataset**[  _condition for rows_  ,  _condition for columns_  ]
-```{r}
-ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
-print(ds[ds$id==1,]) 
-```
-
 
 
 [1]:http://statcanvas.net/thesis/databox/

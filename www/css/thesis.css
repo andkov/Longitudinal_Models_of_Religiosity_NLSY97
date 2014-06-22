@@ -1,5 +1,5 @@
 body, td {
-font-family:"Calibri Light","sans-serif";
+   font-family: "Calibri" , "sans-serif";
    background-color: white;
    font-size: 13px;
 }
@@ -12,7 +12,7 @@ body {
 }
 
 tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace,"Calibri Light";
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
 }
 
 h1 {
@@ -48,12 +48,14 @@ pre, img {
 }
 
 pre code {
-   display: block; padding: 0.5em;
+   display: block; padding: 0.05em;
 }
 
 code {
+  font-family:Consolas;
   font-size: 92%;
   border: 1px solid #ccc;
+  line-height:100%;
 }
 
 code[class] {
@@ -102,7 +104,7 @@ hr {
    }
 
    pre, blockquote {
-      padding-right: 1em;
+      padding-right: .5em;
       page-break-inside: avoid;
    }
 
