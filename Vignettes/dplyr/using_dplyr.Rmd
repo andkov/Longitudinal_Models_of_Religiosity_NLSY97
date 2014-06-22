@@ -1,0 +1,173 @@
+---
+title: "Data Manipulation"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig_caption: yes
+    fig_height: 4.5
+    fig_width: 6.5
+    highlight: textmate
+    keep_md: yes
+    theme: united
+    toc: yes
+  md_document:
+    toc: yes
+    variant: markdown_github
+  pdf_document:
+    toc: yes
+---
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 4.8, 
+  fig.width = 6.5, 
+  out.width = "550px",
+  fig.path = 'figure_rmd/automatic_report/',     
+  dev = "png",
+#   fig.path = 'figure_pdf/',     
+#   dev = "pdf",
+  dpi = 400
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Vignettes/dplyr/using_dplyr.R") # the file to which knitr calls for the chunks
+```
+
+Data Manipulation
+==============
+Report examplifying the use of <code>dplyr</code> in data handling on the example of <code>dsL</code>.
+
+<!-- Run this three chunks to get to the starting point -->
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=FALSE}
+```
+
+## Five basic functions in data handling
+
+For a more detailed discussion of basic verbs and operations consult the [R-Studio guide][1] or internal vignette
+```{r}
+# vignette("introduction",package="dplyr")
+```
+
+The following is a brief demonstration of <code>dplyr</code> syntax using <code>dsL</code> example  
+
+###<code>select()</code> 
+selects variables into a smaller data set
+```{r}
+require(dplyr)
+ds<-dsL
+dim(ds)
+ds<- select(ds,id,year, byear, attend, attendF)
+head(ds,13)
+dim(ds)
+```
+
+###<code>filter()</code> 
+Removes observations that do not meet criteria. The following code selects observation based on the type of sample    
+
+```{r, echo=F}
+ds<- filter(dsL, id %in% c(1, 6803) & year==2000 )
+ds<- select(ds, sample, sampleF)
+ds
+```
+and only between years 2000 and 2011, as only during those years the outcome of interest <code>attend</code> was recorded. 
+```{r, echo=T, message=F}
+require(dplyr)
+ds<- filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- select(ds,id, year, attend, attendF)
+head(ds,13)
+```
+
+
+###<code>arrange()</code> 
+Sorts observations
+```{r, echo=T, message=F}
+require(dplyr)
+ds<- filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- select(ds,id, year, attend)
+ds<- arrange(ds, year, desc(id))
+head(ds,13)
+ds<- arrange(ds, id, year)
+head(ds, 13)
+```
+
+
+###<code>mutate()</code> 
+
+Creates additional variables from the values of existing.
+```{r, echo=T, message=F}
+require(dplyr)
+ds<- filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- select(ds,id, byear, year, attend)
+ds<- mutate(ds, 
+            age = year-byear, 
+            timec = year-2000,
+            linear= timec,
+            quadratic= linear^2,
+            cubic= linear^3)
+head(ds,13)
+```
+
+###<code>summarize()</code> 
+
+## Grouping and Combining 
+The function <code>group_by</code> is used to identify groups in split-apply-combine (SAC) procedure: all possible interactions between the levels of supplied variables
+```{r, echo=T, message=F}
+ds<- filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- select(ds,id, year, attendF)
+
+s <- group_by(ds, year,attendF)
+s <- summarise(s, count = n())
+s <- mutate(s, total = sum(count),
+              percent= count/total)
+s
+
+```
+
+The same result can be achieved with the same result use a more elegant syntax that relies on <code>%>%</code> operator, in which <code>x %>% f(y)</code> turns into <code>f(x, y) </code>:
+```{r, echo=TRUE}
+
+ds<-dsL %>%
+  filter(sample==1, year %in% c(2000:2011)) %>%
+  select(id, year, attendF) %>%
+  group_by(year,attendF) %>%
+    summarise(count = n()) %>%
+    mutate(total = sum(count),
+              percent= count/total)  
+head(ds,10)    
+```
+
+verify that this is what we wanted to achieve:
+```{r, echo=T, message=F}
+summarize( filter(s, year==2000), should.be.one=sum(percent))
+```
+
+
+## Traditional subsetting
+Generally we can select any desired dataset by formula  
+**dataset**[  _condition for rows_  ,  _condition for columns_  ], and using __dataset$variableName__ selector
+```{r, echo=T}
+ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
+print(ds[ds$id==1,]) 
+```
+
+[1]:http://blog.rstudio.org/2014/01/17/introducing-dplyr/

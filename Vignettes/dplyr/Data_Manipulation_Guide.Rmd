@@ -14,7 +14,6 @@ output:
     toc: yes
     variant: markdown_github
   pdf_document:
-    highlight: zenburn
     toc: yes
 ---
 
@@ -45,7 +44,7 @@ opts_chunk$set(
 echoChunks <- FALSE
 warningChunks<- FALSE
 options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Vignettes/Data_Manipulation_dplyr/Data_Manipulation_Guide.R") # the file to which knitr calls for the chunks
+read_chunk("./Vignettes/dplyr/using_dplyr.R") # the file to which knitr calls for the chunks
 ```
 
 Data Manipulation
@@ -133,7 +132,6 @@ head(ds,13)
 ## Grouping and Combining 
 The function <code>group_by</code> is used to identify groups in split-apply-combine (SAC) procedure: all possible interactions between the levels of supplied variables
 ```{r, echo=T, message=F}
-s
 ds<- filter(dsL,sample==1, year %in% c(2000:2011))
 ds<- select(ds,id, year, attendF)
 
@@ -164,7 +162,7 @@ summarize( filter(s, year==2000), should.be.one=sum(percent))
 ```
 
 
-## Base subsetting
+## Traditional subsetting
 Generally we can select any desired dataset by formula  
 **dataset**[  _condition for rows_  ,  _condition for columns_  ], and using __dataset$variableName__ selector
 ```{r, echo=T}
