@@ -6,13 +6,14 @@ pathDerive <- base::file.path("./Data/Derive_dsL_from_Extract.Rmd")
 pathDatabox <- base::file.path("./Models/Descriptives/Databox.Rmd")
 pathMetrics<- base::file.path("./Models/Descriptives/Metrics.Rmd")
 pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
+pathCurQuest <- base::file.path("./Scripts/Questions/Removing_NA/Removing_NA_from_distributions_ggplot.Rmd")
 
 ########## Define groups of reports 
 descriptives<-c(pathDatabox,pathMetrics)
 allreps<- c(pathDerive, pathDatabox,pathMetrics, pathLCM )
-# Select  report or group of reports to build:
+# Place report paths HERE:
 buildthese <- c(pathMetrics)
-#####################
+
 
 testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
 # Build the reports

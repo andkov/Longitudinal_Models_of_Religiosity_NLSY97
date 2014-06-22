@@ -1,0 +1,101 @@
+---
+title: "Metrics"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig_caption: yes
+    fig_height: 4.5
+    fig_width: 6.5
+    highlight: textmate
+    keep_md: yes
+
+    toc: yes
+  md_document:
+    toc: yes
+    variant: markdown_github
+  pdf_document:
+    toc: yes
+---
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 4.8, 
+  fig.width = 6.5, 
+  out.width = "550px",
+  fig.path = 'figure_rmd/automatic_report/',     
+  dev = "png",
+#   fig.path = 'figure_pdf/',     
+#   dev = "pdf",
+  dpi = 400
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Vignettes/dplyr/using_dplyr.R") # the file to which knitr calls for the chunks
+```
+
+On using dplyr
+==============
+Vignettes examplifying using dplyr to handle the data selected for the study
+
+<!-- Run this three chunks to get to the starting point -->
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=FALSE}
+```
+### Basic verbs of dplyr
+Dplyr relies on five basic verb:
++ filter ()
++ arrange ()
++ select ()
++ mutate()
++ summarize()
+
+
+Consult the [official vignette][1] for additional info, which you can call from R as well
+```{r}
+# vignette("introduction",package="dplyr")
+```
+
+
+```{r, echo=F, message=F}
+ds<- filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- select(ds,id, year, attend, attendF)
+head(ds,13)
+require(dplyr)
+
+```
+
+```{r, echo=F, message=F}
+s <- group_by(ds, year,attendF)
+s <- summarise(s, count = n())
+s <- mutate(s, total = sum(count),
+              percent= count/total)
+s
+
+```
+
+verify that this is what we wanted to achieve:
+```{r, echo=T, message=F}
+summarize( filter(s, year==2000), one=sum(percent))
+```
+
+
+[1]:

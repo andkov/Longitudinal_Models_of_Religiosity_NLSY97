@@ -117,7 +117,7 @@ print(ds)
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-```{r attend_2000, echo=echoChunks, message=T}
+```{r attend_2000, echo=echoChunks, message=T, out.width = "700px"}
 p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
 p<- p+geom_bar(color="black")
 p<- p+scale_fill_manual(values=attcol8, na.value="white")
@@ -129,19 +129,22 @@ p
 ```
 
 Creating frequency distributions for each of the measurement wave we have:  
-```{r attend_2000_2011,echo=echoChunks, message=F}
+```{r attend_2000_2011,echo=echoChunks, message=F, out.width = "700px"}
 # attcol8 is defined in DeclareGlobal chunk of  the .R file
 ds<- dsL
-p<-ggplot(ds, aes(x=yearF, fill=attendF))
-p<-p+ geom_bar(position="fill")
-p<-p+ scale_fill_manual(values = attcol8,
+ds <- ddply(ds,.(year, attendF) , summarize, prevalence=sum(attend))
+
+p<- ggplot(ds, aes(x=yearF, fill=attendF))
+p<- p+ geom_bar(position="fill")
+p<- p+ scale_fill_manual(values = attcol8,
                     name="Response category" )
-p<-p+ scale_y_continuous("Prevalence: proportion of total",
+p<- p+ scale_y_continuous("Prevalence: proportion of total",
                      limits=c(0, 1),
                      breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
-p<-p+ scale_x_discrete("Waves of measurement",
+p<- p+ scale_x_discrete("Waves of measurement",
                    limits=as.character(c(2000:2011)))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p<- p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+# p<- p+ geom_text(aes(y=attendF), vjust=1.5, colour="white")
 p
 ```
 
