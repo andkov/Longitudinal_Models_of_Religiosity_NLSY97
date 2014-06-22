@@ -1,7 +1,21 @@
+#TOC {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  overflow:auto;
+}
+
+
 body, td {
    font-family: "Calibri" , "sans-serif";
    background-color: white;
    font-size: 13px;
+      max-width: 800px;
+      margin: auto;
+      margin-left:210px;
+      line-height: 20px;
 }
 
 body {

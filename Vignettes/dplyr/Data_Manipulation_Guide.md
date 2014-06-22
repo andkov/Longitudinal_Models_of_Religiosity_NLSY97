@@ -1,3 +1,27 @@
+---
+output:
+  html_document:
+    css: '\~/GitHub/Longitudinal\_Models\_of\_Religiosity\_NLSY97/www/css/thesis.css'
+    fig_caption: True
+    fig_height: '4.5'
+    fig_width: '6.5'
+    highlight: textmate
+    keep_md: True
+    theme: united
+    toc: True
+  md_document:
+    toc: True
+    variant: markdown
+  pdf_document:
+    fig_crop: False
+    highlight: kate
+    latex_engine: xelatex
+    number_sections: True
+    toc: True
+    toc_depth: 3
+title: Data Manipulation
+...
+
 -   Data Manipulation
     -   Five basic functions in data handling
         -   <code>select()</code>
@@ -16,7 +40,8 @@
 Data Manipulation
 =================
 
-Report examplifying the use of <code>dplyr</code> in data handling on the example of <code>dsL</code>.
+Report examplifying the use of <code>dplyr</code> in data handling on
+the example of <code>dsL</code>.
 
 <!-- Run this three chunks to get to the starting point -->
 
@@ -28,13 +53,16 @@ Report examplifying the use of <code>dplyr</code> in data handling on the exampl
 Five basic functions in data handling
 -------------------------------------
 
-For a more detailed discussion of basic verbs and operations consult the [R-Studio guide](http://blog.rstudio.org/2014/01/17/introducing-dplyr/) or internal vignette
+For a more detailed discussion of basic verbs and operations consult the
+[R-Studio guide](http://blog.rstudio.org/2014/01/17/introducing-dplyr/)
+or internal vignette
 
 ``` {.r}
 # vignette("introduction",package="dplyr")
 ```
 
-The following is a brief demonstration of <code>dplyr</code> syntax using <code>dsL</code> example
+The following is a brief demonstration of <code>dplyr</code> syntax
+using <code>dsL</code> example
 
 ### <code>select()</code>
 
@@ -76,13 +104,15 @@ dim(ds)
 
 ### <code>filter()</code>
 
-Removes observations that do not meet criteria. The following code selects observation based on the type of sample
+Removes observations that do not meet criteria. The following code
+selects observation based on the type of sample
 
       sample         sampleF
     1      1 Cross-Sectional
     2      0      Oversample
 
-and only between years 2000 and 2011, as only during those years the outcome of interest <code>attend</code> was recorded.
+and only between years 2000 and 2011, as only during those years the
+outcome of interest <code>attend</code> was recorded.
 
 ``` {.r}
 require(dplyr)
@@ -190,7 +220,9 @@ head(ds,13)
 Grouping and Combining
 ----------------------
 
-The function <code>group\_by</code> is used to identify groups in split-apply-combine (SAC) procedure: all possible interactions between the levels of supplied variables
+The function <code>group\_by</code> is used to identify groups in
+split-apply-combine (SAC) procedure: all possible interactions between
+the levels of supplied variables
 
 ``` {.r}
 require(dplyr)
@@ -220,7 +252,9 @@ head(s,10)
     9  2000                   NA   733  6748 0.108625
     10 2001                Never  1627  6748 0.241108
 
-The same result can be achieved with the same result use a more elegant syntax that relies on <code>%\>%</code> operator, in which <code>x %\>% f(y)</code> turns into <code>f(x, y) </code>:
+The same result can be achieved with the same result use a more elegant
+syntax that relies on <code>%\>%</code> operator, in which <code>x %\>%
+f(y)</code> turns into <code>f(x, y) </code>:
 
 ``` {.r}
 ds<-dsL %>%
@@ -262,8 +296,9 @@ summarize( filter(s, year==2000), should.be.one=sum(percent))
 Base subsetting
 ---------------
 
-Generally we can select any desired dataset by formula
-**dataset**[ *condition for rows* , *condition for columns* ], and using **dataset\$variableName** selector
+Generally we can select any desired dataset by formula\
+**dataset**[ *condition for rows* , *condition for columns* ], and using
+**dataset\$variableName** selector
 
 ``` {.r}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]

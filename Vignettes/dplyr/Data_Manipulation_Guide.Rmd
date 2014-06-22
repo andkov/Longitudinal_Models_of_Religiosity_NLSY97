@@ -3,11 +3,14 @@ title: "Data Manipulation"
 output:
   pdf_document:
     fig_crop: no
-    latex_engine: lualatex
+    highlight: kate
+    latex_engine: xelatex
+    number_sections: yes
     toc: yes
+    toc_depth: 3
   md_document:
     toc: yes
-    variant: markdown_github
+    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
