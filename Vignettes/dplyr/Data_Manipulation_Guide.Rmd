@@ -132,6 +132,8 @@ head(ds,13)
 ## Grouping and Combining 
 The function <code>group_by</code> is used to identify groups in split-apply-combine (SAC) procedure: all possible interactions between the levels of supplied variables
 ```{r, echo=T, message=F}
+require(dplyr)
+
 ds<- filter(dsL,sample==1, year %in% c(2000:2011))
 ds<- select(ds,id, year, attendF)
 
@@ -162,7 +164,7 @@ summarize( filter(s, year==2000), should.be.one=sum(percent))
 ```
 
 
-## Traditional subsetting
+## Base subsetting
 Generally we can select any desired dataset by formula  
 **dataset**[  _condition for rows_  ,  _condition for columns_  ], and using __dataset$variableName__ selector
 ```{r, echo=T}
