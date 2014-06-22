@@ -218,7 +218,8 @@ head(ds,13)</code></pre>
 <div id="grouping-and-combining" class="section level2">
 <h2>Grouping and Combining</h2>
 <p>The function <code>group_by</code> is used to identify groups in split-apply-combine (SAC) procedure: all possible interactions between the levels of supplied variables</p>
-<pre class="r"><code>ds&lt;- filter(dsL,sample==1, year %in% c(2000:2011))
+<pre class="r"><code>require(dplyr)
+ds&lt;- filter(dsL,sample==1, year %in% c(2000:2011))
 ds&lt;- select(ds,id, year, attendF)
 
 s &lt;- group_by(ds, year,attendF)
