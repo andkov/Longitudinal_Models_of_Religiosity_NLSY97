@@ -200,10 +200,10 @@ s <- group_by(ds, year,attendF)
 s <- summarise(s, count = n())
 s <- mutate(s, total = sum(count),
               percent= count/total)
-s
+head(s,10)
 ```
 
-    Source: local data frame [108 x 5]
+    Source: local data frame [10 x 5]
     Groups: year
 
        year              attendF count total  percent
@@ -217,7 +217,6 @@ s
     8  2000             Everyday    36  6748 0.005335
     9  2000                   NA   733  6748 0.108625
     10 2001                Never  1627  6748 0.241108
-    ..  ...                  ...   ...   ...      ...
 
 The same result can be achieved with the same result use a more elegant syntax that relies on <code>%\>%</code> operator, in which <code>x %\>% f(y)</code> turns into <code>f(x, y) </code>:
 

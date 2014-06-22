@@ -139,7 +139,7 @@ s <- group_by(ds, year,attendF)
 s <- summarise(s, count = n())
 s <- mutate(s, total = sum(count),
               percent= count/total)
-s
+head(s,10)
 
 ```
 
