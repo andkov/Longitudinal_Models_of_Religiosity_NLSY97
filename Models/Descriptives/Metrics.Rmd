@@ -100,7 +100,7 @@ selectCols<-c("year","id","byear","attend","attendF") # select the columns with 
 ds<-dsL[,selectCols] # select all rows for the columns listed  selectCols
 print(ds[ds$id==1,]) # print all availible data for respondent with ID 1
 ```
-Having quick access to factor labels will be especially useful during graph production. For the grammer rules of operations with relevant data see [Data Manipulation Guide][5].
+Having quick access to factor labels will be especially useful during graph production. For the grammer rules of operations with relevant data see [Data Manipulation Guide][./Vignettes/dplyr/Data_Manipulation_Guide.md].
 
 
 ## Time metrics : Age, Period, Cohort
