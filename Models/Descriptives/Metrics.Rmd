@@ -4,10 +4,11 @@ output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
-    fig_height: 4.5
+    fig_height: 4.8
     fig_width: 6.5
     highlight: textmate
     keep_md: yes
+    number_sections: yes
     theme: united
     toc: yes
   md_document:
@@ -51,8 +52,8 @@ warningChunks<- FALSE
 options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
 ```
-Metrics: labeling factors and exploring scales
-==============================================
+#Metrics: labeling factors and exploring scales
+
 Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
@@ -76,9 +77,9 @@ This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_fro
 dsL<-readRDS("./Data/Derived/dsL.rds")
 dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:700px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>
 
----
+
 ##  Labeling Factor Levels
 Review of the item reference [cards][1] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, data were saved as numerical values or  intigers
 ```{r}
@@ -102,7 +103,7 @@ print(ds[ds$id==1,]) # print all availible data for respondent with ID 1
 Having quick access to factor labels will be especially useful during graph production.
 
 
----
+
 ## Time metrics : Age, Period, Cohort
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
 <img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Age, Peridod, Cohort" style="width:700px ;"/>
@@ -119,11 +120,10 @@ print(ds)
 
 
 
----
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-```{r attend_2000, echo=echoChunks, message=T, out.width = "700px"}
+```{r attend_2000, echo=echoChunks, message=T, fig.height = 3.3, fig.width=7, out.width = "400px"}
 p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
 p<- p+geom_bar(color="black")
 p<- p+scale_fill_manual(values=attcol8, na.value="white")
@@ -137,15 +137,7 @@ p
 Creating frequency distributions for each of the measurement wave we have:  
 ```{r attend_2000_2011,echo=echoChunks, message=F, out.width = "700px"}
 # attcol8 is defined in DeclareGlobal chunk of  the .R file
-require(dplyr)
-ds<- dsL %>%
-        filter(sample==1, year %in% c(2000:2011)) %>%
-        select(id,year,yearF,attend, attendF) %>%      
-        group_by(year,attendF) %>%
-        summarize(count = sum(attend))
-
-head(ds,10)
-p<- ggplot(ds, aes(x=year, fill=attendF))
+p<- ggplot(dsL, aes(x=yearF, fill=attendF))
 p<- p+ geom_bar(position="fill")
 p<- p+ scale_fill_manual(values = attcol8,
                     name="Response category" )
@@ -161,9 +153,9 @@ p
 
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
 Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and  look at percentages that each response was endorsed at each time point. 
+
 ```{r attend_2000_2011_na,echo=F, message=F }
-ds<- dsL
-p<-ggplot(subset(ds, !is.na(attendF)), aes(x=yearF, fill=attendF))
+p<-ggplot(subset(dsL, !is.na(attendF)), aes(x=yearF, fill=attendF))
 p<-p+ geom_bar(position="fill")
 p<-p+ scale_fill_manual(values = attcol8,
                     name="Response category" )

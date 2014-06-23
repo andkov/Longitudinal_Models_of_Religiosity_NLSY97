@@ -1,0 +1,301 @@
+---
+title: "Study in figure properties"
+output:
+  pdf_document:
+    fig_crop: no
+    highlight: kate
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  md_document:
+    toc: yes
+    variant: markdown
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig_caption: yes
+    fig_height: 4.8
+    fig_width: 6.5
+    highlight: textmate
+    keep_md: yes
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 4.8, 
+  fig.width = 6.5, 
+  out.width = "550px",
+  fig.path = 'figure_rmd/',     
+  dev = "png",
+#   fig.path = 'figure_pdf/',     
+#   dev = "pdf",
+  dpi = 400
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+```
+Exploring the figure definitions
+
++ fig.width
++ fig.height
++ out.width
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+attcol8<-c("Never"="#4575b4",
+           "Once or Twice"="#74add1",
+           "Less than once/month"="#abd9e9",
+           "About once/month"="#e0f3f8",
+           "About twice/month"="#fee090",
+           "About once/week"="#fdae61",
+           "Several times/week"="#f46d43",
+           "Everyday"="#d73027")
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+require(dplyr)
+require(ggplot2)
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+```
+# Fig.hight
+
+## fig.height = 4, fig.width=7, out.width = "600px"
+```{r 4_7_600, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 3.5, fig.width=7, out.width = "600px"
+```{r 3.5_7_600, echo=echoChunks, message=T, fig.height = 3.5, fig.width=7, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+## fig.height = 3, fig.width=7, out.width = "600px"
+```{r 3_7_600, echo=echoChunks, message=T, fig.height = 3, fig.width=7, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 2.5, fig.width=7, out.width = "600px"
+```{r 2.5_7_600, echo=echoChunks, message=T, fig.height = 2.5, fig.width=7, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 2, fig.width=7, out.width = "600px"
+```{r 2_7_600, echo=echoChunks, message=T, fig.height = 2, fig.width=7, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+# Fig.width
+
+## fig.height = 4, fig.width=7, out.width = "600px"
+```{r 4_7_600_2, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 4, fig.width=6.5, out.width = "600px"
+```{r 4_6.5_600, echo=echoChunks, message=T, fig.height = 4, fig.width=6.5, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 4, fig.width=6, out.width = "600px"
+```{r 4_6_600, echo=echoChunks, message=T, fig.height = 4, fig.width=6, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 4, fig.width=5.5, out.width = "600px"
+```{r 4_5.5_600, echo=echoChunks, message=T, fig.height = 4, fig.width=5.5, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 4, fig.width=5, out.width = "600px"
+```{r 4_5_600, echo=echoChunks, message=T, fig.height = 4, fig.width=5, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 4, fig.width=4.5, out.width = "600px"
+```{r 4_3.5_600, echo=echoChunks, message=T, fig.height = 4, fig.width=4.5, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+# out.width
+
+## fig.height = 4, fig.width=7, out.width = "600px"
+```{r 4_7_600_3, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "600px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 4, fig.width=7, out.width = "550px"
+```{r 4_7_550, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "550px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+## fig.height = 4, fig.width=7, out.width = "500px"
+```{r 4_7_500, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "500px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 4, fig.width=7, out.width = "450px"
+```{r 4_7_450, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "450px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+## fig.height = 4, fig.width=7, out.width = "400px"
+```{r 4_7_400, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "400px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
+
+
+
+## fig.height = 4, fig.width=7, out.width = "350px"
+```{r 4_7_350, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "350px"}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
+p<- p+geom_bar(color="black")
+p<- p+scale_fill_manual(values=attcol8, na.value="white")
+p<- p+coord_flip()
+p<- p+xlab("Church attendance") 
+p<- p+ylab("Count")
+p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+p
+```
