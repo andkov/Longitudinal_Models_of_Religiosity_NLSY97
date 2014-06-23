@@ -65,6 +65,7 @@ attcol8<-c("Never"="#4575b4",
            "About once/week"="#fdae61",
            "Several times/week"="#f46d43",
            "Everyday"="#d73027")
+#TODO: Andrey, consider assigning the `NA` values their own levels (maybe in the `LoadData` chunk), then defining their color here. I recommend some shade of gray.
 ```
 
 ```{r LoadPackages, echo=echoChunks, message=F}
