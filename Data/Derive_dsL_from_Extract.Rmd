@@ -2,16 +2,26 @@
 title: "Derive dsL"
 output:
   pdf_document:
+    fig_crop: no
+    highlight: kate
+    latex_engine: xelatex
+    number_sections: yes
     toc: yes
+    toc_depth: 3
   md_document:
     toc: yes
-    variant: markdown_github
+    variant: markdown
   html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
-    number_sections: yes
-    theme: journal
+    fig_height: 4.5
+    fig_width: 6.5
+    highlight: textmate
+    keep_md: yes
+    theme: united
     toc: yes
 ---
+
 Deriving clean dataset **dsL** from NLSY97 extract
 =================================================
 This report narrates the origin of dataset used in the study. 

@@ -16,9 +16,8 @@ attcol8<-c("Never"="#4575b4",
 ############################
 ## @knitr LoadPackages
 require(RODBC)
-require(plyr)
+require(dplyr)
 require(ggplot2)
-
 
 
 ############################

@@ -16,9 +16,9 @@ pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
 
 ########## Define groups of reports 
 descriptives<-c(pathDatabox,pathMetrics)
-allreps<- c(pathDerive, pathDatabox,pathMetrics, pathLCM, pathRemoveNA )
+allreps<- c(pathDerive, pathManipulate,pathMetrics, pathLCM, pathRemoveNA )
 # Place report paths HERE:
-buildthese <- c(pathManipulate)
+buildthese <- c(allreps)
 
 
 testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
@@ -27,10 +27,10 @@ for( pathRmd in buildthese ) {
 #   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   rmarkdown::render(input = pathRmd, 
                     output_format=c(
-#                       "md_document"
-                      "html_document"
+                      "md_document"
+                      ,"html_document"
 #                       ,"word_document"
-#                       "pdf_document"
+                      ,"pdf_document"
                                     ),
 #                     output_file=pathMd,
                     clean=TRUE)

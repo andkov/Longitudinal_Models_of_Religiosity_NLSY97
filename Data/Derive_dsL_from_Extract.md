@@ -1,7 +1,31 @@
+---
+output:
+  html_document:
+    css: '\~/GitHub/Longitudinal\_Models\_of\_Religiosity\_NLSY97/www/css/thesis.css'
+    fig_caption: True
+    fig_height: '4.5'
+    fig_width: '6.5'
+    highlight: textmate
+    keep_md: True
+    theme: united
+    toc: True
+  md_document:
+    toc: True
+    variant: markdown
+  pdf_document:
+    fig_crop: False
+    highlight: kate
+    latex_engine: xelatex
+    number_sections: True
+    toc: True
+    toc_depth: 3
+title: Derive dsL
+...
+
 -   Deriving clean dataset **dsL** from NLSY97 extract
     -   Working with NLS Investigator
     -   Data Retrieval
-    -   Databox, VO-slice of the selected variables
+    -   Databox, variable-by-occasion slice
     -   Religiosity, Context, and Covariates
     -   dsL - initial dataset
     -   Factor labels
@@ -25,26 +49,50 @@ This report narrates the origin of dataset used in the study.
 
 ### Working with NLS Investigator
 
-To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you will have to register a free account to keep track of your progress), select "NLYS97 1997-2011" in the first dropdown box and then click "Choose File" under "Upload Tagset." Select the file **NLSY97\_Religiosity\_20042014.NLSY97** from the folder **/Data/Extract/NLSY97\_Religiosity\_20042014**. All the variables from this extract will be loaded into NLS Web Investigator.
+To explore the variables in the native context of NLS, go to [NLS
+Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you
+will have to register a free account to keep track of your progress),
+select "NLYS97 1997-2011" in the first dropdown box and then click
+"Choose File" under "Upload Tagset." Select the file
+**NLSY97\_Religiosity\_20042014.NLSY97** from the folder
+**/Data/Extract/NLSY97\_Religiosity\_20042014**. All the variables from
+this extract will be loaded into NLS Web Investigator.
 
-Alternatively, one can locate the particular item of interest by copying and pasting its "Variable Title" it into "Word in Title" search line of the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as indicated in the graphic below.
+Alternatively, one can locate the particular item of interest by copying
+and pasting its "Variable Title" it into "Word in Title" search line of
+the [NLS
+Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as
+indicated in the graphic below.
 
 <img src="./figure_rmd/lmrNLY97figures_NLSwebView.png" alt="Looking up items" style="width:800px ;"/>
 
 ### Data Retrieval
 
-Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials were unzipped into the folder [/Data/Extracts/NLSY97\_Religiosity\_20042014](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data/Extracts/NLSY97_Religiosity_20042014), located in the GitHub Repository. (The naming convention is "Study\_Focus\_DDMMYYYofDownload")
+Using [NLS
+Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a
+list of variables was downloaded from [NLS](http://www.bls.gov/nls/)
+datasets. All the downloaded materials were unzipped into the folder
+[/Data/Extracts/NLSY97\_Religiosity\_20042014](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data/Extracts/NLSY97_Religiosity_20042014),
+located in the GitHub Repository. (The naming convention is
+"Study\_Focus\_DDMMYYYofDownload")
 
 #### The downloaded zip.forlder included:
 
-NLSY97\_Religiosity\_20042014.cdb - **codebook** containing item descriptions
-NLSY97\_Religiosity\_20042014.csv - **data** in comma delimited format
-NLSY97\_Religiosity\_20042014.NLSY97 - **tagset**, the list of variables in the downloaded dataset
-NLSY97\_Religiosity\_20042014.dtc - STATA **dictionary** file of selected variables, contains data as well
+NLSY97\_Religiosity\_20042014.cdb - **codebook** containing item
+descriptions\
+NLSY97\_Religiosity\_20042014.csv - **data** in comma delimited format\
+NLSY97\_Religiosity\_20042014.NLSY97 - **tagset**, the list of variables
+in the downloaded dataset\
+NLSY97\_Religiosity\_20042014.dtc - STATA **dictionary** file of
+selected variables, contains data as well
 
-We import the raw data of NLSY97 from .**csv** file and make initial clean up. <!-- run initial import from the databank defined by tagset. -->
+We import the raw data of NLSY97 from .**csv** file and make initial
+clean up.
+<!-- run initial import from the databank defined by tagset. -->
 
-The STATA **dictionary** file printed below lists the selected variables : unique NLSY97 reference numbers (RNUM) are paired wtih their descriptive labels (VARIABLE TITLE).
+The STATA **dictionary** file printed below lists the selected variables
+: unique NLSY97 reference numbers (RNUM) are paired wtih their
+descriptive labels (VARIABLE TITLE).
 
 #### Selected variables
 
@@ -183,7 +231,9 @@ The STATA **dictionary** file printed below lists the selected variables : uniqu
     132 R0552300              WHAT IS PR CURR RELIG PREF? 1997
     133 R0552200                 WHAT RELIG PR RAISED IN? 1997
 
-After renaming the variables, we arrange data in wide format (variable/occasions as columns), arriving at the basis dataset **dsSource**, which contains
+After renaming the variables, we arrange data in wide format
+(variable/occasions as columns), arriving at the basis dataset
+**dsSource**, which contains
 
 ``` {.r}
 ncol(dsSource)
@@ -201,28 +251,58 @@ nrow(dsSource)
 
 respondents.
 
-Dictionary file is imported into Excel file "ItemMapping\_20042014.xlsx", where variables are renamed and organized with respect to occasssions of their measurement. Renaming and additional data grooming are described in <**@knitr> TweakData\*\* chunk of the sourced .R file. The result is variable-by-occasion databox slice.
+Dictionary file is imported into Excel file
+"ItemMapping\_20042014.xlsx", where variables are renamed and organized
+with respect to occasssions of their measurement. Renaming and
+additional data grooming are described in <**@knitr> TweakData\*\* chunk
+of the sourced .R file. The result is variable-by-occasion databox
+slice.
 
-### Databox, VO-slice of the selected variables
+### Databox, variable-by-occasion slice
 
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>\
 [Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
-Variables on vertical dimension and occasions on horizontal intersect over grey-filled boxes displaying the year of the wave for which data are available. Variable **attend** is marked by red to indicate that it is the primary quantification of religiosity in the statistical models used in this study.
+Variables on vertical dimension and occasions on horizontal intersect
+over grey-filled boxes displaying the year of the wave for which data
+are available. Variable **attend** is marked by red to indicate that it
+is the primary quantification of religiosity in the statistical models
+used in this study.
 
-The variable dimension of the databox slice is represented by three identifiers adjacent to the left of the grid.
+The variable dimension of the databox slice is represented by three
+identifiers adjacent to the left of the grid.
 
--   **Variable Title** - verbatim identifier from NLSY97
--   **Unit** - describes the scales used to measure variables
--   **Codename** - the (new) name of the variable, as it is used in R code
+-   **Variable Title** - verbatim identifier from NLSY97\
+-   **Unit** - describes the scales used to measure variables\
+-   **Codename** - the (new) name of the variable, as it is used in R
+    code
 
 ### Religiosity, Context, and Covariates
 
-The light grey background highlights the variables related to religion and spirituality. The first section of items (**attendPR**, **relprefPR**, **relraisedPR**) gives data on the religiosity of [parents](http://www.bls.gov/nls/quex/r1/y97rd1pquex.htm) of the respondents, whose households were sampled into NLSY97. Another grey section lists the items related to the religiosity of the youth, which give data on their religious behaviors (**relpref**, **attend**, **pray**, **decisions**) and attitudes (**values**, **todo**, **obeyed**, **bornagain**, **faith**).
+The light grey background highlights the variables related to religion
+and spirituality. The first section of items (**attendPR**,
+**relprefPR**, **relraisedPR**) gives data on the religiosity of
+[parents](http://www.bls.gov/nls/quex/r1/y97rd1pquex.htm) of the
+respondents, whose households were sampled into NLSY97. Another grey
+section lists the items related to the religiosity of the youth, which
+give data on their religious behaviors (**relpref**, **attend**,
+**pray**, **decisions**) and attitudes (**values**, **todo**,
+**obeyed**, **bornagain**, **faith**).
 
-Context variables and covariates are on white background. The top section gives basic demographics: the month (**bmonth**) and year (**byear**) of birth, sex (**sex**), race (**race**), as well as the indicator whether the individual is a member of the cross-sectional sampling or a special oversample of minorities (**sample**). Two age variables are located between the religiosity sections: age at the time of the interview in months (**agemon**) and years (**ageyear**). At the bottom are self-reports on emotional wellbeing (**calm**, **blue**, **happy**, **depressed**, **nervous**) and media activities (**internet**, **computer**, **tv**) of respondents.
+Context variables and covariates are on white background. The top
+section gives basic demographics: the month (**bmonth**) and year
+(**byear**) of birth, sex (**sex**), race (**race**), as well as the
+indicator whether the individual is a member of the cross-sectional
+sampling or a special oversample of minorities (**sample**). Two age
+variables are located between the religiosity sections: age at the time
+of the interview in months (**agemon**) and years (**ageyear**). At the
+bottom are self-reports on emotional wellbeing (**calm**, **blue**,
+**happy**, **depressed**, **nervous**) and media activities
+(**internet**, **computer**, **tv**) of respondents.
 
-To review original questionnaire cards of NLSY97 as well as descriptive statistics for the selected variables see the [Interactive version](http://statcanvas.net/thesis/databox/index.html)
+To review original questionnaire cards of NLSY97 as well as descriptive
+statistics for the selected variables see the [Interactive
+version](http://statcanvas.net/thesis/databox/index.html)
 
 ### dsL - initial dataset
 
@@ -230,18 +310,33 @@ This databox slice corresponds to the dataset **dsL**
 
 <img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="dsL" style="width:900px;"/>
 
-which transposes the former, distributing variables on the horizontal axis. Variable **year** keeps track of measurement round and separated two kinds of variables: those, which values do not change with time and those that were measured at multiple occasions. This distinction will be of convenience in later discussion of statistical models. The dataset in figure 3.3 is referred to as ***dsL*** throughout this work and the accompanying R code . It defines the scope of NLSY97 data used in the current study and has a direct correspondence to the databox slice from figure 3.2. While other variables of interest might be added in course or reproduction of this research, it is useful to think of such dataset as a midway point between raw data and model-specific datasets
+which transposes the former, distributing variables on the horizontal
+axis. Variable **year** keeps track of measurement round and separated
+two kinds of variables: those, which values do not change with time and
+those that were measured at multiple occasions. This distinction will be
+of convenience in later discussion of statistical models. The dataset in
+figure 3.3 is referred to as ***dsL*** throughout this work and the
+accompanying R code . It defines the scope of NLSY97 data used in the
+current study and has a direct correspondence to the databox slice from
+figure 3.2. While other variables of interest might be added in course
+or reproduction of this research, it is useful to think of such dataset
+as a midway point between raw data and model-specific datasets
 
 ### Factor labels
 
-The first section **Labeling Factors** of the [Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md) report explains how script [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R) sourced here augementes **dsL** with a copy of initial variables saved as labeled factors.
+The first section **Labeling Factors** of the
+[Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md)
+report explains how script
+[LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R)
+sourced in this report augementes **dsL** with a copy of initial
+variables saved as labeled factors.
 
 ``` {.r}
 source(file.path(pathDir,"Scripts/Data/LabelingFactorLevels.R"))
-#############################
 ```
 
-One can alternate between the raw metric and labeled factors by adding an "F" suffix to the end of the variable name:
+One can alternate between the raw metric and labeled factors by adding
+an "F" suffix to the end of the variable name:
 
 ``` {.r}
 ds<- dsL[dsL$id==1,c("id","year","attend","attendF")]
@@ -277,14 +372,17 @@ print(ds)
 
 ### Saving clean dataset
 
-Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R, which preserves factor levels, not saved in .csv. This report is computation and time costly, so it is typically omitted from the reproduction cycle. Instead, from now on, the initial point of departure for data projects will be the import of **dsL.rds** file produced by this report.
+Finally, we output the created clean dataset **dsL** as a .cvs file.
+Also, it is saved in an .rds format, native to R, which preserves factor
+levels, not saved in .csv. This report is computationally intensive, so
+it is typically omitted from the reproduction cycle. Instead, from now
+on, the initial point of departure for data projects will be the import
+of **dsL.rds** file produced by this report.
 
 ``` {.r}
-pathdsL <- file.path(getwd(),"Data/Derived/dsL.csv")
-write.csv(dsL,pathdsL,  row.names=FALSE)
+pathdsLcvs <- file.path(getwd(),"Data/Derived/dsL.csv")
+write.csv(dsL,pathdsLcvs,  row.names=FALSE)
 
-pathOutputSubject <- file.path(pathDir,"Data/Derived/dsL.rds")
-saveRDS(object=dsL, file=pathOutputSubject, compress="xz")
-
-###########################
+pathdsLrds <- file.path(pathDir,"Data/Derived/dsL.rds")
+saveRDS(object=dsL, file=pathdsLrds, compress="xz")
 ```

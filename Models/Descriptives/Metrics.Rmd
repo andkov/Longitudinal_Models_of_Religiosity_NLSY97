@@ -8,12 +8,18 @@ output:
     fig_width: 6.5
     highlight: textmate
     keep_md: yes
+    theme: united
     toc: yes
   md_document:
     toc: yes
-    variant: markdown_github
+    variant: markdown
   pdf_document:
+    fig_crop: no
+    highlight: kate
+    latex_engine: xelatex
+    number_sections: yes
     toc: yes
+    toc_depth: 3
 ---
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
@@ -131,10 +137,15 @@ p
 Creating frequency distributions for each of the measurement wave we have:  
 ```{r attend_2000_2011,echo=echoChunks, message=F, out.width = "700px"}
 # attcol8 is defined in DeclareGlobal chunk of  the .R file
-ds<- dsL
-ds <- ddply(ds,.(year, attendF) , summarize, prevalence=sum(attend))
+require(dplyr)
+ds<- dsL %>%
+        filter(sample==1, year %in% c(2000:2011)) %>%
+        select(id,year,yearF,attend, attendF) %>%      
+        group_by(year,attendF) %>%
+        summarize(count = sum(attend))
 
-p<- ggplot(ds, aes(x=yearF, fill=attendF))
+head(ds,10)
+p<- ggplot(ds, aes(x=year, fill=attendF))
 p<- p+ geom_bar(position="fill")
 p<- p+ scale_fill_manual(values = attcol8,
                     name="Response category" )

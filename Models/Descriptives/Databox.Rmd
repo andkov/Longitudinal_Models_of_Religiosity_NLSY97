@@ -1,3 +1,27 @@
+---
+title: "Databox"
+output:
+  pdf_document:
+    fig_crop: no
+    highlight: kate
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  md_document:
+    toc: yes
+    variant: markdown
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig_caption: yes
+    fig_height: 4.5
+    fig_width: 6.5
+    highlight: textmate
+    keep_md: yes
+    theme: united
+    toc: yes
+---
+
 The List of Descriptive Graphs for Databox
 =================================================
 This report creates graphs for basic descriptive statistics in the NLSY97 religiosity data as defined by the extract NLSY97_Religiosity_20042014. 
