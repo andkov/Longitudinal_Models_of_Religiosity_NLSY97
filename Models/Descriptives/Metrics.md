@@ -221,7 +221,7 @@ print(ds[ds$id==1,]) # print all availible data for respondent with ID 1
 Having quick access to factor labels will be especially useful during
 graph production. For the grammer rules of operations with relevant data
 see [Data Manipulation
-Guide][./Vignettes/dplyr/Data\_Manipulation\_Guide.md].
+Guide](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md).
 
 Time metrics : Age, Period, Cohort
 ----------------------------------
