@@ -82,6 +82,7 @@ p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF))
 p <- p + geom_bar(color="black")
 p <- p + scale_fill_manual(values=attcol8, na.value="white")
 p <- p + coord_flip()
+p <- p + guides(fill = guide_legend(reverse=TRUE)) #http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/#reversing-the-order-of-items-in-the-legend
 p <- p + labs(title="How often did you attend a place of worship in the last year? (2000)", x="Church attendance", y="Count")
 ```
 
