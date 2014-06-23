@@ -1,26 +1,3 @@
----
-output:
-  html_document:
-    css: '\~/GitHub/Longitudinal\_Models\_of\_Religiosity\_NLSY97/www/css/thesis.css'
-    fig_caption: True
-    fig_height: '4.8'
-    fig_width: '6.5'
-    highlight: textmate
-    keep_md: True
-    number_sections: True
-    theme: united
-    toc: True
-  md_document:
-    toc: True
-    variant: markdown
-  pdf_document:
-    fig_crop: False
-    highlight: kate
-    number_sections: True
-    toc: True
-    toc_depth: 3
-title: Study in figure properties
-...
 
 -   Fig.hight
 -   Fig.hight
@@ -54,7 +31,7 @@ Exploring the figure definitions
 -   fig.height
 -   out.width
 
-baseSize\<- 12 \`\`\`
+
 
 Fig.hight
 =========
