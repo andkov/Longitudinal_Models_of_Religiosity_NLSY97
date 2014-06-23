@@ -1,15 +1,6 @@
 ---
 title: "Study in figure properties"
 output:
-  pdf_document:
-    fig_crop: no
-    highlight: kate
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
-  md_document:
-    toc: yes
-    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
@@ -20,6 +11,15 @@ output:
     number_sections: yes
     theme: united
     toc: yes
+  md_document:
+    toc: yes
+    variant: markdown
+  pdf_document:
+    fig_crop: no
+    highlight: kate
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
 ---
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
@@ -65,78 +65,67 @@ attcol8<-c("Never"="#4575b4",
            "About once/week"="#fdae61",
            "Several times/week"="#f46d43",
            "Everyday"="#d73027")
+#TODO: Andrey, consider assigning the `NA` values their own levels (maybe in the `LoadData` chunk), then defining their color here. I recommend some shade of gray.
+```
+
+baseSize<- 12
 ```
 
 ```{r LoadPackages, echo=echoChunks, message=F}
 require(dplyr)
+require(grid) #For the (zero) length of the tick marks
 require(ggplot2)
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
 dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
+
+```{r DefineCommonGraph, echo=echoChunks, message=T}
+p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF))
+p <- p + geom_bar(color="black")
+p <- p + scale_fill_manual(values=attcol8, na.value="white")
+p <- p + coord_flip()
+p <- p + guides(fill = guide_legend(reverse=TRUE, title="Attendence")) #http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/#reversing-the-order-of-items-in-the-legend
+p <- p + labs(title="How often did you attend a place of worship in the last year? (2000)", x="Church attendance", y="Count")
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20")) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+```
+
+
+# Fig.hight
 # Fig.hight
 
 ## fig.height = 4, fig.width=7, out.width = "600px"
 ```{r 4_7_600, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 3.5, fig.width=7, out.width = "600px"
 ```{r 3.5_7_600, echo=echoChunks, message=T, fig.height = 3.5, fig.width=7, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 ## fig.height = 3, fig.width=7, out.width = "600px"
 ```{r 3_7_600, echo=echoChunks, message=T, fig.height = 3, fig.width=7, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 2.5, fig.width=7, out.width = "600px"
 ```{r 2.5_7_600, echo=echoChunks, message=T, fig.height = 2.5, fig.width=7, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 2, fig.width=7, out.width = "600px"
 ```{r 2_7_600, echo=echoChunks, message=T, fig.height = 2, fig.width=7, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
@@ -145,78 +134,36 @@ p
 
 ## fig.height = 4, fig.width=7, out.width = "600px"
 ```{r 4_7_600_2, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 4, fig.width=6.5, out.width = "600px"
 ```{r 4_6.5_600, echo=echoChunks, message=T, fig.height = 4, fig.width=6.5, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 4, fig.width=6, out.width = "600px"
 ```{r 4_6_600, echo=echoChunks, message=T, fig.height = 4, fig.width=6, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 4, fig.width=5.5, out.width = "600px"
 ```{r 4_5.5_600, echo=echoChunks, message=T, fig.height = 4, fig.width=5.5, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 4, fig.width=5, out.width = "600px"
 ```{r 4_5_600, echo=echoChunks, message=T, fig.height = 4, fig.width=5, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 4, fig.width=4.5, out.width = "600px"
 ```{r 4_3.5_600, echo=echoChunks, message=T, fig.height = 4, fig.width=4.5, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
@@ -225,64 +172,29 @@ p
 
 ## fig.height = 4, fig.width=7, out.width = "600px"
 ```{r 4_7_600_3, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "600px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 4, fig.width=7, out.width = "550px"
 ```{r 4_7_550, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "550px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 ## fig.height = 4, fig.width=7, out.width = "500px"
 ```{r 4_7_500, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "500px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 4, fig.width=7, out.width = "450px"
 ```{r 4_7_450, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "450px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
 
 ## fig.height = 4, fig.width=7, out.width = "400px"
 ```{r 4_7_400, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "400px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```
 
@@ -290,12 +202,5 @@ p
 
 ## fig.height = 4, fig.width=7, out.width = "350px"
 ```{r 4_7_350, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "350px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
 p
 ```

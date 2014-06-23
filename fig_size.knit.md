@@ -1,5 +1,5 @@
 ---
-title: "Metrics"
+title: "Study in figure properties"
 output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
@@ -17,7 +17,6 @@ output:
   pdf_document:
     fig_crop: no
     highlight: kate
-    latex_engine: xelatex
     number_sections: yes
     toc: yes
     toc_depth: 3
@@ -27,17 +26,46 @@ output:
 
 
 
-#Metrics: labeling factors and exploring scales
+Exploring the figure definitions
 
-Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
-
-
-
-
++ fig.width
++ fig.height
++ out.width
 
 
 
-#### fig.height = 4, fig.width=7, out.width = "600px"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

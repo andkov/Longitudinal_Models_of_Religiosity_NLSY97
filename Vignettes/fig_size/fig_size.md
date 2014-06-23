@@ -23,6 +23,7 @@ title: Study in figure properties
 ...
 
 -   Fig.hight
+-   Fig.hight
     -   fig.height = 4, fig.width=7, out.width = "600px"
     -   fig.height = 3.5, fig.width=7, out.width = "600px"
     -   fig.height = 3, fig.width=7, out.width = "600px"
@@ -52,6 +53,11 @@ Exploring the figure definitions
 -   fig.width
 -   fig.height
 -   out.width
+
+baseSize\<- 12 \`\`\`
+
+Fig.hight
+=========
 
 Fig.hight
 =========
