@@ -69,6 +69,7 @@ attcol8<-c("Never"="#4575b4",
 
 ```{r LoadPackages, echo=echoChunks, message=F}
 require(dplyr)
+require(grid) #For the (zero) length of the tick marks
 require(ggplot2)
 ```
 
@@ -90,6 +91,7 @@ p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20"))
 p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
 p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
 p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 ```
 
 
