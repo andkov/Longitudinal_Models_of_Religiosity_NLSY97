@@ -84,6 +84,12 @@ p <- p + scale_fill_manual(values=attcol8, na.value="white")
 p <- p + coord_flip()
 p <- p + guides(fill = guide_legend(reverse=TRUE, title="Attendence")) #http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/#reversing-the-order-of-items-in-the-legend
 p <- p + labs(title="How often did you attend a place of worship in the last year? (2000)", x="Church attendance", y="Count")
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20")) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 ```
 
 
