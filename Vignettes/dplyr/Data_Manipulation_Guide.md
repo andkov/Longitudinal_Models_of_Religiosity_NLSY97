@@ -62,14 +62,17 @@ or internal vignette
 ```
 
 The following is a brief demonstration of <code>dplyr</code> syntax
-using <code>dsL</code> example
+using <code>dsL</code> dataset as an example. I accompany functions with
+prefix <code>dplyr::</code> to avoid possible conflicts with
+<code>plyr</code> package on which <code>ggplot2</code> package relies.
+I recommend such practice in all dplyr expressions in sharable
+publications.
 
 ### <code>select()</code>
 
 selects variables into a smaller data set
 
 ``` {.r}
-require(dplyr)
 ds<-dsL
 dim(ds)
 ```
@@ -77,7 +80,7 @@ dim(ds)
     [1] 134760     60
 
 ``` {.r}
-ds<- select(ds,id,year, byear, attend, attendF)
+ds<- dplyr::select(ds,id,year, byear, attend, attendF)
 head(ds,13)
 ```
 
@@ -115,9 +118,8 @@ and only between years 2000 and 2011, as only during those years the
 outcome of interest <code>attend</code> was recorded.
 
 ``` {.r}
-require(dplyr)
-ds<- filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- select(ds,id, year, attend, attendF)
+ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- dplyr::select(ds,id, year, attend, attendF)
 head(ds,13)
 ```
 
@@ -141,10 +143,9 @@ head(ds,13)
 Sorts observations
 
 ``` {.r}
-require(dplyr)
-ds<- filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- select(ds,id, year, attend)
-ds<- arrange(ds, year, desc(id))
+ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- dplyr::select(ds,id, year, attend)
+ds<- dplyr::arrange(ds, year, desc(id))
 head(ds,13)
 ```
 
@@ -188,10 +189,9 @@ head(ds, 13)
 Creates additional variables from the values of existing.
 
 ``` {.r}
-require(dplyr)
-ds<- filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- select(ds,id, byear, year, attend)
-ds<- mutate(ds, 
+ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- dplyr::select(ds,id, byear, year, attend)
+ds<- dplyr::mutate(ds, 
             age = year-byear, 
             timec = year-2000,
             linear= timec,
@@ -225,14 +225,12 @@ split-apply-combine (SAC) procedure: all possible interactions between
 the levels of supplied variables
 
 ``` {.r}
-require(dplyr)
+ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- dplyr::select(ds,id, year, attendF)
 
-ds<- filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- select(ds,id, year, attendF)
-
-s <- group_by(ds, year,attendF)
-s <- summarise(s, count = n())
-s <- mutate(s, total = sum(count),
+s <- dplyr::group_by(ds, year,attendF)
+s <- dplyr::summarise(s, count = n())
+s <- dplyr::mutate(s, total = sum(count),
               percent= count/total)
 head(s,10)
 ```
@@ -258,11 +256,11 @@ f(y)</code> turns into <code>f(x, y) </code>:
 
 ``` {.r}
 ds<-dsL %>%
-  filter(sample==1, year %in% c(2000:2011)) %>%
-  select(id, year, attendF) %>%
-  group_by(year,attendF) %>%
-    summarise(count = n()) %>%
-    mutate(total = sum(count),
+  dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
+  dplyr::select(id, year, attendF) %>%
+  dplyr::group_by(year,attendF) %>%
+    dplyr::summarise(count = n()) %>%
+    dplyr::mutate(total = sum(count),
               percent= count/total)  
 head(ds,10)    
 ```
@@ -285,7 +283,7 @@ head(ds,10)
 verify that this is what we wanted to achieve:
 
 ``` {.r}
-summarize( filter(s, year==2000), should.be.one=sum(percent))
+dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
 ```
 
     Source: local data frame [1 x 2]
