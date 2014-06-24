@@ -28,7 +28,7 @@ require(ggplot2)
 pathDir<- getwd()
 pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd") # to store .pngs
 dsL<-readRDS("./Data/Derived/dsL.rds")
-# dsL<- dsL[dsL$sample==1,] # select only the cross-sample
+
 # str(dsL)
 
 # Variables that do not change with time, TI - time invariant

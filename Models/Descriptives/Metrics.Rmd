@@ -1,28 +1,25 @@
 ---
 title: "Metrics"
 output:
+  pdf_document:
+    highlight: default
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  md_document:
+    toc: yes
+    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
-    fig_height: 4.8
-    fig_width: 6.5
-    fig_retina: 2
+    fig_height: 4
+    fig_width: 7
     highlight: textmate
     keep_md: yes
     number_sections: yes
     theme: united
     toc: yes
-  md_document:
-    toc: yes
-    variant: markdown
-  pdf_document:
-    fig_crop: no
-    highlight: kate
-    latex_engine: xelatex
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
----
+--
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
@@ -39,10 +36,10 @@ opts_chunk$set(
   message = TRUE,
   comment = NA, 
   tidy = FALSE,
-  fig.height = 4.8, 
-  fig.width = 6.5, 
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
   out.width = "550px",
-  fig.path = 'figure_rmd/automatic_report/',     
+  fig.path = 'figure_rmd/',     
   dev = "png",
 #   fig.path = 'figure_pdf/',     
 #   dev = "pdf",
@@ -77,13 +74,13 @@ colNA # color for the NA value in graphs
 
 ## Data In
 Initial point of departure - the [databox][1] of the selected sample, described in the [Methods][2] chapter.
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:800px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:100%;"/>
 This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][3] report. 
 ```{r echo=T, message=T}
 dsL<-readRDS("./Data/Derived/dsL.rds")
 dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:800px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:100%;"/>
 
 
 ##  Labeling Factor Levels
@@ -130,7 +127,7 @@ print(ds)
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5, fig.width=8, out.width = "730px"}
+```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5, fig.width=8}
 ds<- dplyr::filter(dsL,year==2000,sample==1)
 p<-ggplot(ds, aes(x=attendF, fill=attendF))
 p <- p + geom_bar(color="black")
@@ -150,7 +147,7 @@ p
 ```
 
 Creating frequency distributions for each of the measurement wave we have:  
-```{r attend_2000_2011, echo=echoChunks,warning=F, message=F, fig.height=5, fig.width=9.5, out.width = "800px"}
+```{r attend_2000_2011, echo=echoChunks,warning=F, message=F, fig.height=5, fig.width=9.5}
 ds<- dsL %.%
   dplyr::filter(sample==1) %.%   # comment out to count NA in the total
   dplyr::group_by(yearF,attendF) %.%
@@ -185,7 +182,7 @@ p
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
 Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total and  look at prevalence of endorsements over time. 
 
-```{r attend_2000_2011_na,echo=F, message=F, warning=F, fig.height=5, fig.width=9.5, out.width = "800px"}
+```{r attend_2000_2011_na,echo=F, message=F, warning=F, fig.height=5, fig.width=9.5}
 ds<- dsL %.%
   dplyr::filter(sample==1, !is.na(attendF)) %.%   # comment out to count NA in the total
   dplyr::group_by(yearF,attendF) %.%
@@ -216,7 +213,7 @@ p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
-Tracing the rate of change of prevalence in a line graph, we see that which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")
+Tracing the rate of change of prevalence in a line graph, we see more clearly which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")
 ```{r attend_2000_2011_lines,echo=F, message=F, warning=F, fig.height=4.8, fig.width=9.5, out.width = "800px"}
 ds<- dsL %.%
   dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
@@ -233,7 +230,7 @@ p<- p+ geom_point(aes(fill=attendF), shape=21, size=3, color="black",position=po
 p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
 p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
 p<- p+ scale_y_continuous(limits=c(0, .4),
-                          breaks=c(.1,.2,.3,.4))
+                          breaks=c(0,.1,.2,.3,.4))
 p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
 # # annotations
 p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 

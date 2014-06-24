@@ -1,25 +1,24 @@
 ---
 title: "Choose size"
 output:
+  pdf_document:
+    highlight: default
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  md_document:
+    toc: yes
+    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
-    fig_height: 4.8
-    fig_width: 6.5
+    fig_height: 4
+    fig_width: 7
     highlight: textmate
     keep_md: yes
     number_sections: yes
     theme: united
     toc: yes
-  md_document:
-    toc: yes
-    variant: markdown
-  pdf_document:
-    fig_crop: no
-    highlight: kate
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
 ---
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
@@ -39,12 +38,12 @@ opts_chunk$set(
   tidy = FALSE,
 #   fig.height = 4.8, 
 #   fig.width = 6.5, 
-#   out.width = "550px",
-  fig.path = 'figure_rmd/choosingSize/',     
-  dev = "png"
+  out.width = "550px",
+#   fig.path = 'figure_rmd/choosingSize/',     
+  dev = "png",
 #   fig.path = 'figure_pdf/',     
 #   dev = "pdf",
-#   dpi = 400
+  dpi = 400
 )
 echoChunks <- FALSE
 warningChunks<- FALSE
@@ -129,12 +128,12 @@ width4<- 9.5
 width5<- 9.5
 width6<- 9.5  
 
-owidth1<- "800px"
-owidth2<- "800px"
-owidth3<- "800px"
-owidth4<- "800px"
-owidth5<- "800px"
-owidth6<- "800px"
+owidth1<- NULL
+owidth2<- NULL
+owidth3<- NULL
+owidth4<- NULL
+owidth5<- NULL
+owidth6<- NULL
 
 
 
@@ -145,35 +144,35 @@ owidth6<- "800px"
 # Comparing produced graphs
 
 ##  Slot 1
-```{r slot_1 , echo=echoChunks, message=T, fig.height = height1, fig.width=width1, out.width=owidth1,}
+```{r slot_1, echo=echoChunks, message=T,fig.height = height1, fig.width=width2 }
 p
 ```
 
 
 ##  Slot 2
-```{r slot_2 , echo=echoChunks, message=T, fig.height = height2, fig.width=width2, out.width=owidth2}
+```{r slot_2, echo=echoChunks, message=T, fig.height = height2, fig.width=width2, out.width=owidth2}
 p
 ```
 
 ##  Slot 3
-```{r slot_3 , echo=echoChunks, message=T, fig.height = height3, fig.width=width3, out.width=owidth3}
+```{r slot_3, echo=echoChunks, message=T, fig.height = height3, fig.width=width3, out.width=owidth3}
 p
 ```
 
 
 ##  Slot 4
-```{r slot_4 , echo=echoChunks, message=T, fig.height = height4, fig.width=width4, out.width=owidth4}
+```{r slot_4, echo=echoChunks, message=T, fig.height = height4, fig.width=width4, out.width=owidth4}
 p
 ```
 
 
 ##  Slot 5
-```{r slot_5 , echo=echoChunks, message=T, fig.height = height5, fig.width=width5,out.width=owidth5}
+```{r slot_5, echo=echoChunks, message=T, fig.height = height5, fig.width=width5,out.width=owidth5}
 p
 ```
 
 
 ##  Slot 6
-```{r slot_6 , echo=echoChunks, message=T, fig.height = height6, fig.width=width6, out.width=owidth6}
+```{r slot_6, echo=echoChunks, message=T, fig.height = height6, fig.width=width6, out.width=owidth6}
 p
 ```
