@@ -52,12 +52,27 @@ warningChunks<- FALSE
 options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
 ```
+
 #Metrics: labeling factors and exploring scales
 
 Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-# attcol8 - attANDANCE colOUR 8 categories - set up default colors for "attend"
+# Defined
+attcol8 # color palette for attendance
+baseSize # base text size
+colNA # color for the NA value in graphs
+
+
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+commonTheme<- p
+
 ```
 
 ```{r LoadPackages, echo=echoChunks, message=F}
@@ -94,7 +109,7 @@ variables, but each of them has a double, a labeled factor.
 ```{r}
 str(dsL)
 ```
-This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels. One can alternate between the raw metric and labeled factor by adding "F" suffix to the end of the variable name:
+This give a certain flexibity to assemble needed dataset quickly and have access to factor labels. One can alternate between the raw metric and labeled factor by adding "F" suffix to the end of the variable name:
 ```{r}
 selectCols<-c("year","id","byear","attend","attendF") # select the columns with these names
 ds<-dsL[,selectCols] # select all rows for the columns listed  selectCols
@@ -105,7 +120,10 @@ Having quick access to factor labels will be especially useful during graph prod
 
 ## Time metrics : Age, Period, Cohort
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
-<img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Age, Peridod, Cohort" style="width:700px ;"/>
+<img src="./figure_rmd/3_Methods_Figure_3_1.png" 
+      alt="Age, Period, Cohort" 
+      style="width:700px 
+      fig.cap="Figure 3: Age, Period, and Cohort in NLSY97";"/>
 
 There are several indicators of age in NSLY97 that vary in precision. Birth cohort (**byear**) is the most general one, it was recorded once. Two age variables were recorded at each interview: age at the time of the interview in months (**agemon**) and in years (**ageyear**). Those are not derivatives of each other, but are are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
 For example, for one person **id** = 25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this  rounding issue  disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be  calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
@@ -118,54 +136,129 @@ print(ds)
 ```
 
 
-
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-```{r attend_2000, echo=echoChunks, message=T, fig.height = 3.3, fig.width=7, out.width = "400px"}
-p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF ))
-p<- p+geom_bar(color="black")
-p<- p+scale_fill_manual(values=attcol8, na.value="white")
-p<- p+coord_flip()
-p<- p+xlab("Church attendance") 
-p<- p+ylab("Count")
-p<- p+labs(title="How often did you attend a place of worship in the last year? (2000)")
+```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5, fig.width=8, out.width = "730px"}
+ds<- dplyr::filter(dsL,year==2000,sample==1)
+p<-ggplot(ds, aes(x=attendF, fill=attendF))
+p <- p + geom_bar(color="black")
+p <- p + scale_fill_manual(values=attcol8, na.value=colNA, guide=FALSE)
+p <- p + coord_flip()
+# p <- p + guides(fill = guide_legend(reverse=TRUE, title="Attendence")) #http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/#reversing-the-order-of-items-in-the-legend
+p <- p + labs(title="How often did you attend a place of worship in the last year (2000)?", x="Church attendance", y="Count")
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
+
 ```
 
 Creating frequency distributions for each of the measurement wave we have:  
-```{r attend_2000_2011,echo=echoChunks, message=F, out.width = "700px"}
-# attcol8 is defined in DeclareGlobal chunk of  the .R file
-p<- ggplot(dsL, aes(x=yearF, fill=attendF))
-p<- p+ geom_bar(position="fill")
-p<- p+ scale_fill_manual(values = attcol8,
-                    name="Response category" )
-p<- p+ scale_y_continuous("Prevalence: proportion of total",
-                     limits=c(0, 1),
-                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
-p<- p+ scale_x_discrete("Waves of measurement",
-                   limits=as.character(c(2000:2011)))
-p<- p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-# p<- p+ geom_text(aes(y=attendF), vjust=1.5, colour="white")
+```{r attend_2000_2011, echo=echoChunks,warning=F, message=F, fig.height=5, fig.width=9.5, out.width = "800px"}
+ds<- dsL %.%
+  dplyr::filter(sample==1) %.%   # comment out to count NA in the total
+  dplyr::group_by(yearF,attendF) %.%
+  dplyr::summarize(count = length( attendF)) %.%
+  dplyr::mutate(total = sum(count),
+              percent= count/total)
+# head(ds,10)
+p<- ggplot( ds, aes(x=yearF, y=percent, fill=attendF))  #  keeping NA in calculations
+# geoms
+p<- p+ geom_bar(position="stack", stat="identity")
+# scales
+p<- p+ scale_fill_manual(values = attcol8)
+p<- p+ scale_y_continuous(limits=c(0, 1),
+                          breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
+# annotations
+p<- p + guides(fill = guide_legend(reverse=TRUE, title="Response category")) 
+p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
+                         x="Wave of measurement",
+                         y="Proportion of total")
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
-Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total of responses and  look at percentages that each response was endorsed at each time point. 
+Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total and  look at prevalence of endorsements over time. 
 
-```{r attend_2000_2011_na,echo=F, message=F }
-p<-ggplot(subset(dsL, !is.na(attendF)), aes(x=yearF, fill=attendF))
-p<-p+ geom_bar(position="fill")
-p<-p+ scale_fill_manual(values = attcol8,
-                    name="Response category" )
-p<-p+ scale_y_continuous("Prevalence: proportion of total",
-                     limits=c(0, 1),
-                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
-p<-p+ scale_x_discrete("Waves of measurement",
-                   limits=as.character(c(2000:2011)))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+```{r attend_2000_2011_na,echo=F, message=F, warning=F, fig.height=5, fig.width=9.5, out.width = "800px"}
+ds<- dsL %.%
+  dplyr::filter(sample==1, !is.na(attendF)) %.%   # comment out to count NA in the total
+  dplyr::group_by(yearF,attendF) %.%
+  dplyr::summarize(count = length( attendF)) %.%
+  dplyr::mutate(total = sum(count),
+              percent= count/total)
+# head(ds,10)
+p<- ggplot( ds, aes(x=yearF, y=percent, fill=attendF))  #  keeping NA in calculations
+# geoms
+p<- p+ geom_bar(position="stack", stat="identity")
+# scales
+p<- p+ scale_fill_manual(values = attcol8)
+p<- p+ scale_y_continuous(limits=c(0, 1),
+                          breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
+p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
+# annotations
+p<- p + guides(fill = guide_legend(reverse=TRUE, title="Response category")) 
+p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
+                         x="Wave of measurement",
+                         y="Proportion of total")
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
+Tracing the rate of change of prevalence in a line graph, we see that which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")
+```{r attend_2000_2011_lines,echo=F, message=F, warning=F, fig.height=4.5, fig.width=9.5, out.width = "800px"}
+ds<- dsL %.%
+  dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
+  dplyr::group_by(yearF,attendF) %.%
+  dplyr::summarize(count = length( attendF)) %.%
+  dplyr::mutate(total = sum(count),
+              percent= count/total)
+# head(ds,10)
+p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calculations
+# geoms
+p<- p+ geom_line(aes(group=attendF), stat="identity", size=1.4)
+p<- p+ geom_point(shape=20, size=2.5, alpha=.7 )
+# scales
+p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_y_continuous(limits=c(0, .4),
+                          breaks=c(.1,.2,.3,.4))
+p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
+# # annotations
+p<- p + guides(color = guide_legend(reverse=FALSE, title="Response category")) 
+p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
+                         x="Wave of measurement",
+                         y="Proportion of total")
+# # themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p
+```
+
 
 Graphs above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov  models.  LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.
 
@@ -213,7 +306,7 @@ ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
 p<-ggplot(ds, aes(x=year,y=attend, color=idF))
 p<-p+ geom_line()
 # p<-p+ geom_smooth(method=lm)
-p<-p+ geom_point()
+p<-p+ geom_point(shape=21,alpha=.5)
 p<-p+ scale_y_continuous("Church attendance",
                      limits=c(1, 8),
                      breaks=c(1:8))

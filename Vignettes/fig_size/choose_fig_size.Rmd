@@ -1,0 +1,177 @@
+---
+title: "Choose siz
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig_caption: yes
+    fig_height: 4.8
+    fig_width: 6.5
+    highlight: textmate
+    keep_md: yes
+    number_sections: yes
+    theme: united
+    toc: yes
+  md_document:
+    toc: yes
+    variant: markdown
+  pdf_document:
+    fig_crop: no
+    highlight: kate
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+---
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+#   out.width = "550px",
+  fig.path = 'figure_rmd/choosingSize/',     
+  dev = "png"
+#   fig.path = 'figure_pdf/',     
+#   dev = "pdf",
+#   dpi = 400
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+```
+Exploring the figure definitions
+
++ fig.width
++ fig.height
++ out.width
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+attcol8<-c("Never"="#4575b4",
+           "Once or Twice"="#74add1",
+           "Less than once/month"="#abd9e9",
+           "About once/month"="#e0f3f8",
+           "About twice/month"="#fee090",
+           "About once/week"="#fdae61",
+           "Several times/week"="#f46d43",
+           "Everyday"="#d73027")
+
+baseSize<- 14
+colNA<- "#696969"
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+require(dplyr)
+require(grid) #For the (zero) length of the tick marks
+require(ggplot2)
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+```
+
+```{r DefineCommonGraph, echo=echoChunks, message=T}
+# ds<- dsL %.%
+#   dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
+#   dplyr::group_by(yearF,attendF) %.%
+#   dplyr::summarize(count = length( attendF)) %.%
+#   dplyr::mutate(total = sum(count),
+#               percent= count/total)
+# # head(ds,10)
+# p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calculations
+# # geoms
+# p<- p+ geom_line(aes(group=attendF),stat="identity", size=1.4)
+# p<- p+ geom_point(shape=1, size=3, alpha=.9)
+# # scales
+# # p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
+# # p<- p+ scale_y_continuous(limits=c(0, .4),
+# #                           breaks=c(.1,.2,.3,.4))
+# # p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
+# # # # annotations
+# # p<- p + guides(color = guide_legend(reverse=FALSE, title="Response category")) 
+# # p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
+# #                          x="Wave of measurement",
+# #                          y="Proportion of total")
+# # # themes
+# p <- p + ggplot2::theme_bw()
+# p <- p + ggplot2::theme_bw(base_size=baseSize)
+# p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+# p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+# p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+# p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+# p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+# p
+
+
+# height1<- 3.5
+# height2<- 3.8
+# height3<- 4
+# height4<- 4.2
+# height5<- 4.5
+# height6<- 4.8
+# 
+# width1<- 9.5
+# width2<- 9.5
+# width3<- 9.5
+# width4<- 9.5
+# width5<- 9.5
+# width6<- 9.5  
+# 
+# owidth1<- "800px"
+# owidth2<- "800px"
+# owidth3<- "800px"
+# owidth4<- "800px"
+# owidth5<- "800px"
+# owidth6<- "800px"
+
+
+
+
+```
+
+
+# Comparing produced graphs
+
+##  Slot 1
+```{r slot_1 , echo=echoChunks, message=T, fig.height = height1, fig.width=width1, out.width=owidth1,}
+p
+```
+
+
+##  Slot 2
+```{r slot_2 , echo=echoChunks, message=T, fig.height = height2, fig.width=width2, out.width=owidth2}
+p
+```
+
+##  Slot 3
+```{r slot_3 , echo=echoChunks, message=T, fig.height = height3, fig.width=width3, out.width=owidth3}
+p
+```
+
+
+##  Slot 4
+```{r slot_4 , echo=echoChunks, message=T, fig.height = height4, fig.width=width4, out.width=owidth4}
+p
+```
+
+
+##  Slot 5
+```{r slot_5 , echo=echoChunks, message=T, fig.height = height5, fig.width=width5,out.width=owidth5}
+p
+```
+
+
+##  Slot 6
+```{r slot_6 , echo=echoChunks, message=T, fig.height = height6, fig.width=width6, out.width=owidth6}
+p
+```

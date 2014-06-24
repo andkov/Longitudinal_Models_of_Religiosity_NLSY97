@@ -4,10 +4,11 @@ output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
-    fig_height: 4.5
+    fig_height: 4.8
     fig_width: 6.5
     highlight: textmate
     keep_md: yes
+    number_sections: yes
     theme: united
     toc: yes
   md_document:
@@ -26,8 +27,9 @@ output:
 
 
 
-Metrics: labeling factors and exploring scales
-==============================================
+
+#Metrics: labeling factors and exploring scales
+
 Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
 
@@ -46,9 +48,9 @@ This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_fro
 dsL<-readRDS("./Data/Derived/dsL.rds")
 dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:700px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>
 
----
+
 ##  Labeling Factor Levels
 Review of the item reference [cards][1] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, data were saved as numerical values or  intigers
 
@@ -168,7 +170,7 @@ str(dsL)
  $ computerF   : Ord.factor w/ 6 levels "None"<"less than 1"<..: NA NA NA NA NA 5 NA NA NA NA ...
  $ internetF   : Ord.factor w/ 2 levels "No"<"Yes": NA NA NA NA NA NA 2 1 2 2 ...
 ```
-This give a certain flexibiity to assemble needed dataset quickly and have access to factor labels. One can alternate between the raw metric and labeled factor by adding "F" suffix to the end of the variable name:
+This give a certain flexibity to assemble needed dataset quickly and have access to factor labels. One can alternate between the raw metric and labeled factor by adding "F" suffix to the end of the variable name:
 
 ```r
 selectCols<-c("year","id","byear","attend","attendF") # select the columns with these names
@@ -194,13 +196,15 @@ print(ds[ds$id==1,]) # print all availible data for respondent with ID 1
 14 2010  1  1981      1           Never
 15 2011  1  1981      1           Never
 ```
-Having quick access to factor labels will be especially useful during graph production.
+Having quick access to factor labels will be especially useful during graph production. For the grammer rules of operations with relevant data see [Data Manipulation Guide][5].
 
 
----
 ## Time metrics : Age, Period, Cohort
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
-<img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Age, Peridod, Cohort" style="width:700px ;"/>
+<img src="./figure_rmd/3_Methods_Figure_3_1.png" 
+      alt="Age, Period, Cohort" 
+      style="width:700px 
+      fig.cap="Figure 3: Age, Period, and Cohort in NLSY97";"/>
 
 There are several indicators of age in NSLY97 that vary in precision. Birth cohort (**byear**) is the most general one, it was recorded once. Two age variables were recorded at each interview: age at the time of the interview in months (**agemon**) and in years (**ageyear**). Those are not derivatives of each other, but are are closely related. The variable **ageyear** records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. 
 For example, for one person **id** = 25 the age was recorded as 21 years for both 2003 and 2004 (see **ageyear**). However, when you examine age in months (**agemon**) you can see this  rounding issue  disappears once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be  calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12).
@@ -230,14 +234,13 @@ print(ds)
 ```
 
 
-
----
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-<img src="figure_rmd/automatic_report/attend_2000.png" title="plot of chunk attend_2000" alt="plot of chunk attend_2000" width="700px" />
 
-Creating frequency distributions for each of the measurement wave we have:  
+
+
+
 
 
 

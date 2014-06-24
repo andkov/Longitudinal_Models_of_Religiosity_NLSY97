@@ -21,7 +21,7 @@ allreps<- c(pathDerive, pathManipulate,pathMetrics, pathLCM, pathRemoveNA )
 
 
 # Place report paths HERE ###########
-buildthese <- c(pathFigSize)##########
+buildthese <- c(pathMetrics,pathManipulate)##########
 ####################################
 
 testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
@@ -32,10 +32,10 @@ for( pathRmd in buildthese ) {
                     output_format=c(
                       "html_document"
                       ,"md_document"
-                      ,"pdf_document"
+#                       ,"pdf_document"
 #                       ,"word_document"
                                     ),
 #                     output_file=pathMd,
                     clean=TRUE)
 }
-
+ 

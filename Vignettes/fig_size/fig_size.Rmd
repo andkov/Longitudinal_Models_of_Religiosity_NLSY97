@@ -65,8 +65,7 @@ attcol8<-c("Never"="#4575b4",
            "About once/week"="#fdae61",
            "Several times/week"="#f46d43",
            "Everyday"="#d73027")
-#TODO: Andrey, consider assigning the `NA` values their own levels (maybe in the `LoadData` chunk), then defining their color here. I recommend some shade of gray.
-```
+colNA<- "#696969"
 
 baseSize<- 12
 ```
@@ -84,7 +83,7 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 ```{r DefineCommonGraph, echo=echoChunks, message=T}
 p<-ggplot(subset(dsL,year==2000), aes(x=attendF, fill=attendF))
 p <- p + geom_bar(color="black")
-p <- p + scale_fill_manual(values=attcol8, na.value="white")
+p <- p + scale_fill_manual(values=attcol8, na.value=colNA)
 p <- p + coord_flip()
 p <- p + guides(fill = guide_legend(reverse=TRUE, title="Attendence")) #http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/#reversing-the-order-of-items-in-the-legend
 p <- p + labs(title="How often did you attend a place of worship in the last year? (2000)", x="Church attendance", y="Count")
@@ -98,8 +97,8 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 ```
 
 
-# Fig.hight
-# Fig.hight
+
+# Fig.height
 
 ## fig.height = 4, fig.width=7, out.width = "600px"
 ```{r 4_7_600, echo=echoChunks, message=T, fig.height = 4, fig.width=7, out.width = "600px"}

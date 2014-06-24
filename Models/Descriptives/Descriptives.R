@@ -13,6 +13,9 @@ attcol8<-c("Never"="#4575b4",
            "Several times/week"="#f46d43",
            "Everyday"="#d73027")
 
+baseSize<- 14
+colNA<- "#636363"
+
 ############################
 ## @knitr LoadPackages
 require(RODBC)

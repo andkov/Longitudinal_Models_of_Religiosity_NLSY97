@@ -18,6 +18,10 @@ body, td {
       line-height: 20px;
 }
 
+p {
+  font-size: 14px;
+}
+
 body {
   max-width: 800px;
   margin: auto;
