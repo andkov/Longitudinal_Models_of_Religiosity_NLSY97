@@ -41,7 +41,7 @@ Data Manipulation
 =================
 
 Report examplifying the use of <code>dplyr</code> in data handling on
-the example of <code>dsL</code>.
+the example of **dsL**\>.
 
 <!-- Run this three chunks to get to the starting point -->
 
@@ -55,18 +55,18 @@ Five basic functions in data handling
 
 For a more detailed discussion of basic verbs and operations consult the
 [R-Studio guide](http://blog.rstudio.org/2014/01/17/introducing-dplyr/)
-or internal vignette
+or internal
+[vignette](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
 
 ``` {.r}
-# vignette("introduction",package="dplyr")
+vignette("introduction",package="dplyr")
 ```
 
 The following is a brief demonstration of <code>dplyr</code> syntax
-using <code>dsL</code> dataset as an example. I accompany functions with
-prefix <code>dplyr::</code> to avoid possible conflicts with
-<code>plyr</code> package on which <code>ggplot2</code> package relies.
-I recommend such practice in all dplyr expressions in sharable
-publications.
+using **dsL** dataset as an example. I attach prefix
+<code>dplyr::</code> to avoid possible conflicts with <code>plyr</code>
+package on which <code>ggplot2</code> package relies. I recommend such
+practice in all <code>dplyr</code> expressions in sharable publications.
 
 ### <code>select()</code>
 
@@ -220,9 +220,12 @@ head(ds,13)
 Grouping and Combining
 ----------------------
 
-The function <code>group\_by</code> is used to identify groups in
-split-apply-combine (SAC) procedure: all possible interactions between
-the levels of supplied variables
+The function <code>group\_by()</code> is used to identify groups in
+split-apply-combine (SAC) procedure: it splits the initial data into
+smaller datasets (according to all possible interactions between the
+levels of supplied variables). It is these smaller datasets that
+<code>summarize()</code> will individually collapse into a single
+computed value according to its formula.
 
 ``` {.r}
 ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
@@ -250,9 +253,10 @@ head(s,10)
     9  2000                   NA   733  6748 0.108625
     10 2001                Never  1627  6748 0.241108
 
-The same result can be achieved with the same result use a more elegant
-syntax that relies on <code>%\>%</code> operator, in which <code>x %\>%
-f(y)</code> turns into <code>f(x, y) </code>:
+The same result can be achieved with a more elegant syntax that relies
+on <code>%\>%</code> operator, in which <code>x %\>% f(y)</code> turns
+into <code>f(x, y) </code>. Alternatively, one can use <code>%.%</code>
+for identical results.
 
 ``` {.r}
 ds<-dsL %>%
@@ -280,7 +284,7 @@ head(ds,10)
     9  2000                   NA   733  6748 0.108625
     10 2001                Never  1627  6748 0.241108
 
-verify that this is what we wanted to achieve:
+To verify that this is what we wanted to achieve:
 
 ``` {.r}
 dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
@@ -294,9 +298,12 @@ dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
 Base subsetting
 ---------------
 
-Generally we can select any desired dataset by formula\
-**dataset**[ *condition for rows* , *condition for columns* ], and using
-**dataset\$variableName** selector
+Generally, we can compose any desired dataset by using matrix calls. The
+general formula is of the form: **ds**[ *rowCond* , *colCond* ], where
+**ds** is a dataframe, and *rowCond* and *colCond* are conditions for
+including rows and columns of the new dataset, respectively. One can
+also call a variable by attaching <code> \$ </code> followed variable
+name to the name of the dataset: <code>**ds***\$variableName*</code>.
 
 ``` {.r}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
@@ -316,3 +323,41 @@ print(ds[ds$id==1,])
     13  1  1981 2009           Never       28    337
     14  1  1981 2010           Never       29    350
     15  1  1981 2011           Never       29    360
+
+The following is a list of operatiors that can be used in these calls.
+<ul>
+<li>
+basic math operators: <code>+</code>, <code>-</code>, <code>\*</code>,
+<code>/</code>, <code>%%</code>, <code>\^</code>
+</li>
+<li>
+math functions: <code>abs</code>, <code>acos</code>, <code>acosh</code>,
+<code>asin</code>, <code>asinh</code>, <code>atan</code>,
+<code>atan2</code>, <code>atanh</code>, <code>ceiling</code>,
+<code>cos</code>, <code>cosh</code>, <code>cot</code>,
+<code>coth</code>, <code>exp</code>, <code>floor</code>,
+<code>log</code>, <code>log10</code>, <code>round</code>,
+<code>sign</code>, <code>sin</code>, <code>sinh</code>,
+<code>sqrt</code>, <code>tan</code>, <code>tanh</code>
+</li>
+<li>
+logical comparisons: <code>\<</code>, <code>\<=</code>, <code>!=</code>,
+<code>\>=</code>, <code>\></code>, <code>==</code>, <code>%in%</code>
+</li>
+<li>
+boolean operations: <code>&</code>, <code>&&</code>, <code>|</code>,
+<code>||</code>, <code>!</code>, <code>xor</code>
+</li>
+<li>
+basic aggregations: <code>mean</code>, <code>sum</code>,
+<code>min</code>, <code>max</code>, <code>sd</code>, <code>var</code>
+</li>
+</ul>
+
+<code>dplyr</code> can translate all of these into SQL. For more of on
+<code>dplyr</code> and SQL compatibility consult another built-in
+[vignette](http://cran.rstudio.com/web/packages/dplyr/vignettes/databases.html)
+
+``` {.r}
+vignette("database",package="dplyr")
+```

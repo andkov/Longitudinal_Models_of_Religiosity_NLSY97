@@ -328,7 +328,7 @@ The first section **Labeling Factors** of the
 [Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md)
 report explains how script
 [LabelingFactorLevels](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R)
-sourced in this report augementes **dsL** with a copy of initial
+sourced in this report augements **dsL** with a copy of initial
 variables saved as labeled factors.
 
 ``` {.r}

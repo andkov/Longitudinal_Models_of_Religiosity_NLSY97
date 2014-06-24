@@ -6,6 +6,7 @@ output:
     fig_caption: yes
     fig_height: 4.8
     fig_width: 6.5
+    fig_retina: 2
     highlight: textmate
     keep_md: yes
     number_sections: yes
@@ -63,16 +64,6 @@ attcol8 # color palette for attendance
 baseSize # base text size
 colNA # color for the NA value in graphs
 
-
-p <- p + ggplot2::theme_bw()
-p <- p + ggplot2::theme_bw(base_size=baseSize)
-p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
-p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
-p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
-p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
-p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
-commonTheme<- p
-
 ```
 
 ```{r LoadPackages, echo=echoChunks, message=F}
@@ -86,13 +77,13 @@ commonTheme<- p
 
 ## Data In
 Initial point of departure - the [databox][1] of the selected sample, described in the [Methods][2] chapter.
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:800px;"/>
 This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][3] report. 
 ```{r echo=T, message=T}
 dsL<-readRDS("./Data/Derived/dsL.rds")
 dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:800px;"/>
 
 
 ##  Labeling Factor Levels
@@ -101,7 +92,7 @@ Review of the item reference [cards][1] shows that initially, all items were rec
 ds<- dsL[,1:(ncol(dsL)/2)]# selects the first half of variables
 str(ds)
 ```
-[LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] matches numeric values with response labels from the questionnaire and adds to **dsL** copies of the variables, saved as labeled factors. For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves useful.  It is convenient to think that **dsL** has really only
+[LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] matches numeric values with response labels from the questionnaire and adds to **dsL** copies of the variables, saved as labeled factors. For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves useful.  It is convenient to think that **dsL** contains only
 ```{r}
 ncol(dsL)/2
 ```
@@ -226,7 +217,7 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 Tracing the rate of change of prevalence in a line graph, we see that which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")
-```{r attend_2000_2011_lines,echo=F, message=F, warning=F, fig.height=4.5, fig.width=9.5, out.width = "800px"}
+```{r attend_2000_2011_lines,echo=F, message=F, warning=F, fig.height=4.8, fig.width=9.5, out.width = "800px"}
 ds<- dsL %.%
   dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
   dplyr::group_by(yearF,attendF) %.%
@@ -236,15 +227,17 @@ ds<- dsL %.%
 # head(ds,10)
 p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calculations
 # geoms
-p<- p+ geom_line(aes(group=attendF), stat="identity", size=1.4)
-p<- p+ geom_point(shape=20, size=2.5, alpha=.7 )
+p<- p+ geom_line(aes(group=attendF), stat="identity", size=.7)
+p<- p+ geom_point(aes(fill=attendF), shape=21, size=3, color="black",position=position_dodge(0.2) )
 # scales
 p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
 p<- p+ scale_y_continuous(limits=c(0, .4),
                           breaks=c(.1,.2,.3,.4))
 p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
 # # annotations
-p<- p + guides(color = guide_legend(reverse=FALSE, title="Response category")) 
+p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
+p<- p + guides(color = FALSE) 
 p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
                          x="Wave of measurement",
                          y="Proportion of total")
@@ -365,5 +358,5 @@ p
 [1]:http://statcanvas.net/thesis/databox/
 [2]:http://statcanvas.net/thesis/III_methods/03_Methods.htm
 [3]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
-[4]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R
+[4]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
 [5]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md

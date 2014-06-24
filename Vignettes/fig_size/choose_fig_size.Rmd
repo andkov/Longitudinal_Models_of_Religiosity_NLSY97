@@ -1,5 +1,5 @@
 ---
-title: "Choose siz
+title: "Choose size"
 output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
@@ -81,58 +81,60 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 
 ```{r DefineCommonGraph, echo=echoChunks, message=T}
-# ds<- dsL %.%
-#   dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
-#   dplyr::group_by(yearF,attendF) %.%
-#   dplyr::summarize(count = length( attendF)) %.%
-#   dplyr::mutate(total = sum(count),
-#               percent= count/total)
-# # head(ds,10)
-# p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calculations
-# # geoms
-# p<- p+ geom_line(aes(group=attendF),stat="identity", size=1.4)
-# p<- p+ geom_point(shape=1, size=3, alpha=.9)
-# # scales
-# # p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
-# # p<- p+ scale_y_continuous(limits=c(0, .4),
-# #                           breaks=c(.1,.2,.3,.4))
-# # p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
-# # # # annotations
-# # p<- p + guides(color = guide_legend(reverse=FALSE, title="Response category")) 
-# # p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
-# #                          x="Wave of measurement",
-# #                          y="Proportion of total")
-# # # themes
-# p <- p + ggplot2::theme_bw()
-# p <- p + ggplot2::theme_bw(base_size=baseSize)
-# p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
-# p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
-# p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
-# p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
-# p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
-# p
+ds<- dsL %.%
+  dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
+  dplyr::group_by(yearF,attendF) %.%
+  dplyr::summarize(count = length( attendF)) %.%
+  dplyr::mutate(total = sum(count),
+              percent= count/total)
+# head(ds,10)
+p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calculations
+# geoms
+p<- p+ geom_line(aes(group=attendF), stat="identity", size=.7)
+p<- p+ geom_point(aes(fill=attendF), shape=21, size=3, color="black",position=position_dodge(0.2) )
+# scales
+p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_y_continuous(limits=c(0, .4),
+                          breaks=c(.1,.2,.3,.4))
+p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
+# # annotations
+p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
+p<- p + guides(color = FALSE) 
+p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
+                         x="Wave of measurement",
+                         y="Proportion of total")
+# # themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p
 
 
-# height1<- 3.5
-# height2<- 3.8
-# height3<- 4
-# height4<- 4.2
-# height5<- 4.5
-# height6<- 4.8
-# 
-# width1<- 9.5
-# width2<- 9.5
-# width3<- 9.5
-# width4<- 9.5
-# width5<- 9.5
-# width6<- 9.5  
-# 
-# owidth1<- "800px"
-# owidth2<- "800px"
-# owidth3<- "800px"
-# owidth4<- "800px"
-# owidth5<- "800px"
-# owidth6<- "800px"
+height1<- 3.5
+height2<- 3.8
+height3<- 4
+height4<- 4.2
+height5<- 4.5
+height6<- 4.8
+
+width1<- 9.5
+width2<- 9.5
+width3<- 9.5
+width4<- 9.5
+width5<- 9.5
+width6<- 9.5  
+
+owidth1<- "800px"
+owidth2<- "800px"
+owidth3<- "800px"
+owidth4<- "800px"
+owidth5<- "800px"
+owidth6<- "800px"
 
 
 

@@ -4,6 +4,7 @@ output:
     css: '\~/GitHub/Longitudinal\_Models\_of\_Religiosity\_NLSY97/www/css/thesis.css'
     fig_caption: True
     fig_height: '4.8'
+    fig_retina: 2
     fig_width: '6.5'
     highlight: textmate
     keep_md: True
@@ -33,6 +34,7 @@ title: Metrics
 
 
 
+
 Metrics: labeling factors and exploring scales
 ==============================================
 
@@ -48,7 +50,7 @@ Initial point of departure - the
 described in the
 [Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm)
 chapter.
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:800px;"/>
 This [databox](http://statcanvas.net/thesis/databox/) corresponds to the
 dataset **dsL** produced by
 [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
@@ -59,7 +61,7 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
 
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:800px;"/>
 
 Labeling Factor Levels
 ----------------------
@@ -107,7 +109,7 @@ str(ds)
      $ computer   : num  NA NA NA NA NA 5 NA NA NA NA ...
      $ internet   : num  NA NA NA NA NA NA 1 0 1 1 ...
 
-[LabelingFactorLevels.R](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Manipulation/LabelingFactorLevels.R)
+[LabelingFactorLevels.R](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R)
 sourced at the end of
 [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
 matches numeric values with response labels from the questionnaire and
@@ -115,7 +117,7 @@ adds to **dsL** copies of the variables, saved as labeled factors. For
 estimations routines such as lm4 or graphing functions such as ggplot,
 the data type (string,numeric, factor) is a meaningful input, so a quick
 access to both formats frequently proves useful. It is convenient to
-think that **dsL** has really only
+think that **dsL** contains only
 
 ``` {.r}
 ncol(dsL)/2
@@ -191,7 +193,7 @@ str(dsL)
      $ computerF   : Ord.factor w/ 6 levels "None"<"less than 1"<..: NA NA NA NA NA 5 NA NA NA NA ...
      $ internetF   : Ord.factor w/ 2 levels "No"<"Yes": NA NA NA NA NA NA 2 1 2 2 ...
 
-This give a certain flexibiity to assemble needed dataset quickly and
+This give a certain flexibity to assemble needed dataset quickly and
 have access to factor labels. One can alternate between the raw metric
 and labeled factor by adding "F" suffix to the end of the variable name:
 
@@ -229,7 +231,10 @@ Time metrics : Age, Period, Cohort
 NLSY97 sample includes individuals from five cohorts, born between 1980
 and 1984.The following graphics shows how birth cohort, age of
 respondents, and round of observation are related in NSLY97.
-<img src="./figure_rmd/3_Methods_Figure_3_1.png" alt="Age, Peridod, Cohort" style="width:700px ;"/>
+<img src="./figure_rmd/3_Methods_Figure_3_1.png" 
+      alt="Age, Period, Cohort" 
+      style="width:700px 
+      fig.cap="Figure 3: Age, Period, and Cohort in NLSY97";"/>
 
 There are several indicators of age in NSLY97 that vary in precision.
 Birth cohort (**byear**) is the most general one, it was recorded once.
@@ -274,19 +279,24 @@ Mapping Church Attendance
 The focal variable of interest is **attend**, an item measuring church
 attendance in the current year. The questionnaire recorded the responses
 on the ordinal scale.\
-<img src="figure_rmd/automatic_report/attend_2000.png" title="plot of chunk attend_2000" alt="plot of chunk attend_2000" width="400px" />
+<img src="figure_rmd/automatic_report/attend_2000.png" title="plot of chunk attend_2000" alt="plot of chunk attend_2000" width="730px" />
 
 Creating frequency distributions for each of the measurement wave we
 have:\
-<img src="figure_rmd/automatic_report/attend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="700px" />
+<img src="figure_rmd/automatic_report/attend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="800px" />
 
 Missing values are used in the calculation of total responses to show
 the natural attrition in the study. Assumming that attrition is not
 significantly associated with the outcome measure, we can remove missing
-values from the calculation of the total of responses and look at
-percentages that each response was endorsed at each time point.
+values from the calculation of the total and look at prevalence of
+endorsements over time.
 
-<img src="figure_rmd/automatic_report/attend_2000_2011_na.png" title="plot of chunk attend_2000_2011_na" alt="plot of chunk attend_2000_2011_na" width="550px" />
+<img src="figure_rmd/automatic_report/attend_2000_2011_na.png" title="plot of chunk attend_2000_2011_na" alt="plot of chunk attend_2000_2011_na" width="800px" />
+Tracing the rate of change of prevalence in a line graph, we see that
+which categores increase over time (e.g. "Never"), which decline (e.g.
+""About once/week), and which stay relatively stable (e.g. "About
+twice/month")
+<img src="figure_rmd/automatic_report/attend_2000_2011_lines.png" title="plot of chunk attend_2000_2011_lines" alt="plot of chunk attend_2000_2011_lines" width="800px" />
 
 Graphs above shows change in the cross-sectional distribution of
 responses over the years. Modeling the change in these response

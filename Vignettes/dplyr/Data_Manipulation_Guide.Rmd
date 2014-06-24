@@ -1,16 +1,6 @@
 ---
 title: "Data Manipulation"
 output:
-  pdf_document:
-    fig_crop: no
-    highlight: kate
-    latex_engine: xelatex
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
-  md_document:
-    toc: yes
-    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
@@ -20,6 +10,16 @@ output:
     keep_md: yes
     theme: united
     toc: yes
+  md_document:
+    toc: yes
+    variant: markdown
+  pdf_document:
+    fig_crop: no
+    highlight: kate
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
 ---
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
@@ -54,7 +54,7 @@ read_chunk("./Vignettes/dplyr/using_dplyr.R") # the file to which knitr calls fo
 
 Data Manipulation
 ==============
-Report examplifying the use of <code>dplyr</code> in data handling on the example of <code>dsL</code>.
+Report examplifying the use of <code>dplyr</code> in data handling on the example of **dsL**>.
 
 <!-- Run this three chunks to get to the starting point -->
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
@@ -68,12 +68,12 @@ Report examplifying the use of <code>dplyr</code> in data handling on the exampl
 
 ## Five basic functions in data handling
 
-For a more detailed discussion of basic verbs and operations consult the [R-Studio guide][1] or internal vignette
-```{r}
-# vignette("introduction",package="dplyr")
+For a more detailed discussion of basic verbs and operations consult the [R-Studio guide][1] or internal [vignette][2]
+```{r,eval=FALSE}
+vignette("introduction",package="dplyr")
 ```
 
-The following is a brief demonstration of <code>dplyr</code> syntax using <code>dsL</code> dataset as an example. I accompany functions with prefix <code>dplyr::</code> to avoid possible conflicts with <code>plyr</code> package on which <code>ggplot2</code> package relies. I recommend such practice in all dplyr expressions in sharable publications.  
+The following is a brief demonstration of <code>dplyr</code> syntax using **dsL** dataset as an example. I attach prefix <code>dplyr::</code> to avoid possible conflicts with <code>plyr</code> package on which <code>ggplot2</code> package relies. I recommend such practice in all <code>dplyr</code>  expressions in sharable publications.  
 
 ###<code>select()</code> 
 selects variables into a smaller data set
@@ -131,7 +131,7 @@ head(ds,13)
 ###<code>summarize()</code> 
 
 ## Grouping and Combining 
-The function <code>group_by</code> is used to identify groups in split-apply-combine (SAC) procedure: all possible interactions between the levels of supplied variables
+The function <code>group_by()</code> is used to identify groups in split-apply-combine (SAC) procedure: it splits the initial data into smaller datasets (according to all possible interactions between the levels of supplied variables). It is these smaller datasets that <code>summarize()</code> will individually collapse into a single computed value according to its formula.  
 ```{r, echo=T, message=F}
 ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
 ds<- dplyr::select(ds,id, year, attendF)
@@ -144,9 +144,9 @@ head(s,10)
 
 ```
 
-The same result can be achieved with the same result use a more elegant syntax that relies on <code>%>%</code> operator, in which <code>x %>% f(y)</code> turns into <code>f(x, y) </code>:
-```{r, echo=TRUE}
+The same result can be achieved with a more elegant syntax that relies on <code>%>%</code> operator, in which <code>x %>% f(y)</code> turns into <code>f(x, y) </code>. Alternatively, one can use <code>%.%</code> for identical results.
 
+```{r, echo=TRUE}
 ds<-dsL %>%
   dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
   dplyr::select(id, year, attendF) %>%
@@ -157,18 +157,38 @@ ds<-dsL %>%
 head(ds,10)    
 ```
 
-verify that this is what we wanted to achieve:
+To verify that this is what we wanted to achieve:
 ```{r, echo=T, message=F}
 dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
 ```
 
 
 ## Base subsetting
-Generally we can select any desired dataset by formula  
-**dataset**[  _condition for rows_  ,  _condition for columns_  ], and using __dataset$variableName__ selector
+Generally, we can compose any desired dataset by using matrix calls. The general formula is of the form:
+**ds**[  _rowCond_  ,  _colCond_  ], where **ds** is a dataframe, and  _rowCond_ and _colCond_ are conditions for including rows and columns of the new dataset, respectively. One can also call a variable by attaching <code> $ </code> followed variable name to the name of the dataset:    <code>**ds**_$variableName_</code>. 
 ```{r, echo=T}
 ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
 print(ds[ds$id==1,]) 
 ```
 
+The following is a list of operatiors that can be used in these calls. 
+<ul>
+<li>basic math operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%%</code>, <code>^</code></li>
+<li>math functions: <code>abs</code>, <code>acos</code>, <code>acosh</code>, <code>asin</code>, <code>asinh</code>, <code>atan</code>, <code>atan2</code>,
+<code>atanh</code>, <code>ceiling</code>, <code>cos</code>, <code>cosh</code>, <code>cot</code>, <code>coth</code>, <code>exp</code>, <code>floor</code>,
+<code>log</code>, <code>log10</code>, <code>round</code>, <code>sign</code>, <code>sin</code>, <code>sinh</code>, <code>sqrt</code>, <code>tan</code>, <code>tanh</code></li>
+<li>logical comparisons: <code>&lt;</code>, <code>&lt;=</code>, <code>!=</code>, <code>&gt;=</code>, <code>&gt;</code>, <code>==</code>, <code>%in%</code></li>
+<li>boolean operations: <code>&amp;</code>, <code>&amp;&amp;</code>, <code>|</code>, <code>||</code>, <code>!</code>, <code>xor</code></li>
+<li>basic aggregations: <code>mean</code>, <code>sum</code>, <code>min</code>, <code>max</code>, <code>sd</code>, <code>var</code></li>
+</ul>
+
+<code>dplyr</code> can translate all of these into SQL. For more of on <code>dplyr</code> and SQL compatibility consult another built-in [vignette][3]
+```{r,eval=FALSE}
+vignette("database",package="dplyr")
+```
+
+
+
 [1]:http://blog.rstudio.org/2014/01/17/introducing-dplyr/
+[2]:http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html
+[3]:http://cran.rstudio.com/web/packages/dplyr/vignettes/databases.html
