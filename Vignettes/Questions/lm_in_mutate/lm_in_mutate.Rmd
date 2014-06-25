@@ -57,32 +57,14 @@ colNA # color for the NA value in graphs
 
 Data for a single person
 ```{r, echo=T,eval=TRUE, message=T}
-ds<- dsL %>% dplyr::filter(id==47,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) 
+ds<- dsL %>% dplyr::filter(id==1,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) 
 print(ds)
+```
 
-```
-add a straight line to represent possible predition line, in this case a straight line
-```{r}
-linear<-    predict(lm(attend ~ year, ds))
-ds<- ds %>% dplyr::mutate(linear=linear)
-print(ds)
-```
-Or adding the curvartures of quadratic and cubic terms
-```{r}
-quadratic<- predict(lm(attend ~ year + I(year^2),ds))
-cubic<-     predict(lm(attend ~ year + I(year^2) + I(year^3),ds))
-ds<- ds %>% mutate(quadratic=quadratic, cubic=cubic)
-print(ds)
-```
-Plotting these data
 ```{r, echo=F}
 require(ggplot2)
 p<-ggplot(ds, aes(x=year,y=attend, color=idF))
 p<-p+ geom_line(color="purple")
-p<-p+ geom_line(aes(y=linear),color="red", size=.5)
-p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
-p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
-
 # p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
 p<-p+ geom_point(color="purple")
 p<-p+ scale_y_continuous("Church attendance",
@@ -104,33 +86,35 @@ p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
 p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
-# 
-
-# 
-# ```{r}
-# A trajectory of a single person 
-# ```{r, eval=FALSE}
-# ds <- read.table(header = TRUE, text ="
-# obs  id year attend
-# 1  47 2000      5
-# 2  47 2001      2
-# 3  47 2002      4
-# 4  47 2003      2
-# 5  47 2004      3
-# 6  47 2005      2
-# 7  47 2006      2
-# 8  47 2007      3
-# 9  47 2008      2
-# 10 47 2009      1
-# 11 47 2010      1
-# 12 47 2011      1
-# 
-# ")
-# print(ds)
-# 
-# m<- ds %>% mutate(linear=predict(lm(attend~year)),
-#                   quadratic=predict(lm(attend~year+I(year^2))),
-#                   cubic=predict(lm(attend~year+I(year^2)+I(year^3))))
-# m
 ```
+
+
+add a straight line to represent possible predition line, in this case a straight line
+```{r}
+linear<- predict(lm(attend ~ year, ds))
+ds<- ds %>% dplyr::mutate(linear=linear)
+print(ds)
+p<-p+ geom_line(aes(y=linear),color="red", size=.5)
+p
+```
+Or adding the curvarture the  quadratic term
+```{r}
+quadratic<- predict(lm(attend ~ year + I(year^2),ds))
+ds<- ds %>% mutate(quadratic=quadratic)
+print(ds)
+p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
+ p
+# p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
+```
+or the cubic term
+```{r}
+cubic<- predict(lm(attend ~ year + I(year^2) + I(year^3),ds))
+ds<- ds %>% mutate( cubic=cubic)
+print(ds)
+p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
+p
+```
+
+
+
 
