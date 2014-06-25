@@ -3,9 +3,11 @@ title: "lm() in mutate()"
 author: "Andriy Koval"
 date: "Tuesday, June 24, 2014"
 output:
+  pdf_document: default
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 3
+  word_document: default
 ---
 
 
@@ -29,7 +31,7 @@ opts_chunk$set(
 #   out.width = "800px",
 #   fig.path = 'figure_rmd/choosingSize/',     
   dev = "png",
-#   fig.path = 'figure_pdf/',     
+  fig.path = 'figure_pdf/',     
 #   dev = "pdf",
   dpi = 400
 )
@@ -57,22 +59,46 @@ colNA # color for the NA value in graphs
 
 Data for a single person
 ```{r, echo=T,eval=TRUE, message=T}
-ds<- dsL %>% dplyr::filter(id==1,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) 
+ds<- dsL %>% dplyr::filter(id==1,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) %>%
+  mutate(time=year-2000)
 print(ds)
 ```
 
+```{r}
+ds <- read.table(header = TRUE, text ="
+obs  id year attend
+1  47 2000      1
+2  47 2001      3
+3  47 2002      5
+4  47 2003      8
+5  47 2004      6
+6  47 2005      4
+7  47 2006      2
+8  47 2007      1
+9  47 2008      2
+10 47 2009      3
+11 47 2010      4
+12 47 2011      5
+
+")
+ds<- ds %>% dplyr::mutate(time=year-2000)
+print(ds)
+
+```
+
+
 ```{r, echo=F}
 require(ggplot2)
-p<-ggplot(ds, aes(x=year,y=attend, color=idF))
+p<-ggplot(ds, aes(x=time,y=attend, color=idF))
 p<-p+ geom_line(color="purple")
 # p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
 p<-p+ geom_point(color="purple")
 p<-p+ scale_y_continuous("Church attendance",
                      limits=c(0, 8),
                      breaks=c(1:8))
-p<-p+ scale_x_continuous("Waves of measurement",
-                   limits=c(2000,2011),
-                   breaks=c(2000:2011))
+p<-p+ scale_x_continuous("Years since 2000",
+                   limits=c(0,11),
+                   breaks=c(0:11))
 
 # annotations
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
@@ -91,7 +117,7 @@ p
 
 add a straight line to represent possible predition line, in this case a straight line
 ```{r}
-linear<- predict(lm(attend ~ year, ds))
+linear<- predict(lm(attend ~ time, ds))
 ds<- ds %>% dplyr::mutate(linear=linear)
 print(ds)
 p<-p+ geom_line(aes(y=linear),color="red", size=.5)
@@ -99,7 +125,7 @@ p
 ```
 Or adding the curvarture the  quadratic term
 ```{r}
-quadratic<- predict(lm(attend ~ year + I(year^2),ds))
+quadratic<- predict(lm(attend ~ poly(time,2),ds))
 ds<- ds %>% mutate(quadratic=quadratic)
 print(ds)
 p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
@@ -108,7 +134,7 @@ p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
 ```
 or the cubic term
 ```{r}
-cubic<- predict(lm(attend ~ year + I(year^2) + I(year^3),ds))
+cubic<- predict(lm(attend ~ poly(time,3),ds))
 ds<- ds %>% mutate( cubic=cubic)
 print(ds)
 p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
