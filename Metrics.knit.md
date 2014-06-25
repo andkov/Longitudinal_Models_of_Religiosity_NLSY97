@@ -1,26 +1,26 @@
 ---
 title: "Metrics"
 output:
+  pdf_document:
+    highlight: default
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  md_document:
+    toc: yes
+    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig_caption: yes
     fig_height: 4.8
+    fig_retina: 2
     fig_width: 6.5
     highlight: textmate
     keep_md: yes
     number_sections: yes
+    retina: 2
     theme: united
     toc: yes
-  md_document:
-    toc: yes
-    variant: markdown
-  pdf_document:
-    fig_crop: no
-    highlight: kate
-    latex_engine: xelatex
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
 ---
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
@@ -41,14 +41,14 @@ Report explains how the response categories from NLSY97 questionnaire are labele
 
 ## Data In
 Initial point of departure - the [databox][1] of the selected sample, described in the [Methods][2] chapter.
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:100%;"/>
 This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][3] report. 
 
 ```r
 dsL<-readRDS("./Data/Derived/dsL.rds")
 dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:900px;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:100%;"/>
 
 
 ##  Labeling Factor Levels
@@ -92,7 +92,7 @@ str(ds)
  $ computer   : num  NA NA NA NA NA 5 NA NA NA NA ...
  $ internet   : num  NA NA NA NA NA NA 1 0 1 1 ...
 ```
-[LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] matches numeric values with response labels from the questionnaire and adds to **dsL** copies of the variables, saved as labeled factors. For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves useful.  It is convenient to think that **dsL** has really only
+[LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] matches numeric values with response labels from the questionnaire and adds to **dsL** copies of the variables, saved as labeled factors. For estimations routines such as lm4 or graphing  functions such as ggplot, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves useful.  It is convenient to think that **dsL** contains only
 
 ```r
 ncol(dsL)/2
@@ -237,16 +237,46 @@ print(ds)
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
+<img src="figure_rmd/attend_2000.png" title="plot of chunk attend_2000" alt="plot of chunk attend_2000" width="800px" />
+
+Creating frequency distributions for each of the measurement wave we have:  
+<img src="figure_rmd/attend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="800px" />
+
+Missing values are used in the calculation of total responses to show the natural attrition in the study. 
+Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total and  look at prevalence of endorsements over time. 
+
+<img src="figure_rmd/attend_2000_2011_na.png" title="plot of chunk attend_2000_2011_na" alt="plot of chunk attend_2000_2011_na" width="800px" />
+Tracing the rate of change of prevalence in a line graph, we see more clearly which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")
+<img src="figure_rmd/attend_2000_2011_lines.png" title="plot of chunk attend_2000_2011_lines" alt="plot of chunk attend_2000_2011_lines" width="800px" />
 
 
+Graphs above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov  models.  LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.
 
+To demonstrate mapping of individual trajectories to time, let's select a  dataset that would include personal identifyer (**id**), cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
 
+```r
+ds<- dsL %>%  dplyr::filter(year %in% c(2000:2011), id==47) %>%
+              dplyr:: select(id, byear, year, attend, attendF)
+print(ds)
+```
 
+```
+   id byear year attend              attendF
+1  47  1982 2000      5    About twice/month
+2  47  1982 2001      2        Once or Twice
+3  47  1982 2002      4     About once/month
+4  47  1982 2003      2        Once or Twice
+5  47  1982 2004      3 Less than once/month
+6  47  1982 2005      2        Once or Twice
+7  47  1982 2006      2        Once or Twice
+8  47  1982 2007      3 Less than once/month
+9  47  1982 2008      2        Once or Twice
+10 47  1982 2009      1                Never
+11 47  1982 2010      1                Never
+12 47  1982 2011      1                Never
+```
 
-
-
-
-
+The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have 
 
 
 

@@ -80,30 +80,27 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
 
 ```{r DefineCommonGraph, echo=echoChunks, message=T}
-ds<- dsL %.%
-  dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
-  dplyr::group_by(yearF,attendF) %.%
-  dplyr::summarize(count = length( attendF)) %.%
-  dplyr::mutate(total = sum(count),
-              percent= count/total)
-# head(ds,10)
-p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calculations
-# geoms
-p<- p+ geom_line(aes(group=attendF), stat="identity", size=.7)
-p<- p+ geom_point(aes(fill=attendF), shape=21, size=3, color="black",position=position_dodge(0.2) )
-# scales
-p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
-p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
-p<- p+ scale_y_continuous(limits=c(0, .4),
-                          breaks=c(.1,.2,.3,.4))
-p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
-# # annotations
-p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
-p<- p + guides(color = FALSE) 
-p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
-                         x="Wave of measurement",
-                         y="Proportion of total")
-# # themes
+ds<- dsL %>%  dplyr::filter(year %in% c(2000:2011), id==47) %>%
+              dplyr::select(id, byear, year, attend, attendF) %>%
+              dplyr::mutate(attendS=(lm(attend~year,ds)))
+print(ds)
+
+ds$a<-lm(attend~1,ds)
+p<-ggplot(ds, aes(x=year,y=attend, color=idF))
+p<-p+ geom_line(color="purple")
+# p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
+p<-p+ geom_point(color="purple")
+p<-p+ scale_y_continuous("Church attendance",
+                     limits=c(1, 8),
+                     breaks=c(1:8))
+p<-p+ scale_x_continuous("Waves of measurement",
+                   limits=c(2000,2011),
+                   breaks=c(2000:2011))
+
+# annotations
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p<- p + guides(color = guide_legend(title="Respondents")) 
+# themes
 p <- p + ggplot2::theme_bw()
 p <- p + ggplot2::theme_bw(base_size=baseSize)
 p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
@@ -112,6 +109,34 @@ p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
 p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
+
+# p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calculations
+# # geoms
+# p<- p+ geom_line(aes(group=attendF), stat="identity", size=.7)
+# p<- p+ geom_point(aes(fill=attendF), shape=21, size=3, color="black",position=position_dodge(0.2) )
+# # scales
+# p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
+# p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
+# p<- p+ scale_y_continuous(limits=c(0, .4),
+#                           breaks=c(.1,.2,.3,.4))
+# p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
+# # # annotations
+# p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
+# p<- p + guides(color = FALSE) 
+# p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
+#                          x="Wave of measurement",
+#                          y="Proportion of total")
+# # # themes
+# p <- p + ggplot2::theme_bw()
+# p <- p + ggplot2::theme_bw(base_size=baseSize)
+# p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+# p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+# p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+# p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+# p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+# p
+
+
 
 
 height1<- 3.5

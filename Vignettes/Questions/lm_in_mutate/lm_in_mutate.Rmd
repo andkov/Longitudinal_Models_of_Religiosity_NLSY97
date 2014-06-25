@@ -1,0 +1,129 @@
+---
+title: "lm() in mutate()"
+author: "Andriy Koval"
+date: "Tuesday, June 24, 2014"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 3
+---
+
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+#   out.width = "800px",
+#   fig.path = 'figure_rmd/choosingSize/',     
+  dev = "png",
+#   fig.path = 'figure_pdf/',     
+#   dev = "pdf",
+  dpi = 400
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/Descriptives/Descriptives.R") 
+```
+
+```{r, echo=F,eval=TRUE}
+require(dplyr)
+ds<- dsL %>% dplyr::filter(id==47,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) 
+print(ds)
+
+```
+add a straight line to represent possible predition line, in this case a straight line
+```{r}
+# require(dplyr)
+# ds<- ds %>% dplyr::mutate(linear=predict(lm(attend~year,ds)))
+# print(ds)
+```
+Or adding the curvarture of the quadratic term
+```{r}
+# require(dplyr)
+# ds<- ds %>% mutate(quad  = predict(lm(attend~year+I(year^2),ds)))
+# print(ds)
+```
+or cubic term
+```{r}
+# ds<- ds %>% mutate(cubic  = predict(lm(attend~year+I(year^2)+I(year^3),ds)))
+# print(ds)
+```
+
+
+
+```{r}
+# require(ggplot2)
+# p<-ggplot(ds, aes(x=year,y=attend, color=idF))
+# p<-p+ geom_line(color="purple")
+# p<-p+ geom_line(aes(y=linear),color="red", size=.5)
+# p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
+# p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
+# 
+# # p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
+# p<-p+ geom_point(color="purple")
+# p<-p+ scale_y_continuous("Church attendance",
+#                      limits=c(0, 8),
+#                      breaks=c(1:8))
+# p<-p+ scale_x_continuous("Waves of measurement",
+#                    limits=c(2000,2011),
+#                    breaks=c(2000:2011))
+# 
+# # annotations
+# p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+# p<- p + guides(color = guide_legend(title="Respondents")) 
+# # themes
+# p <- p + ggplot2::theme_bw()
+# p <- p + ggplot2::theme_bw(base_size=baseSize)
+# p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+# p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+# p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+# p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+# p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+# p
+# 
+# ```
+# 
+# 
+# 
+# 
+# ```{r}
+# A trajectory of a single person 
+# ```{r, eval=FALSE}
+# ds <- read.table(header = TRUE, text ="
+# obs  id year attend
+# 1  47 2000      5
+# 2  47 2001      2
+# 3  47 2002      4
+# 4  47 2003      2
+# 5  47 2004      3
+# 6  47 2005      2
+# 7  47 2006      2
+# 8  47 2007      3
+# 9  47 2008      2
+# 10 47 2009      1
+# 11 47 2010      1
+# 12 47 2011      1
+# 
+# ")
+# print(ds)
+# 
+# m<- ds %>% mutate(linear=predict(lm(attend~year)),
+#                   quadratic=predict(lm(attend~year+I(year^2))),
+#                   cubic=predict(lm(attend~year+I(year^2)+I(year^3))))
+# m
+```
+

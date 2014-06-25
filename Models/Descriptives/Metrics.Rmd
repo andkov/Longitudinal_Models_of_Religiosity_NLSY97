@@ -18,6 +18,7 @@ output:
     highlight: textmate
     keep_md: yes
     number_sections: yes
+    retina: 2
     theme: united
     toc: yes
 ---
@@ -255,26 +256,14 @@ Graphs above shows change in the cross-sectional distribution of responses over 
 
 To demonstrate mapping of individual trajectories to time, let's select a  dataset that would include personal identifyer (**id**), cohort indicator (**byear**), wave of measurement (**year**) and the focal variable of interest - worship attendance (**attend**). 
 ```{r, echo=T, message=F, warning=warningChunks}
-ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","attendF")] # select needed variables
-print(ds[ds$id==47,])# for a single subject with id=47
+ds<- dsL %>%  dplyr::filter(year %in% c(2000:2011), id==47) %>%
+              dplyr:: select(id, byear, year, attend, attendF)
+print(ds)
 ```
 
 The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have 
 ```{r,echo=echoChunks, message=F, warning=warningChunks }
-ds<-dsL[dsL$year %in% c(2000:2011),c('idF',"byear","year","attend","attendF")] # select needed variables
-ds<- ds[ds$id==47,]
-p<-ggplot(ds, aes(x=year,y=attend, color=idF))
-p<-p+ geom_line(color="purple")
-p<-p+ geom_smooth(method=lm)
-p<-p+ geom_point(color="purple")
-p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(1, 8),
-                     breaks=c(1:8))
-p<-p+ scale_x_continuous("Waves of measurement",
-                   limits=c(2000,2011),
-                   breaks=c(2000:2011))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p
+d
 ```  
 
 where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the 

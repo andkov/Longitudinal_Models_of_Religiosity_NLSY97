@@ -25,6 +25,11 @@ output:
 
 
 
+Exploring the figure definitions
+
++ fig.width
++ fig.height
++ out.width
 
 
 
