@@ -39,66 +39,73 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") 
 ```
 
-```{r, echo=F,eval=TRUE}
-require(dplyr)
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+# Defined
+attcol8 # color palette for attendance
+baseSize # base text size
+colNA # color for the NA value in graphs
+
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+# select only respondence in the cross-sectional sample
+
+```
+
+Data for a single person
+```{r, echo=T,eval=TRUE, message=T}
 ds<- dsL %>% dplyr::filter(id==47,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) 
 print(ds)
 
 ```
 add a straight line to represent possible predition line, in this case a straight line
 ```{r}
-# require(dplyr)
-# ds<- ds %>% dplyr::mutate(linear=predict(lm(attend~year,ds)))
-# print(ds)
+linear<-    predict(lm(attend ~ year, ds))
+ds<- ds %>% dplyr::mutate(linear=linear)
+print(ds)
 ```
-Or adding the curvarture of the quadratic term
+Or adding the curvartures of quadratic and cubic terms
 ```{r}
-# require(dplyr)
-# ds<- ds %>% mutate(quad  = predict(lm(attend~year+I(year^2),ds)))
-# print(ds)
+quadratic<- predict(lm(attend ~ year + I(year^2),ds))
+cubic<-     predict(lm(attend ~ year + I(year^2) + I(year^3),ds))
+ds<- ds %>% mutate(quadratic=quadratic, cubic=cubic)
+print(ds)
 ```
-or cubic term
-```{r}
-# ds<- ds %>% mutate(cubic  = predict(lm(attend~year+I(year^2)+I(year^3),ds)))
-# print(ds)
-```
+Plotting these data
+```{r, echo=F}
+require(ggplot2)
+p<-ggplot(ds, aes(x=year,y=attend, color=idF))
+p<-p+ geom_line(color="purple")
+p<-p+ geom_line(aes(y=linear),color="red", size=.5)
+p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
+p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
 
+# p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
+p<-p+ geom_point(color="purple")
+p<-p+ scale_y_continuous("Church attendance",
+                     limits=c(0, 8),
+                     breaks=c(1:8))
+p<-p+ scale_x_continuous("Waves of measurement",
+                   limits=c(2000,2011),
+                   breaks=c(2000:2011))
 
+# annotations
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p<- p + guides(color = guide_legend(title="Respondents")) 
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p
+# 
 
-```{r}
-# require(ggplot2)
-# p<-ggplot(ds, aes(x=year,y=attend, color=idF))
-# p<-p+ geom_line(color="purple")
-# p<-p+ geom_line(aes(y=linear),color="red", size=.5)
-# p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
-# p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
-# 
-# # p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
-# p<-p+ geom_point(color="purple")
-# p<-p+ scale_y_continuous("Church attendance",
-#                      limits=c(0, 8),
-#                      breaks=c(1:8))
-# p<-p+ scale_x_continuous("Waves of measurement",
-#                    limits=c(2000,2011),
-#                    breaks=c(2000:2011))
-# 
-# # annotations
-# p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-# p<- p + guides(color = guide_legend(title="Respondents")) 
-# # themes
-# p <- p + ggplot2::theme_bw()
-# p <- p + ggplot2::theme_bw(base_size=baseSize)
-# p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
-# p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
-# p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
-# p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
-# p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
-# p
-# 
-# ```
-# 
-# 
-# 
 # 
 # ```{r}
 # A trajectory of a single person 
