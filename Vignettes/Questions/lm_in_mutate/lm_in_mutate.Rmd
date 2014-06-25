@@ -3,16 +3,19 @@ title: "lm() in mutate()"
 author: "Andriy Koval"
 date: "Tuesday, June 24, 2014"
 output:
-  pdf_document: default
+  word_document:
+    fig_width: 6.5
+    fig_height: 3
+  pdf_document:
+    toc: yes
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig.retina: 3
-  word_document: default
+    fig.retina: 2
 ---
 
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
-```{r, echo=F, message=F} 
+```{r c1, echo=F, message=F} 
 require(knitr)
 opts_knit$set(root.dir='../../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 
@@ -29,9 +32,8 @@ opts_chunk$set(
 #   fig.height = 4.8, 
 #   fig.width = 6.5, 
 #   out.width = "800px",
-#   fig.path = 'figure_rmd/choosingSize/',     
   dev = "png",
-  fig.path = 'figure_pdf/',     
+  fig.path = 'figure_rdm/',     
 #   dev = "pdf",
   dpi = 400
 )
@@ -43,9 +45,9 @@ read_chunk("./Models/Descriptives/Descriptives.R")
 
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
 # Defined
-attcol8 # color palette for attendance
-baseSize # base text size
-colNA # color for the NA value in graphs
+# attcol8 # color palette for attendance
+# baseSize # base text size
+# colNA # color for the NA value in graphs
 
 ```
 
@@ -58,13 +60,13 @@ colNA # color for the NA value in graphs
 ```
 
 Data for a single person
-```{r, echo=T,eval=TRUE, message=T}
+```{r c2, echo=T,eval=FALSE, message=T}
 ds<- dsL %>% dplyr::filter(id==1,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) %>%
   mutate(time=year-2000)
 print(ds)
 ```
 
-```{r}
+```{r c3, echo=F}
 ds <- read.table(header = TRUE, text ="
 obs  id year attend
 1  47 2000      1
@@ -87,22 +89,21 @@ print(ds)
 ```
 
 
-```{r, echo=F}
+```{r c4, echo=F}
 require(ggplot2)
 p<-ggplot(ds, aes(x=time,y=attend, color=idF))
-p<-p+ geom_line(color="purple")
+p<-p+ geom_line(color="purple", size=.5)
 # p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
-p<-p+ geom_point(color="purple")
+p<-p+ geom_point(color="purple", size=2)
 p<-p+ scale_y_continuous("Church attendance",
                      limits=c(0, 8),
                      breaks=c(1:8))
 p<-p+ scale_x_continuous("Years since 2000",
                    limits=c(0,11),
                    breaks=c(0:11))
-
 # annotations
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p<- p + guides(color = guide_legend(title="Respondents")) 
+p<- p + guides(color=guide_legend) 
 # themes
 p <- p + ggplot2::theme_bw()
 p <- p + ggplot2::theme_bw(base_size=baseSize)
@@ -116,7 +117,7 @@ p
 
 
 add a straight line to represent possible predition line, in this case a straight line
-```{r}
+```{r c5}
 linear<- predict(lm(attend ~ time, ds))
 ds<- ds %>% dplyr::mutate(linear=linear)
 print(ds)
@@ -124,7 +125,7 @@ p<-p+ geom_line(aes(y=linear),color="red", size=.5)
 p
 ```
 Or adding the curvarture the  quadratic term
-```{r}
+```{r c6}
 quadratic<- predict(lm(attend ~ poly(time,2),ds))
 ds<- ds %>% mutate(quadratic=quadratic)
 print(ds)
@@ -133,7 +134,7 @@ p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
 # p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
 ```
 or the cubic term
-```{r}
+```{r c7}
 cubic<- predict(lm(attend ~ poly(time,3),ds))
 ds<- ds %>% mutate( cubic=cubic)
 print(ds)
