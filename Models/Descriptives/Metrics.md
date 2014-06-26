@@ -187,11 +187,8 @@ Time metrics : Age, Period, Cohort
 
 NLSY97 sample includes individuals from five cohorts, born between 1980
 and 1984.The following graphics shows how birth cohort, age of
-respondents, and round of observation are related in NSLY97.
-<img src="./figure_rmd/3_Methods_Figure_3_1.png" 
-      alt="Age, Period, Cohort" 
-      style="width:700px 
-      fig.cap="Figure 3: Age, Period, and Cohort in NLSY97";"/>
+respondents, and round of observation are related in NSLY97. ![Figure
+3.1](./figure_rmd/3_Methods_Figure_3_1.png)
 
 There are several indicators of age in NSLY97 that vary in precision.
 Birth cohort (**byear**) is the most general one, it was recorded once.
