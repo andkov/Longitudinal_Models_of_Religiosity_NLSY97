@@ -102,7 +102,7 @@ Having quick access to factor labels will be especially useful during graph prod
 
 
 ## Time metrics : Age, Period, Cohort
-NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.
+NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.  
 ![Figure 3.1](./figure_rmd/3_Methods_Figure_3_1.png)
 
 
@@ -253,7 +253,7 @@ ds<- dsL %>%  dplyr::filter(year %in% c(2000:2011), id==47) %>%
 print(ds)
 ```
 
-The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have 
+The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have  
 ```{r,echo=echoChunks, message=F, warning=warningChunks, fig.height=3.3 }
 ds<- dsL %>% dplyr::filter(id==47,year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
   mutate(time=year-2000)
