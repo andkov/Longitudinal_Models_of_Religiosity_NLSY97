@@ -2,13 +2,13 @@
 title: 'Choose size '
 author: "Andriy Koval"
 output:
-  pdf_document:
-    fig_width: 8
-    toc: yes
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
+  pdf_document:
+    fig_width: 8
+    toc: yes
   word_document:
     fig_width: 6.5
 ---

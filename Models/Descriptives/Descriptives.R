@@ -18,7 +18,9 @@ colNA<- "#636363"
 
 ############################
 ## @knitr LoadPackages
+require(pandoc)
 require(RODBC)
+require(grid)
 require(dplyr)
 require(ggplot2)
 

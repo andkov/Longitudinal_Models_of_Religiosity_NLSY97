@@ -187,8 +187,8 @@ Time metrics : Age, Period, Cohort
 
 NLSY97 sample includes individuals from five cohorts, born between 1980
 and 1984.The following graphics shows how birth cohort, age of
-respondents, and round of observation are related in NSLY97. ![Figure
-3.1](./figure_rmd/3_Methods_Figure_3_1.png)
+respondents, and round of observation are related in NSLY97.  
+![Figure 3.1](./figure_rmd/3_Methods_Figure_3_1.png)
 
 There are several indicators of age in NSLY97 that vary in precision.
 Birth cohort (**byear**) is the most general one, it was recorded once.
@@ -249,8 +249,7 @@ rate of change of prevalence in a line graph, we see more clearly which
 categores increase over time (e.g. "Never"), which decline (e.g. ""About
 once/week), and which stay relatively stable (e.g. "About twice/month")
 
-![plot of chunk
-attend\_2000\_2011\_lines](figure_rmd/attend_2000_2011_lines.png)
+![plot of chunk attend\_freq\_lines](figure_rmd/attend_freq_lines.png)
 
 Graphs above shows change in the cross-sectional distribution of
 responses over the years. Modeling the change in these response
@@ -282,8 +281,8 @@ variable of interest - worship attendance (**attend**).
     12 47  1982 2011      1                Never
 
 The view above lists attendance data for subjust with id = 47. Mapping
-his attendance to time we have ![plot of chunk
-unnamed-chunk-9](figure_rmd/unnamed-chunk-9.png)
+his attendance to time we have  
+![plot of chunk attend\_line\_1id](figure_rmd/attend_line_1id.png)
 
 where vertical dimension maps the outcome value and the horizontal maps
 the time. There will be a trajecory for each of the
@@ -306,7 +305,8 @@ following scenario.
 Attendance trajectories of subjects with **id**s 4, 25, 35, and 47 are
 plotted in the next graph
 
-![plot of chunk unnamed-chunk-12](figure_rmd/unnamed-chunk-12.png)
+![plot of chunk
+attend\_line\_4id\_years](figure_rmd/attend_line_4id_years.png)
 
 The respondent **id**=35 reported attending no worship services in any
 of the years, while respodent **id**=25 seemed to frequent it,
@@ -325,7 +325,8 @@ primary factors explaining interindividual differences in church
 attendance. To examine the role of age, we change the metric of time
 from waves of measurement, as in the previous graph, to biological age.
 
-![plot of chunk unnamed-chunk-13](figure_rmd/unnamed-chunk-13.png)
+![plot of chunk
+attend\_line\_4id\_age](figure_rmd/attend_line_4id_age.png)
 
 Persons **id** = 35 and **id** = 25 are peers, in 2000 they were both
 17. Respondent **id** = 47 is a year older, in 2000 he was 18. The
@@ -358,7 +359,8 @@ years will be either calculated as (**age** = **year** - **byear**)
     11   4 2010      2    357      29   10  29
     12   4 2011      5    368      30   11  30
 
-![plot of chunk unnamed-chunk-15](figure_rmd/unnamed-chunk-15.png)
+![plot of chunk
+attend\_line\_4id\_age2](figure_rmd/attend_line_4id_age2.png)
 
 or as (**age** = **agemon**/12).
 
@@ -381,4 +383,5 @@ or as (**age** = **agemon**/12).
     11   4 2010      2    357      29  1981   10 29.75
     12   4 2011      5    368      30  1981   11 30.67
 
-![plot of chunk unnamed-chunk-17](figure_rmd/unnamed-chunk-17.png)
+![plot of chunk
+attend\_line\_4id\_age3](figure_rmd/attend_line_4id_age3.png)

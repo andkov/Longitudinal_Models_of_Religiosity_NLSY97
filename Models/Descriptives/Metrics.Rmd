@@ -3,14 +3,14 @@ title: "Metrics"
 author: "Andriy Koval"
 date: "Tuesday, June 24, 2014"
 output:
-  pdf_document:
-    fig_width: 8
-    latex_engine: xelatex
-    toc: yes
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
+    toc: yes
+  pdf_document:
+    fig_width: 8
+    latex_engine: xelatex
     toc: yes
   word_document:
     fig_width: 6.5
@@ -208,7 +208,7 @@ p
 ```
 Tracing the rate of change of prevalence in a line graph, we see more clearly which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")  
 
-```{r attend_2000_2011_lines,echo=F, message=F, warning=F, fig.height=4.2}
+```{r attend_freq_lines,echo=F, message=F, warning=F, fig.height=4.2}
 ds<- dsL %.%
   dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
   dplyr::group_by(yearF,attendF) %.%
@@ -254,7 +254,7 @@ print(ds)
 ```
 
 The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have  
-```{r,echo=echoChunks, message=F, warning=warningChunks, fig.height=3.3 }
+```{r attend_line_1id,echo=echoChunks, message=F, warning=warningChunks, fig.height=3.3 }
 ds<- dsL %>% dplyr::filter(id==47,year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
   mutate(time=year-2000)
 
@@ -296,7 +296,7 @@ Each of such trajectories imply a story, a life scenario. Why one person grows i
 
 Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph
 
-```{r,echo=echoChunks, message=F, warning=F, fig.height=3.3}
+```{r attend_line_4id_years,echo=echoChunks, message=F, warning=F, fig.height=3.3}
 ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
   mutate(time=year-2000)
 p<-ggplot(ds, aes(x=time,y=attend, color=idF))
@@ -330,10 +330,10 @@ The respondent  **id**=35 reported attending no worship services in any of the y
 
 Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
 
-```{r,echo=echoChunks, message=F, fig.height= 3.3 }
+```{r attend_line_4id_age,echo=echoChunks, message=F, fig.height= 3.3 }
 ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% 
-  dplyr::select(idF,year,attend,ageyear) %>% 
-  mutate(time=year-2000, age=ageyear)
+  dplyr::select(idF,year,attend,ageyear, byear) %>% 
+  mutate(time=year-2000, age=year-byear+1)
 
 p<-ggplot(ds, aes(x=age,y=attend, color=idF))
 # geoms
@@ -372,7 +372,7 @@ ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>%
 head(ds,12)
 ```
 
-```{r,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height=3.3  }
+```{r attend_line_4id_age2,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height=3.3  }
 p<-ggplot(ds, aes(x=age,y=attend, color=idF))
 # geoms
 p<-p+ geom_line(size=.4)
@@ -408,7 +408,7 @@ head(ds,12)
 ```
 
 
-```{r,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height = 3.3 }
+```{r attend_line_4id_age3,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height = 3.3 }
 p<-ggplot(ds, aes(x=age,y=attend, color=idF))
 # geoms
 p<- p + geom_line(size=.4)
