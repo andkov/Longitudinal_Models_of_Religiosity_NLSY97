@@ -1,27 +1,21 @@
 ---
 title: "Metrics"
+author: "Andriy Koval"
+date: "Tuesday, June 24, 2014"
 output:
-  pdf_document:
-    highlight: default
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
-  md_document:
-    toc: yes
-    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig_caption: yes
-    fig_height: 4.8
-    fig_retina: 2
-    fig_width: 6.5
-    highlight: textmate
-    keep_md: yes
-    number_sections: yes
-    retina: 2
-    theme: united
+    fig.retina: 2
+    fig_width: 8
     toc: yes
+  pdf_document:
+    fig_width: 8
+    toc: yes
+  word_document:
+    fig_width: 6.5
 ---
+
+
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
@@ -41,7 +35,7 @@ Report explains how the response categories from NLSY97 questionnaire are labele
 
 ## Data In
 Initial point of departure - the [databox][1] of the selected sample, described in the [Methods][2] chapter.
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:100%;"/>
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:800px;"/>
 This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][3] report. 
 
 ```r
@@ -237,17 +231,17 @@ print(ds)
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-<img src="figure_rmd/attend_2000.png" title="plot of chunk attend_2000" alt="plot of chunk attend_2000" width="800px" />
+<img src="figure_rmd/attend_2000.png" title="plot of chunk attend_2000" alt="plot of chunk attend_2000" width="3200" />
 
 Creating frequency distributions for each of the measurement wave we have:  
-<img src="figure_rmd/attend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="800px" />
+<img src="figure_rmd/attend_2000_2011.png" title="plot of chunk attend_2000_2011" alt="plot of chunk attend_2000_2011" width="3200" />
 
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
 Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total and  look at prevalence of endorsements over time. 
 
-<img src="figure_rmd/attend_2000_2011_na.png" title="plot of chunk attend_2000_2011_na" alt="plot of chunk attend_2000_2011_na" width="800px" />
+<img src="figure_rmd/attend_2000_2011_na.png" title="plot of chunk attend_2000_2011_na" alt="plot of chunk attend_2000_2011_na" width="3200" />
 Tracing the rate of change of prevalence in a line graph, we see more clearly which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")
-<img src="figure_rmd/attend_2000_2011_lines.png" title="plot of chunk attend_2000_2011_lines" alt="plot of chunk attend_2000_2011_lines" width="800px" />
+<img src="figure_rmd/attend_2000_2011_lines.png" title="plot of chunk attend_2000_2011_lines" alt="plot of chunk attend_2000_2011_lines" width="3200" />
 
 
 Graphs above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov  models.  LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.
@@ -277,9 +271,39 @@ print(ds)
 ```
 
 The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have 
+<img src="figure_rmd/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="3200" />
+
+where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the 
+
+```r
+cat(length(unique(dsL$id)))
+```
+
+```
+6748
+```
+subjects in total. Unless specified otherwise, only individuals from the cross-sample will be used in the model to increase external validity.
+
+```r
+ds<- dsL[dsL$sample==1,]
+```
 
 
+Each of such trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? To demostrate how interpretations of trajectories can vary among individuals consider the following scenario.
 
+Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph
+
+<img src="figure_rmd/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="3200" />
+
+The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011.  Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  
+
+Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
+
+<img src="figure_rmd/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="3200" />
+
+Persons **id** = 35 and **id** = 25 are peers, in 2000 they were both 17.  Respondent **id** = 47 is a year older, in 2000 he was 18. The oldest is **id** = 4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
+
+Note that for person **id** = 25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used.  To avoid this potentially confusing peculiarity, age in years will be either calculated as (**age** = **year** - **byear**) 
 
 
 

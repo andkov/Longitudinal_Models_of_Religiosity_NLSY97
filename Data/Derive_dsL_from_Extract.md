@@ -1,36 +1,3 @@
----
-output:
-  html_document:
-    css: '\~/GitHub/Longitudinal\_Models\_of\_Religiosity\_NLSY97/www/css/thesis.css'
-    fig_caption: True
-    fig_height: '4.5'
-    fig_width: '6.5'
-    highlight: textmate
-    keep_md: True
-    theme: united
-    toc: True
-  md_document:
-    toc: True
-    variant: markdown
-  pdf_document:
-    fig_crop: False
-    highlight: kate
-    latex_engine: xelatex
-    number_sections: True
-    toc: True
-    toc_depth: 3
-title: Derive dsL
-...
-
--   Deriving clean dataset **dsL** from NLSY97 extract
-    -   Working with NLS Investigator
-    -   Data Retrieval
-    -   Databox, variable-by-occasion slice
-    -   Religiosity, Context, and Covariates
-    -   dsL - initial dataset
-    -   Factor labels
-    -   Saving clean dataset
-
 Deriving clean dataset **dsL** from NLSY97 extract
 ==================================================
 
@@ -79,10 +46,10 @@ located in the GitHub Repository. (The naming convention is
 #### The downloaded zip.forlder included:
 
 NLSY97\_Religiosity\_20042014.cdb - **codebook** containing item
-descriptions\
-NLSY97\_Religiosity\_20042014.csv - **data** in comma delimited format\
+descriptions  
+NLSY97\_Religiosity\_20042014.csv - **data** in comma delimited format  
 NLSY97\_Religiosity\_20042014.NLSY97 - **tagset**, the list of variables
-in the downloaded dataset\
+in the downloaded dataset  
 NLSY97\_Religiosity\_20042014.dtc - STATA **dictionary** file of
 selected variables, contains data as well
 
@@ -235,17 +202,13 @@ After renaming the variables, we arrange data in wide format
 (variable/occasions as columns), arriving at the basis dataset
 **dsSource**, which contains
 
-``` {.r}
-ncol(dsSource)
-```
+    ncol(dsSource)
 
     [1] 133
 
 variables and
 
-``` {.r}
-nrow(dsSource)
-```
+    nrow(dsSource)
 
     [1] 8984
 
@@ -260,7 +223,7 @@ slice.
 
 ### Databox, variable-by-occasion slice
 
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>\
+<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:900px;"/>  
 [Interactive version](http://statcanvas.net/thesis/databox/index.html)
 
 Variables on vertical dimension and occasions on horizontal intersect
@@ -272,8 +235,8 @@ used in this study.
 The variable dimension of the databox slice is represented by three
 identifiers adjacent to the left of the grid.
 
--   **Variable Title** - verbatim identifier from NLSY97\
--   **Unit** - describes the scales used to measure variables\
+-   **Variable Title** - verbatim identifier from NLSY97  
+-   **Unit** - describes the scales used to measure variables  
 -   **Codename** - the (new) name of the variable, as it is used in R
     code
 
@@ -331,17 +294,13 @@ report explains how script
 sourced in this report augements **dsL** with a copy of initial
 variables saved as labeled factors.
 
-``` {.r}
-source(file.path(pathDir,"Scripts/Data/LabelingFactorLevels.R"))
-```
+    source(file.path(pathDir,"Scripts/Data/LabelingFactorLevels.R"))
 
 One can alternate between the raw metric and labeled factors by adding
 an "F" suffix to the end of the variable name:
 
-``` {.r}
-ds<- dsL[dsL$id==1,c("id","year","attend","attendF")]
-str(ds)
-```
+    ds<- dsL[dsL$id==1,c("id","year","attend","attendF")]
+    str(ds)
 
     'data.frame':   15 obs. of  4 variables:
      $ id     : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -349,9 +308,7 @@ str(ds)
      $ attend : num  NA NA NA 1 6 2 1 1 1 1 ...
      $ attendF: Ord.factor w/ 8 levels "Never"<"Once or Twice"<..: NA NA NA 1 6 2 1 1 1 1 ...
 
-``` {.r}
-print(ds)
-```
+    print(ds)
 
        id year attend         attendF
     1   1 1997     NA            <NA>
@@ -379,10 +336,8 @@ it is typically omitted from the reproduction cycle. Instead, from now
 on, the initial point of departure for data projects will be the import
 of **dsL.rds** file produced by this report.
 
-``` {.r}
-pathdsLcvs <- file.path(getwd(),"Data/Derived/dsL.csv")
-write.csv(dsL,pathdsLcvs,  row.names=FALSE)
+    pathdsLcvs <- file.path(getwd(),"Data/Derived/dsL.csv")
+    write.csv(dsL,pathdsLcvs,  row.names=FALSE)
 
-pathdsLrds <- file.path(pathDir,"Data/Derived/dsL.rds")
-saveRDS(object=dsL, file=pathdsLrds, compress="xz")
-```
+    pathdsLrds <- file.path(pathDir,"Data/Derived/dsL.rds")
+    saveRDS(object=dsL, file=pathdsLrds, compress="xz")

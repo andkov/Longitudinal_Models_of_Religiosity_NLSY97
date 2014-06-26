@@ -2,11 +2,13 @@
 title: 'Choose size '
 author: "Andriy Koval"
 output:
+  pdf_document:
+    fig_width: 8
+    toc: yes
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
-  pdf_document:
-    toc: yes
+    fig_width: 8
   word_document:
     fig_width: 6.5
 ---
@@ -28,11 +30,9 @@ opts_chunk$set(
   tidy = FALSE,
 #   fig.height = 4.8, 
 #   fig.width = 6.5, 
-  out.width = "550px",
-#   fig.path = 'figure_rmd/choosingSize/',     
+  out.width = NULL,
+  fig.path = 'figure_rmd/',     
   dev = "png",
-#   fig.path = 'figure_pdf/',     
-#   dev = "pdf",
   dpi = 400
 )
 echoChunks <- FALSE
@@ -71,23 +71,23 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 
 ```{r DefineCommonGraph, echo=echoChunks, message=F}
 # The graph in this report is reproduced under various figure option conditions.
-ds<- dsL %>% dplyr::filter(id==1,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) %>%
+ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
   mutate(time=year-2000)
-
 p<-ggplot(ds, aes(x=time,y=attend, color=idF))
-p<-p+ geom_line(color="purple")
-# p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
-p<-p+ geom_point(color="purple")
+# geoms
+p<-p+ geom_line(size=.4)
+p<-p+ geom_point(size=2)
+# scales
 p<-p+ scale_y_continuous("Church attendance",
                      limits=c(0, 8),
                      breaks=c(1:8))
 p<-p+ scale_x_continuous("Years since 2000",
                    limits=c(0,11),
                    breaks=c(0:11))
-
+p <- p + scale_color_manual(values=c("black","red","green", "purple"))
 # annotations
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p<- p + guides(guide=guide_legend()) 
+p <- p + guides(color = guide_legend(title="Respondents"))
 # themes
 p <- p + ggplot2::theme_bw()
 p <- p + ggplot2::theme_bw(base_size=baseSize)
@@ -98,48 +98,21 @@ p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 
-# p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calculations
-# # geoms
-# p<- p+ geom_line(aes(group=attendF), stat="identity", size=.7)
-# p<- p+ geom_point(aes(fill=attendF), shape=21, size=3, color="black",position=position_dodge(0.2) )
-# # scales
-# p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
-# p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
-# p<- p+ scale_y_continuous(limits=c(0, .4),
-#                           breaks=c(.1,.2,.3,.4))
-# p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
-# # # annotations
-# p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
-# p<- p + guides(color = FALSE) 
-# p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
-#                          x="Wave of measurement",
-#                          y="Proportion of total")
-# # # themes
-# p <- p + ggplot2::theme_bw()
-# p <- p + ggplot2::theme_bw(base_size=baseSize)
-# p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
-# p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
-# p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
-# p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
-# p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
-# p
 
 
-
-
-height1<- 3.5
-height2<- 3.8
-height3<- 4
+height1<- 3.0
+height2<- 3.4
+height3<- 3.8
 height4<- 4.2
-height5<- 4.5
-height6<- 4.8
+height5<- 4.6
+height6<- 5
 
-width1<- 9.5
-width2<- 9.5
-width3<- 9.5
-width4<- 9.5
-width5<- 9.5
-width6<- 9.5  
+# width1<- 6.5
+# width2<- 6.5
+# width3<- 6.5
+# width4<- 8
+# width5<- 8
+# width6<- 8  
 
 owidth1<- NULL
 owidth2<- NULL
@@ -157,35 +130,35 @@ owidth6<- NULL
 # Comparing produced graphs
 
 ##  Slot 1
-```{r slot_1, echo=echoChunks, message=T,fig.height = height1, fig.width=width1, out.width=owidth1  }
+```{r slot_1, echo=echoChunks, message=T,fig.height = height1,  out.width=owidth1  }
 p
 ```
 
 
 ##  Slot 2
-```{r slot_2, echo=echoChunks, message=T, fig.height = height2, fig.width=width2, out.width=owidth2}
+```{r slot_2, echo=echoChunks, message=T, fig.height = height2, out.width=owidth2}
 p
 ```
 
 ##  Slot 3
-```{r slot_3, echo=echoChunks, message=T, fig.height = height3, fig.width=width3, out.width=owidth3}
+```{r slot_3, echo=echoChunks, message=T, fig.height = height3, out.width=owidth3}
 p
 ```
 
 
 ##  Slot 4
-```{r slot_4, echo=echoChunks, message=T, fig.height = height4, fig.width=width4, out.width=owidth4}
+```{r slot_4, echo=echoChunks, message=T, fig.height = height4,  out.width=owidth4}
 p
 ```
 
 
 ##  Slot 5
-```{r slot_5, echo=echoChunks, message=T, fig.height = height5, fig.width=width5,out.width=owidth5}
+```{r slot_5, echo=echoChunks, message=T, fig.height = height5, out.width=owidth5}
 p
 ```
 
 
 ##  Slot 6
-```{r slot_6, echo=echoChunks, message=T, fig.height = height6, fig.width=width6, out.width=owidth6}
+```{r slot_6, echo=echoChunks, message=T, fig.height = height6,  out.width=owidth6}
 p
 ```

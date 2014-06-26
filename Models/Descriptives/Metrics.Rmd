@@ -1,27 +1,22 @@
 ---
 title: "Metrics"
+author: "Andriy Koval"
+date: "Tuesday, June 24, 2014"
 output:
   pdf_document:
-    highlight: default
-    number_sections: yes
+    fig_width: 8
+    latex_engine: xelatex
     toc: yes
-    toc_depth: 3
-  md_document:
-    toc: yes
-    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig_caption: yes
-    fig_height: 4.8
-    fig_retina: 2
-    fig_width: 6.5
-    highlight: textmate
-    keep_md: yes
-    number_sections: yes
-    retina: 2
-    theme: united
+    fig.retina: 2
+    fig_width: 8
     toc: yes
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
 ---
+
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
@@ -40,11 +35,9 @@ opts_chunk$set(
   tidy = FALSE,
 #   fig.height = 4.8, 
 #   fig.width = 6.5, 
-  out.width = "800px",
+  out.width = NULL,
   fig.path = 'figure_rmd/',     
   dev = "png",
-#   fig.path = 'figure_pdf/',     
-#   dev = "pdf",
   dpi = 400
 )
 echoChunks <- FALSE
@@ -73,16 +66,16 @@ colNA # color for the NA value in graphs
 
 ```
 
-
-## Data In
-Initial point of departure - the [databox][1] of the selected sample, described in the [Methods][2] chapter.
-<img link src="./figure_rmd/3_Methods_Figure_3_2.png" alt="Databox slice" style="width:100%;"/>
-This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][3] report. 
+## Data preliminaries
+This section introduces data space.  
+### Data In
+Initial point of departure - the [databox][1] of the selected variables, described in the [Methods][2] chapter.
+![Figure 3.2](./figure_rmd/3_Methods_Figure_3_2.png)
+This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][3] report, given in the Appendix. 
 ```{r echo=T, message=T}
 dsL<-readRDS("./Data/Derived/dsL.rds")
-dsL<- dsL[dsL$sample==1,] # cross-sample only
 ```
-<img link src="./figure_rmd/3_Methods_Figure_3_3.png" alt="View of dsL" style="width:100%;"/>
+![Figure 3.3](./figure_rmd/3_Methods_Figure_3_3.png)
 
 
 ##  Labeling Factor Levels
@@ -129,7 +122,7 @@ print(ds)
 ## Mapping Church Attendance
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5, fig.width=8}
+```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5}
 ds<- dplyr::filter(dsL,year==2000,sample==1)
 p<-ggplot(ds, aes(x=attendF, fill=attendF))
 p <- p + geom_bar(color="black")
@@ -149,7 +142,7 @@ p
 ```
 
 Creating frequency distributions for each of the measurement wave we have:  
-```{r attend_2000_2011, echo=echoChunks,warning=F, message=F, fig.height=5, fig.width=9.5}
+```{r attend_2000_2011, echo=echoChunks,warning=F, message=F, fig.height=3.5}
 ds<- dsL %.%
   dplyr::filter(sample==1) %.%   # comment out to count NA in the total
   dplyr::group_by(yearF,attendF) %.%
@@ -184,7 +177,7 @@ p
 Missing values are used in the calculation of total responses to show the natural attrition in the study. 
 Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total and  look at prevalence of endorsements over time. 
 
-```{r attend_2000_2011_na,echo=F, message=F, warning=F, fig.height=5, fig.width=9.5}
+```{r attend_2000_2011_na,echo=F, message=F, warning=F, fig.height=3.5}
 ds<- dsL %.%
   dplyr::filter(sample==1, !is.na(attendF)) %.%   # comment out to count NA in the total
   dplyr::group_by(yearF,attendF) %.%
@@ -215,8 +208,9 @@ p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
-Tracing the rate of change of prevalence in a line graph, we see more clearly which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")
-```{r attend_2000_2011_lines,echo=F, message=F, warning=F, fig.height=4.8, fig.width=9.5, out.width = "800px"}
+Tracing the rate of change of prevalence in a line graph, we see more clearly which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month")  
+
+```{r attend_2000_2011_lines,echo=F, message=F, warning=F, fig.height=4.2, fig.width=8}
 ds<- dsL %.%
   dplyr::filter(sample==1, year %in% c(2000:2011), !is.na(attend)) %.%   # comment out to count NA in the total
   dplyr::group_by(yearF,attendF) %.%
@@ -262,17 +256,41 @@ print(ds)
 ```
 
 The view above lists attendance data for subjust with id = 47. Mapping his attendance to time we have 
-```{r,echo=echoChunks, message=F, warning=warningChunks }
-d
+```{r,echo=echoChunks, message=F, warning=warningChunks, fig.height=3.3 }
+ds<- dsL %>% dplyr::filter(id==47,year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
+  mutate(time=year-2000)
+
+p<-ggplot(ds, aes(x=time,y=attend, color=idF))
+p<-p+ geom_line(size=.4)
+p<-p+ geom_point(size=2)
+p<-p+ scale_y_continuous("Church attendance",
+                     limits=c(0, 8),
+                     breaks=c(1:8))
+p<-p+ scale_x_continuous("Years since 2000",
+                   limits=c(0,11),
+                   breaks=c(0:11))
+p <- p + scale_color_manual(values=c("purple"))
+# annotations
+p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p <- p + guides(color = guide_legend(title="Respondents"))
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p
 ```  
 
 where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the 
 ```{r, echo=T, message=F, warning=warningChunks}
-cat(length(unique(dsL$id)))
+length(unique(dsL$id))
 ```
 subjects in total. Unless specified otherwise, only individuals from the cross-sample will be used in the model to increase external validity.
 ```{r}
-ds<- dsL[dsL$sample==1,]
+ds<- dsL %>% dplyr::filter(sample==1)
 ```
 
 
@@ -280,65 +298,146 @@ Each of such trajectories imply a story, a life scenario. Why one person grows i
 
 Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph
 
-```{r,echo=echoChunks, message=F }
-
-ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
-p<-ggplot(ds, aes(x=year,y=attend, color=idF))
-p<-p+ geom_line()
-# p<-p+ geom_smooth(method=lm)
-p<-p+ geom_point(shape=21,alpha=.5)
+```{r,echo=echoChunks, message=F, warning=F, fig.height=3.3}
+ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
+  mutate(time=year-2000)
+p<-ggplot(ds, aes(x=time,y=attend, color=idF))
+# geoms
+p<-p+ geom_line(size=.4)
+p<-p+ geom_point(size=2, position=position_dodge(0.2))
+# scales
 p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(1, 8),
+                     limits=c(0, 8),
                      breaks=c(1:8))
-p<-p+ scale_x_continuous("Waves of measurement",
-                   limits=c(2000,2011),
-                   breaks=c(2000:2011))
+p<-p+ scale_x_continuous("Years since 2000",
+                   limits=c(0,11),
+                   breaks=c(0:11))
+p <- p + scale_color_manual(values=c("black","red","green", "purple"))
+# annotations
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p <- p + guides(color = guide_legend(title="Respondents"))
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
+
 ```
 
 The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011.  Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.  
 
 Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age.
 
-```{r,echo=echoChunks, message=F, out.width="300px", fig.width = 8 }
+```{r,echo=echoChunks, message=F, fig.height= 3.3 }
+ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% 
+  dplyr::select(idF,year,attend,ageyear) %>% 
+  mutate(time=year-2000, age=ageyear)
 
-ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
-p<-ggplot(ds, aes(x=ageyear,y=as.numeric(attend), color=idF ))
-p<-p+ geom_line()
-# p<-p+ geom_smooth(method=lm)
-p<-p+ geom_point()
+p<-ggplot(ds, aes(x=age,y=attend, color=idF))
+# geoms
+p<-p+ geom_line(size=.4)
+p<-p+ geom_point(size=2, position=position_dodge(0.2))
+# scales
 p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(1, 8),
+                     limits=c(0, 8),
                      breaks=c(1:8))
 p<-p+ scale_x_continuous("Age in years",
                    limits=c(16,31),
                    breaks=seq(from=12, to=31,by=1))
+p <- p + scale_color_manual(values=c("black","red","green", "purple"))
+# annotations
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p <- p + guides(color = guide_legend(title="Respondents"))
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
 Persons **id** = 35 and **id** = 25 are peers, in 2000 they were both 17.  Respondent **id** = 47 is a year older, in 2000 he was 18. The oldest is **id** = 4, who by the last round of measurement in 2011 is 30 years of age. Perhaps, his increased church attendance could be explained by starting a family of his own?
 
-Note that for person **id** = 25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used.  To avoid this potentially confusing peculiarity, age in years will be either calculated as (**age** = **year** - **byear**) or as (**ageALT** = **agemon**/12). See "Mime metrics" section of this report for details.
+Note that for person **id** = 25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used.  To avoid this potentially confusing peculiarity, age in years will be either calculated as (**age** = **year** - **byear**) 
 
-```{r,echo=echoChunks, message=F, error=FALSE, warning=FALSE, out.width="700px", fig.width = 8 }
+```{r}
+ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% 
+  dplyr::select(idF,year,attend,agemon,ageyear) %>% 
+  mutate(time=year-2000, age=ageyear)
+head(ds,12)
+```
 
-ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
-ds$age<-ds$year-ds$byear
-p<-ggplot(ds, aes(x=age,y=as.numeric(attend), color=idF ))
-p<-p+ geom_line()
-# p<-p+ geom_smooth(method=lm)
-p<-p+ geom_point()
+```{r,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height=3.3  }
+p<-ggplot(ds, aes(x=age,y=attend, color=idF))
+# geoms
+p<-p+ geom_line(size=.4)
+p<-p+ geom_point(size=2, position=position_dodge(0.2))
+# scales
 p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(1, 8),
+                     limits=c(0, 8),
                      breaks=c(1:8))
 p<-p+ scale_x_continuous("Age in years",
                    limits=c(16,31),
                    breaks=seq(from=12, to=31,by=1))
+p <- p + scale_color_manual(values=c("black","red","green", "purple"))
+# annotations
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p <- p + guides(color = guide_legend(title="Respondents"))
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
+
+or as (**age** = **agemon**/12). 
+```{r}
+ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% 
+  dplyr::select(idF,year,attend,agemon,ageyear,byear) %>% 
+  mutate(time=year-2000, age=agemon/12)
+head(ds,12)
+```
+
+
+```{r,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height = 3.3 }
+p<-ggplot(ds, aes(x=age,y=attend, color=idF))
+# geoms
+p<- p + geom_line(size=.4)
+p<- p + geom_point(size=2, position=position_dodge(0.2))
+# scales
+p<- p + scale_y_continuous("Church attendance",
+                     limits=c(0, 8),
+                     breaks=c(1:8))
+p<- p + scale_x_continuous("Age in years",
+                   limits=c(16,31),
+                   breaks=seq(from=12, to=31,by=1))
+p <- p + scale_color_manual(values=c("black","red","green", "purple"))
+# annotations
+p<-  p + labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p<-  p + guides(color = guide_legend(title="Respondents"))
+p<-  p + geom_point(position=position_dodge(0.2) )
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p
+```
+
 
 
 
@@ -347,3 +446,4 @@ p
 [3]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
 [4]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
 [5]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md
+[fig 3.2]: ./figure_rmd/3_Methods_Figure_3_2.png 
