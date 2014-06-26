@@ -1,37 +1,3 @@
----
-output:
-  html_document:
-    css: '\~/GitHub/Longitudinal\_Models\_of\_Religiosity\_NLSY97/www/css/thesis.css'
-    fig_caption: True
-    fig_height: '4.5'
-    fig_width: '6.5'
-    highlight: textmate
-    keep_md: True
-    theme: united
-    toc: True
-  md_document:
-    toc: True
-    variant: markdown
-  pdf_document:
-    fig_crop: False
-    highlight: kate
-    latex_engine: xelatex
-    number_sections: True
-    toc: True
-    toc_depth: 3
-title: Data Manipulation
-...
-
--   Data Manipulation
-    -   Five basic functions in data handling
-        -   <code>select()</code>
-        -   <code>filter()</code>
-        -   <code>arrange()</code>
-        -   <code>mutate()</code>
-        -   <code>summarize()</code>
-    -   Grouping and Combining
-    -   Base subsetting
-
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
 
@@ -58,9 +24,7 @@ For a more detailed discussion of basic verbs and operations consult the
 or internal
 [vignette](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
 
-``` {.r}
-vignette("introduction",package="dplyr")
-```
+    vignette("introduction",package="dplyr")
 
 The following is a brief demonstration of <code>dplyr</code> syntax
 using **dsL** dataset as an example. I attach prefix
@@ -72,17 +36,13 @@ practice in all <code>dplyr</code> expressions in sharable publications.
 
 selects variables into a smaller data set
 
-``` {.r}
-ds<-dsL
-dim(ds)
-```
+    ds<-dsL
+    dim(ds)
 
     [1] 134760     60
 
-``` {.r}
-ds<- dplyr::select(ds,id,year, byear, attend, attendF)
-head(ds,13)
-```
+    ds<- dplyr::select(ds,id,year, byear, attend, attendF)
+    head(ds,13)
 
        id year byear attend         attendF
     1   1 1997  1981     NA            <NA>
@@ -99,9 +59,7 @@ head(ds,13)
     12  1 2008  1981      1           Never
     13  1 2009  1981      1           Never
 
-``` {.r}
-dim(ds)
-```
+    dim(ds)
 
     [1] 134760      5
 
@@ -117,11 +75,9 @@ selects observation based on the type of sample
 and only between years 2000 and 2011, as only during those years the
 outcome of interest <code>attend</code> was recorded.
 
-``` {.r}
-ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- dplyr::select(ds,id, year, attend, attendF)
-head(ds,13)
-```
+    ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+    ds<- dplyr::select(ds,id, year, attend, attendF)
+    head(ds,13)
 
        id year attend         attendF
     1   1 2000      1           Never
@@ -142,12 +98,10 @@ head(ds,13)
 
 Sorts observations
 
-``` {.r}
-ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- dplyr::select(ds,id, year, attend)
-ds<- dplyr::arrange(ds, year, desc(id))
-head(ds,13)
-```
+    ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+    ds<- dplyr::select(ds,id, year, attend)
+    ds<- dplyr::arrange(ds, year, desc(id))
+    head(ds,13)
 
          id year attend
     1  9022 2000      1
@@ -164,10 +118,8 @@ head(ds,13)
     12 8991 2000      3
     13 8987 2000      6
 
-``` {.r}
-ds<- arrange(ds, id, year)
-head(ds, 13)
-```
+    ds<- arrange(ds, id, year)
+    head(ds, 13)
 
        id year attend
     1   1 2000      1
@@ -188,17 +140,15 @@ head(ds, 13)
 
 Creates additional variables from the values of existing.
 
-``` {.r}
-ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- dplyr::select(ds,id, byear, year, attend)
-ds<- dplyr::mutate(ds, 
-            age = year-byear, 
-            timec = year-2000,
-            linear= timec,
-            quadratic= linear^2,
-            cubic= linear^3)
-head(ds,13)
-```
+    ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+    ds<- dplyr::select(ds,id, byear, year, attend)
+    ds<- dplyr::mutate(ds, 
+                age = year-byear, 
+                timec = year-2000,
+                linear= timec,
+                quadratic= linear^2,
+                cubic= linear^3)
+    head(ds,13)
 
        id byear year attend age timec linear quadratic cubic
     1   1  1981 2000      1  19     0      0         0     0
@@ -227,16 +177,14 @@ levels of supplied variables). It is these smaller datasets that
 <code>summarize()</code> will individually collapse into a single
 computed value according to its formula.
 
-``` {.r}
-ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- dplyr::select(ds,id, year, attendF)
+    ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+    ds<- dplyr::select(ds,id, year, attendF)
 
-s <- dplyr::group_by(ds, year,attendF)
-s <- dplyr::summarise(s, count = n())
-s <- dplyr::mutate(s, total = sum(count),
-              percent= count/total)
-head(s,10)
-```
+    s <- dplyr::group_by(ds, year,attendF)
+    s <- dplyr::summarise(s, count = n())
+    s <- dplyr::mutate(s, total = sum(count),
+                  percent= count/total)
+    head(s,10)
 
     Source: local data frame [10 x 5]
     Groups: year
@@ -258,16 +206,14 @@ on <code>%\>%</code> operator, in which <code>x %\>% f(y)</code> turns
 into <code>f(x, y) </code>. Alternatively, one can use <code>%.%</code>
 for identical results.
 
-``` {.r}
-ds<-dsL %>%
-  dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
-  dplyr::select(id, year, attendF) %>%
-  dplyr::group_by(year,attendF) %>%
-    dplyr::summarise(count = n()) %>%
-    dplyr::mutate(total = sum(count),
-              percent= count/total)  
-head(ds,10)    
-```
+    ds<-dsL %>%
+      dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
+      dplyr::select(id, year, attendF) %>%
+      dplyr::group_by(year,attendF) %>%
+        dplyr::summarise(count = n()) %>%
+        dplyr::mutate(total = sum(count),
+                  percent= count/total)  
+    head(ds,10)    
 
     Source: local data frame [10 x 5]
     Groups: year
@@ -286,9 +232,7 @@ head(ds,10)
 
 To verify that this is what we wanted to achieve:
 
-``` {.r}
-dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
-```
+    dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
 
     Source: local data frame [1 x 2]
 
@@ -305,10 +249,8 @@ including rows and columns of the new dataset, respectively. One can
 also call a variable by attaching <code> \$ </code> followed variable
 name to the name of the dataset: <code>**ds***\$variableName*</code>.
 
-``` {.r}
-ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
-print(ds[ds$id==1,]) 
-```
+    ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
+    print(ds[ds$id==1,]) 
 
        id byear year         attendF ageyearF agemon
     4   1  1981 2000           Never       19    231
@@ -358,6 +300,4 @@ basic aggregations: <code>mean</code>, <code>sum</code>,
 <code>dplyr</code> and SQL compatibility consult another built-in
 [vignette](http://cran.rstudio.com/web/packages/dplyr/vignettes/databases.html)
 
-``` {.r}
-vignette("database",package="dplyr")
-```
+    vignette("database",package="dplyr")
