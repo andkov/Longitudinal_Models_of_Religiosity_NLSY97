@@ -288,8 +288,10 @@ dsLTI<-merge(x=dsLTI,y=dstemp,by=c("id","year"),all.x=TRUE)
 dsL_order<-c("sample"  ,"id"	,"sex"	,"race"	,"bmonth"	,"byear"	,"attendPR"	,"relprefPR"	,"relraisedPR"	,"year","agemon"	,"ageyear"	,"famrel"	,"attend"	,"values"	,"todo"	,"obeyed"	,"pray"	,"decisions"	,"relpref"	,"bornagain"	,"faith"	,"calm"	,"blue"	,"happy"	,"depressed"	,"nervous"	,"tv"	,"computer"	,"internet")
 dsL<-dsLTI[dsL_order]
 
-
-
+# NOTE: repsondent id=467 has an abberation in age data (agemon for 2000)
+print ( dsL[dsL$id==467, c("id","year", "byear","bmonth","agemon", "ageyear")])
+# the observation for this subject is removed
+dsL <- dsL[!(dsL$id %in% c(467)), ]
 
 ## @knitr LabelFactors
 source(file.path(pathDir,"Scripts/Data/LabelingFactorLevels.R"))

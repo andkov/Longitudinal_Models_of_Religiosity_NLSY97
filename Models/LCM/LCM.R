@@ -4,7 +4,17 @@ rm(list=ls(all=TRUE))  #Clear the variables from previous runs.
 ############################
 ## @knitr DeclareGlobals
 # colors to represent 8 categories of church attendance
-attcol8<-c("#4575b4","#74add1","#abd9e9", "#e0f3f8", "#fee090", "#fdae61" ,"#f46d43", "#d73027")
+attcol8<-c("Never"="#4575b4",
+           "Once or Twice"="#74add1",
+           "Less than once/month"="#abd9e9",
+           "About once/month"="#e0f3f8",
+           "About twice/month"="#fee090",
+           "About once/week"="#fdae61",
+           "Several times/week"="#f46d43",
+           "Everyday"="#d73027")
+
+baseSize<- 14
+colNA<- "#636363"
 
 ############################
 ## @knitr LoadPackages
@@ -27,31 +37,29 @@ pathImageOut<-file.path(pathDir,"Models/Descriptives/figure_rmd") # to store .pn
 dsL<-readRDS("./Data/Derived/dsL.rds")
 
 # str(dsL)
+attcol8<-c("Never"="#4575b4",
+           "Once or Twice"="#74add1",
+           "Less than once/month"="#abd9e9",
+           "About once/month"="#e0f3f8",
+           "About twice/month"="#fee090",
+           "About once/week"="#fdae61",
+           "Several times/week"="#f46d43",
+           "Everyday"="#d73027")
+
+cohortCol5<- c("1980"="#9ecae1",
+               "1981"="#6baed6",
+               "1982"="#4292c6",
+               "1983"="#2171b5",
+               "1984"="#084594")
+
+baseSize<- 14
+colNA<- "#636363"
 
 # Variables that do not change with time, TI - time invariant
 TIvars<-c("sample", "id", "sex","race", "bmonth","byear",  'attendPR', "relprefPR", "relraisedPR")
 
 ############################
 ## @knitr TweakData
-
-dsL<- dsLF[dsLF$sample==1,]
-## keepyears is defined in the  .Rmd file
-
-# Select a few variables for current model or graph
-
-# dsLCM<-dsLCM[which(dsLCM$year %in% keepyears),]
-# dsLCM<-dsL[,c('id',"byear","year","attend","ageyear")]
-# 
-
-# dsLCM<-mutate(dsLCM,timec=year-2000) # creates centered variable
-# dsLCM<-mutate(dsLCM,age=year-byear) # computes age in years at time of interview
-# dsLCM<-mutate(dsLCM,linear+1)
-# dsLCM<-mutate(dsLCM,quadratic=linear^2)
-# dsLCM<-mutate(dsLCM,cubic=linear^3)
-
-## For this report keep only these years
-keepyears<- c(2000:2011)
-ds<-dsLF[which(dsL$year %in% keepyears),]
 
 ############################
 ## @knitr AnalysisChunk01

@@ -13,12 +13,18 @@ attcol8<-c("Never"="#4575b4",
            "Several times/week"="#f46d43",
            "Everyday"="#d73027")
 
+cohortCol5<- c("1980"="#9ecae1",
+               "1981"="#6baed6",
+               "1982"="#4292c6",
+               "1983"="#2171b5",
+               "1984"="#084594")
+
 baseSize<- 14
 colNA<- "#636363"
 
 ############################
 ## @knitr LoadPackages
-require(pandoc)
+
 require(RODBC)
 require(grid)
 require(dplyr)

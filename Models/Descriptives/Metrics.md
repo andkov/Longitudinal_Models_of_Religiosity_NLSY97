@@ -13,8 +13,7 @@ operations and graphing.
 Data preliminaries
 ------------------
 
-This section introduces data space.  
-\#\#\# Data In Initial point of departure - the
+Initial point of departure - the
 [databox](http://statcanvas.net/thesis/databox/) of the selected
 variables, described in the
 [Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm)
@@ -40,7 +39,7 @@ as numerical values or intigers
     ds<- dsL[,1:(ncol(dsL)/2)]# selects the first half of variables
     str(ds)
 
-    'data.frame':   134760 obs. of  30 variables:
+    'data.frame':   134745 obs. of  30 variables:
      $ sample     : int  1 1 1 1 1 1 1 1 1 1 ...
      $ id         : int  1 1 1 1 1 1 1 1 1 1 ...
      $ sex        : int  2 2 2 2 2 2 2 2 2 2 ...
@@ -77,10 +76,10 @@ sourced at the end of
 [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
 matches numeric values with response labels from the questionnaire and
 adds to **dsL** copies of the variables, saved as labeled factors. For
-estimations routines such as lm4 or graphing functions such as ggplot,
-the data type (string,numeric, factor) is a meaningful input, so a quick
-access to both formats frequently proves useful. It is convenient to
-think that **dsL** contains only
+estimations routines such as <code>lme4</code> or graphing functions
+such as <code>ggplot</code>, the data type (string,numeric, factor) is a
+meaningful input, so a quick access to both formats frequently proves
+useful. It is convenient to think that **dsL** contains only
 
     ncol(dsL)/2
 
@@ -90,7 +89,7 @@ variables, but each of them has a double, a labeled factor.
 
     str(dsL)
 
-    'data.frame':   134760 obs. of  60 variables:
+    'data.frame':   134745 obs. of  60 variables:
      $ sample      : int  1 1 1 1 1 1 1 1 1 1 ...
      $ id          : int  1 1 1 1 1 1 1 1 1 1 ...
      $ sex         : int  2 2 2 2 2 2 2 2 2 2 ...
@@ -122,9 +121,9 @@ variables, but each of them has a double, a labeled factor.
      $ computer    : num  NA NA NA NA NA 5 NA NA NA NA ...
      $ internet    : num  NA NA NA NA NA NA 1 0 1 1 ...
      $ sampleF     : Ord.factor w/ 2 levels "Cross-Sectional"<..: 1 1 1 1 1 1 1 1 1 1 ...
-     $ idF         : Factor w/ 8984 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
+     $ idF         : Factor w/ 8983 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
      $ sexF        : Ord.factor w/ 3 levels "Male"<"Female"<..: 2 2 2 2 2 2 2 2 2 2 ...
-     $ raceF       : Ord.factor w/ 4 levels "Black"<"Hispanic"<..: NA NA NA NA NA NA NA NA NA NA ...
+     $ raceF       : Ord.factor w/ 4 levels "Black"<"Hispanic"<..: 4 4 4 4 4 4 4 4 4 4 ...
      $ bmonthF     : Ord.factor w/ 12 levels "Jan"<"Feb"<"Mar"<..: 9 9 9 9 9 9 9 9 9 9 ...
      $ byearF      : Factor w/ 5 levels "1980","1981",..: 2 2 2 2 2 2 2 2 2 2 ...
      $ attendPRF   : Ord.factor w/ 8 levels "Never"<"Once or Twice"<..: 7 7 7 7 7 7 7 7 7 7 ...
@@ -190,198 +189,40 @@ and 1984.The following graphics shows how birth cohort, age of
 respondents, and round of observation are related in NSLY97.  
 ![Figure 3.1](./figure_rmd/3_Methods_Figure_3_1.png)
 
-There are several indicators of age in NSLY97 that vary in precision.
-Birth cohort (**byear**) is the most general one, it was recorded once.
-Two age variables were recorded at each interview: age at the time of
-the interview in months (**agemon**) and in years (**ageyear**). Those
-are not derivatives of each other, but are are closely related. The
-variable **ageyear** records the full number of years a respondent
+NSLY97 contains static and dynamic indicators of age. Variables byear
+and bmonth were recorded once in 1997 (static) and contain
+respondentsâ€™ birth year and birth month respectively. Two age
+variables were recorded continuously at each interview (dynamic): age at
+the time of the interview in months (agemon) and in years (ageyear).
+
+    ds<- dsL %>% dplyr::filter(id==25, year %in% c(1997:2011)) %>% dplyr::select(id,bmonthF,byear,year, agemon,ageyear) %>%
+      mutate (age = (year-byear+1), ageD = agemon/12)
+    print(ds)
+
+       id bmonthF byear year agemon ageyear age  ageD
+    1  25     Mar  1983 1997    167      13  15 13.92
+    2  25     Mar  1983 1998    188      15  16 15.67
+    3  25     Mar  1983 1999    201      16  17 16.75
+    4  25     Mar  1983 2000    214      17  18 17.83
+    5  25     Mar  1983 2001    226      18  19 18.83
+    6  25     Mar  1983 2002    236      19  20 19.67
+    7  25     Mar  1983 2003    254      21  21 21.17
+    8  25     Mar  1983 2004    261      21  22 21.75
+    9  25     Mar  1983 2005    272      22  23 22.67
+    10 25     Mar  1983 2006    284      23  24 23.67
+    11 25     Mar  1983 2007    295      24  25 24.58
+    12 25     Mar  1983 2008    307      25  26 25.58
+    13 25     Mar  1983 2009    319      26  27 26.58
+    14 25     Mar  1983 2010    332      27  28 27.67
+    15 25     Mar  1983 2011    342      28  29 28.50
+
+The variable ageyear records the full number of years a respondent
 reached at the time of the interview. Due to difficulties of
 administering the survey, time intervals between the waves could differ.
-For example, for one person **id** = 25 the age was recorded as 21 years
-for both 2003 and 2004 (see **ageyear**). However, when you examine age
-in months (**agemon**) you can see this rounding issue disappears once a
-more precise scale is used. To avoid this potentially confusing
-peculiarity, age in years will be calculated as (**age** = **year** -
-**byear**) or as (**ageALT** = **agemon**/12).
-
-    ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attend","ageyear","agemon")]
-    ds<- ds[ds$id %in% c(25),]
-    ds$age<-ds$year-ds$byear
-    ds$ageALT<- ds$agemon/12
-    print(ds)
-
-        id byear year attend ageyear agemon age ageALT
-    364 25  1983 2000      5      17    214  17  17.83
-    365 25  1983 2001      7      18    226  18  18.83
-    366 25  1983 2002      7      19    236  19  19.67
-    367 25  1983 2003      2      21    254  20  21.17
-    368 25  1983 2004      7      21    261  21  21.75
-    369 25  1983 2005      5      22    272  22  22.67
-    370 25  1983 2006      7      23    284  23  23.67
-    371 25  1983 2007      5      24    295  24  24.58
-    372 25  1983 2008      7      25    307  25  25.58
-    373 25  1983 2009      7      26    319  26  26.58
-    374 25  1983 2010      7      27    332  27  27.67
-    375 25  1983 2011      7      28    342  28  28.50
-
-Mapping Church Attendance
--------------------------
-
-The focal variable of interest is **attend**, an item measuring church
-attendance in the current year. The questionnaire recorded the responses
-on the ordinal scale.  
-![plot of chunk attend\_2000](figure_rmd/attend_2000.png)
-
-Creating frequency distributions for each of the measurement wave we
-have:  
-![plot of chunk attend\_2000\_2011](figure_rmd/attend_2000_2011.png)
-
-Missing values are used in the calculation of total responses to show
-the natural attrition in the study. Assumming that attrition is not
-significantly associated with the outcome measure, we can remove missing
-values from the calculation of the total and look at prevalence of
-endorsements over time.
-
-![plot of chunk
-attend\_2000\_2011\_na](figure_rmd/attend_2000_2011_na.png) Tracing the
-rate of change of prevalence in a line graph, we see more clearly which
-categores increase over time (e.g. "Never"), which decline (e.g. ""About
-once/week), and which stay relatively stable (e.g. "About twice/month")
-
-![plot of chunk attend\_freq\_lines](figure_rmd/attend_freq_lines.png)
-
-Graphs above shows change in the cross-sectional distribution of
-responses over the years. Modeling the change in these response
-frequencies is handled well by Markov models. LCM, however, works with
-longitudinal data, modeling the trajectory of each individual and
-treating attendance as a continuous outcome.
-
-To demonstrate mapping of individual trajectories to time, let's select
-a dataset that would include personal identifyer (**id**), cohort
-indicator (**byear**), wave of measurement (**year**) and the focal
-variable of interest - worship attendance (**attend**).
-
-    ds<- dsL %>%  dplyr::filter(year %in% c(2000:2011), id==47) %>%
-                  dplyr:: select(id, byear, year, attend, attendF)
-    print(ds)
-
-       id byear year attend              attendF
-    1  47  1982 2000      5    About twice/month
-    2  47  1982 2001      2        Once or Twice
-    3  47  1982 2002      4     About once/month
-    4  47  1982 2003      2        Once or Twice
-    5  47  1982 2004      3 Less than once/month
-    6  47  1982 2005      2        Once or Twice
-    7  47  1982 2006      2        Once or Twice
-    8  47  1982 2007      3 Less than once/month
-    9  47  1982 2008      2        Once or Twice
-    10 47  1982 2009      1                Never
-    11 47  1982 2010      1                Never
-    12 47  1982 2011      1                Never
-
-The view above lists attendance data for subjust with id = 47. Mapping
-his attendance to time we have  
-![plot of chunk attend\_line\_1id](figure_rmd/attend_line_1id.png)
-
-where vertical dimension maps the outcome value and the horizontal maps
-the time. There will be a trajecory for each of the
-
-    length(unique(dsL$id))
-
-    [1] 8984
-
-subjects in total. Unless specified otherwise, only individuals from the
-cross-sample will be used in the model to increase external validity.
-
-    ds<- dsL %>% dplyr::filter(sample==1)
-
-Each of such trajectories imply a story, a life scenario. Why one person
-grows in his religious involvement, while other declines, or never
-develops an interest in the first place? To demostrate how
-interpretations of trajectories can vary among individuals consider the
-following scenario.
-
-Attendance trajectories of subjects with **id**s 4, 25, 35, and 47 are
-plotted in the next graph
-
-![plot of chunk
-attend\_line\_4id\_years](figure_rmd/attend_line_4id_years.png)
-
-The respondent **id**=35 reported attending no worship services in any
-of the years, while respodent **id**=25 seemed to frequent it,
-indicating weekly attendance in 8 out of the 12 years. Individual
-**id**=47 started as a fairly regular attendee of religious services in
-2000 (5= "about twice a month"), then gradually declined his involvement
-to nill in 2009 and on. Respondent **id**=4, on the other hand started
-off with a rather passive involvement, reporting attended church only
-"Once or twice" in 2000, maintained a low level of participation
-throughout the years, only to surge his attendance in 2011. Latent curve
-models will describe intraindividual trajectories of change, while
-summarizinig the interindividual similarities and trends.
-
-Previous research in religiousity indicated that age might be one of the
-primary factors explaining interindividual differences in church
-attendance. To examine the role of age, we change the metric of time
-from waves of measurement, as in the previous graph, to biological age.
-
-![plot of chunk
-attend\_line\_4id\_age](figure_rmd/attend_line_4id_age.png)
-
-Persons **id** = 35 and **id** = 25 are peers, in 2000 they were both
-17. Respondent **id** = 47 is a year older, in 2000 he was 18. The
-oldest is **id** = 4, who by the last round of measurement in 2011 is 30
-years of age. Perhaps, his increased church attendance could be
-explained by starting a family of his own?
-
-Note that for person **id** = 25 the age was recorded as 21 years for
-both 2003 and 2004. However, when you examine age in months (**agemon**)
-you can see this is rounding issue that disappears once a more precise
-scale is used. To avoid this potentially confusing peculiarity, age in
-years will be either calculated as (**age** = **year** - **byear**)
-
-    ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% 
-      dplyr::select(idF,year,attend,agemon,ageyear) %>% 
-      mutate(time=year-2000, age=ageyear)
-    head(ds,12)
-
-       idF year attend agemon ageyear time age
-    1    4 2000      2    238      19    0  19
-    2    4 2001      1    251      20    1  20
-    3    4 2002      3    262      21    2  21
-    4    4 2003      1    276      22    3  22
-    5    4 2004      2    287      23    4  23
-    6    4 2005      2    297      24    5  24
-    7    4 2006      2    309      25    6  25
-    8    4 2007      2    320      26    7  26
-    9    4 2008      2    336      27    8  27
-    10   4 2009      1    344      28    9  28
-    11   4 2010      2    357      29   10  29
-    12   4 2011      5    368      30   11  30
-
-![plot of chunk
-attend\_line\_4id\_age2](figure_rmd/attend_line_4id_age2.png)
-
-or as (**age** = **agemon**/12).
-
-    ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% 
-      dplyr::select(idF,year,attend,agemon,ageyear,byear) %>% 
-      mutate(time=year-2000, age=agemon/12)
-    head(ds,12)
-
-       idF year attend agemon ageyear byear time   age
-    1    4 2000      2    238      19  1981    0 19.83
-    2    4 2001      1    251      20  1981    1 20.92
-    3    4 2002      3    262      21  1981    2 21.83
-    4    4 2003      1    276      22  1981    3 23.00
-    5    4 2004      2    287      23  1981    4 23.92
-    6    4 2005      2    297      24  1981    5 24.75
-    7    4 2006      2    309      25  1981    6 25.75
-    8    4 2007      2    320      26  1981    7 26.67
-    9    4 2008      2    336      27  1981    8 28.00
-    10   4 2009      1    344      28  1981    9 28.67
-    11   4 2010      2    357      29  1981   10 29.75
-    12   4 2011      5    368      30  1981   11 30.67
-
-![plot of chunk
-attend\_line\_4id\_age3](figure_rmd/attend_line_4id_age3.png)
+For example, for one person id = 25 the age was recorded as 21 years for
+both 2003 and 2004 (see ageyear). However, when you examine age in
+months (agemon) you can see this rounding issue disappears, once a more
+precise scale is used. To avoid this potentially confusing peculiarity,
+age in years will be calculated as age = year â€“ byear +1 or as (ageD =
+agemon/12). The suffix D in ageD refers to the fact that it was
+calculated from a dynamic age indicator.

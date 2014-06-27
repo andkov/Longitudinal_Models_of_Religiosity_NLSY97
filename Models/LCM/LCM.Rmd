@@ -1,35 +1,30 @@
 ---
-title: "LCM"
+title: "Descriptives"
+author: "Andriy Koval"
+date: "Tuesday, June 24, 2014"
 output:
-  pdf_document:
-    fig_crop: no
-    highlight: kate
-    latex_engine: xelatex
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
-  md_document:
-    toc: yes
-    variant: markdown
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig_caption: yes
-    fig_height: 4.5
-    fig_width: 6.5
-    highlight: textmate
-    keep_md: yes
-    theme: united
+    fig.retina: 2
+    fig_width: 8
     toc: yes
+  pdf_document:
+    fig_width: 8
+    latex_engine: xelatex
+    toc: yes
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
 ---
+
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
+require(knitr)
 opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 
 ```
 
-
-<!-- Set the report-wide options, and point to the external code file. -->
 ```{r set_options, echo=F, message=F}
 require(knitr)
 # getwd()
@@ -38,22 +33,24 @@ opts_chunk$set(
   message = TRUE,
   comment = NA, 
   tidy = FALSE,
-  fig.height = 4, 
-  fig.width = 5.5, 
-  out.width = "565px",
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+  out.width = NULL,
   fig.path = 'figure_rmd/',     
   dev = "png",
-#   fig.path = 'figure_pdf/',     
-#   dev = "pdf",
   dpi = 400
 )
 echoChunks <- FALSE
+warningChunks<- FALSE
 options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
 ```
 
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-# attANDANCE colOUR 8 categories - set up default colors for "attend"
+# Defined
+attcol8 # color palette for attendance
+baseSize # base text size
+colNA # color for the NA value in graphs
 
 ```
 
@@ -61,91 +58,69 @@ read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
-```
-
-```{r TweakData, echo=F, message=T}
+# select only respondence in the cross-sectional sample
 
 ```
+
+
+
 Latent Curve Modeling 
 =================================================
 This report analyzes a sequence of multilevel latent curve models of church attendance in NLSY97.
 
 ### Data
 
-The collection of variables selected from NLSY97 database are shown in Fig 3.2
+The preparation of this dataset is described in the report [Derive_dsL_from_Extract][derive]. For the scales and factor levels, refer to [Metrics][metrics] report, which relies on the script  [LabelingFactorLevels.R][labels] sourced at the end of [Derive_dsL_from_Extract][3].
 
-<img link src="./figure_rmd/3_Methods_Figure 3.2.png" alt="Databox" style="width:900px;"/> 
-
-This databox slice corresponds to the dataset **dsL**.
-
-<img link src="./figure_rmd/3_Methods_Figure 3.3.png" alt="dsL" style="width:900px;"/>  
- 
-The preparation of this dataset is surveyed [here](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data) and detailed in the [Reproducibility Instructions](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md).
-
-Basic LCM relies on four variables from **dsL**: identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**) and the variable of interest - worship attendance (**attend**). This is how the data look for one respondent 
+A basic LCM in this sequence relies on four variables from the **dsL** dataset: identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**), and the variable of interest - worship attendance (**attend**). 
 ```{r, echo=echoChunks, message=F}
-ds<-dsL[,c('id',"byear","year","attend")] # select needed variables
-print(ds[ds$id==1,])# for a single subject with id=1
+require(dplyr)
+ds<- dsL %>% select(id, byear, year, attend) %>% 
+  filter(year %in% c(2000:2011)) %>%
+  filter (id %in% c(1))
+ds
 ```
-The total number of respondents in the current data set is
+
+The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on an ordinal scale, the integers used to record the response (1 through 8) are treated as measurements on the continuous scale when fitted in these statistical models. For elaboraton on metrics of church attendance and time, see [Attendance][attend] report.
+
+
+New variable **timec** is created, containing the values of **year**, centered at 2000. In addition, time effects are added, encoded as  weights of the Lambda matrix
 ```{r, echo=echoChunks, message=F}
-cat(length(unique(dsLCM$id)))
+ds<- dsL %>% select(id, byear, year, attend) %>% 
+  filter(year %in% c(2000:2011)) %>%
+  mutate(timec=year-2000, linear=timec, quadratic=timec^2, cubic=timec^3) %>%
+  filter (id %in% c(1))
+ds
 ```
 
-
-
-The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on an ordinal scale, the integers used to record the response (1 through 8) are treated as measurements on the continuous scale when fit in these statistical models. The interpretations of the estimates, therefore, should be done in the context of this scale.
-
-
-Service variables computed  and time effects are added, encoded as  weights of the Lambda matrix
-```{r, echo=echoChunks, message=F}
-ds<-dsL[,c('id',"byear","year","attend")] # select needed variables
-ds$attend<- as.numeric(ds$attend) # convert into continuous
-
-ds<-mutate(ds,timec=year-2000) # creates centered variable
-ds<-mutate(ds,age=year-byear) # computes age in years at time of interview
-# linear<- c(0:length(unique(ds$year)))
-ds<-mutate(ds,linear= c(0:11))
-ds<-mutate(ds,quadratic=linear^2)
-ds<-mutate(ds,cubic=linear^3)
-print(ds[ds$id==1,])# for a single subject with id=1
-```
-
-We have data on attendance for 12 years, from 2000 to 2011. Figure 2 gives a cross-sectional frequency distribution of the data across the years.
-#### Figure 2. Relative frequency of responses for each observed wave
-```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
-# attcol8 is defined in DeclareGlobal chunk of  the .R file
-ds<- dsL
-p<-ggplot(ds, aes(x=factor(year), fill=attend))
-p<-p+ geom_bar(position="fill")
-p<-p+ scale_fill_manual(values = attcol8,
-                    name="Response category" )
-p<-p+ scale_y_continuous("Prevalence: proportion of total",
-                     limits=c(0, 1),
-                     breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
-p<-p+ scale_x_discrete("Waves of measurement",
-                   limits=as.character(c(2000:2011)))
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p
-
-```
-
-However, LCM works with longitudinal data, modeling the trajectory of each individual. The trajectories of subjects with **id**s of 4, 25, 35, and 47 are plotted in the next graph
+We have data on attendance for 12 years, from 2000 to 2011. LCM models trajectories of individuals. For example, the graph below shows one of such trajectories.
 
 ```{r,echo=echoChunks, message=F, out.width="700px", fig.width = 8 }
+require(ggplot2)
+ds<- dsL %>% dplyr::filter(id==833,year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
+  mutate(time=year-2000)
 
-ds<- dsL[dsL$id %in% c(4, 25, 35, 47),]
-p<-ggplot(ds, aes(x=year,y=as.numeric(attend), color=factor(id) ))
-p<-p+ geom_line()
-# p<-p+ geom_smooth(method=lm)
-p<-p+ geom_point()
+p<-ggplot(ds, aes(x=time,y=attend, color=idF))
+p<-p+ geom_line(size=.4)
+p<-p+ geom_point(size=2)
 p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(1, 8),
+                     limits=c(0, 8),
                      breaks=c(1:8))
-p<-p+ scale_x_continuous("Waves of measurement",
-                   limits=c(2000,2011),
-                   breaks=c(2000:2011))
+p<-p+ scale_x_continuous("Years since 2000",
+                   limits=c(0,11),
+                   breaks=c(0:11))
+p <- p + scale_color_manual(values=c("purple"))
+# annotations
 p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p <- p + guides(color = guide_legend(title="Respondents"))
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
@@ -153,15 +128,12 @@ p
 
 
 
-```{r}
-source("./Manipulation/produceMDandHTML.R")
-
-```
 
 
 
-
-
-
+[derive]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
+[labels]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
+[metrics]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md
+[attend]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Attendance.md
 
 

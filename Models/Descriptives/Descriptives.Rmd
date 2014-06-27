@@ -1,0 +1,164 @@
+---
+title: "Descriptives"
+author: "Andriy Koval"
+date: "Tuesday, June 24, 2014"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    toc: yes
+  pdf_document:
+    fig_width: 8
+    latex_engine: xelatex
+    toc: yes
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
+---
+
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+  out.width = NULL,
+  fig.path = 'figure_rmd/Descriptives/',     
+  dev = "png",
+  dpi = 400
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+# Defined
+attcol8 # color palette for attendance
+baseSize # base text size
+colNA # color for the NA value in graphs
+
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+# select only respondence in the cross-sectional sample
+
+```
+
+
+There are total of 
+```{r 01}
+cat(length(unique(dsL$id)))
+```
+respondents. 
+
+```{r 02}
+ds<- dsL %>% group_by(sampleF) %>% summarize (count=n_distinct(id))
+ds
+```
+
+Basic demographics is given in Figure 4.# 
+```{r basic_demo,echo=F, warning=F}
+ds<- dsL %>% dplyr::filter(id %in% c(1:9000), year==1997) %>% dplyr::select(id,sampleF,sexF, raceF) %>%
+  dplyr::group_by(sampleF, sexF,raceF) %>% dplyr::summarize (count= n()) 
+
+# ds<- reshape2::melt(ds,id.vars= colnames(ds))
+# ds
+p<- ggplot(ds, aes(x=raceF, y=count, fill=sexF))
+#geoms
+p<- p+ geom_bar(stat="identity", position="dodge")
+p<- p+ facet_grid(sampleF~.)
+p<- p+ geom_text(aes(label=count), position=position_dodge(.9), vjust=-.2, size=3.5)
+# scales
+p<- p + scale_y_continuous( limits= c(0,2700))
+# annotations
+p<- p + guides(fill = guide_legend( title="Sex")) 
+p<- p+ labs(title = "Basic demographic constitution of NLSY97",
+                         x="Race",
+                         y="Sampling frame")
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p 
+
+
+```
+
+Respondents’ age was of particular interest and was entered as a predictor of church attendance.  NSLY97 contains static and dynamic indicators of age age. Variables  byear and bmonth were recorded once in 1997 (static) and contain respondents’ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear.   Figure 4.2 shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
+
+```{r bmonth_dist, echo=F, warning=F, fig.height=3.3}
+ds<- dsL %>% dplyr::filter(year %in% c(1997)) %>% dplyr::select(id,year,byearF,bmonth,agemon,ageyear) %>%
+  group_by(bmonth,byearF) %>%
+  summarize(count=n()) %>% arrange(byearF,bmonth) %>%
+  mutate (born=paste0(substr(byearF,3,4),"-",bmonth)) %>%
+  arrange(byearF, bmonth)
+head(ds, 13)
+
+  p<-ggplot(ds, aes(x=born, y=count, fill=byearF))
+  p<-p+geom_bar(stat="identity")
+  p<- p + scale_fill_manual(values=cohortCol5)
+# annotations
+p<- p + guides(fill = guide_legend(reverse=TRUE, title="Birth year")) 
+p<-  p+ labs(title = "Distribution of births among NLSY97 repsondent (1997)",
+                         x="The month of birth",
+                         y="Count")
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40", size=8))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p<- p + theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5))
+p
+```
+
+
+
+```{r agemon_dist, echo=F, warning=F, fig.height=3.3}
+
+ds<- dsL %>% dplyr::filter(id %in% c(1:19000), year %in% c(2000)) %>% dplyr::select(id,year,byearF,attend,agemon,ageyear) %>%
+  mutate(time=year-2000, age=agemon/12)
+
+  p<-ggplot(ds, aes(x=agemon, fill=byearF))
+  p<-p+geom_bar(bin=1)
+  p<- p + scale_fill_manual(values=cohortCol5)
+# annotations
+p<- p + guides(fill = guide_legend(reverse=TRUE, title="Birth year")) 
+p<-  p+ labs(title = "Age and cohort structure",
+                         x="Age in months at the time of interview in 2000",
+                         y="Count")
+# themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p
+```
+
+

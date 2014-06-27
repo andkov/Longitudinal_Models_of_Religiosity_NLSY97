@@ -1,14 +1,14 @@
 ---
 title: "Data Manipulation"
 output:
-  pdf_document:
-    fig_width: 8
-    latex_engine: xelatex
-    toc: yes
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
+    toc: yes
+  pdf_document:
+    fig_width: 8
+    latex_engine: xelatex
     toc: yes
   word_document:
     fig_width: 6.5
@@ -122,6 +122,32 @@ head(ds,13)
 ```
 
 ###<code>summarize()</code> 
+collapses data into a single value computed according to the aggregate functions.
+
+
+```{r}
+require(dplyr)
+ds<- dplyr::filter(dsL,sample==1)
+ds<- dplyr::summarize(ds, N= n_distinct(id))
+ds
+```
+Other functions one could use with <code>summarize()</code> include:
+
+From <code>base</code>
++ <code> min() </code>   
++ <code> max() </code>   
++ <code> mean() </code>   
++ <code> sum() </code>   
++ <code> sd() </code>   
++ <code> median() </code>   
++ <code> IQR()  </code>   
+
+Native to <code>dplyr</code>
++ <code> n() </code>  -  number of observations in the current group
++ <code> n_distinct(x) </code>  -    count the number of unique values in x.
++ <code> first(x) </code>  -  similar to <code>x[1]</code> + control over <code>NA</code>
++ <code> last(x) </code>  -  similar to <code>x[length(x)] </code> + control over <code>NA</code>
++ <code> nth(x, n)  </code>  -  similar to<code> x[n] </code>  + control over <code>NA</code>
 
 ## Grouping and Combining 
 The function <code>group_by()</code> is used to identify groups in split-apply-combine (SAC) procedure: it splits the initial data into smaller datasets (according to all possible interactions between the levels of supplied variables). It is these smaller datasets that <code>summarize()</code> will individually collapse into a single computed value according to its formula.  
@@ -180,6 +206,29 @@ The following is a list of operatiors that can be used in these calls.
 vignette("database",package="dplyr")
 ```
 
+## Base Reference
+
+The following unary and binary operators are defined for <code> base</code>. They are listed in precedence groups, from highest to lowest.
+
+
++ <code> :: :::   </code> -  access variables in a namespace  
++ <code> $ @	    </code> - component / slot extraction   
++ <code> [ [[	    </code> - indexing  
++ <code> ^	      </code>  - exponentiation (right to left)   
++ <code> - +	 </code>  - unary minus and plus   
++ <code> :	 </code>  - sequence operator   
++ <code> %any%	 </code>  - special operators (including %% and %/%)   
++ <code> * /	 </code>  - multiply, divide   
++ <code> + -	 </code>  - (binary) add, subtract   
++ <code> < > <= >= == !=	 </code>  - ordering and comparison   
++ <code> !	 </code>  - negation   
++ <code> & &&	 </code>  - and   
++ <code> | ||	 </code>  - or   
++ <code> ~	 </code>  - as in formulae   
++ <code> -> ->>	 </code>  - rightwards assignment   
++ <code> <- <<-	 </code>  - assignment (right to left)   
++ <code> =	 </code>  - assignment (right to left)   
++ <code> ?	 </code>  - help (unary and binary)   
 
 
 [1]:http://blog.rstudio.org/2014/01/17/introducing-dplyr/

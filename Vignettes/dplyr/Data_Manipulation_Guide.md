@@ -39,7 +39,7 @@ selects variables into a smaller data set
     ds<-dsL
     dim(ds)
 
-    [1] 134760     60
+    [1] 134745     60
 
     ds<- dplyr::select(ds,id,year, byear, attend, attendF)
     head(ds,13)
@@ -61,7 +61,7 @@ selects variables into a smaller data set
 
     dim(ds)
 
-    [1] 134760      5
+    [1] 134745      5
 
 ### <code>filter()</code>
 
@@ -167,6 +167,37 @@ Creates additional variables from the values of existing.
 
 ### <code>summarize()</code>
 
+collapses data into a single value computed according to the aggregate
+functions.
+
+    require(dplyr)
+    ds<- dplyr::filter(dsL,sample==1)
+    ds<- dplyr::summarize(ds, N= n_distinct(id))
+    ds
+
+         N
+    1 6747
+
+Other functions one could use with <code>summarize()</code> include:
+
+From <code>base</code> + <code> min() </code>  
++ <code> max() </code>  
++ <code> mean() </code>  
++ <code> sum() </code>  
++ <code> sd() </code>  
++ <code> median() </code>  
++ <code> IQR() </code>
+
+Native to <code>dplyr</code> + <code> n() </code> - number of
+observations in the current group + <code> n\_distinct(x) </code> -
+count the number of unique values in x. + <code> first(x) </code> -
+similar to
+<code>x[1](http://blog.rstudio.org/2014/01/17/introducing-dplyr/)</code>
++ control over <code>NA</code> + <code> last(x) </code> - similar to
+<code>x[length(x)] </code> + control over <code>NA</code> + <code>
+nth(x, n) </code> - similar to<code> x[n] </code> + control over
+<code>NA</code>
+
 Grouping and Combining
 ----------------------
 
@@ -190,16 +221,16 @@ computed value according to its formula.
     Groups: year
 
        year              attendF count total  percent
-    1  2000                Never  1581  6748 0.234292
-    2  2000        Once or Twice  1304  6748 0.193242
-    3  2000 Less than once/month   775  6748 0.114849
-    4  2000     About once/month   362  6748 0.053646
-    5  2000    About twice/month   393  6748 0.058239
-    6  2000      About once/week  1101  6748 0.163159
-    7  2000   Several times/week   463  6748 0.068613
-    8  2000             Everyday    36  6748 0.005335
-    9  2000                   NA   733  6748 0.108625
-    10 2001                Never  1627  6748 0.241108
+    1  2000                Never  1580  6747 0.234178
+    2  2000        Once or Twice  1304  6747 0.193271
+    3  2000 Less than once/month   775  6747 0.114866
+    4  2000     About once/month   362  6747 0.053653
+    5  2000    About twice/month   393  6747 0.058248
+    6  2000      About once/week  1101  6747 0.163184
+    7  2000   Several times/week   463  6747 0.068623
+    8  2000             Everyday    36  6747 0.005336
+    9  2000                   NA   733  6747 0.108641
+    10 2001                Never  1626  6747 0.240996
 
 The same result can be achieved with a more elegant syntax that relies
 on <code>%\>%</code> operator, in which <code>x %\>% f(y)</code> turns
@@ -219,16 +250,16 @@ for identical results.
     Groups: year
 
        year              attendF count total  percent
-    1  2000                Never  1581  6748 0.234292
-    2  2000        Once or Twice  1304  6748 0.193242
-    3  2000 Less than once/month   775  6748 0.114849
-    4  2000     About once/month   362  6748 0.053646
-    5  2000    About twice/month   393  6748 0.058239
-    6  2000      About once/week  1101  6748 0.163159
-    7  2000   Several times/week   463  6748 0.068613
-    8  2000             Everyday    36  6748 0.005335
-    9  2000                   NA   733  6748 0.108625
-    10 2001                Never  1627  6748 0.241108
+    1  2000                Never  1580  6747 0.234178
+    2  2000        Once or Twice  1304  6747 0.193271
+    3  2000 Less than once/month   775  6747 0.114866
+    4  2000     About once/month   362  6747 0.053653
+    5  2000    About twice/month   393  6747 0.058248
+    6  2000      About once/week  1101  6747 0.163184
+    7  2000   Several times/week   463  6747 0.068623
+    8  2000             Everyday    36  6747 0.005336
+    9  2000                   NA   733  6747 0.108641
+    10 2001                Never  1626  6747 0.240996
 
 To verify that this is what we wanted to achieve:
 
@@ -301,3 +332,29 @@ basic aggregations: <code>mean</code>, <code>sum</code>,
 [vignette](http://cran.rstudio.com/web/packages/dplyr/vignettes/databases.html)
 
     vignette("database",package="dplyr")
+
+Base Reference
+--------------
+
+The following unary and binary operators are defined for <code>
+base</code>. They are listed in precedence groups, from highest to
+lowest.
+
+-   <code> :: ::: </code> - access variables in a namespace  
+-   <code> \$ @ </code> - component / slot extraction  
+-   <code> [ [[ </code> - indexing  
+-   <code> \^ </code> - exponentiation (right to left)  
+-   <code> - + </code> - unary minus and plus  
+-   <code> : </code> - sequence operator  
+-   <code> %any% </code> - special operators (including %% and %/%)  
+-   <code> \* / </code> - multiply, divide  
+-   <code> + - </code> - (binary) add, subtract  
+-   <code> \< \> \<= \>= == != </code> - ordering and comparison  
+-   <code> ! </code> - negation  
+-   <code> & && </code> - and  
+-   <code> | || </code> - or  
+-   <code> \~ </code> - as in formulae  
+-   <code> -\> -\>\> </code> - rightwards assignment  
+-   <code> \<- \<\<- </code> - assignment (right to left)  
+-   <code> = </code> - assignment (right to left)  
+-   <code> ? </code> - help (unary and binary)

@@ -27,9 +27,6 @@ for(i in varlist){
 ## race ##################################################################
 raceLevels<- c(1,2,3,4)
 raceLabels<- c("Black","Hispanic","Mixed (Non-H)","Non-B/Non-H")
-dsLF$race<-factor(dsLF$race,
-                levels = raceLevels,
-                labels = raceLabels)
 
 varlist<-c("race")
 for(i in varlist){

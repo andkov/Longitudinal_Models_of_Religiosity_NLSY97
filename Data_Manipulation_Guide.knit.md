@@ -1,22 +1,18 @@
 ---
 title: "Data Manipulation"
 output:
-  pdf_document:
-    fig_crop: no
-    latex_engine: lualatex
-    toc: yes
-  md_document:
-    toc: yes
-    variant: markdown_github
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig_caption: yes
-    fig_height: 4.5
-    fig_width: 6.5
-    highlight: textmate
-    keep_md: yes
-    theme: united
+    fig.retina: 2
+    fig_width: 8
     toc: yes
+  pdf_document:
+    fig_width: 8
+    latex_engine: xelatex
+    toc: yes
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
 ---
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
@@ -26,7 +22,7 @@ output:
 
 Data Manipulation
 ==============
-Report examplifying the use of <code>dplyr</code> in data handling on the example of <code>dsL</code>.
+Report examplifying the use of <code>dplyr</code> in data handling on the example of **dsL**>.
 
 <!-- Run this three chunks to get to the starting point -->
 
@@ -37,29 +33,28 @@ Report examplifying the use of <code>dplyr</code> in data handling on the exampl
 
 ## Five basic functions in data handling
 
-For a more detailed discussion of basic verbs and operations consult the [R-Studio guide][1] or internal vignette
+For a more detailed discussion of basic verbs and operations consult the [R-Studio guide][1] or internal [vignette][2]
 
 ```r
-# vignette("introduction",package="dplyr")
+vignette("introduction",package="dplyr")
 ```
 
-The following is a brief demonstration of <code>dplyr</code> syntax using <code>dsL</code> example  
+The following is a brief demonstration of <code>dplyr</code> syntax using **dsL** dataset as an example. I attach prefix <code>dplyr::</code> to avoid possible conflicts with <code>plyr</code> package on which <code>ggplot2</code> package relies. I recommend such practice in all <code>dplyr</code>  expressions in sharable publications.  
 
 ###<code>select()</code> 
 selects variables into a smaller data set
 
 ```r
-require(dplyr)
 ds<-dsL
 dim(ds)
 ```
 
 ```
-[1] 134760     60
+[1] 134745     60
 ```
 
 ```r
-ds<- select(ds,id,year, byear, attend, attendF)
+ds<- dplyr::select(ds,id,year, byear, attend, attendF)
 head(ds,13)
 ```
 
@@ -85,7 +80,7 @@ dim(ds)
 ```
 
 ```
-[1] 134760      5
+[1] 134745      5
 ```
 
 ###<code>filter()</code> 
@@ -100,9 +95,8 @@ Removes observations that do not meet criteria. The following code selects obser
 and only between years 2000 and 2011, as only during those years the outcome of interest <code>attend</code> was recorded. 
 
 ```r
-require(dplyr)
-ds<- filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- select(ds,id, year, attend, attendF)
+ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- dplyr::select(ds,id, year, attend, attendF)
 head(ds,13)
 ```
 
@@ -128,10 +122,9 @@ head(ds,13)
 Sorts observations
 
 ```r
-require(dplyr)
-ds<- filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- select(ds,id, year, attend)
-ds<- arrange(ds, year, desc(id))
+ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- dplyr::select(ds,id, year, attend)
+ds<- dplyr::arrange(ds, year, desc(id))
 head(ds,13)
 ```
 
@@ -180,10 +173,9 @@ head(ds, 13)
 Creates additional variables from the values of existing.
 
 ```r
-require(dplyr)
-ds<- filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- select(ds,id, byear, year, attend)
-ds<- mutate(ds, 
+ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
+ds<- dplyr::select(ds,id, byear, year, attend)
+ds<- dplyr::mutate(ds, 
             age = year-byear, 
             timec = year-2000,
             linear= timec,
@@ -210,9 +202,13 @@ head(ds,13)
 ```
 
 ###<code>summarize()</code> 
+collapses data into a single value computed according to the aggregate functions.
 
-## Grouping and Combining 
-The function <code>group_by</code> is used to identify groups in split-apply-combine (SAC) procedure: all possible interactions between the levels of supplied variables
+
+
+
+
+
 
 
 
