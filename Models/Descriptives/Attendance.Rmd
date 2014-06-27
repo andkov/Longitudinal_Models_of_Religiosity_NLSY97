@@ -6,6 +6,7 @@ output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
+    fig_caption: yes
     fig_width: 8
     toc: yes
   pdf_document:
@@ -66,8 +67,8 @@ colNA # color for the NA value in graphs
 
 ### Cross-Sectional View
 
-The focal variable of interest is **attend**, an item measuring church attendance in the current year. The questionnaire recorded the responses on the ordinal scale.   
-```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5}
+The focal variable of interest is **attend**, the item measuring church attendance for the year that preceded the interview date. The questionnaire recorded the responses on the ordinal scale.   
+```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5,fig.cap="Figure caption test"}
 ds<- dplyr::filter(dsL,year==2000,sample==1)
 p<-ggplot(ds, aes(x=attendF, fill=attendF))
 p <- p + geom_bar(color="black")
@@ -119,8 +120,7 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
-Missing values are used in the calculation of total responses to show the natural attrition in the study. 
-Assumming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total and  look at prevalence of endorsements over time. 
+Here, missing values are used in the calculation of total responses to show the natural attrition in the study. Assuming that attrition is not significantly associated with  the outcome measure, we can remove missing values from the calculation of the total and look at prevalence of response endorsements over time. 
 
 ```{r attend_2000_2011_na,echo=F, message=F, warning=F, fig.height=3.5}
 ds<- dsL %.%
@@ -189,6 +189,81 @@ p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
+
+Inspecting the prevalence trajectories across races.
+```{r attend_freq_lines_race, echo=F, message=F, warning=F, fig.height=7, fig.width=10}
+ds<- dsL %.%
+  dplyr::filter(year %in% c(2000:2011), !is.na(attend), race !=3) %.%   # comment out to count NA in the total
+  dplyr::group_by(sampleF,yearF,raceF,attendF) %.%
+  dplyr::summarize(count = n()) %.%
+  dplyr::mutate(total = sum(count),
+                percent= count/total)
+
+p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF)) 
+# geoms
+p<- p+ geom_line(aes(group=attendF), stat="identity", size=.4)
+p<- p+ geom_point(aes(fill=attendF), shape=21, size=2, color="black",linesize=1,position=position_dodge(0.2) )
+p<- p+ facet_grid(sampleF ~ raceF)
+# scales
+p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_y_continuous(limits=c(0, .5),
+                          breaks=c(0,.1,.2,.3,.4,.5))
+p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
+# # annotations
+p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
+p<- p + guides(color = FALSE) 
+p<-  p+ labs(title = "In the past year, how often have you attended a worship service?",
+             x="Wave of measurement",
+             y="Proportion of total")
+# # themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p <- p + ggplot2::theme(axis.text.x = element_text(angle=90, hjust=1, vjust=.5, size=8))
+p
+```
+
+```{r attend_race_2000, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+ds<- dsL %.%
+  dplyr::filter(year %in% c(2000), !is.na(attend), race !=3) %.%   # comment out to count NA in the total
+  dplyr::group_by(sampleF,yearF,raceF,attendF) %.%
+  dplyr::summarize(count = n()) %.%
+  dplyr::mutate(total = sum(count),
+                percent= count/total)
+ds
+p<- ggplot( ds, aes(x=attendF, y=percent, fill=attendF)) 
+# geoms
+p<- p+ geom_bar(stat="identity")
+p<- p+ facet_grid(sampleF ~ raceF)
+p<- p+ geom_text(aes(label=round(percent,2)), position=position_dodge(.9), vjust=-.2, size=3.5)
+# scales
+
+p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_y_continuous(limits=c(0, .3),
+                          breaks=c(0,.1,.2,.3,.4,.5))
+# # annotations
+p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
+p<- p + guides(color = FALSE) 
+p<-  p+ labs(title = "In the past year(2000), how often have you attended a worship service?",
+             x="Church attendance",
+             y="Proportion of total")
+# # themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p <- p + ggplot2::theme(axis.text.x = element_blank())
+p
+```
+
 
 ### Longitudinal View
 

@@ -5,13 +5,18 @@ output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
+    fig_caption: yes
     fig_width: 8
+    toc: yes
   pdf_document:
     fig_width: 8
+    latex_engine: xelatex
     toc: yes
   word_document:
     fig_width: 6.5
+mainfont: Calibri
 ---
+
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
@@ -30,7 +35,7 @@ opts_chunk$set(
   tidy = FALSE,
 #   fig.height = 4.8, 
 #   fig.width = 6.5, 
-  out.width = NULL,
+#   out.width = NULL,
   fig.path = 'figure_rmd/',     
   dev = "png",
   dpi = 400
@@ -71,24 +76,30 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 
 ```{r DefineCommonGraph, echo=echoChunks, message=F}
 # The graph in this report is reproduced under various figure option conditions.
-ds<- dsL %>% dplyr::filter(id %in% c(4,25,45,47),year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
-  mutate(time=year-2000)
-p<-ggplot(ds, aes(x=time,y=attend, color=idF))
+ds<- dsL %.%
+  dplyr::filter(year %in% c(2000), !is.na(attend), race !=3) %.%   # comment out to count NA in the total
+  dplyr::group_by(sampleF,yearF,raceF,attendF) %.%
+  dplyr::summarize(count = n()) %.%
+  dplyr::mutate(total = sum(count),
+                percent= count/total)
+ds
+p<- ggplot( ds, aes(x=attendF, y=percent, fill=attendF)) 
 # geoms
-p<-p+ geom_line(size=.4)
-p<-p+ geom_point(size=2)
+p<- p+ geom_bar(stat="identity")
+p<- p+ facet_grid(sampleF ~ raceF)
+p<- p+ geom_text(aes(label=round(percent,2)), position=position_dodge(.9), vjust=-.2, size=3.5)
 # scales
-p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(0, 8),
-                     breaks=c(1:8))
-p<-p+ scale_x_continuous("Years since 2000",
-                   limits=c(0,11),
-                   breaks=c(0:11))
-p <- p + scale_color_manual(values=c("black","red","green", "purple"))
-# annotations
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p <- p + guides(color = guide_legend(title="Respondents"))
-# themes
+
+p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_y_continuous(limits=c(0, .3),
+                          breaks=c(0,.1,.2,.3,.4,.5))
+# # annotations
+p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
+p<- p + guides(color = FALSE) 
+p<-  p+ labs(title = "In the past year(2000), how often have you attended a worship service?",
+             x="Church attendance",
+             y="Proportion of total")
+# # themes
 p <- p + ggplot2::theme_bw()
 p <- p + ggplot2::theme_bw(base_size=baseSize)
 p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
@@ -96,23 +107,23 @@ p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
 p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
 p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p <- p + ggplot2::theme(axis.text.x = element_blank())
 p
 
 
-
-height1<- 3.0
-height2<- 3.4
-height3<- 3.8
-height4<- 4.2
-height5<- 4.6
+height1<- 5
+height2<- 5
+height3<- 5
+height4<- 5
+height5<- 5
 height6<- 5
 
-# width1<- 6.5
-# width2<- 6.5
-# width3<- 6.5
-# width4<- 8
-# width5<- 8
-# width6<- 8  
+width1<- 8
+width2<- 8.5
+width3<- 9
+width4<- 9.5
+width5<- 10
+width6<- 10.5
 
 owidth1<- NULL
 owidth2<- NULL
@@ -130,35 +141,31 @@ owidth6<- NULL
 # Comparing produced graphs
 
 ##  Slot 1
-```{r slot_1, echo=echoChunks, message=T,fig.height = height1,  out.width=owidth1  }
+```{r slot_1, echo=echoChunks, message=T,fig.height = height1, fig.width=width1, out.width=owidth1  }
 p
 ```
 
-
 ##  Slot 2
-```{r slot_2, echo=echoChunks, message=T, fig.height = height2, out.width=owidth2}
+```{r slot_2, echo=echoChunks, message=T, fig.height = height2, fig.width=width2, out.width=owidth2}
 p
 ```
 
 ##  Slot 3
-```{r slot_3, echo=echoChunks, message=T, fig.height = height3, out.width=owidth3}
+```{r slot_3, echo=echoChunks, message=T, fig.height = height3, fig.width=width3, out.width=owidth3}
 p
 ```
-
 
 ##  Slot 4
-```{r slot_4, echo=echoChunks, message=T, fig.height = height4,  out.width=owidth4}
+```{r slot_4, echo=echoChunks, message=T, fig.height = height4, fig.width=width4,  out.width=owidth4}
 p
 ```
-
 
 ##  Slot 5
-```{r slot_5, echo=echoChunks, message=T, fig.height = height5, out.width=owidth5}
+```{r slot_5, echo=echoChunks, message=T, fig.height = height5,fig.width=width5,  out.width=owidth5}
 p
 ```
 
-
 ##  Slot 6
-```{r slot_6, echo=echoChunks, message=T, fig.height = height6,  out.width=owidth6}
+```{r slot_6, echo=echoChunks, message=T, fig.height = height6, fig.width=width6,  out.width=owidth6}
 p
 ```
