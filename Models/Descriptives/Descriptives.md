@@ -1,5 +1,4 @@
 -   Descriptives:
--   After loading dsL
 -   Basic demographics
 -   Distribution of age variables
     -   Months of births
@@ -21,10 +20,10 @@ Descriptives:
 
 Basic descriptives reports on selected NLSY97 items
 
-After loading dsL
-=================
+Basic demographics
+==================
 
-Downloaded archives of NLSY97 contained
+After importing a clean dataset **dsL**
 
 ``` {.r}
 dsL<-readRDS("./Data/Derived/dsL.rds")
@@ -43,9 +42,6 @@ ds
 
       count
     1  8983
-
-Basic demographics
-==================
 
     ymax not defined: adjusting position using y instead
     ymax not defined: adjusting position using y instead
