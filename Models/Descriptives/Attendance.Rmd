@@ -1,23 +1,22 @@
 ---
-title: "Metrics"
-author: "Andriy Koval"
-date: "Tuesday, June 24, 2014"
+title: "Attendance"
 output:
-  pdf_document:
-    fig_width: 8
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
     toc: yes
-  word_document:
-    fig_width: 6.5
   md_document:
     toc: yes
     toc_depth: 3
+  pdf_document:
+    fig_width: 8
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+    figure_caption: yes
+  word_document:
+    fig_width: 6.5
 mainfont: Calibri
 ---
 
@@ -158,6 +157,8 @@ p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
+
+### Change in prevalences
 Tracing the rate of change of prevalence in a line graph, we see more clearly which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month").    
 
 ```{r attend_freq_lines, echo=F, message=F, warning=F, fig.height=4.2}
@@ -194,6 +195,8 @@ p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
+
+### Prevalence change and race 
 
 Inspecting the prevalence trajectories across races.   
 
@@ -313,19 +316,9 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```  
 
-where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the   
-```{r, echo=T, message=F, warning=warningChunks}
-length(unique(dsL$id))
-```
-subjects in total. Unless specified otherwise, only individuals from the cross-sample will be used in the model to increase external validity.   
-```{r}
-ds<- dsL %>% dplyr::filter(sample==1)
-```
-
-
-Each of such trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? To demostrate how interpretations of trajectories can vary among individuals consider the following scenario.   
-
-Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph   
+where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the respondents. Each of such trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? To demostrate how interpretations of trajectories can vary among individuals consider the following example.   
+### Example: 4 individuals 
+Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph     
 
 ```{r attend_line_4id_years,echo=echoChunks, message=F, warning=F, fig.height=3.3}
 ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>% dplyr::select(idF,year,attend) %>%
@@ -359,6 +352,7 @@ p
 
 The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011.  Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.    
 
+### Changing the metric of time  
 Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age. There are, however, a number of ways information about age was recorded.   
 
 ```{r comparing_age, warning=F }
@@ -366,7 +360,6 @@ ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>%
   dplyr::select(idF,attend, year, byear, ageyear, agemon, ageyear) %>% 
   mutate(time=year-2000, age=(year-byear+1), ageCurrent = agemon/12)
 print(ds[ds$idF==25,])
-ds
 ```
 Note that for person **id** = 25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used.  To avoid this potentially confusing peculiarity, age in years will be either calculated as (**age** = **year** - **byear** + 1)   
 
@@ -408,7 +401,7 @@ ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>%
 head(ds,12)
 ```
 
-Plotting age, caclulated as  <code> age = ageyear </code>  
+Plotting age, caclulated as  <code> age = ageyear </code>. Notice that when compared to the rounded <code>agemon</code>, variable <code>ageyear</code> provides less accurate measure of age than <code>year - byear + 1</code>
 
 ```{r attend_line_4id_age2,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height=3.3  }
 p<-ggplot(ds, aes(x=age,y=attend, color=idF))
@@ -437,8 +430,7 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
-Plotting age, caclulated as  <code> age = agemon/12 </code>  
-
+Plotting age, caclulated as  <code> ageD = agemon/12 </code>. This is the most precise age variable and maybe used when models require a finer age resolutions.
 ```{r}
 ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>% 
   dplyr::select(idF,year,attend,agemon,ageyear,byear) %>% 
@@ -477,10 +469,20 @@ p
 
 
 
+===
+Read more in <code>./Models/Descriptives</code>:   
++ [Metrics][Metrics] - how values of items are labeled 
++ [Descriptives][descriptives] - basic stats of various items   
++ [Attendance](attend) - focus on church attendence over time   
++ [Databox][databoxList]   
 
-[1]:http://statcanvas.net/thesis/databox/
-[2]:http://statcanvas.net/thesis/III_methods/03_Methods.htm
-[3]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
-[4]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
-[5]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md
-[fig 3.2]: ./figure_rmd/3_Methods_Figure_3_2.png 
+
+[databox]:http://statcanvas.net/thesis/databox/
+[derive]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
+[labels]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
+[manipulate]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md
+[attend]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Attendance.md
+[descriptives]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md
+[metrics]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md
+[databoxList]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.md
+

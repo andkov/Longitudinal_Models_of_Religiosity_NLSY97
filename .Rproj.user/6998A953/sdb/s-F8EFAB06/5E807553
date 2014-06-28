@@ -1,0 +1,16 @@
+{
+    "contents" : "The folder [Data/Extracts](./Extracts) contains the original objects downloaded from [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp). The downloaded extract file is transformed into the dataset ***dsL***  by code in[Derive_dsL_from_Extract.R](./Derive_dsL_from_Extract.R) sourced by the report [Desrive_dsL_from_Extract](./Derive_dsL_from_Extract.md), which narrates  every step in data preparation. As the result of running this report, a clean dataset **dsL** is created and stored in the folder [/Data/Derived](./Derived). To review original questionnaire cards of NLSY97 as well as descriptive statistics for the selected variables see the [Interactive version](http://statcanvas.net/thesis/databox/index.html)\n\nFolder [Data/ItemMapping](./ItemMapping) contains files for assigning value labels to the variables in ***dsL***.\nFolder [figure_rmd](./figure_rmd) hosts the images used by knitr reports nested in this folder.\n\n<!--\npathMd <- base::file.path(\"./\", c(\"README.md\"))\npathHtml <- base::gsub(pattern=\".md$\", replacement=\".html\", x=pathMd)\nmarkdown::markdownToHTML(file=pathMd, output=pathHtml)\n-->\n\n",
+    "created" : 1403936223180.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4107218820",
+    "id" : "5E807553",
+    "lastKnownWriteTime" : 1403214547,
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Data/README.md",
+    "project_path" : "Data/README.md",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "markdown"
+}

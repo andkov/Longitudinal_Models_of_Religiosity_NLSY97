@@ -1,10 +1,15 @@
+-   Metrics:labeling factors and exploring scales
+    -   Data preliminaries
+    -   Labeling Factor Levels
+    -   Time metrics : Age, Period, Cohort
+
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
 
 
 
-Metrics: labeling factors and exploring scales
-==============================================
+Metrics:labeling factors and exploring scales
+=============================================
 
 Report explains how the response categories from NLSY97 questionnaire
 are labeled and demonstrates application of labeled factors in data
@@ -15,9 +20,8 @@ Data preliminaries
 
 Initial point of departure - the
 [databox](http://statcanvas.net/thesis/databox/) of the selected
-variables, described in the
-[Methods](http://statcanvas.net/thesis/III_methods/03_Methods.htm)
-chapter. ![Figure 3.2](./figure_rmd/3_Methods_Figure_3_2.png) This
+variables, described in the Methods chapter. ![Figure
+3.2](./figure_rmd/3_Methods_Figure_3_2.png) This
 [databox](http://statcanvas.net/thesis/databox/) corresponds to the
 dataset **dsL** produced by
 [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
@@ -226,3 +230,13 @@ precise scale is used. To avoid this potentially confusing peculiarity,
 age in years will be calculated as age = year â€“ byear +1 or as (ageD =
 agemon/12). The suffix D in ageD refers to the fact that it was
 calculated from a dynamic age indicator.
+
+=== Read more in <code>./Models/Descriptives</code>:  
++
+[Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md)
+- how values of items are labeled +
+[Descriptives](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md)
+- basic stats of various items  
++ [Attendance](attend) - focus on church attendence over time  
++
+[Databox](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.md)

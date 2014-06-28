@@ -1,21 +1,25 @@
 ---
-title: "Metrics"
-author: "Andriy Koval"
-date: "Tuesday, June 24, 2014"
+title: "Derive"
 output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
     toc: yes
+  md_document:
+    toc: yes
+    toc_depth: 3
   pdf_document:
     fig_width: 8
-    latex_engine: xelatex
+    number_sections: yes
     toc: yes
+    toc_depth: 3
+    figure_caption: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
 ---
+
 
 
 Deriving clean dataset **dsL** from NLSY97 extract
@@ -146,3 +150,9 @@ Alternatively, one can locate the particular item of interest by copying and pas
 
 <img src="./figure_rmd/lmrNLY97figures_NLSwebView.png" alt="Looking up items" style="width:800px ;"/>
 
+===
+Read more in <code>./Models/Descriptives</code>:   
++ [Metrics][Metrics] - how values of items are labeled 
++ [Descriptives][descriptives] - basic stats of various items   
++ [Attendance](attend) - focus on church attendence over time   
++ [Databox][databoxList]   

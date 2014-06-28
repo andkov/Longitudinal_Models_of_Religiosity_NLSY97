@@ -1,0 +1,16 @@
+{
+    "contents" : "\n########## Production of reports from .Rmd files ###\nrequire(dplyr)\n\npathDerive <- base::file.path(\"./Data/Derive_dsL_from_Extract.Rmd\")\n# ./Models/Descriptives\npathMetrics<- base::file.path(\"./Models/Descriptives/Metrics.Rmd\")\npathDescriptives<- base::file.path(\"./Models/Descriptives/Descriptives.Rmd\")\npathAttendance<- base::file.path(\"./Models/Descriptives/Attendance.Rmd\")\npathDatabox <- base::file.path(\"./Models/Descriptives/Databox.Rmd\")\n# ./Models/LCM\npathLCM <- base::file.path(\"./Models/LCM/LCM.Rmd\")\n\n# ./Vignettes\npathManipulate <- base::file.path(\"./Vignettes/dplyr/Data_Manipulation_Guide.Rmd\")\npathFigSize <- base::file.path(\"./Vignettes/fig_size/fig_size.Rmd\")\npathChooseSize <- base::file.path(\"./Vignettes/fig_size/choose_fig_size.Rmd\")\npathChooseSize <- base::file.path(\"./Vignettes/Questions/create_TOC_in_md/create_TOC_in_md.Rmd\")\n#./Vignettes/Questions\npathRemoveNA<- base::file.path(\"./Vignettes/Questions/Removing_NA/Removing_NA_from_distributions_ggplot.Rmd\")\npathRawVsSum<- base::file.path(\"./Vignettes/Questions/Raw_vs_Summarized/Raw_vs_Summarized.Rmd\")\npathlmmutate<- base::file.path(\"./Vignettes/Questions/lm_in_mutate/lm_in_mutate.Rmd\")\n\n\n#  Define groups of reports \ndescriptives<-c(pathDatabox,pathMetrics)\nVignettes<- c(pathManipulate)\nDescriptives<- c( pathMetrics,pathDescriptives, pathAttendance)\n\n\n# Place report paths HERE ###########\nbuildthese <- c(Descriptives, pathDerive)##########\n####################################\n\ntestit::assert(\"The knitr Rmd files should exist.\", base::file.exists(buildthese))\n# Build the reports\nfor( pathRmd in buildthese ) {\n#   pathMd <- base::gsub(pattern=\".Rmd$\", replacement=\".md\", x=pathRmd)\n  rmarkdown::render(input = pathRmd, \n                    output_format=c(\n                      \"pdf_document\"\n#                       ,\"word_document\"\n#                       ,\"md_document\"\n#                       ,\"html_document\"\n\n                                    ),\n#                     output_file=pathMd,\n                    clean=TRUE)\n}\n \n",
+    "created" : 1403935319075.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1898962444",
+    "id" : "A8344FD1",
+    "lastKnownWriteTime" : 1403935223,
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Scripts/Utility/list of report.R",
+    "project_path" : "Scripts/Utility/list of report.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

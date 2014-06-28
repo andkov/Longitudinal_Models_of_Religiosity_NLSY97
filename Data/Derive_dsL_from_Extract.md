@@ -1,3 +1,12 @@
+-   Deriving clean dataset **dsL** from NLSY97 extract
+    -   Data Retrieval
+    -   Databox, variable-by-occasion slice
+    -   Religiosity, Context, and Covariates
+    -   dsL - initial dataset
+    -   Factor labels
+    -   Saving clean dataset
+    -   Note:Working with NLS Investigator
+
 Deriving clean dataset **dsL** from NLSY97 extract
 ==================================================
 
@@ -342,3 +351,9 @@ Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as
 indicated in the graphic below.
 
 <img src="./figure_rmd/lmrNLY97figures_NLSwebView.png" alt="Looking up items" style="width:800px ;"/>
+
+=== Read more in <code>./Models/Descriptives</code>:  
++ [Metrics][Metrics] - how values of items are labeled +
+[Descriptives][descriptives] - basic stats of various items  
++ [Attendance](attend) - focus on church attendence over time  
++ [Databox][databoxList]

@@ -1,17 +1,20 @@
 ---
 title: "Metrics"
-author: "Andriy Koval"
-date: "Tuesday, June 24, 2014"
 output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
     toc: yes
+  md_document:
+    toc: yes
+    toc_depth: 3
   pdf_document:
     fig_width: 8
-    latex_engine: xelatex
+    number_sections: yes
     toc: yes
+    toc_depth: 3
+    figure_caption: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
@@ -116,7 +119,19 @@ print(ds)
 The variable ageyear records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. For example, for one person id = 25 the age was recorded as 21 years for both 2003 and 2004 (see ageyear). However, when you examine age in months (agemon) you can see this rounding issue disappears, once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be calculated as age = year – byear +1 or as (ageD = agemon/12). The suffix D in ageD refers to the fact that it was calculated from a dynamic age indicator. 
 
 
+===
+Read more in <code>./Models/Descriptives</code>:   
++ [Metrics][Metrics] - how values of items are labeled 
++ [Descriptives][descriptives] - basic stats of various items   
++ [Attendance](attend) - focus on church attendence over time   
++ [Databox][databoxList]   
+
+
 [databox]:http://statcanvas.net/thesis/databox/
 [derive]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
 [labels]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
 [manipulate]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md
+[attend]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Attendance.md
+[descriptives]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md
+[metrics]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md
+[databoxList]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.md

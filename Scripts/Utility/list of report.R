@@ -15,6 +15,7 @@ pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
 pathManipulate <- base::file.path("./Vignettes/dplyr/Data_Manipulation_Guide.Rmd")
 pathFigSize <- base::file.path("./Vignettes/fig_size/fig_size.Rmd")
 pathChooseSize <- base::file.path("./Vignettes/fig_size/choose_fig_size.Rmd")
+pathChooseSize <- base::file.path("./Vignettes/Questions/create_TOC_in_md/create_TOC_in_md.Rmd")
 #./Vignettes/Questions
 pathRemoveNA<- base::file.path("./Vignettes/Questions/Removing_NA/Removing_NA_from_distributions_ggplot.Rmd")
 pathRawVsSum<- base::file.path("./Vignettes/Questions/Raw_vs_Summarized/Raw_vs_Summarized.Rmd")
@@ -23,7 +24,8 @@ pathlmmutate<- base::file.path("./Vignettes/Questions/lm_in_mutate/lm_in_mutate.
 
 #  Define groups of reports 
 descriptives<-c(pathDatabox,pathMetrics)
-allreps<- c(pathDescriptives, pathMetrics, pathAttendance, pathManipulate)
+Vignettes<- c(pathManipulate)
+Descriptives<- c(pathDescriptives, pathMetrics, pathAttendance, pathManipulate)
 
 
 # Place report paths HERE ###########
@@ -38,8 +40,8 @@ for( pathRmd in buildthese ) {
                     output_format=c(
                       "pdf_document"
                       ,"word_document"
-                      ,"html_document"
                       ,"md_document"
+                      ,"html_document"
 
                                     ),
 #                     output_file=pathMd,
