@@ -2,7 +2,7 @@ Folder [Data](./Data) contains files involved with data import and preparation.
 Folder [Models](./Models) contains descriptive reports and model sequence results.  
 Folder [Scripts](./Scripts) contains files with R code used in various parts of the project.  
 Folder [www](./www) contains web templates for assembling results of data analyis and model synthesis.  
-Folder [Vignettes](./Vignettes) contains code vocabulary and working examples.
+Folder [Vignettes](./Vignettes) contains code vocabulary and working examples.  
 Folder [images](./images) contains general library of figures and graphics used in the study
 
 Graphical Methods for Evaluating Longitudinal Models: Application to NLSY97 Religiosity Data.
