@@ -9,12 +9,14 @@
 
 
 
+Basic descriptives reports on selected NLSY97 items
+===================================================
 
-There are total of
+Downloaded archives of NLSY97 contained
 
-    cat(length(unique(dsL$id)))
+    paste(length(unique(dsL$id)))
 
-    8983
+    [1] "8983"
 
 respondents.
 
@@ -61,3 +63,7 @@ and in years ageyear. Figure 4.2 shows how births in the NLSY97 sample
 ![plot of chunk bmonth\_dist](figure_rmd/Descriptives/bmonth_dist.png)
 
 ![plot of chunk agemon\_dist](figure_rmd/Descriptives/agemon_dist.png)
+
+=== Read more: + [Descriptives](./Descriptives.md) +
+[Attendance](./Attendance.md) + [Metrics](./Metrics.md) +
+[Databox](./Databox.md)
