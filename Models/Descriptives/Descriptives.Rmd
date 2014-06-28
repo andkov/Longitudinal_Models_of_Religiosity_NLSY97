@@ -59,20 +59,22 @@ colNA # color for the NA value in graphs
 
 ```{r LoadData, echo=echoChunks, message=T}
 # select only respondence in the cross-sectional sample
-
+vignette("introduction",package="dplyr")
 ```
 
+Descriptives:
+===  
 Basic descriptives reports on selected NLSY97 items
-===
+
 
 Downloaded archives of NLSY97 contained 
 ```{r 01}
-paste(length(unique(dsL$id)))
+dplyr::summarize(ds,N=n_distinct(id))
 ```
-respondents. 
+respondents. Of them one (id=467) was removed from the dataset due to abberant age score that seemed as a coding mistake. NLSY97 contains representative household sample and the oversample of racial minorities. 
 
 ```{r 02}
-ds<- dsL %>% group_by(sampleF) %>% summarize (count=n_distinct(id))
+ds<- dsL %>% dplyr::group_by(sampleF) %>% summarize (count=n_distinct(id))
 ds
 ```
 
@@ -107,7 +109,7 @@ p
 
 ```
 
-Respondents’ age was of particular interest and was entered as a predictor of church attendance.  NSLY97 contains static and dynamic indicators of age age. Variables  byear and bmonth were recorded once in 1997 (static) and contain respondents’ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear.   Figure 4.2 shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
+The age of respondents was of particular interest and was entered as a predictor of the model outcome. NSLY97 contains static and dynamic indicators of age age. Variables  byear and bmonth were recorded once in 1997 (static) and contain respondents’ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear.   Next graph shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
 
 ```{r bmonth_dist, echo=F, warning=F, fig.height=3.3}
 ds<- dsL %>% dplyr::filter(year %in% c(1997)) %>% 
@@ -165,8 +167,8 @@ p
 ```
 
 ===
-Read more:
-+ [Descriptives](./Descriptives.md)
-+ [Attendance](./Attendance.md)
-+ [Metrics](./Metrics.md)
+Read more in <code>./Models/Descriptives</code>:
++ [Descriptives](./Descriptives.md) - basic stats of various items
++ [Attendance](./Attendance.md) - focus on church attendence over time
++ [Metrics](./Metrics.md) - how values of items are labeled
 + [Databox](./Databox.md)

@@ -29,39 +29,17 @@ mainfont: Calibri
 
 
 
-
-There are total of 
-
-```r
-cat(length(unique(dsL$id)))
-```
-
-```
-8983
-```
-respondents. 
+Descriptives:
+===  
+Basic descriptives reports on selected NLSY97 items
 
 
-```r
-ds<- dsL %>% group_by(sampleF) %>% summarize (count=n_distinct(id))
-ds
-```
+Downloaded archives of NLSY97 contained 
 
-```
-  count
-1  8983
-```
 
-Basic demographics is given in Figure 4.# 
 
-```
-ymax not defined: adjusting position using y instead
-ymax not defined: adjusting position using y instead
-```
 
-![plot of chunk basic_demo](figure_rmd/Descriptives/basic_demo.png) 
 
-Respondents’ age was of particular interest and was entered as a predictor of church attendance.  NSLY97 contains static and dynamic indicators of age age. Variables  byear and bmonth were recorded once in 1997 (static) and contain respondents’ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear.   Figure 4.2 shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
 
 
 
