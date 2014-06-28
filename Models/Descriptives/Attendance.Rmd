@@ -6,7 +6,6 @@ output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
-    fig_caption: yes
     fig_width: 8
     toc: yes
   pdf_document:

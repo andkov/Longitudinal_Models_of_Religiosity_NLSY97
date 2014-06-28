@@ -14,21 +14,21 @@ Mapping Church Attendance in Time
 
 ### Cross-Sectional View
 
-The focal variable of interest is **attend**, an item measuring church
-attendance in the current year. The questionnaire recorded the responses
-on the ordinal scale.  
-![plot of chunk attend\_2000](figure_rmd/Attendance/attend_2000.png)
+The focal variable of interest is **attend**, the item measuring church
+attendance for the year that preceded the interview date. The
+questionnaire recorded the responses on the ordinal scale.  
+![Figure caption test](figure_rmd/Attendance/attend_2000.png)
 
 Creating frequency distributions for each of the measurement wave we
 have:  
 ![plot of chunk
 attend\_2000\_2011](figure_rmd/Attendance/attend_2000_2011.png)
 
-Missing values are used in the calculation of total responses to show
-the natural attrition in the study. Assumming that attrition is not
+Here, missing values are used in the calculation of total responses to
+show the natural attrition in the study. Assuming that attrition is not
 significantly associated with the outcome measure, we can remove missing
 values from the calculation of the total and look at prevalence of
-endorsements over time.
+response endorsements over time.
 
 ![plot of chunk
 attend\_2000\_2011\_na](figure_rmd/Attendance/attend_2000_2011_na.png)
@@ -39,6 +39,12 @@ twice/month")
 
 ![plot of chunk
 attend\_freq\_lines](figure_rmd/Attendance/attend_freq_lines.png)
+
+Inspecting the prevalence trajectories across races. ![plot of chunk
+attend\_freq\_lines\_race](figure_rmd/Attendance/attend_freq_lines_race.png)
+
+![plot of chunk
+attend\_race\_2000](figure_rmd/Attendance/attend_race_2000.png)
 
 ### Longitudinal View
 

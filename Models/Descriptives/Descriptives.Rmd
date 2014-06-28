@@ -108,11 +108,12 @@ p
 Respondents’ age was of particular interest and was entered as a predictor of church attendance.  NSLY97 contains static and dynamic indicators of age age. Variables  byear and bmonth were recorded once in 1997 (static) and contain respondents’ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear.   Figure 4.2 shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
 
 ```{r bmonth_dist, echo=F, warning=F, fig.height=3.3}
-ds<- dsL %>% dplyr::filter(year %in% c(1997)) %>% dplyr::select(id,year,byearF,bmonth,agemon,ageyear) %>%
-  group_by(bmonth,byearF) %>%
-  summarize(count=n()) %>% arrange(byearF,bmonth) %>%
-  mutate (born=paste0(substr(byearF,3,4),"-",bmonth)) %>%
-  arrange(byearF, bmonth)
+ds<- dsL %>% dplyr::filter(year %in% c(1997)) %>% 
+  dplyr::select(id,year,byearF,bmonth,agemon,ageyear) %>%
+  dplyr::group_by(bmonth,byearF) %>%
+  dplyr::summarize(count=n()) %>% arrange(byearF,bmonth) %>%
+  dplyr::mutate (born=paste0(substr(byearF,3,4),"-",bmonth)) %>%
+  dplyr::arrange(byearF, bmonth)
 head(ds, 13)
 
   p<-ggplot(ds, aes(x=born, y=count, fill=byearF))

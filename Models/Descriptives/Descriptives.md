@@ -21,11 +21,8 @@ respondents.
     ds<- dsL %>% group_by(sampleF) %>% summarize (count=n_distinct(id))
     ds
 
-    Source: local data frame [2 x 2]
-
-              sampleF count
-    1 Cross-Sectional  6747
-    2      Oversample  2236
+      count
+    1  8983
 
 Basic demographics is given in Figure 4.\#
 
