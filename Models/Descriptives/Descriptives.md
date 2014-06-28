@@ -1,3 +1,10 @@
+-   Descriptives:
+-   After loading dsL
+-   Basic demographics is given in Figure 4.
+-   Distribution of age variables
+    -   Months
+        -   Age
+
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
 
@@ -9,38 +16,49 @@
 
 
 
+Descriptives:
+=============
+
 Basic descriptives reports on selected NLSY97 items
-===================================================
+
+After loading dsL
+=================
 
 Downloaded archives of NLSY97 contained
 
-    paste(length(unique(dsL$id)))
+``` {.r}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+dplyr::summarize(dsL,N=n_distinct(id))
+```
 
-    [1] "8983"
+         N
+    1 8983
 
-respondents.
+respondents. Of them one (id=467) was removed from the dataset due to abberant age score that seemed as a coding mistake. NLSY97 contains representative household sample and the oversample of racial minorities.
 
-    ds<- dsL %>% group_by(sampleF) %>% summarize (count=n_distinct(id))
-    ds
+``` {.r}
+ds<- dsL %>% dplyr::group_by(sampleF) %>% summarize (count=n_distinct(id))
+ds
+```
 
       count
     1  8983
 
-Basic demographics is given in Figure 4.\#
+Basic demographics is given in Figure 4.
+========================================
 
     ymax not defined: adjusting position using y instead
     ymax not defined: adjusting position using y instead
 
 ![plot of chunk basic\_demo](figure_rmd/Descriptives/basic_demo.png)
 
-Respondentsâ€™ age was of particular interest and was entered as a
-predictor of church attendance. NSLY97 contains static and dynamic
-indicators of age age. Variables byear and bmonth were recorded once in
-1997 (static) and contain respondentsâ€™ birth year and birth month
-respectively. Two age variables were recorded continuously at each
-interview (dynamic): age at the time of the interview in months agemon
-and in years ageyear. Figure 4.2 shows how births in the NLSY97 sample
-(static age) was distributed over calendric months from 1980 to 1984:
+Distribution of age variables
+=============================
+
+The age of respondents was of particular interest and was entered as a predictor of the model outcome. NSLY97 contains static and dynamic indicators of age age. Variables byear and bmonth were recorded once in 1997 (static) and contain respondentsâ€™ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear. Next graph shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
+
+Months
+------
 
     Source: local data frame [13 x 4]
     Groups: bmonth
@@ -62,8 +80,12 @@ and in years ageyear. Figure 4.2 shows how births in the NLSY97 sample
 
 ![plot of chunk bmonth\_dist](figure_rmd/Descriptives/bmonth_dist.png)
 
+### Age
+
 ![plot of chunk agemon\_dist](figure_rmd/Descriptives/agemon_dist.png)
 
-=== Read more: + [Descriptives](./Descriptives.md) +
-[Attendance](./Attendance.md) + [Metrics](./Metrics.md) +
-[Databox](./Databox.md)
+=== Read more in <code>./Models/Descriptives</code>:
++ [Descriptives](./Descriptives.md) - basic stats of various items
++ [Attendance](./Attendance.md) - focus on church attendence over time
++ [Metrics](./Metrics.md) - how values of items are labeled
++ [Databox](./Databox.md)

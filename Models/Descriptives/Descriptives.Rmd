@@ -4,7 +4,6 @@ author: "Andriy Koval"
 date: "Tuesday, June 24, 2014"
 output:
   html_document:
-    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
     toc: yes
@@ -14,6 +13,10 @@ output:
     toc: yes
   word_document:
     fig_width: 6.5
+  md_document:
+    variant: markdown_github
+    toc: true
+    toc_depth: 3
 mainfont: Calibri
 ---
 
@@ -58,27 +61,27 @@ colNA # color for the NA value in graphs
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
-# select only respondence in the cross-sectional sample
-vignette("introduction",package="dplyr")
+# vignette("introduction",package="dplyr") # <- for more info on dplyr
 ```
 
 Descriptives:
 ===  
 Basic descriptives reports on selected NLSY97 items
 
-
+# After loading dsL  
 Downloaded archives of NLSY97 contained 
-```{r 01}
-dplyr::summarize(ds,N=n_distinct(id))
+```{r}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+dplyr::summarize(dsL,N=n_distinct(id))
 ```
 respondents. Of them one (id=467) was removed from the dataset due to abberant age score that seemed as a coding mistake. NLSY97 contains representative household sample and the oversample of racial minorities. 
 
-```{r 02}
+```{r}
 ds<- dsL %>% dplyr::group_by(sampleF) %>% summarize (count=n_distinct(id))
 ds
 ```
 
-Basic demographics is given in Figure 4.# 
+# Basic demographics is given in Figure 4.# 
 ```{r basic_demo,echo=F, warning=F}
 ds<- dsL %>% dplyr::filter(id %in% c(1:9000), year==1997) %>% dplyr::select(id,sampleF,sexF, raceF) %>%
   dplyr::group_by(sampleF, sexF,raceF) %>% dplyr::summarize (count= n()) 
@@ -109,8 +112,10 @@ p
 
 ```
 
+# Distribution of age variables
 The age of respondents was of particular interest and was entered as a predictor of the model outcome. NSLY97 contains static and dynamic indicators of age age. Variables  byear and bmonth were recorded once in 1997 (static) and contain respondents’ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear.   Next graph shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
 
+## Months
 ```{r bmonth_dist, echo=F, warning=F, fig.height=3.3}
 ds<- dsL %>% dplyr::filter(year %in% c(1997)) %>% 
   dplyr::select(id,year,byearF,bmonth,agemon,ageyear) %>%
@@ -141,9 +146,8 @@ p
 ```
 
 
-
+### Age
 ```{r agemon_dist, echo=F, warning=F, fig.height=3.3}
-
 ds<- dsL %>% dplyr::filter(id %in% c(1:19000), year %in% c(2000)) %>% dplyr::select(id,year,byearF,attend,agemon,ageyear) %>%
   mutate(time=year-2000, age=agemon/12)
 
@@ -167,8 +171,8 @@ p
 ```
 
 ===
-Read more in <code>./Models/Descriptives</code>:
-+ [Descriptives](./Descriptives.md) - basic stats of various items
-+ [Attendance](./Attendance.md) - focus on church attendence over time
-+ [Metrics](./Metrics.md) - how values of items are labeled
-+ [Databox](./Databox.md)
+Read more in <code>./Models/Descriptives</code>:   
++ [Descriptives](./Descriptives.md) - basic stats of various items   
++ [Attendance](./Attendance.md) - focus on church attendence over time   
++ [Metrics](./Metrics.md) - how values of items are labeled   
++ [Databox](./Databox.md)   

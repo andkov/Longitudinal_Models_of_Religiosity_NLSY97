@@ -1,0 +1,35 @@
+---
+title: "Include TOC into .MD file"
+output:
+  html_document:
+    fig.retina: 2
+    fig_width: 8
+    toc: yes
+  pdf_document:
+    fig_width: 8
+    latex_engine: xelatex
+    toc: yes
+  word_document:
+    fig_width: 6.5
+  md_document:
+    variant: markdown_github
+    toc: true
+    toc_depth: 3
+mainfont: Calibri
+---
+    
+# Section 1  
+
+## sub section 1.1  
+
+## sub section 1.2  
+
+## sub section 1.3  
+
+# Section 2  
+
+## sub section 2.1  
+
+## sub section 2.2  
+
+## sub section 2.3  

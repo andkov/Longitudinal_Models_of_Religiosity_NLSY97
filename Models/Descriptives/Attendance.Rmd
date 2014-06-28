@@ -17,6 +17,7 @@ output:
     fig_width: 6.5
   md_document:
     toc: yes
+    tod_depth: 3
 mainfont: Calibri
 ---
 

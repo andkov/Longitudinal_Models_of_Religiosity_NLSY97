@@ -1,0 +1,16 @@
+{
+    "contents" : "#These first few lines run only when the file is run in RStudio, !!NOT when an Rmd/Rnw file calls it!!\nrm(list=ls(all=TRUE))  #Clear the variables from previous runs.\n\n############################\n## @knitr DeclareGlobals\n# Palett for attendance\nattcol8<-c(\"Never\"=\"#4575b4\",\n           \"Once or Twice\"=\"#74add1\",\n           \"Less than once/month\"=\"#abd9e9\",\n           \"About once/month\"=\"#e0f3f8\",\n           \"About twice/month\"=\"#fee090\",\n           \"About once/week\"=\"#fdae61\",\n           \"Several times/week\"=\"#f46d43\",\n           \"Everyday\"=\"#d73027\")\n\ncohortCol5<- c(\"1980\"=\"#9ecae1\",\n               \"1981\"=\"#6baed6\",\n               \"1982\"=\"#4292c6\",\n               \"1983\"=\"#2171b5\",\n               \"1984\"=\"#084594\")\n\nbaseSize<- 14\ncolNA<- \"#636363\"\n\n############################\n## @knitr LoadPackages\n\nrequire(RODBC)\nrequire(grid)\nrequire(dplyr)\nrequire(ggplot2)\n\n\n############################\n## @knitr LoadData\npathDir<- getwd()\npathImageOut<-file.path(pathDir,\"Models/Descriptives/figure_rmd\") # to store .pngs\ndsL<-readRDS(\"./Data/Derived/dsL.rds\")\n\n# str(dsL)\n\n# Variables that do not change with time, TI - time invariant\nTIvars<-c(\"sample\", \"id\", \"sex\",\"race\", \"bmonth\",\"byear\",  'attendPR', \"relprefPR\", \"relraisedPR\")\n\n\n############################\n## @knitr TweakData\n\n\n\n############################\n## @knitr AnalysisChunk01\n\n\n# focvar<-\"sample\"\n# p<-ggplot(subset(ds,year==1997), aes(x=focvar))+geom_bar()\n# pathImage<-file.path(pathImageOut,paste0(\"focvar\",\"_\",\"1997\",\".png\"))\n# png(filename = pathImage,\n#     width =4, height =5.5, units=\"in\", res=400)\n# plot(p)\n# dev.off()\n# \n# \n# focvar<-\"sex\"\n# p<-ggplot(subset(ds,year==1997), aes(x=focvar))+geom_bar()\n# pathImage<-file.path(pathImageOut,paste0(focvar,\"_\",\"1997\",\".png\"))\n# png(filename = pathImage,\n#     width =4, height =5.5, units=\"in\", res=400)\n# plot(p)\n# dev.off()\n\n\n\n\n\n############################\n## @knitr AnalysisChunk02\n\n############################\n## @knitr AnalysisChunk03\n\n\n# Run this code manualy, connection doesn't work yet\nDescriptives <- base::file.path(\"./Models/Descriptives/Descriptives.Rmd\")\npathsReports <-c(Descriptives)\n# Build the reports\nfor( pathRmd in pathsReports ) {\n  pathMd <- base::gsub(pattern=\".Rmd$\", replacement=\".md\", x=pathRmd)\n  pathHtml <- base::gsub(pattern=\".Rmd$\", replacement=\".html\", x=pathRmd)\n  markdown::markdownToHTML(file=pathMd, output=pathHtml)\n}\n",
+    "created" : 1403929456641.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1843941913",
+    "id" : "D831346D",
+    "lastKnownWriteTime" : 1403875564,
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Models/Descriptives/Descriptives.R",
+    "project_path" : "Models/Descriptives/Descriptives.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
