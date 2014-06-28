@@ -162,4 +162,9 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
-
+===
+Read more:
++ [Descriptives](./Descriptives.md)
++ [Attendance](./Attendance.md)
++ [Metrics](./Metrics.md)
++ [Databox](./Databox.md)
