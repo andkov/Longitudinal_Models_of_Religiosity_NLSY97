@@ -1,0 +1,27 @@
+Key: 
+	- icons are lower case
+	- Spelled word have a Capital letter
+
+
+History
+	open
+	save
+	To Console
+	To Source
+	delete
+	clear all
+Packages
+	install
+	update
+	refresh
+	search
+	View Columns
+		Header
+			tick box
+			Name
+			Description
+			Version
+		Body
+			User Library
+			System Library
+Help
