@@ -21,7 +21,6 @@ mainfont: Calibri
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
 require(knitr)
-
 opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 
 ```
