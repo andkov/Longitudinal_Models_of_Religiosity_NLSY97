@@ -14,25 +14,6 @@ This report narrates the origin of dataset used in the study.
 
 
 
-### Working with NLS Investigator
-
-To explore the variables in the native context of NLS, go to [NLS
-Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you
-will have to register a free account to keep track of your progress),
-select "NLYS97 1997-2011" in the first dropdown box and then click
-"Choose File" under "Upload Tagset." Select the file
-**NLSY97\_Religiosity\_20042014.NLSY97** from the folder
-**/Data/Extract/NLSY97\_Religiosity\_20042014**. All the variables from
-this extract will be loaded into NLS Web Investigator.
-
-Alternatively, one can locate the particular item of interest by copying
-and pasting its "Variable Title" it into "Word in Title" search line of
-the [NLS
-Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as
-indicated in the graphic below.
-
-<img src="./figure_rmd/lmrNLY97figures_NLSwebView.png" alt="Looking up items" style="width:800px ;"/>
-
 ### Data Retrieval
 
 Using [NLS
@@ -341,3 +322,23 @@ of **dsL.rds** file produced by this report.
 
     pathdsLrds <- file.path(pathDir,"Data/Derived/dsL.rds")
     saveRDS(object=dsL, file=pathdsLrds, compress="xz")
+
+Note:Working with NLS Investigator
+----------------------------------
+
+To explore the variables in the native context of NLS, go to [NLS
+Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you
+will have to register a free account to keep track of your progress),
+select "NLYS97 1997-2011" in the first dropdown box and then click
+"Choose File" under "Upload Tagset." Select the file
+**NLSY97\_Religiosity\_20042014.NLSY97** from the folder
+**/Data/Extract/NLSY97\_Religiosity\_20042014**. All the variables from
+this extract will be loaded into NLS Web Investigator.
+
+Alternatively, one can locate the particular item of interest by copying
+and pasting its "Variable Title" it into "Word in Title" search line of
+the [NLS
+Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as
+indicated in the graphic below.
+
+<img src="./figure_rmd/lmrNLY97figures_NLSwebView.png" alt="Looking up items" style="width:800px ;"/>

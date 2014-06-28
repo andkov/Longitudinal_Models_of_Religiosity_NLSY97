@@ -55,14 +55,6 @@ read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls f
 ```
 
 
-### Working with NLS Investigator
-
-To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you will have to register a free account to keep track of your progress), select "NLYS97 1997-2011" in the first dropdown box and then click  "Choose File" under "Upload Tagset." Select the file __NLSY97_Religiosity_20042014.NLSY97__ from the folder __/Data/Extract/NLSY97_Religiosity_20042014__. All the variables from this extract will be loaded into NLS Web Investigator.
-
-Alternatively, one can locate the particular item of interest by copying and pasting its "Variable Title" it into "Word in Title" search line of the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as indicated in the graphic below. 
-
-<img src="./figure_rmd/lmrNLY97figures_NLSwebView.png" alt="Looking up items" style="width:800px ;"/>
-
 ### Data Retrieval
 Using [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) a list of variables was downloaded from [NLS](http://www.bls.gov/nls/) datasets. All the downloaded materials  were unzipped into  the folder [/Data/Extracts/NLSY97_Religiosity_20042014](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data/Extracts/NLSY97_Religiosity_20042014), located in the GitHub Repository. 
 (The naming convention is "Study_Focus_DDMMYYYofDownload")   
@@ -144,4 +136,13 @@ print(ds)
 Finally, we output the created clean dataset **dsL** as a .cvs file. Also, it is saved in an .rds format, native to R, which preserves factor levels, not saved in .csv. This report is computationally intensive, so it is typically omitted from the reproduction cycle. Instead, from now on, the initial point of departure for data projects will be the import of **dsL.rds** file produced by this report.
 ```{r SaveDerivedData, echo=T, message=T}
 ```
+
+
+## Note:Working with NLS Investigator
+
+To explore the variables in the native context of NLS, go to [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp) (you will have to register a free account to keep track of your progress), select "NLYS97 1997-2011" in the first dropdown box and then click  "Choose File" under "Upload Tagset." Select the file __NLSY97_Religiosity_20042014.NLSY97__ from the folder __/Data/Extract/NLSY97_Religiosity_20042014__. All the variables from this extract will be loaded into NLS Web Investigator.
+
+Alternatively, one can locate the particular item of interest by copying and pasting its "Variable Title" it into "Word in Title" search line of the [NLS Investigator](https://www.nlsinfo.org/investigator/pages/login.jsp), as indicated in the graphic below. 
+
+<img src="./figure_rmd/lmrNLY97figures_NLSwebView.png" alt="Looking up items" style="width:800px ;"/>
 
