@@ -1,9 +1,9 @@
 -   Descriptives:
 -   After loading dsL
--   Basic demographics is given in Figure 4.
+-   Basic demographics
 -   Distribution of age variables
-    -   Months
-        -   Age
+    -   Months of births
+    -   Age and cohort structure
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
@@ -44,8 +44,8 @@ ds
       count
     1  8983
 
-Basic demographics is given in Figure 4.
-========================================
+Basic demographics
+==================
 
     ymax not defined: adjusting position using y instead
     ymax not defined: adjusting position using y instead
@@ -57,8 +57,8 @@ Distribution of age variables
 
 The age of respondents was of particular interest and was entered as a predictor of the model outcome. NSLY97 contains static and dynamic indicators of age age. Variables byear and bmonth were recorded once in 1997 (static) and contain respondentsâ€™ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear. Next graph shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
 
-Months
-------
+Months of births
+----------------
 
     Source: local data frame [13 x 4]
     Groups: bmonth
@@ -80,7 +80,8 @@ Months
 
 ![plot of chunk bmonth\_dist](figure_rmd/Descriptives/bmonth_dist.png)
 
-### Age
+Age and cohort structure
+------------------------
 
 ![plot of chunk agemon\_dist](figure_rmd/Descriptives/agemon_dist.png)
 

@@ -1,10 +1,10 @@
 {
-    "contents" : "rm(list=ls(all=TRUE))  #Clear the variables from previous runs.\npathReport<-  base::file.path(\"./Models/Descriptives/Descriptives.Rmd\")\nlibrary(dplyr)\n\n  rmarkdown::render(input = pathReport, \n                    output_format=c(\n#                        ,\"word_document\"\n#                        \"html_document\"\n                       \"md_document\"\n#                        \"pdf_document\"\n                      \n                    ),clean=TRUE)\n\n",
+    "contents" : "rm(list=ls(all=TRUE))  #Clear the variables from previous runs.\npathReport<-  base::file.path(\"./Models/Descriptives/Descriptives.Rmd\")\nlibrary(dplyr)\n\n  rmarkdown::render(input = pathReport, \n                    output_format=c(\n#                        ,\"word_document\"\n                       \"html_document\"\n                       ,\"md_document\"\n#                        \"pdf_document\"\n                      \n                    ),clean=TRUE)\n\n",
     "created" : 1403925925226.000,
     "dirty" : true,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1319821173",
+    "hash" : "1483203427",
     "id" : "AA47BF65",
     "lastKnownWriteTime" : 1403896081,
     "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Scripts/Utility/render.R",

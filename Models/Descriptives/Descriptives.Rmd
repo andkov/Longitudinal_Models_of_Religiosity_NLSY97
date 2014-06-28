@@ -7,6 +7,7 @@ output:
     fig.retina: 2
     fig_width: 8
     toc: yes
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
   pdf_document:
     fig_width: 8
     latex_engine: xelatex
@@ -81,7 +82,8 @@ ds<- dsL %>% dplyr::group_by(sampleF) %>% summarize (count=n_distinct(id))
 ds
 ```
 
-# Basic demographics is given in Figure 4.# 
+# Basic demographics 
+
 ```{r basic_demo,echo=F, warning=F}
 ds<- dsL %>% dplyr::filter(id %in% c(1:9000), year==1997) %>% dplyr::select(id,sampleF,sexF, raceF) %>%
   dplyr::group_by(sampleF, sexF,raceF) %>% dplyr::summarize (count= n()) 
@@ -115,7 +117,7 @@ p
 # Distribution of age variables
 The age of respondents was of particular interest and was entered as a predictor of the model outcome. NSLY97 contains static and dynamic indicators of age age. Variables  byear and bmonth were recorded once in 1997 (static) and contain respondents’ birth year and birth month respectively. Two age variables were recorded continuously at each interview (dynamic): age at the time of the interview in months agemon and in years ageyear.   Next graph shows how births in the NLSY97 sample (static age) was distributed over calendric months from 1980 to 1984:
 
-## Months
+## Months of births
 ```{r bmonth_dist, echo=F, warning=F, fig.height=3.3}
 ds<- dsL %>% dplyr::filter(year %in% c(1997)) %>% 
   dplyr::select(id,year,byearF,bmonth,agemon,ageyear) %>%
@@ -146,7 +148,7 @@ p
 ```
 
 
-### Age
+## Age and cohort structure 
 ```{r agemon_dist, echo=F, warning=F, fig.height=3.3}
 ds<- dsL %>% dplyr::filter(id %in% c(1:19000), year %in% c(2000)) %>% dplyr::select(id,year,byearF,attend,agemon,ageyear) %>%
   mutate(time=year-2000, age=agemon/12)
