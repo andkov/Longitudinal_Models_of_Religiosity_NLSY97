@@ -235,7 +235,7 @@ ds<- dsL %.%
   dplyr::summarize(count = n()) %.%
   dplyr::mutate(total = sum(count),
                 percent= count/total)
-ds
+# ds
 p<- ggplot( ds, aes(x=attendF, y=percent, fill=attendF)) 
 # geoms
 p<- p+ geom_bar(stat="identity")
