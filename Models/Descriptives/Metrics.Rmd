@@ -46,7 +46,7 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
 ```
 
-#Metrics: labeling factors and exploring scales
+# Metrics:labeling factors and exploring scales
 
 Report explains how the response categories from NLSY97 questionnaire are labeled and demonstrates application of labeled factors in data operations and graphing.
 
@@ -68,9 +68,9 @@ colNA # color for the NA value in graphs
 
 ## Data preliminaries
 
-Initial point of departure - the [databox][1] of the selected variables, described in the [Methods][2] chapter.
+Initial point of departure - the [databox][databox] of the selected variables, described in the Methods chapter.
 ![Figure 3.2](./figure_rmd/3_Methods_Figure_3_2.png)
-This [databox][1] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][3] report, given in the Appendix. 
+This [databox][databox] corresponds to the dataset **dsL** produced by [Derive_dsL_from_Extract][derive] report, given in the Appendix. 
 ```{r echo=T, message=T}
 dsL<-readRDS("./Data/Derived/dsL.rds")
 ```
@@ -78,12 +78,12 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 
 
 ##  Labeling Factor Levels
-Review of the item reference [cards][1] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, data were saved as numerical values or  intigers
+Review of the item reference [cards][databox] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, data were saved as numerical values or  intigers
 ```{r}
 ds<- dsL[,1:(ncol(dsL)/2)]# selects the first half of variables
 str(ds)
 ```
-[LabelingFactorLevels.R][4] sourced at the end of [Derive_dsL_from_Extract][3] matches numeric values with response labels from the questionnaire and adds to **dsL** copies of the variables, saved as labeled factors. For estimations routines such as <code>lme4</code> or graphing  functions such as <code>ggplot</code>, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves useful.  It is convenient to think that **dsL** contains only
+[LabelingFactorLevels.R][labels] sourced at the end of [Derive_dsL_from_Extract][derive] matches numeric values with response labels from the questionnaire and adds to **dsL** copies of the variables, saved as labeled factors. For estimations routines such as <code>lme4</code> or graphing  functions such as <code>ggplot</code>, the  data type (string,numeric,  factor) is a meaningful input, so a quick access to both formats frequently proves useful.  It is convenient to think that **dsL** contains only
 ```{r}
 ncol(dsL)/2
 ```
@@ -97,7 +97,7 @@ selectCols<-c("year","id","byear","attend","attendF") # select the columns with 
 ds<-dsL[,selectCols] # select all rows for the columns listed  selectCols
 print(ds[ds$id==1,]) # print all availible data for respondent with ID 1
 ```
-Having quick access to factor labels will be especially useful during graph production. For the grammer rules of operations with relevant data see [Data Manipulation Guide][5].
+Having quick access to factor labels will be especially useful during graph production. For the grammer rules of operations with relevant data see [Data Manipulation Guide][manipulate].
 
 
 ## Time metrics : Age, Period, Cohort
@@ -116,8 +116,7 @@ print(ds)
 The variable ageyear records the full number of years a respondent reached at the time of the interview. Due to difficulties of administering the survey, time intervals between the waves could differ. For example, for one person id = 25 the age was recorded as 21 years for both 2003 and 2004 (see ageyear). However, when you examine age in months (agemon) you can see this rounding issue disappears, once a more precise scale is used. To avoid this potentially confusing peculiarity, age in years will be calculated as age = year – byear +1 or as (ageD = agemon/12). The suffix D in ageD refers to the fact that it was calculated from a dynamic age indicator. 
 
 
-[1]:http://statcanvas.net/thesis/databox/
-[2]:http://statcanvas.net/thesis/III_methods/03_Methods.htm
-[3]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
-[4]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
-[5]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md
+[databox]:http://statcanvas.net/thesis/databox/
+[derive]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
+[labels]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
+[manipulate]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md

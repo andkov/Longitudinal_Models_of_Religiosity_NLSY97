@@ -1,14 +1,16 @@
 ---
-title: "Derive dsL"
+title: "Metrics"
+author: "Andriy Koval"
+date: "Tuesday, June 24, 2014"
 output:
-  pdf_document:
-    fig_width: 8
-    latex_engine: xelatex
-    toc: yes
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
+    toc: yes
+  pdf_document:
+    fig_width: 8
+    latex_engine: xelatex
     toc: yes
   word_document:
     fig_width: 6.5
@@ -34,13 +36,11 @@ opts_chunk$set(
   message = TRUE,
   comment = NA, 
   tidy = FALSE,
-  fig.height = 4,  # affects the png produced 
-  fig.width = 5.5, 
-  out.width = "550px", # how it looks on HTML
-  fig.path = 'figure_rmd/',     
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+  out.width = NULL,
+  fig.path = 'figure_rmd/Metrics/',     
   dev = "png",
-#   fig.path = 'figure_pdf/',     
-#   dev = "pdf",
   dpi = 400
 )
 echoChunks <- FALSE

@@ -69,8 +69,9 @@ Descriptives:
 ===  
 Basic descriptives reports on selected NLSY97 items
 
-# After loading dsL  
-Downloaded archives of NLSY97 contained 
+# Basic demographics 
+After importing a clean dataset **dsL** 
+
 ```{r}
 dsL<-readRDS("./Data/Derived/dsL.rds")
 dplyr::summarize(dsL,N=n_distinct(id))
@@ -82,7 +83,7 @@ ds<- dsL %>% dplyr::group_by(sampleF) %>% summarize (count=n_distinct(id))
 ds
 ```
 
-# Basic demographics 
+
 
 ```{r basic_demo,echo=F, warning=F}
 ds<- dsL %>% dplyr::filter(id %in% c(1:9000), year==1997) %>% dplyr::select(id,sampleF,sexF, raceF) %>%
@@ -178,3 +179,9 @@ Read more in <code>./Models/Descriptives</code>:
 + [Attendance](./Attendance.md) - focus on church attendence over time   
 + [Metrics](./Metrics.md) - how values of items are labeled   
 + [Databox](./Databox.md)   
+
+
+[databox]:http://statcanvas.net/thesis/databox/
+[derive]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
+[labels]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
+[manipulate]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md
