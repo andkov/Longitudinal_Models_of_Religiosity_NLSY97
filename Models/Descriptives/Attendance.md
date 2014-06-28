@@ -1,3 +1,7 @@
+-   Mapping Church Attendance in Time
+    -   Cross-Sectional View
+    -   Longitudinal View
+
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
 
@@ -10,17 +14,20 @@
 
 
 Mapping Church Attendance in Time
----------------------------------
+=================================
 
-### Cross-Sectional View
+Cross-Sectional View
+--------------------
 
 The focal variable of interest is **attend**, the item measuring church
 attendance for the year that preceded the interview date. The
-questionnaire recorded the responses on the ordinal scale.  
+questionnaire recorded the responses on the ordinal scale.
+
 ![Figure caption test](figure_rmd/Attendance/attend_2000.png)
 
 Creating frequency distributions for each of the measurement wave we
-have:  
+have:
+
 ![plot of chunk
 attend\_2000\_2011](figure_rmd/Attendance/attend_2000_2011.png)
 
@@ -35,18 +42,21 @@ attend\_2000\_2011\_na](figure_rmd/Attendance/attend_2000_2011_na.png)
 Tracing the rate of change of prevalence in a line graph, we see more
 clearly which categores increase over time (e.g. "Never"), which decline
 (e.g. ""About once/week), and which stay relatively stable (e.g. "About
-twice/month")
+twice/month").
 
 ![plot of chunk
 attend\_freq\_lines](figure_rmd/Attendance/attend_freq_lines.png)
 
-Inspecting the prevalence trajectories across races. ![plot of chunk
+Inspecting the prevalence trajectories across races.
+
+![plot of chunk
 attend\_freq\_lines\_race](figure_rmd/Attendance/attend_freq_lines_race.png)
 
 ![plot of chunk
 attend\_race\_2000](figure_rmd/Attendance/attend_race_2000.png)
 
-### Longitudinal View
+Longitudinal View
+-----------------
 
 Graphs above shows change in the cross-sectional distribution of
 responses over the years. Modeling the change in these response
@@ -78,7 +88,8 @@ variable of interest - worship attendance (**attend**).
     12 47  1982 2011      1                Never
 
 The view above lists attendance data for subjust with id = 47. Mapping
-his attendance to time we have  
+his attendance to time we have .
+
 ![plot of chunk
 attend\_line\_1id](figure_rmd/Attendance/attend_line_1id.png)
 
@@ -201,8 +212,9 @@ you can see this is rounding issue that disappears once a more precise
 scale is used. To avoid this potentially confusing peculiarity, age in
 years will be either calculated as (**age** = **year** - **byear** + 1)
 
-Plotting age, caclulated as <code> age = year - byear + 1 </code> ![plot
-of chunk
+Plotting age, caclulated as <code> age = year - byear + 1 </code>
+
+![plot of chunk
 attend\_line\_4id\_age](figure_rmd/Attendance/attend_line_4id_age.png)
 
     ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>% 
@@ -224,7 +236,9 @@ attend\_line\_4id\_age](figure_rmd/Attendance/attend_line_4id_age.png)
     11   4 2010      2    357      29   10  29
     12   4 2011      5    368      30   11  30
 
-Plotting age, caclulated as <code> age = ageyear </code> ![plot of chunk
+Plotting age, caclulated as <code> age = ageyear </code>
+
+![plot of chunk
 attend\_line\_4id\_age2](figure_rmd/Attendance/attend_line_4id_age2.png)
 
 Plotting age, caclulated as <code> age = agemon/12 </code>
