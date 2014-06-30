@@ -1,23 +1,24 @@
 ---
 title: "Attendance"
 output:
-  html_document:
-    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig.retina: 2
-    fig_width: 8
-    toc: yes
-    theme: united
-  md_document:
-    toc: yes
-    toc_depth: 3
   pdf_document:
     fig_caption: no
     fig_crop: no
     fig_width: 8
+    highlight: tango
     latex_engine: xelatex
     number_sections: yes
     toc: yes
     toc_depth: 3
+  md_document:
+    toc: yes
+    toc_depth: 3
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    theme: united
+    toc: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
@@ -64,7 +65,7 @@ aesDefs
 
 Mapping church attendance in time
 
-## Cross-Sectional View  
+# Cross-Sectional View  
 
 The focal variable of interest is **attend**, the item measuring church attendance for the year that preceded the interview date. The questionnaire recorded the responses on the ordinal scale.  
 
@@ -155,7 +156,7 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
-### Change in prevalences
+## Change in prevalences
 Tracing the rate of change of prevalence in a line graph, we see more clearly which  categores increase over time (e.g. "Never"), which decline (e.g. ""About once/week), and which stay relatively stable (e.g. "About twice/month").    
 
 ```{r attend_freq_lines, echo=F, message=F, warning=F, fig.height=4.2}
@@ -193,7 +194,7 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
-### Prevalence change and race 
+## Prevalence change and race 
 
 Inspecting the prevalence trajectories across races.   
 
@@ -271,7 +272,7 @@ p
 ```
 
 
-## Longitudinal View
+# Longitudinal View
 
 Graphs above shows change in the cross-sectional distribution of responses over the years. Modeling the change in these response frequencies is handled well by Markov  models.  LCM, however, works with longitudinal data, modeling the trajectory of each individual and treating attendance as a continuous outcome.   
 
@@ -315,7 +316,7 @@ p
 
 where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the respondents. Each of such trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? To demostrate how interpretations of trajectories can vary among individuals consider the following example.     
 
-### Attendance over waves 
+## Attendance over waves 
 Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph     
 
 ```{r attend_line_4id_years,echo=echoChunks, message=F, warning=F, fig.height=3.3}
@@ -359,7 +360,7 @@ ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>%
 print(ds[ds$idF==25,])
 ```
 
-### Attendance over ages  
+## Attendance over ages  
 Plotting individual trajectories, with age as the metric of time.  
 
 ```{r attend_line_4id_age3,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height = 3.3 }
@@ -397,7 +398,7 @@ p
 
 
 
-## Read more 
+# Read more 
 
 in <code>./Models/Descriptives</code>:   
 

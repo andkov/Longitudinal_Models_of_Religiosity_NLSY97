@@ -1,0 +1,17 @@
+{
+    "contents" : "---\ntitle: \"Derive data\"\noutput:\n  pdf_document:\n    fig_caption: no\n    fig_crop: no\n    fig_width: 8\n    latex_engine: xelatex\n    number_sections: yes\n    toc: yes\n    toc_depth: 3\n  md_document:\n    toc: yes\n    toc_depth: 3\n  html_document:\n    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css\n    fig.retina: 2\n    fig_width: 8\n    theme: united\n    toc: yes\n  word_document:\n    fig_width: 6.5\nmainfont: Calibri\n---\n\n\nDeriving clean dataset <code>dsL</code> from NLSY97 extract. \n\n<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->\n```{r, echo=F, message=F} \nlibrary(knitr)\nopts_knit$set(root.dir='../')  #Don't combine this call with any other chunk -especially one that uses file paths.\n```\n\n<!-- Set the report-wide options, and point to the external code file. -->\n```{r set_options, echo=F, message=T}\nrequire(knitr)\nopts_chunk$set(\n  results='show', \n  message = TRUE,\n  comment = NA, \n  tidy = FALSE,\n#   fig.height = 4.8, \n#   fig.width = 6.5, \n  out.width = NULL,\n  fig.path = 'figure_rmd/Metrics/',     \n  dev = \"png\",\n  dpi = 400\n)\nechoChunks <- FALSE\noptions(width=120) #So the output is 50% wider than the default.\nread_chunk(\"./Data/Derive_dsL_from_Extract.R\") # the file to which knitr calls for the chunks\n```\n\n\n###  Databox\n![Figure 3.2](../images/databox_slice.png)\n\n[Interactive version][databoxStatcanvas]\n\n",
+    "created" : 1404108691065.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2446069113",
+    "id" : "5802D0A2",
+    "lastKnownWriteTime" : 1404108923,
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Data/test.Rmd",
+    "project_path" : "Data/test.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

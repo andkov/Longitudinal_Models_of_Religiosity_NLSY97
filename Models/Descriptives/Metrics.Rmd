@@ -67,7 +67,7 @@ Labeling factors and exploring scales.
 
 ```
 
-## Data preliminaries
+# Data preliminaries
 
 Initial point of departure - the [databox][databox] of the selected variables, described in the Methods chapter.  
 ![Figure 3.2](../../images/databox_slice.png)
@@ -80,7 +80,7 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 Note that the variable **year** serves as a natural devided between time invariant (TIvars) and time variant (TVvars) variables. All modeling operations beging with subsetting this dataset.  For the grammer rules of operations with relevant data see [Data Manipulation Guide][manipulate].
 
 
-##  Labeling Factor Levels
+#  Labeling Factor Levels
 Review of the item reference [cards][databoxStatcanvas] shows that initially, all items were recorded on some discrete scale, either counting occasions or assigning an intiger to a category of response. However, data were saved as numerical values or  intigers
 ```{r}
 ds<- dsL %>%
@@ -113,7 +113,7 @@ ds
 Having quick access to factor labels will be especially useful during graph production.
 
 
-## Time metrics : Age, Period, Cohort
+# Time metrics : Age, Period, Cohort
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.  
 ![Figure 3.1](../../images/APC_layout.png)
 
@@ -137,7 +137,7 @@ ds<- dsL %>%
 print(ds)
 ```
 
-## Attendance  
+# Attendance  
 
 NLSY97 asked to report church attendance (**attend**)for the past 12 months preceding the interview date. The response offered a choice of 7 categories ordered by magnitude.
 ```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5,fig.cap="Figure caption test"}
@@ -161,7 +161,7 @@ p
 
 
 
-## Read more 
+# Read more 
 
 in <code>./Models/Descriptives</code>:   
 
@@ -175,7 +175,7 @@ See also
 + [Deriving Data from NLYS97 extract][derive]
 + [Data Manipulation Guide][manipulate]
 
-```{r child, child = 'Citations.Rmd'}
+```{r child, child_citations = 'Citations.Rmd'}
 
 ```
 
