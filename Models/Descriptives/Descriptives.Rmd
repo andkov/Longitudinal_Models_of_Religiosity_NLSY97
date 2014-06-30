@@ -6,19 +6,23 @@ output:
     fig.retina: 2
     fig_width: 8
     toc: yes
+    theme: united
   md_document:
     toc: yes
     toc_depth: 3
   pdf_document:
+    fig_caption: no
+    fig_crop: no
     fig_width: 8
+    latex_engine: xelatex
     number_sections: yes
     toc: yes
     toc_depth: 3
-    figure_caption: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
 ---
+
 
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
@@ -49,12 +53,8 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
 ```
 
-```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-# Defined
-attcol8 # color palette for attendance
-baseSize # base text size
-colNA # color for the NA value in graphs
-
+```{r DeclareGlobals, echo=echoChunks, message=FALSE, results='hide'}
+# aesDefs
 ```
 
 ```{r LoadPackages, echo=echoChunks, message=F}
@@ -64,25 +64,27 @@ colNA # color for the NA value in graphs
 # vignette("introduction",package="dplyr") # <- for more info on dplyr
 ```
 
-# Basic descriptives reports on selected NLSY97 items
+
+Basic descriptives reports on selected NLSY97 items
 
 ## Basic demographics 
-After importing a clean dataset **dsL** 
+A clean dataset **dsL** contains data on
 
 ```{r}
-dsL<-readRDS("./Data/Derived/dsL.rds")
 dplyr::summarize(dsL,N=n_distinct(id))
 ```
-respondents. Of them one (id=467) was removed from the dataset due to abberant age score that seemed as a coding mistake. NLSY97 contains representative household sample and the oversample of racial minorities. 
+respondents. Of them one (id = 467) was removed from the dataset due to abberant age score that seemed as a coding mistake. NLSY97 contains representative household sample and the oversample of racial minorities. 
 
-```{r}
-ds<- dsL %>% dplyr::group_by(sampleF) %>% summarize (count=n_distinct(id))
+```{r, warning=F}
+ds<- dsL %>% 
+  dplyr::group_by(sampleF) %>% 
+  dplyr::summarize (count=n_distinct(id))
 ds
 ```
 
 
 
-```{r basic_demo,echo=F, warning=F}
+```{r basic_demo,echo=F,warning=F, fig.cap="Figure 4.1 Basic demographics: race and gender"}
 ds<- dsL %>% dplyr::filter(id %in% c(1:9000), year==1997) %>% dplyr::select(id,sampleF,sexF, raceF) %>%
   dplyr::group_by(sampleF, sexF,raceF) %>% dplyr::summarize (count= n()) 
 
@@ -107,8 +109,7 @@ p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12))
 p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
 p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
 p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
-p 
-
+p
 
 ```
 
@@ -123,11 +124,10 @@ ds<- dsL %>% dplyr::filter(year %in% c(1997)) %>%
   dplyr::summarize(count=n()) %>% arrange(byearF,bmonth) %>%
   dplyr::mutate (born=paste0(substr(byearF,3,4),"-",bmonth)) %>%
   dplyr::arrange(byearF, bmonth)
-head(ds, 13)
-
-  p<-ggplot(ds, aes(x=born, y=count, fill=byearF))
-  p<-p+geom_bar(stat="identity")
-  p<- p + scale_fill_manual(values=cohortCol5)
+p<-ggplot(ds, aes(x=born, y=count, fill=byearF))
+#geoms 
+p<-p+geom_bar(stat="identity")
+  p<- p + scale_fill_manual(values=byearCol5)
 # annotations
 p<- p + guides(fill = guide_legend(reverse=TRUE, title="Birth year")) 
 p<-  p+ labs(title = "Distribution of births among NLSY97 repsondent (1997)",
@@ -153,7 +153,7 @@ ds<- dsL %>% dplyr::filter(id %in% c(1:19000), year %in% c(2000)) %>% dplyr::sel
 
   p<-ggplot(ds, aes(x=agemon, fill=byearF))
   p<-p+geom_bar(bin=1)
-  p<- p + scale_fill_manual(values=cohortCol5)
+  p<- p + scale_fill_manual(values=byearCol5)
 # annotations
 p<- p + guides(fill = guide_legend(reverse=TRUE, title="Birth year")) 
 p<-  p+ labs(title = "Age and cohort structure",
@@ -170,17 +170,25 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```
 
-===
 
+## Read more 
 
-Read more in <code>./Models/Descriptives</code>:           
-+ [Metrics][Metrics] - how values of items are labeled        
+in <code>./Models/Descriptives</code>:   
+
++ [Metrics][metrics] - how values of items are labeled       
 + [Descriptives][descriptives] - basic stats of various items       
-+ [Attendance][attend] - focus on church attendence over time       
-+ [Databox][databoxList]       
++ [Attendance][attend] - focus on church attendence over time (__Continue__)      
++ [Databox][databox]   
+
+See also   
+
++ [Deriving Data from NLYS97 extract][derive]
++ [Data Manipulation Guide][manipulate]
+
 
 ```{r child, child = 'Citations.Rmd'}
 
 ```
+
 
 

@@ -1,15 +1,25 @@
+-   Five basic functions in data handling
+    -   <code>select()</code>
+    -   <code>filter()</code>
+    -   <code>arrange()</code>
+    -   <code>mutate()</code>
+    -   <code>summarize()</code>
+-   Grouping and Combining
+-   Base subsetting
+-   Base Reference
+-   Read more
+
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
 
 
 
-Data Manipulation
-=================
 
-Report examplifying the use of <code>dplyr</code> in data handling on
-the example of **dsL**\>.
+Demonstrating the language of data manipulation in <code>dplyr</code>
+packages using **dsL** as an example
 
 <!-- Run this three chunks to get to the starting point -->
+
 
 
 
@@ -32,6 +42,11 @@ using **dsL** dataset as an example. I attach prefix
 package on which <code>ggplot2</code> package relies. I recommend such
 practice in all <code>dplyr</code> expressions in sharable publications.
 
+One of the innovations in <code>dplyr</code> is the ability to chain
+phrases in the data manipulationsentence. The operator <code>%\>%</code>
+(or <code>%.%</code>), accomplishes this, turning <code>x %\>%
+f(y)</code> into <code>f(x, y) </code>.
+
 ### <code>select()</code>
 
 selects variables into a smaller data set
@@ -41,7 +56,8 @@ selects variables into a smaller data set
 
     [1] 134745     60
 
-    ds<- dplyr::select(ds,id,year, byear, attend, attendF)
+    ds<- dsL %>%
+      dplyr::select(id,year, byear, attend, attendF)
     head(ds,13)
 
        id year byear attend         attendF
@@ -75,8 +91,9 @@ selects observation based on the type of sample
 and only between years 2000 and 2011, as only during those years the
 outcome of interest <code>attend</code> was recorded.
 
-    ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-    ds<- dplyr::select(ds,id, year, attend, attendF)
+    ds<- dsL %>%
+      dplyr::filter(sample==1, year %in% c(2000:2011))%>%
+      dplyr::select(id, year, attend, attendF)
     head(ds,13)
 
        id year attend         attendF
@@ -98,9 +115,10 @@ outcome of interest <code>attend</code> was recorded.
 
 Sorts observations
 
-    ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-    ds<- dplyr::select(ds,id, year, attend)
-    ds<- dplyr::arrange(ds, year, desc(id))
+    ds<- dsL %>%
+      dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
+      dplyr::select(id, year, attend) %>%
+      dplyr::arrange(year, desc(id))
     head(ds,13)
 
          id year attend
@@ -118,7 +136,7 @@ Sorts observations
     12 8991 2000      3
     13 8987 2000      6
 
-    ds<- arrange(ds, id, year)
+    ds<- dplyr::arrange(ds, id, year)
     head(ds, 13)
 
        id year attend
@@ -140,14 +158,14 @@ Sorts observations
 
 Creates additional variables from the values of existing.
 
-    ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-    ds<- dplyr::select(ds,id, byear, year, attend)
-    ds<- dplyr::mutate(ds, 
-                age = year-byear, 
-                timec = year-2000,
-                linear= timec,
-                quadratic= linear^2,
-                cubic= linear^3)
+    ds<- dsL %>%
+      dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
+      dplyr::select(id, byear, year, attend) %>%
+      dplyr::mutate(age = year-byear, 
+                    timec = year-2000,
+                    linear= timec,
+                    quadratic= linear^2,
+                    cubic= linear^3)
     head(ds,13)
 
        id byear year attend age timec linear quadratic cubic
@@ -171,8 +189,9 @@ collapses data into a single value computed according to the aggregate
 functions.
 
     require(dplyr)
-    ds<- dplyr::filter(dsL,sample==1)
-    ds<- dplyr::summarize(ds, N= n_distinct(id))
+    ds<- dsL %>%
+      dplyr::filter(sample==1) %>%
+      dplyr::summarize(N= n_distinct(id))
     ds
 
          N
@@ -180,23 +199,27 @@ functions.
 
 Other functions one could use with <code>summarize()</code> include:
 
-From <code>base</code> + <code> min() </code>  
-+ <code> max() </code>  
-+ <code> mean() </code>  
-+ <code> sum() </code>  
-+ <code> sd() </code>  
-+ <code> median() </code>  
-+ <code> IQR() </code>
+From <code>base</code>
 
-Native to <code>dplyr</code> + <code> n() </code> - number of
-observations in the current group + <code> n\_distinct(x) </code> -
-count the number of unique values in x. + <code> first(x) </code> -
-similar to
-<code>x[1](http://blog.rstudio.org/2014/01/17/introducing-dplyr/)</code>
-+ control over <code>NA</code> + <code> last(x) </code> - similar to
-<code>x[length(x)] </code> + control over <code>NA</code> + <code>
-nth(x, n) </code> - similar to<code> x[n] </code> + control over
-<code>NA</code>
+-   <code> min() </code>  
+-   <code> max() </code>  
+-   <code> mean() </code>  
+-   <code> sum() </code>  
+-   <code> sd() </code>  
+-   <code> median() </code>  
+-   <code> IQR() </code>
+
+Native to <code>dplyr</code>
+
+-   <code> n() </code> - number of observations in the current group  
+-   <code> n\_distinct(x) </code> - count the number of unique values in
+    x.  
+-   <code> first(x) </code> - similar to <code>x[ 1 ]</code> + control
+    over <code>NA</code>  
+-   <code> last(x) </code> - similar to <code>x[length(x)] </code> +
+    control over <code>NA</code>  
+-   <code> nth(x, n) </code> - similar to<code> x[n] </code> + control
+    over <code>NA</code>
 
 Grouping and Combining
 ----------------------
@@ -208,43 +231,14 @@ levels of supplied variables). It is these smaller datasets that
 <code>summarize()</code> will individually collapse into a single
 computed value according to its formula.
 
-    ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-    ds<- dplyr::select(ds,id, year, attendF)
-
-    s <- dplyr::group_by(ds, year,attendF)
-    s <- dplyr::summarise(s, count = n())
-    s <- dplyr::mutate(s, total = sum(count),
-                  percent= count/total)
-    head(s,10)
-
-    Source: local data frame [10 x 5]
-    Groups: year
-
-       year              attendF count total  percent
-    1  2000                Never  1580  6747 0.234178
-    2  2000        Once or Twice  1304  6747 0.193271
-    3  2000 Less than once/month   775  6747 0.114866
-    4  2000     About once/month   362  6747 0.053653
-    5  2000    About twice/month   393  6747 0.058248
-    6  2000      About once/week  1101  6747 0.163184
-    7  2000   Several times/week   463  6747 0.068623
-    8  2000             Everyday    36  6747 0.005336
-    9  2000                   NA   733  6747 0.108641
-    10 2001                Never  1626  6747 0.240996
-
-The same result can be achieved with a more elegant syntax that relies
-on <code>%\>%</code> operator, in which <code>x %\>% f(y)</code> turns
-into <code>f(x, y) </code>. Alternatively, one can use <code>%.%</code>
-for identical results.
-
-    ds<-dsL %>%
+    ds<- dsL %>%
       dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
       dplyr::select(id, year, attendF) %>%
       dplyr::group_by(year,attendF) %>%
-        dplyr::summarise(count = n()) %>%
-        dplyr::mutate(total = sum(count),
-                  percent= count/total)  
-    head(ds,10)    
+      dplyr::summarise(count = n()) %>%
+      dplyr::mutate(total = sum(count),
+                  percent= count/total)
+    head(ds,10)
 
     Source: local data frame [10 x 5]
     Groups: year
@@ -261,9 +255,9 @@ for identical results.
     9  2000                   NA   733  6747 0.108641
     10 2001                Never  1626  6747 0.240996
 
-To verify that this is what we wanted to achieve:
+To verify :
 
-    dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
+    dplyr::summarize( filter(ds, year==2000), should.be.one=sum(percent))
 
     Source: local data frame [1 x 2]
 
@@ -280,22 +274,22 @@ including rows and columns of the new dataset, respectively. One can
 also call a variable by attaching <code> \$ </code> followed variable
 name to the name of the dataset: <code>**ds***\$variableName*</code>.
 
-    ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
+    ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","agemon","attendF","ageyearF")]
     print(ds[ds$id==1,]) 
 
-       id byear year         attendF ageyearF agemon
-    4   1  1981 2000           Never       19    231
-    5   1  1981 2001 About once/week       20    243
-    6   1  1981 2002   Once or Twice       21    256
-    7   1  1981 2003           Never       22    266
-    8   1  1981 2004           Never       23    279
-    9   1  1981 2005           Never       24    290
-    10  1  1981 2006           Never       25    302
-    11  1  1981 2007           Never       26    313
-    12  1  1981 2008           Never       27    325
-    13  1  1981 2009           Never       28    337
-    14  1  1981 2010           Never       29    350
-    15  1  1981 2011           Never       29    360
+       id byear year agemon         attendF ageyearF
+    4   1  1981 2000    231           Never       19
+    5   1  1981 2001    243 About once/week       20
+    6   1  1981 2002    256   Once or Twice       21
+    7   1  1981 2003    266           Never       22
+    8   1  1981 2004    279           Never       23
+    9   1  1981 2005    290           Never       24
+    10  1  1981 2006    302           Never       25
+    11  1  1981 2007    313           Never       26
+    12  1  1981 2008    325           Never       27
+    13  1  1981 2009    337           Never       28
+    14  1  1981 2010    350           Never       29
+    15  1  1981 2011    360           Never       29
 
 The following is a list of operatiors that can be used in these calls.
 <ul>
@@ -358,3 +352,23 @@ lowest.
 -   <code> \<- \<\<- </code> - assignment (right to left)  
 -   <code> = </code> - assignment (right to left)  
 -   <code> ? </code> - help (unary and binary)
+
+Read more
+---------
+
+in <code>./Models/Descriptives</code>:
+
+-   [Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md)
+    - how values of items are labeled  
+-   [Descriptives](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md)
+    - basic stats of various items  
+-   [Attendance](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Attendance.md)
+    - focus on church attendence over time  
+-   [Databox](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.Rmd)
+
+See also
+
+-   [Deriving Data from NLYS97
+    extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
+-   [Data Manipulation
+    Guide](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md)

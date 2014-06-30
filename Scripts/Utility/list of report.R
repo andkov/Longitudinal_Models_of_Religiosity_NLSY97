@@ -4,8 +4,8 @@ require(dplyr)
 
 pathDerive <- base::file.path("./Data/Derive_dsL_from_Extract.Rmd")
 # ./Models/Descriptives
-pathDescriptives<- base::file.path("./Models/Descriptives/Descriptives.Rmd")
 pathMetrics<- base::file.path("./Models/Descriptives/Metrics.Rmd")
+pathDescriptives<- base::file.path("./Models/Descriptives/Descriptives.Rmd")
 pathAttendance<- base::file.path("./Models/Descriptives/Attendance.Rmd")
 pathDatabox <- base::file.path("./Models/Descriptives/Databox.Rmd")
 # ./Models/LCM
@@ -23,13 +23,12 @@ pathlmmutate<- base::file.path("./Vignettes/Questions/lm_in_mutate/lm_in_mutate.
 
 
 #  Define groups of reports 
-descriptives<-c(pathDatabox,pathMetrics)
 Vignettes<- c(pathManipulate)
-Descriptives<- c(pathDescriptives, pathMetrics, pathAttendance, pathManipulate)
+Descriptives<- c( pathMetrics,pathDescriptives, pathAttendance)
 
 
 # Place report paths HERE ###########
-buildthese <- c(allreps)##########
+buildthese <- (Descriptives)##########
 ####################################
 
 testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
@@ -38,13 +37,14 @@ for( pathRmd in buildthese ) {
 #   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   rmarkdown::render(input = pathRmd, 
                     output_format=c(
-                      "pdf_document"
-                      ,"word_document"
-                      ,"md_document"
+#                        "pdf_document"
+#                       ,"word_document"
+                      "md_document"
                       ,"html_document"
 
                                     ),
 #                     output_file=pathMd,
                     clean=TRUE)
 }
+ 
  

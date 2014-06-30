@@ -6,15 +6,18 @@ output:
     fig.retina: 2
     fig_width: 8
     toc: yes
+    theme: united
   md_document:
     toc: yes
     toc_depth: 3
   pdf_document:
+    fig_caption: no
+    fig_crop: no
     fig_width: 8
+    latex_engine: xelatex
     number_sections: yes
     toc: yes
     toc_depth: 3
-    figure_caption: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
@@ -49,36 +52,30 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
 ```
 
-```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-# Defined
-attcol8 # color palette for attendance
-baseSize # base text size
-colNA # color for the NA value in graphs
-
+```{r DeclareGlobals, echo=echoChunks, message=FALSE, results='hide'}
+aesDefs
 ```
 
 ```{r LoadPackages, echo=echoChunks, message=F}
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
-# select only respondence in the cross-sectional sample
-
 ```
 
-# Mapping Church Attendance in Time
+Mapping church attendance in time
 
 ## Cross-Sectional View  
 
 The focal variable of interest is **attend**, the item measuring church attendance for the year that preceded the interview date. The questionnaire recorded the responses on the ordinal scale.  
 
 ```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5,fig.cap="Figure caption test"}
-ds<- dplyr::filter(dsL,year==2000,sample==1)
+ds<- dsL %>%  dplyr::filter(year==2000,sample==1)
 p<-ggplot(ds, aes(x=attendF, fill=attendF))
 p <- p + geom_bar(color="black")
-p <- p + scale_fill_manual(values=attcol8, na.value=colNA, guide=FALSE)
+p <- p + scale_fill_manual(values=attendCol8, na.value=NACol, guide=FALSE)
 p <- p + coord_flip()
 # p <- p + guides(fill = guide_legend(reverse=TRUE, title="Attendence")) #http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/#reversing-the-order-of-items-in-the-legend
-p <- p + labs(title="How often did you attend a place of worship in the last year (2000)?", x="Church attendance", y="Count")
+p <- p + labs(title="How often have you attended a worship service (2000)?", x="Church attendance", y="Count")
 p <- p + ggplot2::theme_bw()
 p <- p + ggplot2::theme_bw(base_size=baseSize)
 p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
@@ -104,7 +101,7 @@ p<- ggplot( ds, aes(x=yearF, y=percent, fill=attendF))  #  keeping NA in calcula
 # geoms
 p<- p+ geom_bar(position="stack", stat="identity")
 # scales
-p<- p+ scale_fill_manual(values = attcol8)
+p<- p+ scale_fill_manual(values = attendCol8)
 p<- p+ scale_y_continuous(limits=c(0, 1),
                           breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
 p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
@@ -138,7 +135,7 @@ p<- ggplot( ds, aes(x=yearF, y=percent, fill=attendF))  #  keeping NA in calcula
 # geoms
 p<- p+ geom_bar(position="stack", stat="identity")
 # scales
-p<- p+ scale_fill_manual(values = attcol8)
+p<- p+ scale_fill_manual(values = attendCol8)
 p<- p+ scale_y_continuous(limits=c(0, 1),
                           breaks=c(.1,.2,.3,.4,.5,.6,.7,.8,.9,1))
 p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
@@ -174,8 +171,8 @@ p<- ggplot( ds, aes(x=yearF, y=percent, color=attendF))  #  keeping NA in calcul
 p<- p+ geom_line(aes(group=attendF), stat="identity", size=.7)
 p<- p+ geom_point(aes(fill=attendF), shape=21, size=3, color="black",position=position_dodge(0.2) )
 # scales
-p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
-p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_color_manual(values = attendCol8,na.value=NACol)
+p<- p+ scale_fill_manual(values = attendCol8,na.value=NACol)
 p<- p+ scale_y_continuous(limits=c(0, .4),
                           breaks=c(0,.1,.2,.3,.4))
 p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
@@ -214,8 +211,8 @@ p<- p+ geom_line(aes(group=attendF), stat="identity", size=.4)
 p<- p+ geom_point(aes(fill=attendF), shape=21, size=2, color="black",linesize=1,position=position_dodge(0.2) )
 p<- p+ facet_grid(sampleF ~ raceF)
 # scales
-p<- p+ scale_color_manual(values = attcol8,na.value=colNA)
-p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_color_manual(values = attendCol8,na.value=NACol)
+p<- p+ scale_fill_manual(values = attendCol8,na.value=NACol)
 p<- p+ scale_y_continuous(limits=c(0, .5),
                           breaks=c(0,.1,.2,.3,.4,.5))
 p<- p+ scale_x_discrete(limits=as.character(c(2000:2011)))
@@ -252,7 +249,7 @@ p<- p+ facet_grid(sampleF ~ raceF)
 p<- p+ geom_text(aes(label=round(percent,2)), position=position_dodge(.9), vjust=-.2, size=3.5)
 # scales
 
-p<- p+ scale_fill_manual(values = attcol8,na.value=colNA)
+p<- p+ scale_fill_manual(values = attendCol8,na.value=NACol)
 p<- p+ scale_y_continuous(limits=c(0, .3),
                           breaks=c(0,.1,.2,.3,.4,.5))
 # # annotations
@@ -316,8 +313,9 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 ```  
 
-where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the respondents. Each of such trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? To demostrate how interpretations of trajectories can vary among individuals consider the following example.   
-### Example: 4 individuals 
+where vertical dimension maps the outcome value and the horizontal maps the time. There will be a trajecory for each of the respondents. Each of such trajectories imply a story, a life scenario. Why one person grows in his religious involvement, while other declines, or never develops an interest in the first place? To demostrate how interpretations of trajectories can vary among individuals consider the following example.     
+
+### Attendance over waves 
 Attendance trajectories of subjects with **id**s  4, 25, 35, and 47 are plotted in the next graph     
 
 ```{r attend_line_4id_years,echo=echoChunks, message=F, warning=F, fig.height=3.3}
@@ -350,96 +348,25 @@ p
 
 ```
 
-The respondent  **id**=35 reported attending no worship services in any of the years, while respodent **id**=25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id**=47 started as a fairly regular attendee of religious services in 2000 (5= "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id**=4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011.  Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.    
+The respondent  **id** = 35 reported attending no worship services in any of the years, while respodent **id** = 25 seemed to frequent it, indicating weekly attendance in 8 out of the 12 years. Individual **id** = 47 started as a fairly regular attendee of religious services in 2000 (5 = "about twice a month"), then gradually declined his involvement to nill in 2009 and on. Respondent **id** = 4, on the other hand started off with a rather passive involvement, reporting  attended church only "Once or twice"  in 2000,  maintained a low level of participation throughout the years, only to surge his attendance in 2011.  Latent curve models will describe intraindividual trajectories of change, while summarizinig the interindividual similarities and trends.    
 
 ### Changing the metric of time  
-Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age. There are, however, a number of ways information about age was recorded.   
-
+Previous research in religiousity indicated that age might be one of the primary factors explaining interindividual differences in church attendance. To examine the role of age, we change the metric of time from waves of measurement, as in the previous graph, to biological age. Consult [Metrics][metrics] report for details on measurement of age. 
 ```{r comparing_age, warning=F }
 ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>% 
-  dplyr::select(idF,attend, year, byear, ageyear, agemon, ageyear) %>% 
-  mutate(time=year-2000, age=(year-byear+1), ageCurrent = agemon/12)
+  dplyr::select(idF,byear,bmonth,year,ageyear,agemon) %.%
+  dplyr::mutate(time=year-2000, age=agemon/12)
 print(ds[ds$idF==25,])
 ```
-Note that for person **id** = 25 the age was recorded as 21 years for both 2003 and 2004. However, when you examine age in months (**agemon**) you can see this is rounding issue that disappears once a more precise scale is used.  To avoid this potentially confusing peculiarity, age in years will be either calculated as (**age** = **year** - **byear** + 1)   
 
-Plotting age, caclulated as  <code> age = year - byear + 1 </code>   
-
-```{r attend_line_4id_age,echo=echoChunks, message=F, fig.height= 3.3 }
-p<-ggplot(ds, aes(x=age,y=attend, color=idF))
-# geoms
-p<-p+ geom_line(size=.4)
-p<-p+ geom_point(size=2, position=position_dodge(0.2))
-# scales
-p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(0, 8),
-                     breaks=c(1:8))
-p<-p+ scale_x_continuous("Age in years",
-                   limits=c(16,31),
-                   breaks=seq(from=12, to=31,by=1))
-p <- p + scale_color_manual(values=c("black","red","green", "purple"))
-# annotations
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p <- p + guides(color = guide_legend(title="Respondents"))
-# themes
-p <- p + ggplot2::theme_bw()
-p <- p + ggplot2::theme_bw(base_size=baseSize)
-p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
-p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
-p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
-p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
-p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
-p
-```
-
-
-
-```{r}
-ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>% 
-  dplyr::select(idF,year,attend,agemon,ageyear) %>% 
-  mutate(time=year-2000, age=ageyear)
-head(ds,12)
-```
-
-Plotting age, caclulated as  <code> age = ageyear </code>. Notice that when compared to the rounded <code>agemon</code>, variable <code>ageyear</code> provides less accurate measure of age than <code>year - byear + 1</code>
-
-```{r attend_line_4id_age2,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height=3.3  }
-p<-ggplot(ds, aes(x=age,y=attend, color=idF))
-# geoms
-p<-p+ geom_line(size=.4)
-p<-p+ geom_point(size=2, position=position_dodge(0.2))
-# scales
-p<-p+ scale_y_continuous("Church attendance",
-                     limits=c(0, 8),
-                     breaks=c(1:8))
-p<-p+ scale_x_continuous("Age in years",
-                   limits=c(16,31),
-                   breaks=seq(from=12, to=31,by=1))
-p <- p + scale_color_manual(values=c("black","red","green", "purple"))
-# annotations
-p<-p+ labs(title=paste0("In the past year, how often have you attended a worship service?"))
-p <- p + guides(color = guide_legend(title="Respondents"))
-# themes
-p <- p + ggplot2::theme_bw()
-p <- p + ggplot2::theme_bw(base_size=baseSize)
-p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
-p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
-p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
-p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
-p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
-p
-```
-
-Plotting age, caclulated as  <code> ageD = agemon/12 </code>. This is the most precise age variable and maybe used when models require a finer age resolutions.
-```{r}
-ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>% 
-  dplyr::select(idF,year,attend,agemon,ageyear,byear) %>% 
-  mutate(time=year-2000, age=agemon/12)
-head(ds,12)
-```
-
+### Attendance over ages  
+Plotting individual trajectories, with age as the metric of time.  
 
 ```{r attend_line_4id_age3,echo=echoChunks, message=F, error=FALSE, warning=FALSE, fig.height = 3.3 }
+ds<- dsL %>% dplyr::filter(id %in% c(4,25,35,47),year %in% c(2000:2011)) %>% 
+  dplyr::select(idF,byear,bmonth,year,ageyear,agemon,attend) %.%
+  dplyr::mutate(time=year-2000, age=agemon/12)
+
 p<-ggplot(ds, aes(x=age,y=attend, color=idF))
 # geoms
 p<- p + geom_line(size=.4)
@@ -469,20 +396,23 @@ p
 
 
 
-===
-Read more in <code>./Models/Descriptives</code>:   
-+ [Metrics][Metrics] - how values of items are labeled 
-+ [Descriptives][descriptives] - basic stats of various items   
-+ [Attendance](attend) - focus on church attendence over time   
-+ [Databox][databoxList]   
+
+## Read more 
+
+in <code>./Models/Descriptives</code>:   
+
++ [Metrics][metrics] - how values of items are labeled       
++ [Descriptives][descriptives] - basic stats of various items       
++ [Attendance][attend] - focus on church attendence over time      
++ [Databox][databox]        
+
+See also   
+
++ [Deriving Data from NLYS97 extract][derive]
++ [Data Manipulation Guide][manipulate]
 
 
-[databox]:http://statcanvas.net/thesis/databox/
-[derive]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md
-[labels]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R
-[manipulate]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md
-[attend]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Attendance.md
-[descriptives]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md
-[metrics]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md
-[databoxList]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.md
+```{r child, child = 'Citations.Rmd'}
+
+```
 

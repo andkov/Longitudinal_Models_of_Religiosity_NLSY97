@@ -1,19 +1,28 @@
 ---
-title: "Data Manipulation"
+title: "Data Manipulaton"
 output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
     fig_width: 8
     toc: yes
+    theme: united
+  md_document:
+    toc: yes
+    toc_depth: 3
   pdf_document:
+    fig_caption: no
+    fig_crop: no
     fig_width: 8
     latex_engine: xelatex
+    number_sections: yes
     toc: yes
+    toc_depth: 3
   word_document:
     fig_width: 6.5
 mainfont: Calibri
 ---
+
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
@@ -45,9 +54,8 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Vignettes/dplyr/using_dplyr.R") # the file to which knitr calls for the chunks
 ```
 
-Data Manipulation
-==============
-Report examplifying the use of <code>dplyr</code> in data handling on the example of **dsL**>.
+
+Demonstrating the language of data manipulation in <code>dplyr</code> packages using  **dsL** as an example
 
 <!-- Run this three chunks to get to the starting point -->
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
@@ -59,6 +67,7 @@ Report examplifying the use of <code>dplyr</code> in data handling on the exampl
 ```{r LoadData, echo=echoChunks, message=FALSE}
 ```
 
+
 ## Five basic functions in data handling
 
 For a more detailed discussion of basic verbs and operations consult the [R-Studio guide][1] or internal [vignette][2]
@@ -68,12 +77,16 @@ vignette("introduction",package="dplyr")
 
 The following is a brief demonstration of <code>dplyr</code> syntax using **dsL** dataset as an example. I attach prefix <code>dplyr::</code> to avoid possible conflicts with <code>plyr</code> package on which <code>ggplot2</code> package relies. I recommend such practice in all <code>dplyr</code>  expressions in sharable publications.  
 
+One of the innovations in <code>dplyr</code> is the ability to chain phrases in the data manipulationsentence. The operator <code>%>%</code> (or <code>%.%</code>), accomplishes this, turning <code>x %>% f(y)</code> into <code>f(x, y) </code>.   
+
+
 ###<code>select()</code> 
 selects variables into a smaller data set
 ```{r}
 ds<-dsL
 dim(ds)
-ds<- dplyr::select(ds,id,year, byear, attend, attendF)
+ds<- dsL %>%
+  dplyr::select(id,year, byear, attend, attendF)
 head(ds,13)
 dim(ds)
 ```
@@ -82,14 +95,16 @@ dim(ds)
 Removes observations that do not meet criteria. The following code selects observation based on the type of sample    
 
 ```{r, echo=F}
-ds<- dplyr::filter(dsL, id %in% c(1, 6803) & year==2000 )
-ds<- dplyr::select(ds, sample, sampleF)
+ds<- dsL %>%
+  dplyr::filter(id %in% c(1, 6803) & year==2000 ) %>%
+  dplyr::select(sample, sampleF)
 ds
 ```
 and only between years 2000 and 2011, as only during those years the outcome of interest <code>attend</code> was recorded. 
 ```{r, echo=T, message=F}
-ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- dplyr::select(ds,id, year, attend, attendF)
+ds<- dsL %>%
+  dplyr::filter(sample==1, year %in% c(2000:2011))%>%
+  dplyr::select(id, year, attend, attendF)
 head(ds,13)
 ```
 
@@ -97,11 +112,12 @@ head(ds,13)
 ###<code>arrange()</code> 
 Sorts observations
 ```{r, echo=T, message=F}
-ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- dplyr::select(ds,id, year, attend)
-ds<- dplyr::arrange(ds, year, desc(id))
+ds<- dsL %>%
+  dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
+  dplyr::select(id, year, attend) %>%
+  dplyr::arrange(year, desc(id))
 head(ds,13)
-ds<- arrange(ds, id, year)
+ds<- dplyr::arrange(ds, id, year)
 head(ds, 13)
 ```
 
@@ -110,14 +126,14 @@ head(ds, 13)
 
 Creates additional variables from the values of existing.
 ```{r, echo=T, message=F}
-ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- dplyr::select(ds,id, byear, year, attend)
-ds<- dplyr::mutate(ds, 
-            age = year-byear, 
-            timec = year-2000,
-            linear= timec,
-            quadratic= linear^2,
-            cubic= linear^3)
+ds<- dsL %>%
+  dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
+  dplyr::select(id, byear, year, attend) %>%
+  dplyr::mutate(age = year-byear, 
+                timec = year-2000,
+                linear= timec,
+                quadratic= linear^2,
+                cubic= linear^3)
 head(ds,13)
 ```
 
@@ -127,13 +143,15 @@ collapses data into a single value computed according to the aggregate functions
 
 ```{r}
 require(dplyr)
-ds<- dplyr::filter(dsL,sample==1)
-ds<- dplyr::summarize(ds, N= n_distinct(id))
+ds<- dsL %>%
+  dplyr::filter(sample==1) %>%
+  dplyr::summarize(N= n_distinct(id))
 ds
 ```
 Other functions one could use with <code>summarize()</code> include:
 
-From <code>base</code>
+From <code>base</code>   
+
 + <code> min() </code>   
 + <code> max() </code>   
 + <code> mean() </code>   
@@ -142,43 +160,31 @@ From <code>base</code>
 + <code> median() </code>   
 + <code> IQR()  </code>   
 
-Native to <code>dplyr</code>
-+ <code> n() </code>  -  number of observations in the current group
-+ <code> n_distinct(x) </code>  -    count the number of unique values in x.
-+ <code> first(x) </code>  -  similar to <code>x[1]</code> + control over <code>NA</code>
-+ <code> last(x) </code>  -  similar to <code>x[length(x)] </code> + control over <code>NA</code>
-+ <code> nth(x, n)  </code>  -  similar to<code> x[n] </code>  + control over <code>NA</code>
+Native to <code>dplyr</code>    
+
++ <code> n() </code>  -  number of observations in the current group   
++ <code> n_distinct(x) </code>  -    count the number of unique values in x.    
++ <code> first(x) </code>  -  similar to <code>x[ 1 ]</code> + control over <code>NA</code>      
++ <code> last(x) </code>  -  similar to <code>x[length(x)] </code> + control over <code>NA</code>      
++ <code> nth(x, n)  </code>  -  similar to<code> x[n] </code>  + control over <code>NA</code>     
 
 ## Grouping and Combining 
 The function <code>group_by()</code> is used to identify groups in split-apply-combine (SAC) procedure: it splits the initial data into smaller datasets (according to all possible interactions between the levels of supplied variables). It is these smaller datasets that <code>summarize()</code> will individually collapse into a single computed value according to its formula.  
 ```{r, echo=T, message=F}
-ds<- dplyr::filter(dsL,sample==1, year %in% c(2000:2011))
-ds<- dplyr::select(ds,id, year, attendF)
-
-s <- dplyr::group_by(ds, year,attendF)
-s <- dplyr::summarise(s, count = n())
-s <- dplyr::mutate(s, total = sum(count),
-              percent= count/total)
-head(s,10)
-
-```
-
-The same result can be achieved with a more elegant syntax that relies on <code>%>%</code> operator, in which <code>x %>% f(y)</code> turns into <code>f(x, y) </code>. Alternatively, one can use <code>%.%</code> for identical results.
-
-```{r, echo=TRUE}
-ds<-dsL %>%
+ds<- dsL %>%
   dplyr::filter(sample==1, year %in% c(2000:2011)) %>%
   dplyr::select(id, year, attendF) %>%
   dplyr::group_by(year,attendF) %>%
-    dplyr::summarise(count = n()) %>%
-    dplyr::mutate(total = sum(count),
-              percent= count/total)  
-head(ds,10)    
+  dplyr::summarise(count = n()) %>%
+  dplyr::mutate(total = sum(count),
+              percent= count/total)
+head(ds,10)
+
 ```
 
-To verify that this is what we wanted to achieve:
+To verify :
 ```{r, echo=T, message=F}
-dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
+dplyr::summarize( filter(ds, year==2000), should.be.one=sum(percent))
 ```
 
 
@@ -186,7 +192,7 @@ dplyr::summarize( filter(s, year==2000), should.be.one=sum(percent))
 Generally, we can compose any desired dataset by using matrix calls. The general formula is of the form:
 **ds**[  _rowCond_  ,  _colCond_  ], where **ds** is a dataframe, and  _rowCond_ and _colCond_ are conditions for including rows and columns of the new dataset, respectively. One can also call a variable by attaching <code> $ </code> followed variable name to the name of the dataset:    <code>**ds**_$variableName_</code>. 
 ```{r, echo=T}
-ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","attendF","ageyearF","agemon")]
+ds<-dsL[dsL$year %in% c(2000:2011),c('id',"byear","year","agemon","attendF","ageyearF")]
 print(ds[ds$id==1,]) 
 ```
 
@@ -229,6 +235,26 @@ The following unary and binary operators are defined for <code> base</code>. The
 + <code> <- <<-	 </code>  - assignment (right to left)   
 + <code> =	 </code>  - assignment (right to left)   
 + <code> ?	 </code>  - help (unary and binary)   
+
+
+## Read more 
+
+in <code>./Models/Descriptives</code>:   
+
++ [Metrics][metrics] - how values of items are labeled       
++ [Descriptives][descriptives] - basic stats of various items       
++ [Attendance][attend] - focus on church attendence over time      
++ [Databox][databox]        
+
+See also   
+
++ [Deriving Data from NLYS97 extract][derive]
++ [Data Manipulation Guide][manipulate]
+
+
+```{r child, child = '../../Models/Descriptives/Citations.Rmd'}
+
+```
 
 
 [1]:http://blog.rstudio.org/2014/01/17/introducing-dplyr/

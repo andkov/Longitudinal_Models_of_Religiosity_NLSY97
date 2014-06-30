@@ -1,0 +1,24 @@
+---
+title: "SidebarMenu"
+author: "Andriy Koval"
+date: "Saturday, June 28, 2014"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    toc: yes
+---
+
+# [Longitudinal Models of Religiosity][lmr]
+## [Data][data]
+### [Derive clean dataset][derive]
+## [Models][models]
+### [Metrics][metrics]
+### [Descriptives][descriptives]
+### [Attendance][attend]
+### [Databox][databox]
+## [Vignettes][vignettes]
+
+
+```{r child, child = 'Citations.Rmd'}
+
+```

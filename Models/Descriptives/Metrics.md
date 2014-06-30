@@ -1,27 +1,23 @@
--   Metrics:labeling factors and exploring scales
-    -   Data preliminaries
-    -   Labeling Factor Levels
-    -   Time metrics : Age, Period, Cohort
+-   Data preliminaries
+-   Labeling Factor Levels
+-   Time metrics : Age, Period, Cohort
+-   Attendance
+-   Read more
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
 
 
 
-Metrics:labeling factors and exploring scales
-=============================================
-
-Report explains how the response categories from NLSY97 questionnaire
-are labeled and demonstrates application of labeled factors in data
-operations and graphing.
+Labeling factors and exploring scales.
 
 Data preliminaries
 ------------------
 
 Initial point of departure - the
-[databox](http://statcanvas.net/thesis/databox/) of the selected
-variables, described in the Methods chapter. ![Figure
-3.2](./figure_rmd/3_Methods_Figure_3_2.png) This
+[databox](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.Rmd)
+of the selected variables, described in the Methods chapter.  
+![Figure 3.2](../../images/databox_slice.png) This
 [databox](http://statcanvas.net/thesis/databox/) corresponds to the
 dataset **dsL** produced by
 [Derive\_dsL\_from\_Extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
@@ -30,6 +26,12 @@ report, given in the Appendix.
     dsL<-readRDS("./Data/Derived/dsL.rds")
 
 ![Figure 3.3](./figure_rmd/3_Methods_Figure_3_3.png)
+
+Note that the variable **year** serves as a natural devided between time
+invariant (TIvars) and time variant (TVvars) variables. All modeling
+operations beging with subsetting this dataset. For the grammer rules of
+operations with relevant data see [Data Manipulation
+Guide](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md).
 
 Labeling Factor Levels
 ----------------------
@@ -40,7 +42,15 @@ items were recorded on some discrete scale, either counting occasions or
 assigning an intiger to a category of response. However, data were saved
 as numerical values or intigers
 
-    ds<- dsL[,1:(ncol(dsL)/2)]# selects the first half of variables
+    ds<- dsL %>%
+      dplyr::select(
+            sample, id, sex, race, bmonth,byear, attendPR, relprefPR,relraisedPR,
+        year,
+            agemon, ageyear, famrel, attend,
+            values, todo, obeyed, pray, decisions, 
+            relpref, bornagain, faith, 
+            calm, blue, happy, depressed, nervous,
+            tv, computer, internet)               
     str(ds)
 
     'data.frame':   134745 obs. of  30 variables:
@@ -81,8 +91,8 @@ sourced at the end of
 matches numeric values with response labels from the questionnaire and
 adds to **dsL** copies of the variables, saved as labeled factors. For
 estimations routines such as <code>lme4</code> or graphing functions
-such as <code>ggplot</code>, the data type (string,numeric, factor) is a
-meaningful input, so a quick access to both formats frequently proves
+such as <code>ggplot2</code>, the data type (string,numeric, factor) is
+a meaningful input, so a quick access to both formats frequently proves
 useful. It is convenient to think that **dsL** contains only
 
     ncol(dsL)/2
@@ -155,35 +165,34 @@ variables, but each of them has a double, a labeled factor.
      $ computerF   : Ord.factor w/ 6 levels "None"<"less than 1"<..: NA NA NA NA NA 5 NA NA NA NA ...
      $ internetF   : Ord.factor w/ 2 levels "No"<"Yes": NA NA NA NA NA NA 2 1 2 2 ...
 
-This give a certain flexibity to assemble needed dataset quickly and
+This give a certain flexibity in assembling needed dataset quickly and
 have access to factor labels. One can alternate between the raw metric
 and labeled factor by adding "F" suffix to the end of the variable name:
 
-    selectCols<-c("year","id","byear","attend","attendF") # select the columns with these names
-    ds<-dsL[,selectCols] # select all rows for the columns listed  selectCols
-    print(ds[ds$id==1,]) # print all availible data for respondent with ID 1
+    ds<- dsL %>%
+      dplyr::filter(id==25) %>%
+      dplyr::select(id,byear,year, attend,attendF)
+    ds
 
-       year id byear attend         attendF
-    1  1997  1  1981     NA            <NA>
-    2  1998  1  1981     NA            <NA>
-    3  1999  1  1981     NA            <NA>
-    4  2000  1  1981      1           Never
-    5  2001  1  1981      6 About once/week
-    6  2002  1  1981      2   Once or Twice
-    7  2003  1  1981      1           Never
-    8  2004  1  1981      1           Never
-    9  2005  1  1981      1           Never
-    10 2006  1  1981      1           Never
-    11 2007  1  1981      1           Never
-    12 2008  1  1981      1           Never
-    13 2009  1  1981      1           Never
-    14 2010  1  1981      1           Never
-    15 2011  1  1981      1           Never
+       id byear year attend            attendF
+    1  25  1983 1997     NA               <NA>
+    2  25  1983 1998     NA               <NA>
+    3  25  1983 1999     NA               <NA>
+    4  25  1983 2000      5  About twice/month
+    5  25  1983 2001      7 Several times/week
+    6  25  1983 2002      7 Several times/week
+    7  25  1983 2003      2      Once or Twice
+    8  25  1983 2004      7 Several times/week
+    9  25  1983 2005      5  About twice/month
+    10 25  1983 2006      7 Several times/week
+    11 25  1983 2007      5  About twice/month
+    12 25  1983 2008      7 Several times/week
+    13 25  1983 2009      7 Several times/week
+    14 25  1983 2010      7 Several times/week
+    15 25  1983 2011      7 Several times/week
 
 Having quick access to factor labels will be especially useful during
-graph production. For the grammer rules of operations with relevant data
-see [Data Manipulation
-Guide](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md).
+graph production.
 
 Time metrics : Age, Period, Cohort
 ----------------------------------
@@ -191,52 +200,84 @@ Time metrics : Age, Period, Cohort
 NLSY97 sample includes individuals from five cohorts, born between 1980
 and 1984.The following graphics shows how birth cohort, age of
 respondents, and round of observation are related in NSLY97.  
-![Figure 3.1](./figure_rmd/3_Methods_Figure_3_1.png)
+![Figure 3.1](../../images/APC_layout.png)
 
-NSLY97 contains static and dynamic indicators of age. Variables byear
-and bmonth were recorded once in 1997 (static) and contain
-respondentsâ€™ birth year and birth month respectively. Two age
-variables were recorded continuously at each interview (dynamic): age at
-the time of the interview in months (agemon) and in years (ageyear).
+NSLY97 contains static (**bmonth**, **byear**) and dynamic (**agemon**,
+**ageyear**) indicators of age :
 
-    ds<- dsL %>% dplyr::filter(id==25, year %in% c(1997:2011)) %>% dplyr::select(id,bmonthF,byear,year, agemon,ageyear) %>%
-      mutate (age = (year-byear+1), ageD = agemon/12)
+    ds<- dsL %>% 
+      dplyr::filter(id==25, year %in% c(1997:2011)) %>% 
+      dplyr::select(id,byear,bmonthF,year,agemon,ageyear)
     print(ds)
 
-       id bmonthF byear year agemon ageyear age  ageD
-    1  25     Mar  1983 1997    167      13  15 13.92
-    2  25     Mar  1983 1998    188      15  16 15.67
-    3  25     Mar  1983 1999    201      16  17 16.75
-    4  25     Mar  1983 2000    214      17  18 17.83
-    5  25     Mar  1983 2001    226      18  19 18.83
-    6  25     Mar  1983 2002    236      19  20 19.67
-    7  25     Mar  1983 2003    254      21  21 21.17
-    8  25     Mar  1983 2004    261      21  22 21.75
-    9  25     Mar  1983 2005    272      22  23 22.67
-    10 25     Mar  1983 2006    284      23  24 23.67
-    11 25     Mar  1983 2007    295      24  25 24.58
-    12 25     Mar  1983 2008    307      25  26 25.58
-    13 25     Mar  1983 2009    319      26  27 26.58
-    14 25     Mar  1983 2010    332      27  28 27.67
-    15 25     Mar  1983 2011    342      28  29 28.50
+       id byear bmonthF year agemon ageyear
+    1  25  1983     Mar 1997    167      13
+    2  25  1983     Mar 1998    188      15
+    3  25  1983     Mar 1999    201      16
+    4  25  1983     Mar 2000    214      17
+    5  25  1983     Mar 2001    226      18
+    6  25  1983     Mar 2002    236      19
+    7  25  1983     Mar 2003    254      21
+    8  25  1983     Mar 2004    261      21
+    9  25  1983     Mar 2005    272      22
+    10 25  1983     Mar 2006    284      23
+    11 25  1983     Mar 2007    295      24
+    12 25  1983     Mar 2008    307      25
+    13 25  1983     Mar 2009    319      26
+    14 25  1983     Mar 2010    332      27
+    15 25  1983     Mar 2011    342      28
 
-The variable ageyear records the full number of years a respondent
-reached at the time of the interview. Due to difficulties of
-administering the survey, time intervals between the waves could differ.
-For example, for one person id = 25 the age was recorded as 21 years for
-both 2003 and 2004 (see ageyear). However, when you examine age in
-months (agemon) you can see this rounding issue disappears, once a more
-precise scale is used. To avoid this potentially confusing peculiarity,
-age in years will be calculated as age = year â€“ byear +1 or as (ageD =
-agemon/12). The suffix D in ageD refers to the fact that it was
-calculated from a dynamic age indicator.
+When transforming the metric of time, and using biological age instead
+of year of measurement as the temporal dimension, the value of age at
+the time of the interview will be computed as **age** = **agemon**/12
 
-=== Read more in <code>./Models/Descriptives</code>:  
-+
-[Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md)
-- how values of items are labeled +
-[Descriptives](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md)
-- basic stats of various items  
-+ [Attendance](attend) - focus on church attendence over time  
-+
-[Databox](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.md)
+    ds<- dsL %>% 
+      dplyr::filter(id==25, year %in% c(1997:2011)) %>% 
+      dplyr::select(id,bmonthF,byear,year, agemon,ageyear) %>%
+      dplyr::mutate (age =  agemon/12)
+    print(ds)
+
+       id bmonthF byear year agemon ageyear   age
+    1  25     Mar  1983 1997    167      13 13.92
+    2  25     Mar  1983 1998    188      15 15.67
+    3  25     Mar  1983 1999    201      16 16.75
+    4  25     Mar  1983 2000    214      17 17.83
+    5  25     Mar  1983 2001    226      18 18.83
+    6  25     Mar  1983 2002    236      19 19.67
+    7  25     Mar  1983 2003    254      21 21.17
+    8  25     Mar  1983 2004    261      21 21.75
+    9  25     Mar  1983 2005    272      22 22.67
+    10 25     Mar  1983 2006    284      23 23.67
+    11 25     Mar  1983 2007    295      24 24.58
+    12 25     Mar  1983 2008    307      25 25.58
+    13 25     Mar  1983 2009    319      26 26.58
+    14 25     Mar  1983 2010    332      27 27.67
+    15 25     Mar  1983 2011    342      28 28.50
+
+Attendance
+----------
+
+NLSY97 asked to report church attendance (**attend**)for the past 12
+months preceding the interview date. The response offered a choice of 7
+categories ordered by magnitude. ![Figure caption
+test](figure_rmd/Metrics/attend_2000.png)
+
+Read more
+---------
+
+in <code>./Models/Descriptives</code>:
+
+-   [Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md)
+    - how values of items are labeled  
+-   [Descriptives](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md)
+    - basic stats of various items (**Continue**)  
+-   [Attendance](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Attendance.md)
+    - focus on church attendence over time  
+-   [Databox](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.Rmd)
+
+See also
+
+-   [Deriving Data from NLYS97
+    extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
+-   [Data Manipulation
+    Guide](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md)

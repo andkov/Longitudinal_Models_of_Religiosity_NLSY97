@@ -1,0 +1,17 @@
+{
+    "contents" : "# Definitions of of aesthetics used in reports\n\n\n# COLORS\n## the colors for response categories of item \"attend\"\nattendCol8<-c(\"Never\"=\"#4575b4\",\n           \"Once or Twice\"=\"#74add1\",\n           \"Less than once/month\"=\"#abd9e9\",\n           \"About once/month\"=\"#e0f3f8\",\n           \"About twice/month\"=\"#fee090\",\n           \"About once/week\"=\"#fdae61\",\n           \"Several times/week\"=\"#f46d43\",\n           \"Everyday\"=\"#d73027\")\n\n## The color of cohorts\nbyearCol5<- c(\"1980\"=\"#9ecae1\",\n               \"1981\"=\"#6baed6\",\n               \"1982\"=\"#4292c6\",\n               \"1983\"=\"#2171b5\",\n               \"1984\"=\"#084594\")\n\n\n## the color of missing values\nNACol<- \"#636363\"\n\n\n# SIZES\n# guides and legends, but not axes and title\nbaseSize<- 14\n\n\n# SHAPES\n\n# GROUPS\n\n# Variables that DO NOT change with time, TI - time invariant\nTIvars<-c(\"sample\", \"id\", \"sex\",\"race\", \"bmonth\",\"byear\",  'attendPR', \"relprefPR\", \"relraisedPR\")\n\n# Variables that DO change with time, TV - time variant\nTVvars<- c(\"agemon\", \"ageyear\", \"famrel\", \"attend\",\n           \"values\",\"todo\", \"obeyed\",\"pray\",  \"decisions\", \n           \"relpref\", \"bornagain\", \"faith\", \n           \"calm\", \"blue\", \"happy\", \"depressed\",\"nervous\",\n           \"tv\", \"computer\", \"internet\")\n \n####\n# All defined elements\naesDefs<- list(\"attendCol8\" = attendCol8, \n                      \"byearCol5\" = byearCol5,\n                      \"NACol\" = NACol, \n                      \"baseSize\"= baseSize,\n                      \"TIvars\"=TIvars,\n                      \"TVvars\"=TVvars)\n",
+    "created" : 1404070372296.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "686995672",
+    "id" : "CCE1CB40",
+    "lastKnownWriteTime" : 1404070429,
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Models/Descriptives/AesDefine.R",
+    "project_path" : "Models/Descriptives/AesDefine.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

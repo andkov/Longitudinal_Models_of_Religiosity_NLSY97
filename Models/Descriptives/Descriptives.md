@@ -1,8 +1,8 @@
--   Basic descriptives reports on selected NLSY97 items
-    -   Basic demographics
-    -   Distribution of age variables
-        -   Months of births
-        -   Age and cohort structure
+-   Basic demographics
+-   Distribution of age variables
+    -   Months of births
+    -   Age and cohort structure
+-   Read more
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 
@@ -15,34 +15,39 @@
 
 
 
+
 Basic descriptives reports on selected NLSY97 items
-===================================================
 
 Basic demographics
 ------------------
 
-After importing a clean dataset **dsL**
+A clean dataset **dsL** contains data on
 
-    dsL<-readRDS("./Data/Derived/dsL.rds")
     dplyr::summarize(dsL,N=n_distinct(id))
 
          N
     1 8983
 
-respondents. Of them one (id=467) was removed from the dataset due to
+respondents. Of them one (id = 467) was removed from the dataset due to
 abberant age score that seemed as a coding mistake. NLSY97 contains
 representative household sample and the oversample of racial minorities.
 
-    ds<- dsL %>% dplyr::group_by(sampleF) %>% summarize (count=n_distinct(id))
+    ds<- dsL %>% 
+      dplyr::group_by(sampleF) %>% 
+      dplyr::summarize (count=n_distinct(id))
     ds
 
-      count
-    1  8983
+    Source: local data frame [2 x 2]
+
+              sampleF count
+    1 Cross-Sectional  6747
+    2      Oversample  2236
 
     ymax not defined: adjusting position using y instead
     ymax not defined: adjusting position using y instead
 
-![plot of chunk basic\_demo](figure_rmd/Descriptives/basic_demo.png)
+![Figure 4.1 Basic demographics: race and
+gender](figure_rmd/Descriptives/basic_demo.png)
 
 Distribution of age variables
 -----------------------------
@@ -58,34 +63,28 @@ and in years ageyear. Next graph shows how births in the NLSY97 sample
 
 ### Months of births
 
-    Source: local data frame [13 x 4]
-    Groups: bmonth
-
-       bmonth byearF count  born
-    1       1   1980   159  80-1
-    2       2   1980   136  80-2
-    3       3   1980   139  80-3
-    4       4   1980   125  80-4
-    5       5   1980   128  80-5
-    6       6   1980   137  80-6
-    7       7   1980   136  80-7
-    8       8   1980   141  80-8
-    9       9   1980   144  80-9
-    10     10   1980   146 80-10
-    11     11   1980   146 80-11
-    12     12   1980   154 80-12
-    13      1   1981   160  81-1
-
 ![plot of chunk bmonth\_dist](figure_rmd/Descriptives/bmonth_dist.png)
 
 ### Age and cohort structure
 
 ![plot of chunk agemon\_dist](figure_rmd/Descriptives/agemon_dist.png)
 
-===
+Read more
+---------
 
-Read more in <code>./Models/Descriptives</code>:  
-+ [Metrics][Metrics] - how values of items are labeled  
-+ [Descriptives][descriptives] - basic stats of various items  
-+ [Attendance][attend] - focus on church attendence over time  
-+ [Databox][databoxList]
+in <code>./Models/Descriptives</code>:
+
+-   [Metrics](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md)
+    - how values of items are labeled  
+-   [Descriptives](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md)
+    - basic stats of various items  
+-   [Attendance](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Attendance.md)
+    - focus on church attendence over time (**Continue**)  
+-   [Databox](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.Rmd)
+
+See also
+
+-   [Deriving Data from NLYS97
+    extract](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md)
+-   [Data Manipulation
+    Guide](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md)

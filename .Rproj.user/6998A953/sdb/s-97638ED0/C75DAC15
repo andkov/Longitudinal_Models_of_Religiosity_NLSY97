@@ -1,0 +1,17 @@
+{
+    "contents" : "---\ntitle: \"Citations\"\noutput:\n  html_document:\n    toc: yes\n---\n\n[derive]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Data/Derive_dsL_from_Extract.md\n[metrics]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Metrics.md\n[descriptives]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Descriptives.md\n[attend]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Attendance.md\n[databox]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Models/Descriptives/Databox.Rmd\n\n[labels]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Scripts/Data/LabelingFactorLevels.R\n[manipulate]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/blob/master/Vignettes/dplyr/Data_Manipulation_Guide.md\n\n[databoxStatcanvas]:http://statcanvas.net/thesis/databox/\n[NLSWeb]:https://www.nlsinfo.org/investigator/pages/login.jsp\n[NLS]:http://www.bls.gov/nls/\n[NLSparents]:http://www.bls.gov/nls/quex/r1/y97rd1pquex.htm\n\n[lmr]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97\n\n[data]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data\n\n[models]::https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models\n[vignettes]::https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Vignettes",
+    "created" : 1404097021602.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3853300830",
+    "id" : "C75DAC15",
+    "lastKnownWriteTime" : 1404097086,
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Models/Descriptives/Citations.Rmd",
+    "project_path" : "Models/Descriptives/Citations.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

@@ -1,9 +1,9 @@
 {
-    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Models/Descriptives",
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Data",
     "sortOrder" : [
         {
             "ascending" : false,
-            "columnIndex" : 1
+            "columnIndex" : 4
         },
         {
             "ascending" : true,
@@ -11,7 +11,11 @@
         },
         {
             "ascending" : false,
-            "columnIndex" : 4
+            "columnIndex" : 1
+        },
+        {
+            "ascending" : false,
+            "columnIndex" : 3
         }
     ]
 }
