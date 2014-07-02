@@ -1,0 +1,17 @@
+{
+    "contents" : "pathFolder<- file.path(getwd(),\"Models/Descriptives/temporal_animations/\")\njoinThese<- c(file.path(pathFolder,\"Agemon_Years/agemon_2000.png\"),\n             file.path(pathFolder,\"Agemon_Years_Stabilized/agemon_2000.png\"))\nrl = lapply(joinThese, png::readPNG)\ngl = lapply(rl, grid::rasterGrob)\ndo.call(gridExtra::grid.arrange(), gl) \n\n?sprintf\n\n",
+    "created" : 1404284459404.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3279895099",
+    "id" : "B6C113F",
+    "lastKnownWriteTime" : 1404285155,
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Models/Descriptives/temporal_animations/joining PNGs.R",
+    "project_path" : "Models/Descriptives/temporal_animations/joining PNGs.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

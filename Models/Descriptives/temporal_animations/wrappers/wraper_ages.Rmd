@@ -1,0 +1,230 @@
+---
+title: "Attend over Ages"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    theme: united
+    toc: yes
+  md_document:
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_caption: no
+    fig_crop: no
+    fig_width: 8
+    highlight: tango
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
+---
+
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+# IIMPORTANT:  spell the path to the root directory
+opts_knit$set(root.dir='../../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+  out.width = NULL,
+  fig.path = 'Race_Counts/',     
+  dev = "png",
+  dpi = 100
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE, results='hide'}
+# aesDefs
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+# locate the graph that you would like to replicate across time
+commonGraphAge<-file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R")
+# manually find and replace "attend_race_" into the chunk/image name you want
+# don't forget to change the output folder in fig.path = 'figure_rmd/', where images for this focal variable(s) will be stored
+```
+Among the respondents who were +/- 6 months from a given age.
+For example, a 16 year-old  is defined as an individual between 15.5 and 16.5 years of age at the time of the interview.
+
+## Attendance among races at age 16
+```{r attend_race_16, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 16
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 17
+```{r attend_race_17, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 17
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 18
+```{r attend_race_18, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 18
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 19
+```{r attend_race_19, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 19
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 20
+```{r attend_race_20, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 20
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 21
+```{r attend_race_21, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 21
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 22
+```{r attend_race_22, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 22
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 23
+```{r attend_race_23, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 23
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 24
+```{r attend_race_24, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 24
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 25
+```{r attend_race_25, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 25
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 26
+```{r attend_race_26, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 26
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 27
+```{r attend_race_27, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 27
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 28
+```{r attend_race_28, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 28
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 29
+```{r attend_race_29, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 29
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+## Attendance among races at age 30
+```{r attend_race_30, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 30
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+
+## Attendance among races at age 31
+```{r attend_race_31, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 31
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+
+## Attendance among races at age 32
+```{r attend_race_32, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+t<- 32
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_race_counts.R"))
+p
+```
+
+.   
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+# Read more 
+
+in <code>./Models/Descriptives</code>:   
+
++ [Metrics][metrics] - how values of items are labeled       
++ [Descriptives][descriptives] - basic stats of various items       
++ [Attendance][attend] - focus on church attendence over time      
++ [Databox][databox]        
+
+See also   
+
++ [Deriving Data from NLYS97 extract][derive]
++ [Data Manipulation Guide][manipulate]
+
+
+```{r child, child = '../Citations.Rmd'}
+
+```
+

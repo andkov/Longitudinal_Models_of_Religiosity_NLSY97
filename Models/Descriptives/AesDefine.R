@@ -21,12 +21,12 @@ byearCol5<- c("1980"="#9ecae1",
 
 
 ## the color of missing values
-NACol<- "#636363"
+NACol<- "#f9f9f9" #"#636363"
 
 
 # SIZES
 # guides and legends, but not axes and title
-baseSize<- 14
+baseSize<- 12
 
 
 # SHAPES
@@ -42,7 +42,12 @@ TVvars<- c("agemon", "ageyear", "famrel", "attend",
            "relpref", "bornagain", "faith", 
            "calm", "blue", "happy", "depressed","nervous",
            "tv", "computer", "internet")
- 
+
+# Service
+counterAge<- c("0"="white","1"="#23c8b2")
+
+basicDark<- "#4f8a83"
+
 ####
 # All defined elements
 aesDefs<- list("attendCol8" = attendCol8, 
@@ -51,3 +56,5 @@ aesDefs<- list("attendCol8" = attendCol8,
                       "baseSize"= baseSize,
                       "TIvars"=TIvars,
                       "TVvars"=TVvars)
+
+

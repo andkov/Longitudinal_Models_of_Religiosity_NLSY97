@@ -3,14 +3,14 @@ title: "lm() in mutate()"
 author: "Andriy Koval"
 date: "Tuesday, June 24, 2014"
 output:
-  word_document:
-    fig_width: 6.5
-    fig_height: 3
   pdf_document:
     toc: yes
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
     fig.retina: 2
+  word_document:
+    fig_height: 3
+    fig_width: 6.5
 ---
 
 
@@ -67,24 +67,24 @@ print(ds)
 ```
 
 ```{r c3, echo=F}
-ds <- read.table(header = TRUE, text ="
-obs  id year attend
-1  47 2000      1
-2  47 2001      3
-3  47 2002      5
-4  47 2003      8
-5  47 2004      6
-6  47 2005      4
-7  47 2006      2
-8  47 2007      1
-9  47 2008      2
-10 47 2009      3
-11 47 2010      4
-12 47 2011      5
-
-")
-ds<- ds %>% dplyr::mutate(time=year-2000)
-print(ds)
+# ds <- read.table(header = TRUE, text ="
+# obs  id year attend
+# 1  47 2000      4
+# 2  47 2001      5
+# 3  47 2002      6
+# 4  47 2003      7
+# 5  47 2004      6
+# 6  47 2005      5
+# 7  47 2006      4
+# 8  47 2007      3
+# 9  47 2008      2
+# 10 47 2009      1
+# 11 47 2010      2
+# 12 47 2011      3
+# 
+# ")
+# ds<- ds %>% dplyr::mutate(time=year-2000)
+# print(ds)
 
 ```
 
@@ -92,9 +92,9 @@ print(ds)
 ```{r c4, echo=F}
 require(ggplot2)
 p<-ggplot(ds, aes(x=time,y=attend, color=idF))
-p<-p+ geom_line(color="purple", size=.5)
+p<-p+ geom_line(color="purple",linetype=2, size=.5)
 # p<-p+ geom_smooth(method=lm,stat="identity", color="purple")
-p<-p+ geom_point(color="purple", size=2)
+p<-p+ geom_point(color="grey", size=2)
 p<-p+ scale_y_continuous("Church attendance",
                      limits=c(0, 8),
                      breaks=c(1:8))

@@ -4,31 +4,31 @@ rm(list=ls(all=TRUE))  #Clear the variables from previous runs.
 ############################
 ## @knitr LoadPackages
 require(RODBC)
+require(grid)
+require(dplyr)
 require(ggplot2)
-require(plyr)
-require(reshape2)
-require(lme4) #Load the library necessary for multilevel models
-require(colorspace) #Load the library necessary for creating tightly-controlled palettes.
-require(Hmisc)
-require(lattice)
+require(gridExtra)
 
 ############################
 ## @knitr DeclareGlobals
+# load common aesthetics definitions used in the reports
 source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
+# read back the definitions
+# aesDefs
+
+
+
 ############################
 ## @knitr LoadData
 dsL<-readRDS("./Data/Derived/dsL.rds")
+
 ############################
 ## @knitr TweakData
 
+
+
 ############################
 ## @knitr AnalysisChunk01
-
-ds<- dsL
-
-
-
-
 
 
 

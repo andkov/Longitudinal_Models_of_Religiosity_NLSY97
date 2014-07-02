@@ -7,9 +7,11 @@ require(RODBC)
 require(grid)
 require(dplyr)
 require(ggplot2)
+require(gridExtra)
 
 ############################
 ## @knitr DeclareGlobals
+pathDir<- getwd()
 # load common aesthetics definitions used in the reports
 source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
 # read back the definitions

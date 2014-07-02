@@ -1,0 +1,195 @@
+---
+title: "Attend over Ages"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    theme: united
+    toc: yes
+  md_document:
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_caption: no
+    fig_crop: no
+    fig_width: 8
+    highlight: tango
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
+---
+
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+# IIMPORTANT:  spell the path to the root directory
+opts_knit$set(root.dir='../../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+  out.width = NULL,
+  fig.path = 'Agemon_Years/',     
+  dev = "png",
+  dpi = 100
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE, results='hide'}
+# aesDefs
+
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+# locate the graph that you would like to replicate across time
+# commonGraphYears<-file.path(getwd(),"Models/Descriptives/termporal_animations/commonGraph_agemon_years.R")
+# manually find and replace "agemon_" into the chunk/image name you want
+# don't forget to change the output folder in fig.path = 'figure_rmd/', where images for this focal variable(s) will be stored
+
+```
+
+
+## Attendance among races in 2000 
+```{r agemon_2000, echo=F, message=T, warning=T, fig.height=2.4, fig.width=10}
+t<- 2000
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2001
+```{r agemon_2001, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2001
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2002
+```{r agemon_2002, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2002
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2003
+```{r agemon_2003, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2003
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2004
+```{r agemon_2004, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2004
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2005
+```{r agemon_2005, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2005
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2006 
+```{r agemon_2006, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2006
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2007
+```{r agemon_2007, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2007
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2008
+```{r agemon_2008, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2008
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2009
+```{r agemon_2009, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2009
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2010
+```{r agemon_2010, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2010
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+## Attendance among races in 2011
+```{r agemon_2011, echo=F, message=F, warning=F, fig.height=2.4, fig.width=10}
+t<- 2011
+source(file.path(getwd(),"Models/Descriptives/temporal_animations/commonGraph_agemon_years.R"))
+p
+```
+
+
+.   
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+.    
+# Read more 
+
+in <code>./Models/Descriptives</code>:   
+
++ [Metrics][metrics] - how values of items are labeled       
++ [Descriptives][descriptives] - basic stats of various items       
++ [Attendance][attend] - focus on church attendence over time      
++ [Databox][databox]        
+
+See also   
+
++ [Deriving Data from NLYS97 extract][derive]
++ [Data Manipulation Guide][manipulate]
+
+
+```{r child, child = '../Citations.Rmd'}
+
+```
+

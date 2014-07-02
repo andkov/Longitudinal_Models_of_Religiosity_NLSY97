@@ -1,0 +1,211 @@
+---
+title: "Introduction to LCM"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    theme: united
+    toc: yes
+  md_document:
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_caption: no
+    fig_crop: no
+    fig_width: 8
+    highlight: tango
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
+fontsize: 14pt
+---
+
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+  out.width = NULL,
+  fig.path = 'figure_rmd/IntroLCM/',     
+  dev = "png",
+  dpi = 400
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE, results='hide'}
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+# rm(list=ls(all=TRUE))  
+# dsL<-readRDS(file.path(getwd(),"Data/Derived/dsL.rds"))
+# source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
+
+```
+
+We can retrieve data for a single person using <code>id</code>
+```{r, echo=T, message=T}
+ds<- dsL %>% 
+  dplyr::filter(id==1,year %in% c(2000:2011)) %>% 
+  dplyr::mutate(time=year-2000) %>%
+  dplyr::select(id,year,attend, time) 
+print(ds)
+```
+
+
+```{r, echo=F}
+
+ds<- dsL %>% 
+  dplyr::filter(id==1,year %in% c(2000:2011)) %>% 
+  dplyr::select(id,year,attend,attendF) %>% 
+  dplyr::mutate(time=year-2000)
+
+# canvas
+p<-ggplot(ds, aes(x=time,y=attend))
+# geoms
+p<- p+ geom_point(aes(fill=attendF), size=3.5, shape=21)
+p<- p+ geom_line(aes(group=id), alpha=.6, linetype=2, size=.5)
+# scales
+p<- p+ scale_fill_manual(values=attendCol8)
+p<- p+ scale_y_continuous("Church attendance",
+                     limits=c(0, 8),
+                     breaks=c(1:8))
+p<- p+ scale_x_continuous("Years since 2000",
+                   limits=c(0,11),
+                   breaks=c(0:11))
+# annotations
+p<- p + labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p<- p + guides(fill = guide_legend(reverse=TRUE, title="Response category")) 
+# # themes
+p<- p + ggplot2::theme_bw()
+p<- p + ggplot2::theme_bw(base_size=baseSize)
+p<- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p<- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p<- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p<- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+trajD <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+trajD # trajectory from Data
+```
+
+Or enter data manually, if we want to work with artificial trajectories
+```{r}
+ds<- dsL %>% 
+  dplyr::filter(id==1,year %in% c(2000:2011)) %>% 
+  dplyr::mutate(time=year-2000) %>%
+  dplyr::mutate(attend= c(6,7,7,6,4,3,2,1,1,1,2,2)) %>%
+  dplyr::select(id,year,attend,time)
+
+attendF=ordered(ds$attend,
+            levels= unique(dsL$attend,is.na=T),
+            labels=levels(dsL$attendF))
+print(ds)
+```
+
+```{r, echo=F, eval=F}
+# Alternatively, for posting code online
+ds <- read.table(header = TRUE, text ="
+obs  id year attend
+1  47 2000      6
+2  47 2001      7
+3  47 2002      7
+4  47 2003      6
+5  47 2004      5
+6  47 2005      4
+7  47 2006      3
+8  47 2007      2
+9  47 2008      1
+10 47 2009      1
+11 47 2010      2
+12 47 2011      3
+
+")
+ds<- ds %>% dplyr::mutate(time=year-2000)
+print(ds)
+```
+
+```{r, echo=F}
+# canvas
+p<-ggplot(ds, aes(x=time,y=attend))
+# geoms
+p<- p+ geom_point(aes(fill=attendF), size=3.5, shape=21)
+p<- p+ geom_line(aes(group=id), alpha=.6, linetype=2, size=.5)
+# scales
+p<- p+ scale_fill_manual(values=attendCol8)
+p<- p+ scale_y_continuous("Church attendance",
+                     limits=c(0, 8),
+                     breaks=c(1:8))
+p<- p+ scale_x_continuous("Years since 2000",
+                   limits=c(0,11),
+                   breaks=c(0:11))
+# annotations
+p<- p + labs(title=paste0("In the past year, how often have you attended a worship service?"))
+p<- p + guides(fill = guide_legend(reverse=TRUE, title="Response category")) 
+# # themes
+p<- p + ggplot2::theme_bw()
+p<- p + ggplot2::theme_bw(base_size=baseSize)
+p<- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p<- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p<- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p<- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+trajM <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+trajM # trajectory entered Manually
+```
+
+```{r}
+intercept<- predict(lm(attend ~ 1, ds))
+ds<- ds %>% dplyr::mutate(int=intercept)
+print(ds)
+p<-trajM+ geom_line(aes(y=linear),color="red", size=.5)
+p
+```
+
+
+add a straight line to represent possible predition line, in this case a straight line
+```{r c5}
+linear<- predict(lm(attend ~ time, ds))
+ds<- ds %>% dplyr::mutate(linear=linear)
+print(ds)
+p<-p+ geom_line(aes(y=linear),color="red", size=.5)
+p
+```
+Or adding the curvarture the  quadratic term
+```{r c6}
+quadratic<- predict(lm(attend ~ poly(time,2),ds))
+ds<- ds %>% mutate(quadratic=quadratic)
+print(ds)
+p<-p+ geom_line(aes(y=quadratic),color="blue", size=.5)
+ p
+# p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
+```
+or the cubic term
+```{r c7}
+cubic<- predict(lm(attend ~ poly(time,3),ds))
+ds<- ds %>% mutate( cubic=cubic)
+print(ds)
+p<-p+ geom_line(aes(y=cubic),color="green", size=.5)
+p
+```
