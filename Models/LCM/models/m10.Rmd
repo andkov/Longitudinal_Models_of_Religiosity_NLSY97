@@ -25,7 +25,7 @@ mainfont: Calibri
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 
 require(knitr)
-opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+opts_knit$set(root.dir='../../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 
 ```
 
@@ -40,7 +40,7 @@ opts_chunk$set(
 #   fig.height = 4.8, 
 #   fig.width = 6.5, 
 #   out.width = NULL,
-  fig.path = 'lmerGuide/',     
+  fig.path = 'figureRmd/',     
   dev = "png",
   dpi = 100
 )
@@ -63,8 +63,8 @@ aesDefs
 ```
 
 ```{r}
-# modelNumber<- "m10"
-# numID<- 10000
+modelNumber<- "m10"
+numID<- 10000
 
 modnum<-cat(modelNumber)
 dsL<-readRDS("./Data/Derived/dsL.rds")
@@ -201,4 +201,3 @@ modelSave<-cat(paste0(modelNumber,"S"))
 modS<- list(mInfo,mRE,mREcov,mREcor,FE,mFE,sigma,dsp) # to save in an external file
 str(modS)
 ```
-
