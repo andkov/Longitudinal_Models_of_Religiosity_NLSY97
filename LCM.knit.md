@@ -26,44 +26,15 @@ mainfont: Calibri
 
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
-```{r, echo=F, message=F} 
-require(knitr)
-opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
 
-```
 
-```{r set_options, echo=F, message=F}
-require(knitr)
-# getwd()
-opts_chunk$set(
-  results='show', 
-  message = TRUE,
-  comment = NA, 
-  tidy = FALSE,
-#   fig.height = 4.8, 
-#   fig.width = 6.5, 
-#   out.width = NULL,
-  fig.path = 'figure_rmd/',     
-  dev = "png",
-  dpi = 400
-)
-echoChunks <- FALSE
-warningChunks<- FALSE
-options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
-```
 
-```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-aesDefs
-```
 
-```{r LoadPackages, echo=echoChunks, message=F}
-```
 
-```{r LoadData, echo=echoChunks, message=T}
-# select only respondence in the cross-sectional sample
 
-```
+
+
+
 
 
 
@@ -74,24 +45,42 @@ Analyzing a sequence of multilevel latent curve models of church attendance in N
 The preparation of this dataset is described in the report [Derive_dsL_from_Extract][derive]. For the scales and factor levels, refer to [Metrics][metrics] report, which relies on the script  [LabelingFactorLevels.R][labels] sourced at the end of [Derive_dsL_from_Extract][3].
 
 A basic LCM in this sequence relies on four variables from the **dsL** dataset: identifyer (**id**), birth year which is also used as cohort indicator (**byear**), wave of measurement (**year**), and the variable of interest - worship attendance (**attend**). 
-```{r, echo=echoChunks, message=F}
-require(dplyr)
-ds<- dsL %>% select(id, byear, year, attend) %>% 
-  filter(year %in% c(2000:2011)) %>%
-  filter (id %in% c(1))
-ds
+
+```
+   id byear year attend
+1   1  1981 2000      1
+2   1  1981 2001      6
+3   1  1981 2002      2
+4   1  1981 2003      1
+5   1  1981 2004      1
+6   1  1981 2005      1
+7   1  1981 2006      1
+8   1  1981 2007      1
+9   1  1981 2008      1
+10  1  1981 2009      1
+11  1  1981 2010      1
+12  1  1981 2011      1
 ```
 
 The focal variable of interest is **attend**, an item measuring church attendance in the current year. Although it was recorded on an ordinal scale, the integers used to record the response (1 through 8) are treated as measurements on the continuous scale when fitted in these statistical models. For elaboraton on metrics of church attendance and time, see [Attendance][attend] report.
 
 
 New variable **timec** is created, containing the values of **year**, centered at 2000. The numbers on the horizontal axes represent years passed since 2000. In addition, time effects are added, encoded as  weights of the Lambda matrix. Notice that equality of **timec** and **linear** is coincidental. 
-```{r, echo=echoChunks, message=F}
-ds<- dsL %>% select(id, byear, year, attend) %>% 
-  filter(year %in% c(2000:2011)) %>%
-  mutate(timec=year-2000, linear=timec, quadratic=timec^2, cubic=timec^3) %>%
-  filter (id %in% c(1))
-ds
+
+```
+   id byear year attend timec linear quadratic cubic
+1   1  1981 2000      1     0      0         0     0
+2   1  1981 2001      6     1      1         1     1
+3   1  1981 2002      2     2      2         4     8
+4   1  1981 2003      1     3      3         9    27
+5   1  1981 2004      1     4      4        16    64
+6   1  1981 2005      1     5      5        25   125
+7   1  1981 2006      1     6      6        36   216
+8   1  1981 2007      1     7      7        49   343
+9   1  1981 2008      1     8      8        64   512
+10  1  1981 2009      1     9      9        81   729
+11  1  1981 2010      1    10     10       100  1000
+12  1  1981 2011      1    11     11       121  1331
 ```
 
 NLSY97 has the data on church attendance for 12 years (as of July 2014), from 2000 to 2011. LCM models trajectories of individuals. The following graph maps the data from the previous example (id = 837):  
@@ -99,43 +88,7 @@ NLSY97 has the data on church attendance for 12 years (as of July 2014), from 20
 
 \[{y_{ti}} = {\beta _0} + {\varepsilon _{ti}}\]  
 
-```{r m0,echo=echoChunks, message=F }
-
-# create model object
-ds<- dsL %>% dplyr::filter(id %in% c(1:20),year %in% c(2000:2011)) %>% 
-  dplyr::select(id,year,attend) %>% 
-  mutate(time=year-2000)
-m0 <-lmer (attend ~ 
-              1 + (1 | id),
-            data = ds, REML=FALSE)
-
-dsM<- data.frame(m00)
-
-unique(ds$id)
-nrow(ds)
-# add predicted values to the dataset
-dsM<- ds %>% select (id,year, attend) %>%
-  dplyr::mutate(m00=m00)
-```
-
-In [Attendance]
 
 
-\[\begin{array}{*{20}{c}}
-\begin{array}{l}
-{y_{ij}} = {\beta _{0j}} + {\beta _{1j}}{X_{1j}} + {\beta _{2j}}{X_{2j}}^2 + {\beta _{3j}}{X_{3j}}^3 + {\varepsilon _{ij}}\\
-{\beta _{0j}} = {\gamma _{00}} + {\gamma _{01}}{W_1} + {u_{0j}}\\
-{\beta _{1j}} = {\gamma _{10}} + {u_{1j}}\\
-{\beta _{2j}} = {\gamma _{20}} + {\gamma _{21}}{Z_1} + {u_{2j}}\\
-{\beta _{3j}} = {\gamma _{30}}
-\end{array}&{}&{}&{}
-\end{array}\]
-
-
-
-
-```{r child, child = '../Descriptives/Citations.Rmd'}
-
-```
 
 

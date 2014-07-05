@@ -8,6 +8,7 @@ require(grid)
 require(dplyr)
 require(ggplot2)
 require(gridExtra)
+require(lme4)
 
 ############################
 ## @knitr DeclareGlobals

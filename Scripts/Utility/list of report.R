@@ -28,7 +28,7 @@ Descriptives<- c( pathMetrics,pathDescriptives, pathAttendance)
 
 
 # Place report paths HERE ###########
-buildthese <- (Descriptives)##########
+buildthese <- (pathDerive) ##########
 ####################################
 
 testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
@@ -37,9 +37,9 @@ for( pathRmd in buildthese ) {
 #   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   rmarkdown::render(input = pathRmd, 
                     output_format=c(
-#                        "pdf_document"
-#                       ,"word_document"
-                      "md_document"
+                       "pdf_document"
+                      ,"word_document"
+                      ,"md_document"
                       ,"html_document"
 
                                     ),

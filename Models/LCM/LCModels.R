@@ -79,5 +79,5 @@ require(lattice)
               1 + (1 | id),
             data = ds, REML=0))
 ########################################################
-(m00 <-lm (attend ~ 1),
+(m00 <-lm (attend ~ 1,
  data = ds, REML=0))

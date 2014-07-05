@@ -60,7 +60,7 @@ read_chunk("./Models/Descriptives/Descriptives.R")
 ```
 
 Data for a single person
-```{r c2, echo=T,eval=FALSE, message=T}
+```{r c2, echo=T,eval=TRUE, message=T}
 ds<- dsL %>% dplyr::filter(id==1,year %in% c(2000:2011)) %>% dplyr::select(id,year,attend) %>%
   mutate(time=year-2000)
 print(ds)
