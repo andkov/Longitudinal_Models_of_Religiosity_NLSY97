@@ -82,7 +82,7 @@ modnum <-lmer (attend ~
                1  + agec + timec + timec2 + timec3
              + agec:timec +agec:timec2 + agec:timec3
              + (1 + timec + timec2 + timec3 | id),
-             data = ds, REML=0)
+             data = ds, REML=0, control = list(maxIter = 10000))
 model<- modnum
 ```
 
