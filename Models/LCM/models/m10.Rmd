@@ -66,24 +66,24 @@ aesDefs
 modelNumber<- "m10"
 numID<- 10000
 
+
 modnum<-cat(modelNumber)
 dsL<-readRDS("./Data/Derived/dsL.rds")
-ds<- dsL %>% dplyr::filter(id %in% c(1:numID),year %in% c(2000:2011)) %>% 
+ds<- dsL %>% dplyr::filter(race==4,year %in% c(2000:2011)) %>%
+  dplyr::filter(!ave(attend, id, FUN = function(x) any(is.na(x)))) %>%
   dplyr::mutate(timec=year-2000, timec2= timec^2, timec3= timec^3, 
                 agec= round( (agemon/12),0)-16) %>% 
   dplyr::select(id,year,attend, timec,timec2, timec3, agec)
-head(ds, 20)
+head(ds, 100)
 
 ```
 
 
 ```{r}
-modnum <-lmer (attend ~ 
-               1  + agec + timec + timec2 + timec3
-             + agec:timec +agec:timec2 + agec:timec3
-             + (1 + timec + timec2 + timec3 | id),
-             data = ds, REML=0, control = list(maxIter = 10000))
-model<- modnum
+(m <-lmer (attend ~ 
+              1  + timec + timec2 
+            + (1 | id),
+            data = ds, REML=0))
 ```
 
 

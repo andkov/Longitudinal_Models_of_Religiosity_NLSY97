@@ -102,23 +102,77 @@ NLSY97 has the data on church attendance for 12 years (as of July 2014), from 20
 ```{r m0,echo=echoChunks, message=F }
 
 # create model object
-ds<- dsL %>% dplyr::filter(id %in% c(1:20),year %in% c(2000:2011)) %>% 
-  dplyr::select(id,year,attend) %>% 
-  mutate(time=year-2000)
-m0 <-lmer (attend ~ 
-              1 + (1 | id),
-            data = ds, REML=FALSE)
+ds<- dsL %>% dplyr::filter(id %in% c(1:200),year %in% c(2000:2011)) %>% 
+  dplyr::mutate(timec=year-2000, timec2= timec^2, timec3= timec^3, 
+                agec= round( (agemon/12),0)-16) %>% 
+  dplyr::select(id,year,attend, timec,timec2, timec3, agec)
+########################################################
 
-dsM<- data.frame(m00)
 
-unique(ds$id)
-nrow(ds)
-# add predicted values to the dataset
-dsM<- ds %>% select (id,year, attend) %>%
-  dplyr::mutate(m00=m00)
+model<- m0
+# getting the model prediction and residuals
+dsP<-data.frame(model@frame )
+dsP$Resid<- lme4:::residuals.merMod(model)
+dsP$YHat<- fitted (model)
+dsm0<- plyr::join(ds,dsP,by=c("id"))
+head(dsm0)
+
+model<- m5
+# getting the model prediction and residuals
+dsP<-data.frame(model@frame )
+dsP$Resid<- lme4:::residuals.merMod(model)
+dsP$YHat<- fitted (model)
+head(dsP,20)
+# ds<- plyr::join(ds,dsP,by=c("id"))
+
+
+model<- m10
+# getting the model prediction and residuals
+dsp<-data.frame(model@frame)
+dsp$yHat<- predict(model)
+dsp$resid<- lme4:::residuals.merMod(model)
+coefs <- fixef(model)
+dsp$yPar<-(
+  (coefs["(Intercept)"])         +(coefs["agec"]*dsp$agec)
+  +(coefs["timec"]*dsp$timec)    +(coefs["agec:timec"]*dsp$agec*dsp$timec)
+  +(coefs["timec2"]*dsp$timec2)  +(coefs["agec:timec2"]*dsp$agec*dsp$timec2)
+  +(coefs["timec3"]*dsp$timec3)  +(coefs["agec:timec3"]*dsp$agec*dsp$timec3)
+)
+head(dsp,20)
+# 
+lme4:::summary.merMod(model)
+# extract fixed effects matrix
+FE<- data.frame(getME(model, "X"))
+
+# extract random effect matrix
+RE<- getME(model,"mu")
+a<- data.frame(RE)
+
+FE<- fixef(model)
+
+model@theta
+
+# the formula used in estimating the model
+model@call
+# List of fixed effect estimates
+model@beta
+fixef(model)
+# random effect estimates
+ranef(model)
+getME(model, "X")
+# not sure what
+model@theta
+model@pp$theta
+
+
+coefs(model)
+# ds<- dplyr::left_join(ds,dsP["id", "YHat"],by= c("id","timec"),copy=FALSE)
+# dsp <- plyr::join(x=ds, y=dsPredict, by=c("id", "timec")) 
+
+
 ```
 
-In [Attendance]
+
 
 
 \[\begin{array}{*{20}{c}}
