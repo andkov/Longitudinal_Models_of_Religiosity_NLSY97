@@ -1,5 +1,5 @@
-# t<-17
-barVal<- 1
+t<-17
+barVal<- 1 # fixed for graphics, nothing else
 ds<- dsL %.%
   dplyr::mutate(ageF = as.factor(round(agemon/12 ))) %>%
   dplyr::filter(year %in% c(2000:2011), !is.na(attend), race !=3) %.%   
@@ -7,7 +7,7 @@ ds<- dsL %.%
   dplyr::summarize(count = n()) %>% 
   dplyr::mutate(curtime= ifelse(ageF==t,barVal,0)) %>%
   dplyr::arrange(ageF)
-ds
+head(ds)
 
 
 

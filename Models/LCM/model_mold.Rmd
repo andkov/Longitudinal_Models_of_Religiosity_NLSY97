@@ -1,14 +1,6 @@
 ---
 title: "Single model"
 output:
-  html_document:
-    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig.retina: 2
-    fig_width: 8
-    toc: yes
-  md_document:
-    toc: yes
-    toc_depth: 3
   pdf_document:
     fig_crop: no
     fig_width: 8
@@ -17,6 +9,14 @@ output:
     number_sections: yes
     toc: yes
     toc_depth: 3
+  md_document:
+    toc: yes
+    toc_depth: 3
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    toc: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
@@ -62,10 +62,10 @@ aesDefs
 
 ```
 
-```{r}
-cat("\014") # clears console
+```{r MakeModel}
 modelNumber<- "m10"
 numID<- 9022
+
 
 modnum<-cat(modelNumber)
 dsL<-readRDS("./Data/Derived/dsL.rds")
@@ -96,14 +96,19 @@ table(ds$sample, ds$race)/length(unique(ds$year)) # Sample BY Race counts
 cat(length(unique(ds$id))) # total No. of respondents in dataset
 sum(!is.na(ds$attend)) # valid datapoints 
 sum(is.na(ds$attend)) # NA in the dataset 
-# Estimate the model
+cat(m7R_call) # loads the model lmer() specification from separate R file
+        
+model<- modnum
+summary(model)
+```
+
+
+```{r}
 modnum <-lmer (attend ~ 
                1  + timec + timec2 + timec3
-       + cohort + cohort:timec + cohort:timec2 + cohort:timec3
-              + (1 | id),
-             data = ds, REML=FALSE, 
-             control=lmerControl(optCtrl=list(maxfun=20000)))
-        
+             
+             + (1  | id),
+             data = ds, REML=FALSE) 
 model<- modnum
 summary(model)
 ```
@@ -197,19 +202,14 @@ sqrt(sigma/SDR)
 Predictions form fixed effects only, no individual variability is used in calculation
 
 ```{r}
-# FE <- fixef(model)
-FE<- fixef(model)
-dsp$yPar<- cat(m7R_condFE)
-
-
-
-# # use fixed effects estimates to find conditional predictions
-# dsp$yPar<-(
-#   (FE["(Intercept)"])         +(FE["agec"]*dsp$agec)
-#   +(FE["timec"]*dsp$timec)    +(FE["agec:timec"]*dsp$agec*dsp$timec)
-#   +(FE["timec2"]*dsp$timec2)  +(FE["agec:timec2"]*dsp$agec*dsp$timec2)
-#   +(FE["timec3"]*dsp$timec3)  +(FE["agec:timec3"]*dsp$agec*dsp$timec3)
-#   )
+FE <- fixef(model)
+# use fixed effects estimates to find conditional predictions
+dsp$yPar<-(
+  (FE["(Intercept)"])         +(FE["agec"]*dsp$agec)
+  +(FE["timec"]*dsp$timec)    +(FE["agec:timec"]*dsp$agec*dsp$timec)
+  +(FE["timec2"]*dsp$timec2)  +(FE["agec:timec2"]*dsp$agec*dsp$timec2)
+  +(FE["timec3"]*dsp$timec3)  +(FE["agec:timec3"]*dsp$agec*dsp$timec3)
+  )
 ```
 
 ## List of availible elements

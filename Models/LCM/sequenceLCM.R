@@ -14,30 +14,18 @@ require(reshape2)
 
 ############################
 ## @knitr DeclareGlobals
-# load common aesthetics definitions used in the reports
 source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
-# read back the definitions
-# aesDefs
-
-
-
 ############################
 ## @knitr LoadData
 dsL<-readRDS("./Data/Derived/dsL.rds")
-
 ############################
 ## @knitr TweakData
 
-
-
 ############################
 ## @knitr AnalysisChunk01
-
-
 
 ############################
 ## @knitr AnalysisChunk02
 
 ############################
 ## @knitr AnalysisChunk03
-

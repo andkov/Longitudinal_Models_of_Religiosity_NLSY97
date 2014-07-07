@@ -1,203 +1,43 @@
 ---
-title: "Single model"
 output:
-  pdf_document:
-    fig_crop: no
-    fig_width: 8
-    highlight: haddock
-    latex_engine: xelatex
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
-  md_document:
-    toc: yes
-    toc_depth: 3
+  pdf_document: default
   html_document:
-    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig.retina: 2
-    fig_width: 8
-    toc: yes
-  word_document:
-    fig_width: 6.5
-mainfont: Calibri
+    mathjax: http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 ---
 
-<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
-```{r, echo=F, message=F} 
-require(knitr)
-opts_knit$set(root.dir='../../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+### Two formulas side by side
+<div style="width:900px">
 
-```
+<div style="width:450px">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+ <semantics>
+  <mrow>
+   <msub style="color:red">
+    <mi>y</mi>
+    <mrow>
+     <mi>t</mi><mi>i</mi></mrow>
+   </msub>
+   <mo>=</mo><msub>
+    <mi>&#x03B2;</mi>
+    <mn>0</mn>
+   </msub>
+   <mo>+</mo><msub style="color:red">
+    <mi>&#x03B5;</mi>
+    <mrow>
+     <mi>t</mi><mi>i</mi></mrow>
+   </msub>
+   </mrow>
+  </annotation>
+ </semantics>
+</math>
 
-```{r set_options, echo=F, message=F}
-require(knitr)
-# getwd()
-opts_chunk$set(
-  results='show', 
-  message = TRUE,
-  comment = NA, 
-  tidy = FALSE,
-#   fig.height = 4.8, 
-#   fig.width = 6.5, 
-#   out.width = NULL,
-  fig.path = 'figureRmd/',     
-  dev = "png",
-  dpi = 100
-)
-echoChunks <- FALSE
-warningChunks<- FALSE
-options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
-```
+</div>
 
-```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-aesDefs
-```
+<div style="width:450px">
+$$ 
+{y_{ti}} = {\beta _0} + {\beta _1}Tim{e_t} + {\varepsilon _{ti}}
+$$
+</div>
 
-```{r LoadPackages, echo=echoChunks, message=F}
-```
+</div>
 
-```{r LoadData, echo=echoChunks, message=T}
-# select only respondence in the cross-sectional sample
-
-```
-
-```{r}
-modelNumber<- "m10"
-numID<- 10000
-
-
-modnum<-cat(modelNumber)
-dsL<-readRDS("./Data/Derived/dsL.rds")
-ds<- dsL %>% dplyr::filter(race==4,year %in% c(2000:2011)) %>%
-  dplyr::filter(!ave(attend, id, FUN = function(x) any(is.na(x)))) %>%
-  dplyr::mutate(timec=year-2000, timec2= timec^2, timec3= timec^3, 
-                agec= round( (agemon/12),0)-16) %>% 
-  dplyr::select(id,year,attend, timec,timec2, timec3, agec)
-head(ds, 100)
-
-```
-
-
-```{r}
-(m <-lmer (attend ~ 
-              1  + timec + timec2 
-            + (1 | id),
-            data = ds, REML=0))
-```
-
-
-```{r}
-summary(model) 
-```
-
-
-## Model formula
-```{r}
-model@call 
-```
-
-## Fit and Information indices
-
-```{r}
-# get indicies
-mInfo<-summary(model)$AICtab
-mInfo["N"]<- model@devcomp$dims["N"] # number of datapoints, verify
-mInfo["p"]<- model@devcomp$dims["p"] # number of estimated parameters, verify
-mInfo["ids"]<- (summary(model))$ngrps # number of units on level-2, here: individuals
-mInfo
-```
-
-## Random Effects (RE)
-
-### Matrix of RE
-```{r}
-# extract RE covariance matrix
-mREcov<-     data.frame(     summary(model)$varcor$id   ) # covariance matrix of RE
-mREcor<-  data.frame(attr(summary(model)$varcor$id,"correlation")) # corrleation matrix of RE
-mRE<-   data.frame(sd= (attr(summary(model)$varcor$id,"stddev")))
-mRE$var<- mRE$sd^2
-mRE<-mRE[c("var","sd")]
-mRE
-mREcov
-```
-
-### extracting RE for each individual
-```{r}
-RE<- lme4:::ranef.merMod(model)$id 
-head(RE,6)
-# however
-cor(RE)  # not the same as mRE, find out why
-var(RE)  # not the same as mRE, find out why
-```
-
-## Fixed Effects (FE)
-
-
-### estimate of the FE
-```{r}
-# similar ways to extract FE estimates, #3 is the fullest
-FE<- summary(model)$coefficients
-FE
-```
-
-### Matrix of FE
-```{r}
-mFE<- (summary(model)$vcov@factors$correlation) # notice that this is object of 
-mFE
-```
-
-## Prediction and Residuals
-
-```{r}
-dsp<- data.frame(getME(model,"X")) # no Y, only predictors (with interaction terms)
-dsp$id<-getME(model,"flist")$id # first level grouping factor, individual
-dsp$y<-getME(model,"y") # response vector
-dsp$yHat<- predict(model) # predicted values
-dsp$resid<- lme4:::residuals.merMod(model)
-identical (  dsp$y-dsp$yHat, dsp$resid)
-head(dsp,13)
-```
-
-Getting the standard error of residuals
-```{r}
-sigma<-sigma(model) # std.error of residuals <- this methods is preferred
-# however
-SDR<-sd(dsp$resid) # not the same as sigma(model) = find out why
-identical (sigma, SDR) # WHY?
-# however, compare
-sigma
-SDR
-sqrt(sigma/SDR)
-```
-
-## Conditional values
-Predictions form fixed effects only, no individual variability is used in calculation
-
-```{r}
-FE <- fixef(model)
-# use fixed effects estimates to find conditional predictions
-dsp$yPar<-(
-  (FE["(Intercept)"])         +(FE["agec"]*dsp$agec)
-  +(FE["timec"]*dsp$timec)    +(FE["agec:timec"]*dsp$agec*dsp$timec)
-  +(FE["timec2"]*dsp$timec2)  +(FE["agec:timec2"]*dsp$agec*dsp$timec2)
-  +(FE["timec3"]*dsp$timec3)  +(FE["agec:timec3"]*dsp$agec*dsp$timec3)
-  )
-```
-
-## List of availible elements
-```{r}
-summary(model)
-mInfo # model information indices
-mRE  # variances and standard deviations of random effects
-mREcov # covariance matrix of Random Effects
-mREcor # correlation  matrix of Random Effects
-FE # estimates of Fixed Effects, SE, t-value
-mFE # matrix of correlations among Fixed Effects
-sigma # standard deviation of residual
-head(dsp,13) # input + output + residual + conditional
-
-modelSave<-cat(paste0(modelNumber,"S")) 
-modS<- list(mInfo,mRE,mREcov,mREcor,FE,mFE,sigma,dsp) # to save in an external file
-str(modS)
-```
