@@ -292,6 +292,8 @@ The deviations from this average trajectory will be recorded in **RE**, containi
 
 ```{r }
 # tau**sd - standard deviation, sqrt(tau00)
+dspCopy
+dsp<- dspCopy
 RE<- lme4:::ranef.merMod(model)$id 
 RE$id=rownames(RE)
 oldREnames<- c ("(Intercept)", "timec", "timec2", "timec3")
@@ -299,10 +301,34 @@ newREnames<- c("tau00sd","tau11sd", "tau22sd", "tau33sd")
 for(i in 1:4)names(RE)[names(RE)==oldREnames[i]]=newREnames[i]
 # attach individual disturbances to dsp by id
 dsp<- merge(dsp,RE, by="id" )
+head(dsp)
+
+pullRandomEffect <- function (timeName,tauName){
+  possibleNAEffect <- dsp[,tauName]
+  result <- ifelse( is.na(rep(possibleNAEffect,nrow(dsp))), 0,
+                  possibleNAEffect*dsp[,timeName]) 
+  return(result)
+}
+
 # and produce predictions using the time effects 
-dsp["tau11sd"] <- dsp["tau11sd"]*dsp["timec"]
+# dsp["tau11sd"] <- dsp["tau11sd"]*dsp["timec"]
+dsp[,"tau11sd1"] <- pullRandomEffect(timeName="timec", tauName="tau11sd")
+
 dsp["tau22sd"] <- dsp["tau22sd"]*dsp["timec2"]
 dsp["tau33sd"] <- dsp["tau33sd"]*dsp["timec3"]
+
+
+dsp$gamma13 <- pullInteractionEffect("timec3") 
+
+
+
+pullRandomEffect <- function (timeName){
+  possibleNAEffect <- FE[paste0(timeName,":cohort")]
+  result <- ifelse( is.na(rep(possibleNAEffect,nrow(dsp))), 0,
+                  possibleNAEffect*dsp[,timeName]) 
+  return(result)
+}
+
 ```
 
 Create the individual disturbance
@@ -355,9 +381,10 @@ head(dsp,13) # input + output + residual + conditional
 # mFE@x
 # mFE@Dimnames
 
-rowCountBeforeJoin <- nrow(a)
+
 a<- data.frame(FEt)
 a$Coefficient <- rownames(a)
+rowCountBeforeJoin <- nrow(a)
 
 b<- as.data.frame(matrix(mFE@x, ncol=length(mFE@Dimnames[[1]]), byrow=TRUE, dimnames=mFE@Dimnames))
 b$Coefficient <- rownames(b)
@@ -383,15 +410,21 @@ testit::assert("The join shouldn't add new records.",  rowCountBeforeJoin==nrow(
 testit::assert("The join shouldn't add new records.",  nrow(dsDaddy)==nrow(a))
 testit::assert("The join shouldn't add new records.",  nrow(dsDaddy)==nrow(b))
 
-modelSave<-cat(paste0(modelNumber,"S")) 
-modS<- list(mInfo,mRE,mREcov,mREcor,FE,mFE,sigma,dsp) # to save in an external file
-str(modS)
+dsmInfo<- data.frame(mInfo)
+dsFERE<- dsDaddy
+dsp<- data.frame(dsp)
+
 ```
 
 ```{r saveModelResults}
-pathmInfo <- file.path(pathDir,"Data/Derived/dsL.rds")
+modelNumber
+pathdsmInfo <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modnum,"_mInfo.rds"))
+pathdsFERE  <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modnum,"_FERE.rds"))
+pathdsp  <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modnum,"_dsp.rds"))
 
-saveRDS(object=dsL, file=pathdsLrds, compress="xz")
+saveRDS(object=dsmInfo, file=pathdsmInfo, compress="xz")
+saveRDS(object=dsFERE, file=pathdsFERE, compress="xz")
+saveRDS(object=dsp, file=pathdsp, compress="xz")
 
 ```
 
