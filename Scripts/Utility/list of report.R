@@ -13,22 +13,25 @@ pathLCM <- base::file.path("./Models/LCM/LCM.Rmd")
 
 # ./Vignettes
 pathManipulate <- base::file.path("./Vignettes/dplyr/Data_Manipulation_Guide.Rmd")
-pathFigSize <- base::file.path("./Vignettes/fig_size/fig_size.Rmd")
+pathFigSize <-    base::file.path("./Vignettes/fig_size/fig_size.Rmd")
 pathChooseSize <- base::file.path("./Vignettes/fig_size/choose_fig_size.Rmd")
 pathChooseSize <- base::file.path("./Vignettes/Questions/create_TOC_in_md/create_TOC_in_md.Rmd")
+pathlmerGuide<-   base::file.path("./Vignettes/lmer/lmerGuide.Rmd")
 #./Vignettes/Questions
 pathRemoveNA<- base::file.path("./Vignettes/Questions/Removing_NA/Removing_NA_from_distributions_ggplot.Rmd")
 pathRawVsSum<- base::file.path("./Vignettes/Questions/Raw_vs_Summarized/Raw_vs_Summarized.Rmd")
 pathlmmutate<- base::file.path("./Vignettes/Questions/lm_in_mutate/lm_in_mutate.Rmd")
 
 
+
 #  Define groups of reports 
 Vignettes<- c(pathManipulate)
 Descriptives<- c( pathMetrics,pathDescriptives, pathAttendance)
 
+Appendix<- c(pathDerive, pathMetrics, pathDescriptives, pathAttendance, pathManipulate, pathlmerGuide )
 
 # Place report paths HERE ###########
-buildthese <- (pathDerive) ##########
+buildthese <- (Appendix) ##########
 ####################################
 
 testit::assert("The knitr Rmd files should exist.", base::file.exists(buildthese))
@@ -37,12 +40,12 @@ for( pathRmd in buildthese ) {
 #   pathMd <- base::gsub(pattern=".Rmd$", replacement=".md", x=pathRmd)
   rmarkdown::render(input = pathRmd, 
                     output_format=c(
-                       "pdf_document"
-                      ,"word_document"
-                      ,"md_document"
-                      ,"html_document"
-
+#                        "pdf_document"
+#                       ,"word_document"
+#                       ,"md_document"
+                      "html_document"
                                     ),
+                    output_dir = "for Appendix" ,
 #                     output_file=pathMd,
                     clean=TRUE)
 }

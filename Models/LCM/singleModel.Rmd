@@ -107,7 +107,7 @@ length(unique(ds$timec))
 # Estimate the model
 modnum <-lmer (attend ~ 
                1  + timec + timec2 +# timec3
-       + cohort + cohort:timec + cohort:timec2 #+ cohort:timec3
+       + cohort + cohort:timec + #cohort:timec2 + cohort:timec3
               + (1 + timec + timec2 + timec3 | id),
              data = ds, REML=FALSE, 
              control=lmerControl(optCtrl=list(maxfun=20000)))
@@ -236,58 +236,40 @@ head(dsp,13)
 model@call
 
 
-pullMainEffect<- function (timeName){ 
+pullMainEffect <- function (timeName){
   possibleNAEffect <- FE[timeName]
-#     result<- ifelse( is.na(possibleNAEffect) , 0, 
-#                      possibleNAEffect*dsp[,timeName]) 
- result<-ifelse( is.na(rep(possibleNAEffect,nrow(dsp))) , 0, 
-                 possibleNAEffect*dsp[,timeName]) 
+  result <- ifelse( is.na(rep(possibleNAEffect,nrow(dsp))), 0,
+                  possibleNAEffect*dsp[,timeName]) 
   return(result)
 }
 
-pullInteractionEffect<- function (timeName){
+pullInteractionEffect <- function (timeName){
   possibleNAEffect <- FE[paste0(timeName,":cohort")]
-result<-ifelse( is.na(rep(possibleNAEffect,nrow(dsp))) , 0, 
-                 possibleNAEffect*dsp[,timeName]) 
+  result <- ifelse( is.na(rep(possibleNAEffect,nrow(dsp))), 0,
+                  possibleNAEffect*dsp[,timeName]) 
   return(result)
 }
 
 FE<- fixef(model)
 # estimates of the fixed effects 
 #  gamma sub(0*) - pure time effects 
-  # Intercept - gamma sub(00)
-dsp$gamma00<- FE["(Intercept)"]
-  # Linear trend of time - gamma sub(01)
-# dsp$gamma01<- pullMainEffect("timec") 
-# dsp$gamma01<- FE["timec"]*dsp$timec 
-# ifelse( is.na(FE["timec"]) , 0, FE["timec"]*dsp[,"timec"]) 
-# ifelse( is.na(rep(FE["timec"],nrow(dsp))) , 0, FE["timec"]*dsp[,"timec"]) 
-# ifelse( is.na(rep(FE["time"],nrow(dsp))) , 0, FE["time"]*dsp[,"time"]) 
-# ifelse( is.na(FE["time"]) , 0, c(3,2,5)) 
-
+# Intercept - gamma sub(00)
+dsp$gamma00 <- FE["(Intercept)"]
+# Linear trend of time - gamma sub(01)
+dsp$gamma01 <- pullMainEffect("timec") 
 # Quadratic trend of time - gamma sub(02)
-dsp$gamma01<- pullMainEffect("timec") 
-# Quadratic trend of time - gamma sub(02)
-dsp$gamma02<- pullMainEffect("timec2") 
-  # Cubic trend of time - gamma sub(03)
-dsp$gamma03<- pullMainEffect("timec3") 
+dsp$gamma02 <- pullMainEffect("timec2") 
+# Cubic trend of time - gamma sub(03)
+dsp$gamma03 <- pullMainEffect("timec3") 
 #  gamma subs(1*) - effect of cohort(w1) on: 
-#   #  Intercept - gamma sub(01) 
-dsp$gamma10<- FE["cohort"]
+#  Intercept - gamma sub(01) 
+dsp$gamma10 <- FE["cohort"]
 # Linear trend of time - gamma sub(11)  
-dsp$gamma11<- pullInteractionEffect("timec") 
-  # Quadratic trend of time - gamma sub(12)
-dsp$gamma12<- pullInteractionEffect("timec2") 
-  # Cubic trend of time - gamma sub(13) 
-dsp$gamma13<- pullInteractionEffect("timec3") 
-
-#   # Linear trend of time - gamma sub(11)    
-# dsp$gamma11<- FE["timec:cohort"]*dsp$timec
-#   # Quadratic trend of time - gamma sub(12)
-# dsp$gamma12<- FE["timec2:cohort"]*dsp$timec2
-  # Cubic trend of time - gamma sub(13) 
-# dsp$gamma10<-  FE["timec3:cohort"]*dsp$timec3
- # Linear trend of time - gamma sub(11) 
+dsp$gamma11 <- pullInteractionEffect("timec") 
+# Quadratic trend of time - gamma sub(12)
+dsp$gamma12 <- pullInteractionEffect("timec2") 
+# Cubic trend of time - gamma sub(13) 
+dsp$gamma13 <- pullInteractionEffect("timec3") 
 
 # Compute the mean trajectory, without the individual variability
 # gamma sub(K*) - add more predictors here if expanding sequence
