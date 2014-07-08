@@ -69,7 +69,7 @@ The model is of the class
 ![Sequence_Specification](../../images/SequenceMap_Web.png)
 
 # Model and Data specification
-```{r}
+```{r defineData}
 cat("\014") # clears console
 modelNumber<- "m7R"
 numID<- 200
@@ -106,9 +106,9 @@ sum(is.na(ds$attend)) # NA in the dataset
 length(unique(ds$timec))
 # Estimate the model
 modnum <-lmer (attend ~ 
-               1  + timec + timec2 +# timec3
+               1  + timec + timec2 + timec3
        + cohort + cohort:timec # + cohort:timec2 + cohort:timec3
-              + (1 + timec + timec2 + timec3 | id),
+              + (1 + timec  | id),
              data = ds, REML=FALSE, 
              control=lmerControl(optCtrl=list(maxfun=20000)))
         
@@ -163,6 +163,9 @@ mRE$var<- mRE$sd^2
 mRE<-mRE[c("var","sd")]
 mRE
 mREcov
+
+
+
 ```
 
 ### extracting RE for each individual
@@ -170,8 +173,9 @@ mREcov
 RE<- lme4:::ranef.merMod(model)$id 
 head(RE,6)
 # however
-cor(RE)  # not the same as mRE, find out why
-var(RE)  # not the same as mRE, find out why
+cor(RE)  # in unadjusted RE estimates, not same as mRE
+var(RE)  # in unadjusted RE estimates, not same as mRE
+mRE
 ```
 
 ## Fixed Effects (FE)
@@ -180,8 +184,10 @@ var(RE)  # not the same as mRE, find out why
 ### estimate of the FE
 ```{r FE}
 # similar ways to extract FE estimates, #3 is the fullest
-FE<- summary(model)$coefficients
-FE
+FE<- fixef(model)  
+FE # vector used in predition
+FEt<- summary(model)$coefficients
+FEt # contains t-values that test the terms
 ```
 
 ### Matrix of FE
@@ -225,11 +231,11 @@ head(dsp)
 
 The effects that were not present in the model will be substituted with zeros. 
 ```{r}
-cat("\014")
-dsp<- data.frame(getME(model,"X")) # read back the input 
-dsp$id<-getME(model,"flist")$id # first level grouping factor, individual
-dsp$y<-getME(model,"y") # observed response vector
-head(dsp,13)
+# cat("\014")
+# dsp<- data.frame(getME(model,"X")) # read back the input 
+# dsp$id<-getME(model,"flist")$id # first level grouping factor, individual
+# dsp$y<-getME(model,"y") # observed response vector
+# head(dsp,13)
 
 model@call
 
@@ -284,30 +290,49 @@ Of particular interest is variable **yFE** which has several interpretations. It
 
 The deviations from this average trajectory will be recorded in **RE**, containing a column for each of the random effects estimated.  
 
-```{r}
+```{r }
 # tau**sd - standard deviation, sqrt(tau00)
-head(ds)
-head(RE)
-
+RE<- lme4:::ranef.merMod(model)$id 
 RE$id=rownames(RE)
-ds<- merge(dsp,RE, by="id" )
-
-oldREnames<- c ("(Intercept)", "timec.y", "timec2.y", "timec3.y")
+oldREnames<- c ("(Intercept)", "timec", "timec2", "timec3")
 newREnames<- c("tau00sd","tau11sd", "tau22sd", "tau33sd")
-for(i in 1:2)names(ds)[names(ds)==oldREnames[i]]=newREnames[i]
+for(i in 1:4)names(RE)[names(RE)==oldREnames[i]]=newREnames[i]
+# attach individual disturbances to dsp by id
+dsp<- merge(dsp,RE, by="id" )
+# and produce predictions using the time effects 
+dsp["tau11sd"] <- dsp["tau11sd"]*dsp["timec"]
+dsp["tau22sd"] <- dsp["tau22sd"]*dsp["timec2"]
+dsp["tau33sd"] <- dsp["tau33sd"]*dsp["timec3"]
+```
 
+Create the individual disturbance
+```{r}
+r.effects<- c("tau00sd","tau11sd","tau22sd","tau33sd")
+dsp$yRE <- rowSums (dsp[,colnames(dsp) %in% r.effects],na.rm=TRUE)
+
+head(dsp)
+```
+
+```{r}
+ds<- dsp %>%
+  dplyr::select(y,resid,yFE,yRE,yHat) %>%
+  dplyr::mutate(
+    yFERE=yFE+yRE, # predictions reconstructed manually
+    residFERE= y- yFERE,
+    residDif= resid- residFERE # residuals might slightly differ due to rounding
+         ) 
+# Check that the model solution deconstructed from fixed and random coefficient estimates (yFERE) matches the prediction produced by the built in function predict(model) or fitted(model).
+all.equal(dsp$yHat1, dsp$yFERE)
+head(ds,10)
 
 ```
 
 Getting the standard error of residuals
 ```{r}
 sigma<-sigma(model) # std.error of scaled residuals 
-SDR<-sd(dsp$resid) # raw residuals, not scaled
-identical (sigma, SDR) # 
-# however, compare
+SDR<-sd(dsp$resid) # st.deviation of the raw residuals, not scaled
 sigma
 SDR
-sqrt(sigma/SDR)
 ```
 
 
@@ -321,16 +346,31 @@ RE # random effect corrections for each (person x timepoint)
 mRE  # variances and standard deviations of random effects
 mREcov # covariance matrix of Random Effects
 mREcor # correlation  matrix of Random Effects
-FE # estimates of Fixed Effects, SE, t-value
+FEt # estimates of Fixed Effects, SE, t-value
 mFE # matrix of correlations among Fixed Effects
 sigma # standard deviation of residual
 head(dsp,13) # input + output + residual + conditional
 
-effects<- c()
+
+a<- data.frame(FEt)
+b<- data.frame(mFE)
+c<- merge(FEt,mFE,)
+
+mRE
+mREcov
+mREcor
+
 
 modelSave<-cat(paste0(modelNumber,"S")) 
 modS<- list(mInfo,mRE,mREcov,mREcor,FE,mFE,sigma,dsp) # to save in an external file
 str(modS)
+```
+
+```{r saveModelResults}
+pathmInfo <- file.path(pathDir,"Data/Derived/dsL.rds")
+
+saveRDS(object=dsL, file=pathdsLrds, compress="xz")
+
 ```
 
 
