@@ -60,6 +60,18 @@ read_chunk("./Data/Derive_dsL_from_Extract.R") # the file to which knitr calls f
 ```{r LoadPackages, echo=echoChunks, message=FALSE}
 ```
 
+<!-- run initial import from the databank defined by tagset. --> 
+```{r LoadData, echo=echoChunks, message=FALSE}
+```
+
+```{r, echo=echoChunks, message=FALSE}
+print(dsSourceLabels)
+```
+
+```{r TweakData, echo=echoChunks, message=FALSE, results='hide'}
+```
+
+
 # Preparing the dataset
 ## Data Retrieval
 Using [NLS Investigator][NLSWeb] a list of variables was downloaded from [NLS][NLS] datasets. All the downloaded materials  were unzipped into  the folder [/Data/Extracts/NLSY97_Religiosity_20042014](https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data/Extracts/NLSY97_Religiosity_20042014), located in the GitHub Repository. 
@@ -73,18 +85,9 @@ NLSY97_Religiosity_20042014.dtc - STATA **dictionary** file of selected variable
   
 
 We import the raw data of NLSY97 from .**csv** file  and make initial clean up. 
-<!-- run initial import from the databank defined by tagset. --> 
-```{r LoadData, echo=echoChunks, message=FALSE}
-```
 The STATA **dictionary** file printed below  lists the selected variables : unique NLSY97 reference numbers (RNUM) are paired wtih their descriptive labels (VARIABLE TITLE). 
 
 ## Selected variables
-```{r, echo=echoChunks, message=FALSE}
-print(dsSourceLabels)
-```
-
-```{r TweakData, echo=echoChunks, message=FALSE, results='hide'}
-```
 
 After renaming the variables, we arrange data in wide format (variable/occasions as columns), arriving at the basis dataset <code>dsSource</code>, which contains 
 ```{r, echo=TRUE}

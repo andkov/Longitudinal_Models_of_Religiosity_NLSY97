@@ -107,7 +107,7 @@ length(unique(ds$timec))
 # Estimate the model
 modnum <-lmer (attend ~ 
                1  + timec + timec2 +# timec3
-       + cohort + cohort:timec + #cohort:timec2 + cohort:timec3
+       + cohort + cohort:timec # + cohort:timec2 + cohort:timec3
               + (1 + timec + timec2 + timec3 | id),
              data = ds, REML=FALSE, 
              control=lmerControl(optCtrl=list(maxfun=20000)))
@@ -225,16 +225,13 @@ head(dsp)
 
 The effects that were not present in the model will be substituted with zeros. 
 ```{r}
-summary(model)
 cat("\014")
-dsp<- data.frame(getME(model,"X"))
+dsp<- data.frame(getME(model,"X")) # read back the input 
 dsp$id<-getME(model,"flist")$id # first level grouping factor, individual
 dsp$y<-getME(model,"y") # observed response vector
 head(dsp,13)
 
-
 model@call
-
 
 pullMainEffect <- function (timeName){
   possibleNAEffect <- FE[timeName]
@@ -289,15 +286,17 @@ The deviations from this average trajectory will be recorded in **RE**, containi
 
 ```{r}
 # tau**sd - standard deviation, sqrt(tau00)
+head(ds)
 head(RE)
-dsp$tau00sd<- 
-  =
-  dplyr::left_join(dsp["id"],RE["(Intercept)"],by= id)
+
+RE$id=rownames(RE)
+ds<- merge(dsp,RE, by="id" )
+
+oldREnames<- c ("(Intercept)", "timec.y", "timec2.y", "timec3.y")
+newREnames<- c("tau00sd","tau11sd", "tau22sd", "tau33sd")
+for(i in 1:2)names(ds)[names(ds)==oldREnames[i]]=newREnames[i]
 
 
-dsp$tau11sd<- RE["timec"]
-dsp$tau22sd<- RE["timec2"]
-dsp$tau33sd<- RE["timec3"]
 ```
 
 Getting the standard error of residuals

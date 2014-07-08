@@ -99,21 +99,28 @@ sum(is.na(ds$attend)) # total No. of missing values
 # Counts of observations at each time point
 ```
 
+
+```{r}
+ds<- ds
+filterColumn <- "attend"
+ds$g<- ds[,filterColumn]
+head(ds)
+```
+
+
 ## Wide age  
 ```{r}
 
 d<- ds %>% 
-  mutate(ageF=factor(round(age,0))) %>%
-  filter(is.na(attend))
-table(d$byear, d$ageF)
+  filter(is.na(g))
+table(d$byear, d$age)
 
 ```
 
 ## Wide wave  
 ```{r}
 d<- ds %>% 
-  mutate(ageF=factor(round(age,0))) %>%
-  filter(is.na(attend)) 
+  filter(is.na(g))
 table(d$byear,d$year)
 
 ```
@@ -121,17 +128,15 @@ table(d$byear,d$year)
 ## Long wave  
 ```{r}
 d<- ds %>% 
-  mutate(ageF=factor(round(age,0))) %>%
-  filter(is.na(attend)) 
+  filter(is.na(g))
 table(d$year,d$byear)
 
 ```
 ## Long age  
 ```{r}
 d<- ds %>% 
-  mutate(ageF=factor(round(age,0))) %>%
-  filter(is.na(attend)) 
-table(d$ageF,d$byear)
+  filter(is.na(g))
+table(d$age,d$byear)
 
 ```
 
