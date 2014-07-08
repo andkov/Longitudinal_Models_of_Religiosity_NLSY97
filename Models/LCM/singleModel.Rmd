@@ -351,15 +351,37 @@ mFE # matrix of correlations among Fixed Effects
 sigma # standard deviation of residual
 head(dsp,13) # input + output + residual + conditional
 
+# str(mFE)
+# mFE@x
+# mFE@Dimnames
 
+rowCountBeforeJoin <- nrow(a)
 a<- data.frame(FEt)
-b<- data.frame(mFE)
-c<- merge(FEt,mFE,)
+a$Coefficient <- rownames(a)
 
-mRE
-mREcov
-mREcor
+b<- as.data.frame(matrix(mFE@x, ncol=length(mFE@Dimnames[[1]]), byrow=TRUE, dimnames=mFE@Dimnames))
+b$Coefficient <- rownames(b)
 
+dsRE <- mRE
+dsRE <- plyr::rename(dsRE, replace=c("var"="varRE", "sd"="sdRE"))
+dsRE$Coefficient <- rownames(dsRE)
+
+dsRECov <- mREcov
+dsRECov <- plyr::rename(dsRECov, replace=c("X.Intercept."="intVarRE", "timec"="timecVarRE"))
+dsRECov$Coefficient <- rownames(dsRECov)
+
+dsRECor <- mREcor
+dsRECor <- plyr::rename(dsRECor, replace=c("X.Intercept."="intSDRE", "timec"="timecSDRE"))
+dsRECor$Coefficient <- rownames(dsRECor)
+
+dsDaddy <- merge(x=a, y=b, by="Coefficient", all=TRUE)
+dsDaddy <- merge(x=dsDaddy, y=dsRE, by="Coefficient", all=TRUE)
+dsDaddy <- merge(x=dsDaddy, y=dsRECov, by="Coefficient", all=TRUE)
+dsDaddy <- merge(x=dsDaddy, y=dsRECor, by="Coefficient", all=TRUE)
+
+testit::assert("The join shouldn't add new records.",  rowCountBeforeJoin==nrow(a))
+testit::assert("The join shouldn't add new records.",  nrow(dsDaddy)==nrow(a))
+testit::assert("The join shouldn't add new records.",  nrow(dsDaddy)==nrow(b))
 
 modelSave<-cat(paste0(modelNumber,"S")) 
 modS<- list(mInfo,mRE,mREcov,mREcor,FE,mFE,sigma,dsp) # to save in an external file
