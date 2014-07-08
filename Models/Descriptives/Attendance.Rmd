@@ -66,11 +66,12 @@ aesDefs
 # source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
 ```
 
-Mapping church attendance in time
+Mapping church attendance in time   
+[back to Appendix][appendix]
 
 # Cross-Sectional View  
 
-The focal variable of interest is **attend**, the item measuring church attendance for the year that preceded the interview date. The questionnaire recorded the responses on the ordinal scale.  
+The focal variable of interest is **attend**, the item measuring church attendance for the year that preceded the interview date. The questionnaire recorded the responses on the ordinal scale.
 
 ```{r attend_2000, echo=echoChunks, message=T, fig.height=3.5,fig.cap="Figure caption test"}
 ds<- dsL %>%  dplyr::filter(year==2000,sample==1)
@@ -356,6 +357,52 @@ p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
 p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p <- p + ggplot2::theme(axis.text.x = element_blank())
 p
+```
+
+## Counts for data used in models
+The following tables inspect the counts of valid responses (church attendance) across two time metircs (age and NLSY97 round) and cohort membership. 
+```{r}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
+  dplyr::filter(id %in% c(1:9022)) %.% # 1:9022
+  dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
+  dplyr::filter(sample %in% c(0,1)) %.% # 0-Oversample; 1-Cross-Sectional
+  dplyr::filter(race %in% c(1:4)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
+  dplyr::filter(byear %in% c(1980:1984)) %>% # birth year 1980:1984
+  dplyr::mutate(age=year-byear) # define bin for age
+length(unique(ds$id)) # total No. of respondents in dataset
+
+``` 
+
+```{r}
+d<- ds %>% 
+  filter(is.na(attend)) # only nonmissing datapoints
+table(d$byear,d$year) # Number of respondent in each NLSY97 round 
+table(d$byear, d$age) # Number of respondent in each age bin 
+table(d$age,d$year) # cross-section of age and round of NLSY97
+table(d$attend,useNA="always")
+```
+
+Such view allows to see quickly whether each cell contains enough observations to offer stability for estimated solutions. 
+
+```{r}
+ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
+  dplyr::filter(id %in% c(1:9022)) %.% # 1:9022
+  dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
+  dplyr::filter(sample %in% c(0)) %.% # 0-Oversample; 1-Cross-Sectional
+  dplyr::filter(race %in% c(1)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
+  dplyr::filter(byear %in% c(1980:1984)) %>% # birth year 1980:1984
+  dplyr::filter(sex==1) %>% # 1-Male; 2-Female
+  dplyr::mutate(age=round(agemon/12,0)) # define bin for age
+length(unique(ds$id)) # total No. of respondents in dataset
+``` 
+
+```{r}
+d<- ds %>% 
+  filter(!is.na(attend)) # only nonmissing datapoints
+table(d$byear,d$year) # Number of respondent in each NLSY97 round 
+table(d$byear, d$age) # Number of respondent in each age bin 
+table(d$age,d$year) # cross-section of age and round of NLSY97
 ```
 
 

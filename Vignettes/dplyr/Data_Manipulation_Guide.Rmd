@@ -55,7 +55,10 @@ read_chunk("./Vignettes/dplyr/using_dplyr.R") # the file to which knitr calls fo
 ```
 
 
-Demonstrating the language of data manipulation in <code>dplyr</code> packages using  **dsL** as an example
+Demonstrating the language of data manipulation in <code>dplyr</code> packages using  **dsL** as an example   
+[back to Appendix][appendix]
+
+
 
 <!-- Run this three chunks to get to the starting point -->
 ```{r DeclareGlobals, echo=echoChunks, message=FALSE}
@@ -236,6 +239,23 @@ The following unary and binary operators are defined for <code> base</code>. The
 + <code> =	 </code>  - assignment (right to left)   
 + <code> ?	 </code>  - help (unary and binary)   
 
+## Joining data with dplyr  
+
+While <code>merge</code> works just fine , joining data frames with <code>dplyr</code> might offer some additional conveniences:   
+
++ rows are kept in existing order
++ much faster
++ tells you what keys you're merging by (if you don't supply)
++ also work with database tables.
+
+dplyr implements the four most useful joins from SQL:  
+
++ <code>inner_join</code> - similar to <code>merge(..., all.x=F, all.y=F)</code>   
++ <code>ileft_join</code> - similar to <code>merge(..., all.x=T, all.y=F)</code>   
++ <code>isemi_join</code> - no equivalent in <code>merge()</code> unless y includes only join fields       
++ <code>ianti_join</code> - no equivalent in <code>merge()</code>, this is all x without a match in y   
+
+## 
 
 ## Read more 
 

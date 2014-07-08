@@ -2,7 +2,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 300px;
+  width: 200px;
   height: 100%;
   overflow:auto;
 }
@@ -12,22 +12,25 @@ body, td {
    font-family: "Helvetica" , "sans-serif";
    background-color: white;
    font-size: 14px;
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
-      margin-left:310px;
+      margin-left:200px;
       line-height: 20px;
 }
 
 
-p {line-height:150%}
+p {line-height:200%}
 
 body {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: 1em;
   line-height: 20px;
 }
 
+li {
+line-height: 200%;
+}
 
 tt, code, pre {
    font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
@@ -78,6 +81,7 @@ code {
 
 code[class] {
   background-color: #F8F8F8;
+   line-height:300%;
 }
 
 table, td, th {

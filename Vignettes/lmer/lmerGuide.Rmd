@@ -1,0 +1,264 @@
+---
+title: "lmer guide"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    theme: united
+    toc: yes
+  md_document:
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_caption: no
+    fig_crop: no
+    fig_width: 8
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
+---
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+#   fig.height = 4.8, 
+#   fig.width = 6.5, 
+#   out.width = NULL,
+  fig.path = 'lmerGuide/',     
+  dev = "png",
+  dpi = 100
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+aesDefs
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+# select only respondence in the cross-sectional sample
+
+```
+
+Locating model estimation results in S4 objects produced by of <code>lmer()</code> calls of *lme4* package.
+[back to Appendix][appendix]
+
+
+## Basics 
+Prepare data for modeling. 
+Only the first 200 respondents will be selected to keep illustration light.
+```{r}
+dsL<-readRDS("./Data/Derived/dsL.rds")
+ds<- dsL %>% dplyr::filter(id %in% c(1:200),year %in% c(2000:2011)) %>% 
+  dplyr::mutate(timec=year-2000, timec2= timec^2, timec3= timec^3, 
+                agec= round( (agemon/12),0)-16) %>% 
+  dplyr::select(id,year,attend, timec,timec2, timec3, agec)
+head(ds, 20)
+```
+
+Fit the model with <code>lmer</code>
+```{r}
+m10 <-lmer (attend ~ 
+               1  + agec + timec + timec2 + timec3
+             + agec:timec +agec:timec2 + agec:timec3
+             + (1 + timec + timec2 + timec3 | id),
+             data = ds, REML=0)
+model<- m10
+```
+
+Print the basic results of  the fitted model
+```{r}
+print(model) 
+```
+
+Or get a more detailed summary
+```{r}
+summary(model)
+```
+
+For a list of objects that can be extracted from the model
+```{r}
+str(summary(model))
+```
+
+
+
+There a number of ways one could extract the needed element from the S4 object. In addition, some of the elements might be stored in several locations.   
+
+## Model formula
+```{r}
+model@call # 1
+(summary(model))$call #2
+```
+
+## Fit and Information indices
+
+```{r}
+# get indicies
+mInfo<-summary(model)$AICtab
+mInfo
+mInfo['logLik']
+```
+
+Aleternatively,
+```{r}
+logLik<-logLik(model)
+dev<-deviance(model)
+AIC <- AIC(model) 
+BIC <- BIC(model)
+N<- model@devcomp$dims["N"] # Looks like the total number of data points ( individual-by-time)
+p<- model@devcomp$dims["p"] # Looks like the number of estimated parameters, verify
+ids<- (summary(model))$ngrps # number of units on level-2, here: individuals
+mInfo<- c("logLik"=logLik,"dev"=dev,"AIC"=AIC,"BIC"=BIC,"N"=N, "p"=p, "ids"=ids)
+mInfo
+```
+
+## Random Effects (RE)
+
+### Matrix of RE
+```{r}
+str(summary(model)$varcor)
+# extract RE covariance matrix
+mRE<- data.frame(summary(model)$varcor$id) 
+mRE
+mRE<- data.frame(VarCorr(model)$id)
+mRE
+```
+
+```{r}
+mREcor<-  data.frame(attr(summary(model)$varcor$id,"correlation")) # corrleation 
+mREcor
+mREcor<- data.frame( attr(VarCorr(model)$id,"correlation"))
+mREcor
+mREsd<-   data.frame(STD=(attr(summary(model)$varcor$id,"stddev"))) 
+mREsd
+```
+
+
+
+### extracting RE for each individual
+```{r}
+RE<- lme4:::ranef.merMod(model)$id 
+head(RE,5)
+tail(RE,5)
+mRE
+cor(RE)  # not the same as mRE, find out why
+var(RE)  # not the same as mRE, find out why
+```
+
+## Fixed Effects (RE)
+
+### Matrix of FE
+```{r}
+str(summary(model)$vcov)
+mFE<- (summary(model)$vcov@factors$correlation) # notice that this is object of class corMatrix
+str(mFE)
+```
+
+### estimate of the FE
+```{r}
+# similar ways to extract FE estimates, #3 is the fullest
+FE1<- fixef(model) #1 
+FE2<- getME(model, "beta") # 2
+FE3<- summary(model)$coefficients # 3
+coefs<- FE1
+```
+
+## Prediction and Residuals
+### Restatement of model input
+First, recover information that went into the model
+```{r}
+# dsP - P for predicted
+dsp<-data.frame(model@frame) # original vars used by the model (no interaction terms)
+head(dsp,13)
+```
+
+Another way, which includes interaction terms, but no outcome
+```{r}
+dsp<- data.frame(getME(model,"X")) # no Y, only predictors (with interaction terms)
+head(dsp,13)
+```
+
+We can add response vector and the grouping factor for the second level (individual)
+```{r}
+dsp$id<-getME(model,"flist")$id # first level grouping factor, individual
+dsp$y<-getME(model,"y") # response vector
+head(dsp,13)
+```
+
+### Adding model output
+There are several way to extract the predictions made by the model
+```{r}
+# model outcome, predicted values
+yHat1<- fitted(model) # 1
+yHat2<- predict(model) # 2
+yHat3<- getME(model,"mu") # 3
+
+identical(yHat1,yHat2)
+identical(as.numeric(yHat2),yHat3)
+dsp$yHat<- predict(model)
+head(dsp,13)
+```
+
+### Adding residual
+```{r}
+dsp$resid<- lme4:::residuals.merMod(model) # individual residual (id and time)
+head(dsp,13)
+identical (  dsp$y-dsp$yHat, dsp$resid)
+
+```
+
+Getting the standard error of residuals
+```{r}
+getME(model,"sigma") # standard error of residuals, same sigma(model)
+sigma(model) # std.error of residuals <- this methods is preferred
+# however
+sd(dsp$resid) # not the same as sigma(model) = find out why
+identical (sigma(model),sd(dsp$resid)) # WHY?
+```
+
+## Conditional values
+Predictions form fixed effects only, no individual variability is used in calculation
+
+```{r}
+# create object "coefs" for easy reference
+coefs <- fixef(model)
+# use fixed effects estimates to find conditional predictions??
+dsp$yPar<-(
+  (coefs["(Intercept)"])         +(coefs["agec"]*dsp$agec)
+  +(coefs["timec"]*dsp$timec)    +(coefs["agec:timec"]*dsp$agec*dsp$timec)
+  +(coefs["timec2"]*dsp$timec2)  +(coefs["agec:timec2"]*dsp$agec*dsp$timec2)
+  +(coefs["timec3"]*dsp$timec3)  +(coefs["agec:timec3"]*dsp$agec*dsp$timec3)
+)
+head(dsp,13)
+
+```
+
+```{r child, child = '../../Models/Descriptives/Citations.Rmd'}
+
+```
+
+

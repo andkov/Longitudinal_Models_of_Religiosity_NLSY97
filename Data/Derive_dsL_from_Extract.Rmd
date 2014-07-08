@@ -25,7 +25,8 @@ mainfont: Calibri
 ---
 
 
-Deriving clean dataset <code>dsL</code> from NLSY97 extract. 
+Deriving clean dataset <code>dsL</code> from NLSY97 extract.    
+[back to Appendix][appendix]
 
 <!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
 ```{r, echo=F, message=F} 

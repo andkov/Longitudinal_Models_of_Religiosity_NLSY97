@@ -65,7 +65,8 @@ read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr cal
 ```
 
 
-Basic descriptives reports on the selected NLSY97 items
+Basic descriptives reports on the selected NLSY97 items   
+[back to Appendix][appendix]
 
 ## Basic demographics 
 A clean dataset **dsL** contains data on
@@ -220,6 +221,51 @@ ds<- dsL %.%
 head(ds, 10)
 
 ```
+
+
+## Counts for data used in models
+The following tables inspect the counts of valid responses (church attendance) across two time metircs (age and NLSY97 round) and cohort membership. 
+```{r}
+ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
+  dplyr::filter(id %in% c(1:9022)) %.% # 1:9022
+  dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
+  dplyr::filter(sample %in% c(0,1)) %.% # 0-Oversample; 1-Cross-Sectional
+  dplyr::filter(race %in% c(1:4)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
+  dplyr::filter(byear %in% c(1980:1984)) %>% # birth year 1980:1984
+  dplyr::mutate(age=round(agemon/12,0)) # define bin for age
+length(unique(ds$id)) # total No. of respondents in dataset
+``` 
+
+```{r}
+d<- ds %>% 
+  filter(!is.na(attend)) # only nonmissing datapoints
+table(d$byear,d$year) # Number of respondent in each NLSY97 round 
+table(d$byear, d$age) # Number of respondent in each age bin 
+table(d$age,d$year) # cross-section of age and round of NLSY97
+```
+
+When subsetting data to run throught the sequence of models, it would of use to see such counts. Insufficient number of observation per cell might be behind poor model estimation. For example, male blacks from the oversample may not be a good subset to fit a complex model. 
+```{r}
+ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
+  dplyr::filter(id %in% c(1:9022)) %.% # 1:9022
+  dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
+  dplyr::filter(sample %in% c(0)) %.% # 0-Oversample; 1-Cross-Sectional
+  dplyr::filter(race %in% c(1)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
+  dplyr::filter(byear %in% c(1980:1984)) %>% # birth year 1980:1984
+  dplyr::filter(sex==1) %>% # 1-Male; 2-Female
+  dplyr::mutate(age=round(agemon/12,0)) # define bin for age
+
+length(unique(ds$id)) # total No. of respondents in dataset
+``` 
+
+```{r}
+d<- ds %>% 
+  filter(!is.na(attend)) # only nonmissing datapoints
+table(d$byear,d$year) # Number of respondent in each NLSY97 round 
+table(d$byear, d$age) # Number of respondent in each age bin 
+table(d$age,d$year) # cross-section of age and round of NLSY97
+```
+
 
 ## Read more 
 

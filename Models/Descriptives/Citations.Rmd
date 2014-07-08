@@ -23,5 +23,7 @@ output:
 
 [data]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Data
 
-[models]::https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models
+[models]:https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Models
 [vignettes]::https://github.com/andkov/Longitudinal_Models_of_Religiosity_NLSY97/tree/master/Vignettes
+
+[appendix]:http://statcanvas.net/thesis/appendix/

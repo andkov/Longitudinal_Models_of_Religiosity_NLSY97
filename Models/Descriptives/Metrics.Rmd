@@ -1,6 +1,15 @@
 ---
 title: "Metrics"
 output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    theme: united
+    toc: yes
+  md_document:
+    toc: yes
+    toc_depth: 3
   pdf_document:
     fig_caption: no
     fig_crop: no
@@ -9,15 +18,6 @@ output:
     number_sections: yes
     toc: yes
     toc_depth: 3
-  md_document:
-    toc: yes
-    toc_depth: 3
-  html_document:
-    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig.retina: 2
-    fig_width: 8
-    theme: united
-    toc: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
@@ -53,10 +53,6 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr calls for the chunks
 ```
 
-===   
-
-Labeling factors and exploring scales.   
-
 ```{r DeclareGlobals, echo=F, message=FALSE, results='hide'}
 # aesDefs
 ```
@@ -68,6 +64,10 @@ Labeling factors and exploring scales.
 # select only respondence in the cross-sectional sample
 
 ```
+
+Labeling factors and exploring scales.   
+[back to Appendix][appendix]
+
 
 ## Data preliminaries
 
@@ -119,6 +119,45 @@ Having quick access to factor labels will be especially useful during graph prod
 NLSY97 sample includes individuals from five cohorts, born between 1980 and 1984.The following graphics shows how birth cohort, age of respondents, and round of observation are related in NSLY97.  
 ![Figure 3.1](../../images/APC_layout.png)
 
+### Counts of respondents across age, period, and cohort
+```{r}
+ds<- dsL %>%  # chose conditions to apply in creating the dataset 
+  dplyr::filter(id %in% c(1:9022)) %.% # 1:9022
+  dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
+  dplyr::filter(sample %in% c(0,1)) %.% # 0-Oversample; 1-Cross-Sectional
+  dplyr::filter(race %in% c(1:4)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
+  dplyr::filter(byear %in% c(1980:1984)) %.%
+  dplyr::mutate(age=year-byear) # define bin for age
+```
+
+#### Wide age  
+```{r}
+table(ds$byear, ds$age)
+
+```
+
+#### Wide wave  
+```{r}
+table(ds$byear,ds$year)
+
+```
+
+#### Long wave  
+```{r}
+table(ds$year,ds$byear)
+
+```
+#### Long age  
+```{r}
+table(ds$age,ds$byear)
+
+```
+
+#### Two time metrics: rounds across ages 
+```{r}
+table(ds$age,ds$year)
+
+```
 
 NSLY97 contains static (**bmonth**, **byear**) and dynamic (**agemon**, **ageyear**) indicators of age : 
 
@@ -178,7 +217,8 @@ See also
 + [Deriving Data from NLYS97 extract][derive]
 + [Data Manipulation Guide][manipulate]
 
-```{r child, child_citations = 'Citations.Rmd'}
+
+```{r child, child = 'Citations.Rmd'}
 
 ```
 
