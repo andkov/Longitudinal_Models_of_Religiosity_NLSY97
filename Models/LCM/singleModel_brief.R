@@ -16,7 +16,7 @@ require(reshape2)
 ############################
 ## @knitr DeclareGlobals
 # load common aesthetics definitions used in the reports
-source("./Models/Descriptives/AesDefine.R"))
+source("./Models/Descriptives/AesDefine.R")
 # read back the definitions
 # aesDefs
 
@@ -64,29 +64,29 @@ length(unique(ds$timec))
 #               control=lmerControl(optCtrl=list(maxfun=20000)))
 # modelR<-model
 # 
-# fnlme<- as.formula(call_m5F)
-# model<- nlme::gls(f, data=ds,method = "ML")
+# fnlme<- as.formula(call_m4F)
+# model<- nlme::gls(fnlme, data=ds,method = "ML")
 # modelF<-model
 ###################
 
 
-modelName <- "m1R1"
+modelName <- "m7F"
   # list of fixed models
-  modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
-                  "mFa", "mFb", "mFc", "mFd","mFe")
-  modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1",
-                "mR1a", "mR1b", "mR1c", "mR1d","mR1e")
-  modelsR2 <- "m0R2", "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2",
-  
-  modelsR3 <- c("m0R3", "m1R3", "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
-  
-  modelsR4 <- c("m0R4", "m1R4", "m2R4", "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
+modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
+                "mFa", "mFb", "mFc", "mFd","mFe")
+modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1",
+              "mR1a", "mR1b", "mR1c", "mR1d","mR1e")
+modelsR2 <- c("m0R2", "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
+
+modelsR3 <- c("m0R3", "m1R3", "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
+
+modelsR4 <- c("m0R4", "m1R4", "m2R4", "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
 
 allModels<- modelNamesLabels
 modelList<- c(modelsFE,modelsR1 )
 
 
-for(i in modelsR1){
+for(i in modelList){
   modelName<- i
   modelCall<- paste0("call_",modelName)
   f<- as.formula(modelCall)
@@ -111,6 +111,8 @@ mInfo["p"]<- model@devcomp$dims["p"] # number of estimated parameters, verify
 mInfo["ids"]<- (summary(model))$ngrps # number of units on level-2, here: individuals
 mInfo<- c(mInfo, "modelName"=modelName)
 dsmInfo<-data.frame(mInfo)
+dsmInfo<- plyr::rename(dsmInfo,replace= c("mInfo"=modelName))
+dsmInfo$Coefficient <- rownames(dsmInfo)
 dsmInfo # model information 
 
 ## dsFERE ##
@@ -280,8 +282,13 @@ p<- summary(model)$dims$p
 ids<- length(unique(ds$id))
 df.resid<- N-p
 
-dsmInfo<- data.frame("AIC" = AIC, "BIC" = BIC, "logLik" = logLik, "deviance"=deviance,
+mInfo<- data.frame("AIC" = AIC, "BIC" = BIC, "logLik" = logLik, "deviance"=deviance,
                    "df.resid"=df.resid, "N"=N, "p"=p, "ids"=ids, "modelName"=modelName)
+t<- t(mInfo)
+rownames(t)<-colnames(mInfo)
+dsmInfo<- data.frame(new=t)
+colnames(dsmInfo)<- c(modelName)
+dsmInfo$Coefficient <- rownames(dsmInfo)
 dsmInfo
 
 ## dsFERE
