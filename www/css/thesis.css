@@ -81,7 +81,7 @@ code {
 
 code[class] {
   background-color: #F8F8F8;
-   line-height:300%;
+   line-height:100%;
 }
 
 table, td, th {

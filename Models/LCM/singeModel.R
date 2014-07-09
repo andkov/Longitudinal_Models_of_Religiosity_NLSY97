@@ -1,160 +1,61 @@
----
-title: "Single model"
-output:
-  html_document:
-    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig.retina: 2
-    fig_width: 8
-    toc: yes
-  md_document:
-    toc: yes
-    toc_depth: 3
-  pdf_document:
-    fig_crop: no
-    fig_width: 8
-    highlight: haddock
-    latex_engine: xelatex
-    number_sections: yes
-    toc: yes
-    toc_depth: 3
-  word_document:
-    fig_width: 6.5
-mainfont: Calibri
----
+#These first few lines run only when the file is run in RStudio, !!NOT when an Rmd/Rnw file calls it!!
+rm(list=ls(all=TRUE))  #Clear the variables from previous runs.
 
-<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
-```{r, echo=F, message=F} 
-require(knitr)
-opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+############################
+## @knitr LoadPackages
+require(RODBC)
+require(grid)
+require(lattice)
+require(dplyr)
+require(ggplot2)
+require(gridExtra)
+require(lme4)
+require(reshape2)
 
-```
+############################
+## @knitr DeclareGlobals
+# load common aesthetics definitions used in the reports
+source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
+# read back the definitions
+# aesDefs
 
-```{r set_options, echo=F, message=F}
-require(knitr)
-# getwd()
-opts_chunk$set(
-  results='show', 
-  message = TRUE,
-  comment = NA, 
-  tidy = FALSE,
-#   fig.height = 4.8, 
-#   fig.width = 6.5, 
-#   out.width = NULL,
-  fig.path = 'lmerGuide/',     
-  dev = "png",
-  dpi = 100
-)
-echoChunks <- FALSE
-warningChunks<- FALSE
-options(width=120) #So the output is 50% wider than the default.
-read_chunk("./Models/LCM/LCM.R") # the file to which knitr calls for the chunks
-```
-
-```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-aesDefs
-```
-
-```{r LoadPackages, echo=echoChunks, message=F}
-```
-
-```{r LoadData, echo=echoChunks, message=T}
-# select only respondence in the cross-sectional sample
-
-```
-# Model specification   
-The model is of the class
-![LCM_Specification](../../images/WideSpecification_Guide.png)
-
-# Sequence specification  
-![Sequence_Specification](../../images/SequenceMap_Web.png)
-
-# Model and Data specification
-```{r defineData}
-cat("\014") # clears console
-modelNumber<- "m7R"
-numID<- 200
-
-modnum<-cat(modelNumber)
+############################
+## @knitr LoadData
 dsL<-readRDS("./Data/Derived/dsL.rds")
-ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
-  dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
-  dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
-  dplyr::filter(sample %in% c(1)) %.% # 0-Oversample; 1-Cross-Sectional
-  dplyr::filter(race %in% c(4)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
-  dplyr::filter(byear %in% c(1980:1984)) %.% # birth year 1980:1984
-  dplyr::filter(ave(!is.na(attend), id, FUN = all)) %.% # only complete trajectories
-  dplyr::mutate( # create new variables
-        age= year-byear, # definition of age to be used in the model    
-        timec=year-2000, # metric of time is rounds of NSLY97 in years, centered at 2000
-        timec2= timec^2, 
-        timec3= timec^3,
-#         timec= age-16, # metric of time is bilogical age in years, centered at 16
-#         timec2= timec^2,
-#         timec3= timec^3,# 
-        cohort=byear-1980) %.% # age difference, years younger
-  dplyr::select( # assemble the dataset for modeling
-    id, sample, race, byear,cohort, # Time Invariant variables
-    year,
-    age, timec,timec2,timec3, attend)  # Time Variant variables
-head(ds)
-table(ds$byear) # the year of birth  - metric: YEAR 
-table(ds$age) # years past 16 -  metric: AGE
-table(ds$year, ds$age) # YEAR by  AGE 
-length(unique(ds$id)) # total No. of respondents in dataset
-sum(!is.na(ds$attend)) # valid datapoints 
-sum(is.na(ds$attend)) # NA in the dataset 
-length(unique(ds$timec))
-# Estimate the model
-modnum <-lmer (attend ~ 
-               1  + timec + timec2 + timec3
-       + cohort + cohort:timec  #+ cohort:timec2 # + cohort:timec3
-              + (1 + timec + timec2  | id),
-             data = ds, REML=FALSE, 
-             control=lmerControl(optCtrl=list(maxfun=20000)))
-        
-model<- modnum
 
-```
-
-# Model results
-
-# Basic elements of the S4 object
-
-The full model summary can be accessed by command:
-```{r Summary}
-summary(model) 
-```
-
-After studying 
-```{r, eval=FALSE}
-str(summary(model)$vcov@x)
-str(summary(model)$varcor)
-```
-we can spot a few complex elements that would be particularly useful
-
-str(summary(model)$varcor)
+############################
+## @knitr TweakData
 
 
-## Model formula
-```{r Call}
-model@call 
-```
 
-## Fit and Information indices
+############################
+## @knitr AnalysisChunk01
 
-```{r mInfo}
-# get indicies
+
+
+############################
+## @knitr AnalysisChunk02
+
+############################
+## @knitr AnalysisChunk03
+
+
+############################
+## @knitr 
+
+############################
+## @knitr mInfo
+
 mInfo<-summary(model)$AICtab
 mInfo["N"]<- model@devcomp$dims["N"] # number of datapoints, verify
 mInfo["p"]<- model@devcomp$dims["p"] # number of estimated parameters, verify
 mInfo["ids"]<- (summary(model))$ngrps # number of units on level-2, here: individuals
 mInfo
-```
 
-## Random Effects (RE)
 
-### Matrix of RE
-```{r mRE}
+
+############################
+## @knitr mRE
 # extract RE covariance matrix
 mREcov<-  data.frame(     summary(model)$varcor$id   ) # covariance matrix of RE
 mREcor<-  data.frame(attr(summary(model)$varcor$id,"correlation")) # corrleation matrix of RE
@@ -164,73 +65,50 @@ mRE<-mRE[c("var","sd")]
 mRE
 mREcov
 
-
-
-```
-
-### extracting RE for each individual
-```{r RE}
+############################
+## @knitr RE
 RE<- lme4:::ranef.merMod(model)$id 
 head(RE,6)
 # however
 cor(RE)  # in unadjusted RE estimates, not same as mRE
 var(RE)  # in unadjusted RE estimates, not same as mRE
 mRE
-```
 
-## Fixed Effects (FE)
-
-
-### estimate of the FE
-```{r FE}
+############################
+## @knitr FE
 # similar ways to extract FE estimates, #3 is the fullest
 FE<- fixef(model)  
 FE # vector used in predition
 FEt<- summary(model)$coefficients
 FEt # contains t-values that test the terms
-```
 
-### Matrix of FE
-```{r mFE}
+
+############################
+## @knitr mFE
 mFE<- (summary(model)$vcov@factors$correlation) # notice that this is object of 
 mFE
-```
 
-
-## Model output
-```{r dsp_recover_input}
+############################
+## @knitr dsp_recover_input
 # Read back when went into the model
 cat("\014")
 dsp<- data.frame(getME(model,"X"))
 dsp$id<-getME(model,"flist")$id # first level grouping factor, individual
 dsp$y<-getME(model,"y") # observed response vector
 head(dsp,13)
-```
 
-### Prediction and Residuals
-
-```{r dsp_yHat_resid}
-cat("\014")
+############################
+## @knitr dsp_yHat_resid
+# cat("\014")
 dsp$yHat<- predict(model) # predicted values
 dsp$resid<- lme4:::residuals.merMod(model)
 head(dsp,13)
 identical ( dsp$y-dsp$yHat, dsp$resid) # check if adds up
+
 ```
 
-## Conditional values
-The fixed effects  collectivelly define a trajectory that summarises differences among individuals. Uusing the values of the estimated parameters, we reconstruct the trjecectory from which the individual trajectories vary, according to the estimated random effects, if present in the model.
-
-The columns named as fixed effect coefficients (gamma00:gammaKP), contain  predicted trajectories of the outcome (y), computed using only the correspodning term (gamma coefficient x predictor(s), if present). Thus, collumn *gamma00* contains the predicted trajectory of church attendance cumputed using only the grand mean (gamma00) of the current model specification. 
-
-```{r}
-cat("\014")
-head(dsp)
-dsp$gamma00<- ifelse( is.na(FE["(Intercept)"]),0,FE["(Intercept)"])
-head(dsp)
-```
-
-The effects that were not present in the model will be substituted with zeros. 
-```{r predictFE}
+############################
+## @knitr predictFE
 # cat("\014")
 # dsp<- data.frame(getME(model,"X")) # read back the input 
 # dsp$id<-getME(model,"flist")$id # first level grouping factor, individual
@@ -242,14 +120,14 @@ model@call
 pullMainEffect <- function (timeName){
   possibleNAEffect <- FE[timeName]
   result <- ifelse( is.na(rep(possibleNAEffect,nrow(dsp))), 0,
-                  possibleNAEffect*dsp[,timeName]) 
+                    possibleNAEffect*dsp[,timeName]) 
   return(result)
 }
 
 pullInteractionEffect <- function (timeName){
   possibleNAEffect <- FE[paste0(timeName,":cohort")]
   result <- ifelse( is.na(rep(possibleNAEffect,nrow(dsp))), 0,
-                  possibleNAEffect*dsp[,timeName]) 
+                    possibleNAEffect*dsp[,timeName]) 
   return(result)
 }
 
@@ -280,17 +158,9 @@ f.effects<- c("gamma00","gamma01","gamma02","gamma03",
               "gamma10","gamma11","gamma12","gamma13")
 dsp$yFE <- rowSums (dsp[,colnames(dsp) %in% f.effects],na.rm=TRUE)
 head(dsp)
-```
 
-Of particular interest is variable **yFE** which has several interpretations. It is:      
-  0. the sum of all estimated fixed effects (gamma00:gammaKP) in (person x timepoint) cell    
-  1. the overall model solution for the interindividual  differences   
-  2. the average intraindividual pattern     
-  3. the prediction of the model with interindividual variability factored out, as opposed to **yHat**, generated using both fixed and random effect(s) coefficients.  
-
-The deviations from this average trajectory will be recorded in **RE**, containing a column for each of the random effects estimated.  
-
-```{r predictRE}
+############################
+## @knitr predictRE
 # tau**sd - standard deviation, sqrt(tau00)
 # dspCopy<- dsp
 # dsp<- dspCopy
@@ -299,13 +169,10 @@ RE$id=rownames(RE)
 oldREnames<- c ("(Intercept)", "timec", "timec2", "timec3")
 newREnames<- c("tau00sd","tau11sd", "tau22sd", "tau33sd")
 for(i in 1:4)names(RE)[names(RE)==oldREnames[i]]=newREnames[i]
-
-
-head(RE)
-
+# head(RE)
 # attach individual disturbances to dsp by id
 dsp<- merge(dsp,RE, by="id" )
-head(dsp)
+# head(dsp)
 
 pullRandomEffect <- function (timeName,tauName){
   variableMissing <- !(tauName %in% colnames(dsp))
@@ -315,7 +182,7 @@ pullRandomEffect <- function (timeName,tauName){
   else {
     possibleNAEffect <- dsp[,tauName]
     result <- ifelse( is.na(possibleNAEffect), 0,
-                    possibleNAEffect*dsp[,timeName]) 
+                      possibleNAEffect*dsp[,timeName]) 
     return(result)
   }
 }
@@ -327,41 +194,41 @@ dsp$tau11sd <- pullRandomEffect(timeName="timec", tauName="tau11sd")
 dsp$tau22sd <- pullRandomEffect(timeName="timec2", tauName="tau22sd")
 dsp$tau33sd <- pullRandomEffect(timeName="timec3", tauName="tau33sd")
 head(dsp)
-```
 
-Create the individual disturbance
-```{r indDisturb}
+
+############################
+## @knitr indDisturb 
 r.effects<- c("tau00sd","tau11sd","tau22sd","tau33sd")
 dsp$yRE <- rowSums (dsp[,colnames(dsp) %in% r.effects],na.rm=TRUE)
 
 head(dsp)
-```
 
-```{r predictions}
+
+############################
+## @knitr predictions
 ds<- dsp %>%
   dplyr::select(y,resid,yFE,yRE,yHat) %>%
   dplyr::mutate(
     yFERE=yFE+yRE, # predictions reconstructed manually
     residFERE= y- yFERE,
     residDif= resid- residFERE # residuals might slightly differ due to rounding
-         ) 
+  ) 
 # Check that the model solution deconstructed from fixed and random coefficient estimates (yFERE) matches the prediction produced by the built in function predict(model) or fitted(model).
 all.equal(dsp$yHat1, dsp$yFERE)
 head(ds,10)
 
-```
 
-Getting the standard error of residuals
-```{r residSE}
+############################
+## @knitr residSE
 sigma<-sigma(model) # std.error of scaled residuals 
 SDR<-sd(dsp$resid) # st.deviation of the raw residuals, not scaled
 sigma
 SDR
-```
 
 
-## List of availible elements
-```{r combineResults}
+
+############################
+## @knitr combineResults
 summary(model)
 VarCorr(model)
 
@@ -412,9 +279,8 @@ dsmInfo<- data.frame(mInfo)
 dsFERE<- dsDaddy
 dsp<- data.frame(dsp)
 
-```
-
-```{r saveModelResults}
+############################
+## @knitr 
 modelNumber
 pathdsmInfo <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelNumber,"_mInfo.rds"))
 pathdsFERE  <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelNumber,"_FERE.rds"))
@@ -423,11 +289,4 @@ pathdsp  <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelNumber,"_
 saveRDS(object=dsmInfo, file=pathdsmInfo, compress="xz")
 saveRDS(object=dsFERE, file=pathdsFERE, compress="xz")
 saveRDS(object=dsp, file=pathdsp, compress="xz")
-
-```
-
-
-```{r child, child = '../../Models/Descriptives/Citations.Rmd'}
-
-```
 
