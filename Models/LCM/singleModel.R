@@ -25,15 +25,16 @@ source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
 dsL<-readRDS("./Data/Derived/dsL.rds")
 source(file.path(getwd(),"Models/LCM/LCModels.R"))
 
-a <- c("m3R")
-for(i in a){
-modelName<- i
+# a <- c("m7R")
+# for(i in a){
+# modelName<- i
 ############################
 ## @knitr defineData
 
+modelName <- "m7R1"
 
 modelCall<- paste0("call_",modelName)
-numID<- 9022 # highest id value (max = 9022)
+numID<- 222 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
@@ -41,7 +42,7 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(sample %in% c(1)) %.% # 0-Oversample; 1-Cross-Sectional
   dplyr::filter(race %in% c(4)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
   dplyr::filter(byear %in% c(1980:1984)) %.% # birth year 1980:1984
-  dplyr::filter(ave(!is.na(attend), id, FUN = all)) %.% # only complete trajectories
+#   dplyr::filter(ave(!is.na(attend), id, FUN = all)) %.% # only complete trajectories
   dplyr::mutate( # compute new variables
     age= year-byear, # definition of age to be used in the model    
     timec=year-2000, # metric of time is rounds of NSLY97 in years, centered at 2000
@@ -254,7 +255,7 @@ summary(model)
 VarCorr(model)
 
 mInfo # model information indices
-RE # random effect corrections for each (person x timepoint)
+head(RE,6) # random effect corrections for each (person x timepoint)
 mRE  # variances and standard deviations of random effects
 mREcov # covariance matrix of Random Effects
 mREcor # correlation  matrix of Random Effects
@@ -280,11 +281,11 @@ dsRE <- plyr::rename(dsRE, replace=c("var"="varRE", "sd"="sdRE"))
 dsRE$Coefficient <- rownames(dsRE)
 
 dsRECov <- mREcov
-dsRECov <- plyr::rename(dsRECov, replace=c("X.Intercept."="intVarRE", "timec"="timecVarRE",, "timec2"="timec2VarRE", "timec3"="timec3VarRE"))
+dsRECov <- plyr::rename(dsRECov, replace=c("X.Intercept."="intVarRE", "timec"="timecVarRE","timec2"="timec2VarRE","timec3"="timec3VarRE"))
 dsRECov$Coefficient <- rownames(dsRECov)
 
 dsRECor <- mREcor
-dsRECor <- plyr::rename(dsRECor, replace=c("X.Intercept."="intSDRE", "timec"="timecSDRE","timec2"="timec2SDRE", "timec3"="timec3SDRE"))
+dsRECor <- plyr::rename(dsRECor, replace=c("X.Intercept."="intSDRE", "timec"="timecSDRE", "timec2"="timec2SDRE", "timec3"="timec3SDRE"))
 dsRECor$Coefficient <- rownames(dsRECor)
 
 dsDaddy <- merge(x=a, y=b, by="Coefficient", all=TRUE)
@@ -313,4 +314,4 @@ saveRDS(object=dsmInfo, file=pathdsmInfo, compress="xz")
 saveRDS(object=dsFERE, file=pathdsFERE, compress="xz")
 saveRDS(object=dsp, file=pathdsp, compress="xz")
 
-} # end of the for loop
+# } # end of the for loop
