@@ -5,6 +5,7 @@
   width: 200px;
   height: 100%;
   overflow:auto;
+  line-height:200%;
 }
 
 
@@ -29,7 +30,7 @@ body {
 }
 
 li {
-line-height: 200%;
+line-height: 150%;
 }
 
 tt, code, pre {

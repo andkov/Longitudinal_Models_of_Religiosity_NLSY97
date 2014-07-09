@@ -1,172 +1,70 @@
-############################
-## @knitr LoadPackages
-require(RODBC)
-require(plyr)
-require(ggplot2)
-require(reshape2)
-require(lme4) #Load the library necessary for multilevel models
-require(colorspace) #Load the library necessary for creating tightly-controlled palettes.
-require(Hmisc)
-require(lattice)
+### m7R ###
+call_m7R <- "attend ~ 1  + timec + timec2 + timec3 + cohort + cohort:timec + cohort:timec2  + cohort:timec3 + (1 | id)"
+### m6R ###
+call_m6R <- "attend ~ 1  + timec + timec2 + timec3 + cohort + cohort:timec  + cohort:timec2  + (1 | id)"
+### m5R ###
+call_m5R <- "attend ~ 1  + timec + timec2 + timec3 + cohort + cohort:timec + (1 | id)"
+### m4R ###
+call_m4R <- "attend ~ 1  + timec + timec2 + timec3 + cohort + (1 | id)"
+### m3R ###
+call_m3R <- "attend ~ 1  + timec + timec2 + timec3 + (1 | id)"
+### m2R ###
+call_m2R <- "attend ~ 1  + timec + timec2 + (1 | id)"
+### m1R ###
+call_m1R <- "attend ~ 1  + timec + (1 | id)"
+### m0R ###
+call_m0R <- "attend ~ 1 + (1 | id)"
 
-#THis file contains all the models fitted in the presentation. The second portion of the code
-# is the formulas for the fixed effect prediction and should be used 
+### m7F ###
+call_m7F <- "attend ~ 1  + timec + timec2 + timec3 + cohort + cohort:timec  + cohort:timec2  + cohort:timec3 "
+### m6F ###
+call_m6F <- "attend ~ 1  + timec + timec2 + timec3 + cohort + cohort:timec  + cohort:timec2"
+### m5F ###
+call_m5F <- "attend ~ 1  + timec + timec2 + timec3 + cohort + cohort:timec"
+### m4F ###
+call_m4F <- "attend ~ 1  + timec + timec2 + timec3 + cohort "
+### m3F ###
+call_m3F <- "attend ~ 1  + timec + timec2 + timec3 "
+### m2F ###
+call_m2F <- "attend ~ 1  + timec + timec2"
+### m1F ###
+call_m1F <- "attend ~ 1  + timec "
+### m0F ###
+call_m0F <- "attend ~ 1  + timec "
 
-(m12 <-lmer (attend ~ 
-               1  + timec + timec2 + timec3 + agec 
-             + agec:timec +agec:timec2 
-             + (1 + timec + timec2 | id),
-             data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         +(coefs["agec"]*dsp$agec)
-  +(coefs["timec"]*dsp$timec)    +(coefs["timec:agec"]*dsp$agec*dsp$timec)
-  +(coefs["timec2"]*dsp$timec2)  +(coefs["timec2:agec"]*dsp$agec*dsp$timec2)
-  +(coefs["timec3"]*dsp$timec3)  
-)
-str(dsp$YPar)
-########################################################
-(m11 <-lmer (attend ~ 
-               1  + timec + timec2 + timec3 + agec 
-             + agec:timec +agec:timec2 + agec:timec3
-             + (1 + timec + timec2 | id),
-             data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         +(coefs["agec"]*dsp$agec)
-  +(coefs["timec"]*dsp$timec)    +(coefs["timec:agec"]*dsp$agec*dsp$timec)
-  +(coefs["timec2"]*dsp$timec2)  +(coefs["timec2:agec"]*dsp$agec*dsp$timec2)
-  +(coefs["timec3"]*dsp$timec3)  +(coefs["timec3:agec"]*dsp$agec*dsp$timec3)
-)
-str(dsp$YPar)
-######## Maximum Complexity ############################
-(m10 <-lmer (attend ~ 
-               1  + agec + timec + timec2 + timec3
-             + agec:timec +agec:timec2 + agec:timec3
-             + (1 + timec + timec2 + timec3 | id),
-             data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         +(coefs["agec"]*dsp$agec)
-  +(coefs["timec"]*dsp$timec)    +(coefs["agec:timec"]*dsp$agec*dsp$timec)
-  +(coefs["timec2"]*dsp$timec2)  +(coefs["agec:timec2"]*dsp$agec*dsp$timec2)
-  +(coefs["timec3"]*dsp$timec3)  +(coefs["agec:timec3"]*dsp$agec*dsp$timec3)
-)
-str(dsp$YPar)
-# note that the names of the terms would be different from all other models: agec:timec instead of timec:agec
-######## Maximum Complexity ############################
+### mRa ###
+call_mRa <- "attend ~ 1  + timec + (1 | id)"
+### mRb ###
+call_mRb <- "attend ~ 1  + timec + cohort + (1 | id)"
+### mRc ###
+call_mRc <- "attend ~ 1  + timec + cohort + cohort:timec + (1 | id)"
+### mRd ###
+call_mRd <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec + (1 | id)"
+### mRe ###
+call_mRe <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec  + cohort:timec2 + (1 | id)"
 
-(m9 <-lmer (attend ~ 
-              1  + timec + timec2 + timec3 + agec 
-            + agec:timec +agec:timec2 
-            + (1 + timec + timec2 + timec3 | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         +(coefs["agec"]*dsp$agec)
-  +(coefs["timec"]*dsp$timec)    +(coefs["timec:agec"]*dsp$agec*dsp$timec)
-  +(coefs["timec2"]*dsp$timec2)  +(coefs["timec2:agec"]*dsp$agec*dsp$timec2)
-  +(coefs["timec3"]*dsp$timec3)  
-)
-str(dsp$YPar)
-########################################################
-(m8 <-lmer (attend ~ 
-              1  + timec + timec2 + timec3 + agec 
-            + agec:timec 
-            + (1 + timec + timec2 + timec3 | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         +(coefs["agec"]*dsp$agec)
-  +(coefs["timec"]*dsp$timec)    +(coefs["timec:agec"]*dsp$agec*dsp$timec)
-  +(coefs["timec2"]*dsp$timec2)  
-  +(coefs["timec3"]*dsp$timec3)  
-)
-str(dsp$YPar)
-########################################################
-(m7 <-lmer (attend ~ 
-              1  + timec + timec2 + timec3 + agec             
-            + (1 + timec + timec2 + timec3 | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         +(coefs["agec"]*dsp$agec)
-  +(coefs["timec"]*dsp$timec)    
-  +(coefs["timec2"]*dsp$timec2)  
-  +(coefs["timec3"]*dsp$timec3)  
-)
-str(dsp$YPar)
-########################################################
-(m6 <-lmer (attend ~ 
-              1  + timec + timec2 + timec3            
-            + (1 + timec + timec2 + timec3 | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         
-  +(coefs["timec"]*dsp$timec)    
-  +(coefs["timec2"]*dsp$timec2)  
-  +(coefs["timec3"]*dsp$timec3)  
-)
-str(dsp$YPar)
-########################################################
-(m5 <-lmer (attend ~ 
-              1  + timec + timec2 + timec3            
-            + (1 + timec + timec2 | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         
-  +(coefs["timec"]*dsp$timec)    
-  +(coefs["timec2"]*dsp$timec2)  
-  +(coefs["timec3"]*dsp$timec3)  
-)
-str(dsp$YPar)
-########################################################
-(m4 <-lmer (attend ~ 
-              1  + timec + timec2            
-            + (1 + timec + timec2 | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         
-  +(coefs["timec"]*dsp$timec)    
-  +(coefs["timec2"]*dsp$timec2)  
-)
-str(dsp$YPar)
-########################################################
-(m3 <-lmer (attend ~ 
-              1  + timec + timec2            
-            + (1 + timec | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         
-  +(coefs["timec"]*dsp$timec)    
-  +(coefs["timec2"]*dsp$timec2)  
-)
-str(dsp$YPar)
-########################################################
-(m2 <-lmer (attend ~ 
-              1  + timec
-            + (1 + timec | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         
-  +(coefs["timec"]*dsp$timec)    
-)
-str(dsp$YPar)
-########################################################
-(m1 <-lmer (attend ~ 
-              1  + timec
-            + (1 | id),
-            data = ds, REML=0))
-
-dsp$YPar<-(
-  (coefs["(Intercept)"])         
-)
-str(dsp$YPar)
-########################################################
-(m0 <-lmer (attend ~ 
-              1 + (1 | id),
-            data = ds, REML=0))
-dsp$YPar<-(
-  (coefs["(Intercept)"])         
-)
-str(dsp$YPar)
-########################################################
-(m00 <-lm (attend ~ 1),
- data = ds, REML=0))
+### mFa ###
+call_mFa <- "attend ~ 1  + timec "
+### mFb ###
+call_mFb <- "attend ~ 1  + timec + cohort " 
+### mFc ###
+call_mFc <- "attend ~ 1  + timec + cohort + cohort:timec "
+### mFd ###
+call_mFd <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec "
+### mFe ###
+call_mFe <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec  + cohort:timec2"
 
 
+modelNamesLabels<- c(
+  "m0R", "m1R", "m2R", "m3R", "m4R", "m5R", "m6R", "m7R",
+  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
+  "mRa", "mRb", "mRc", "mRd","mRe",
+  "mFa", "mFb", "mFc", "mFd","mFe")
+
+modelNames<- c(
+  call_m0R, call_m1R, call_m2R, call_m3R, call_m4R, call_m5R, call_m6R, call_m7R,
+  call_m0F, call_m1F, call_m2F, call_m3F, call_m4F, call_m5F, call_m6F, call_m7F,
+  call_mRa, call_mRb, call_mRc, call_mRd,call_mRe,
+  call_mFa, call_mFb, call_mFc, call_mFd,call_mFe)
+names(modelNames)<- modelNamesLabels
 

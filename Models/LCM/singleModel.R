@@ -1,3 +1,4 @@
+cat("\014")
 #These first few lines run only when the file is run in RStudio, !!NOT when an Rmd/Rnw file calls it!!
 rm(list=ls(all=TRUE))  #Clear the variables from previous runs.
 
@@ -22,37 +23,60 @@ source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
 ############################
 ## @knitr LoadData
 dsL<-readRDS("./Data/Derived/dsL.rds")
+source(file.path(getwd(),"Models/LCM/LCModels.R"))
 
+a <- c("m3R")
+for(i in a){
+modelName<- i
 ############################
-## @knitr TweakData
+## @knitr defineData
 
 
+modelCall<- paste0("call_",modelName)
+numID<- 9022 # highest id value (max = 9022)
+### Define the data that will populate the model
+ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
+  dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
+  dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
+  dplyr::filter(sample %in% c(1)) %.% # 0-Oversample; 1-Cross-Sectional
+  dplyr::filter(race %in% c(4)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
+  dplyr::filter(byear %in% c(1980:1984)) %.% # birth year 1980:1984
+  dplyr::filter(ave(!is.na(attend), id, FUN = all)) %.% # only complete trajectories
+  dplyr::mutate( # compute new variables
+    age= year-byear, # definition of age to be used in the model    
+    timec=year-2000, # metric of time is rounds of NSLY97 in years, centered at 2000
+    timec2= timec^2, 
+    timec3= timec^3,
+    #         timec= age-16, # metric of time is bilogical age in years, centered at 16
+    #         timec2= timec^2,
+    #         timec3= timec^3,# 
+    cohort=byear-1980) %.% # age difference, years younger (unit - 1 cohort away)
+  dplyr::select( # assemble the dataset for modeling
+    id, sample, race, byear,cohort, # Time Invariant variables
+    year,
+    age, timec,timec2,timec3, attend)  # Time Variant variables
+head(ds)
+table(ds$byear) # the year of birth  - metric: YEAR 
+table(ds$age) # years past 16 -  metric: AGE
+table(ds$year, ds$age) # YEAR by  AGE 
+length(unique(ds$id)) # total No. of respondents in dataset
+sum(!is.na(ds$attend)) # valid datapoints 
+sum(is.na(ds$attend)) # NA in the dataset 
+length(unique(ds$timec))
 
-############################
-## @knitr AnalysisChunk01
-
-
-
-############################
-## @knitr AnalysisChunk02
-
-############################
-## @knitr AnalysisChunk03
-
-
-############################
-## @knitr 
-
+# Estimate the model
+f<- as.formula(modelCall)
+model <-lmer (f, data = ds, REML=FALSE,
+               control=lmerControl(optCtrl=list(maxfun=20000)))
+summary(model)
 ############################
 ## @knitr mInfo
-
 mInfo<-summary(model)$AICtab
 mInfo["N"]<- model@devcomp$dims["N"] # number of datapoints, verify
 mInfo["p"]<- model@devcomp$dims["p"] # number of estimated parameters, verify
 mInfo["ids"]<- (summary(model))$ngrps # number of units on level-2, here: individuals
+mInfo<- c(mInfo, modelName)
 mInfo
-
-
 
 ############################
 ## @knitr mRE
@@ -105,8 +129,6 @@ dsp$resid<- lme4:::residuals.merMod(model)
 head(dsp,13)
 identical ( dsp$y-dsp$yHat, dsp$resid) # check if adds up
 
-```
-
 ############################
 ## @knitr predictFE
 # cat("\014")
@@ -114,7 +136,6 @@ identical ( dsp$y-dsp$yHat, dsp$resid) # check if adds up
 # dsp$id<-getME(model,"flist")$id # first level grouping factor, individual
 # dsp$y<-getME(model,"y") # observed response vector
 # head(dsp,13)
-
 model@call
 
 pullMainEffect <- function (timeName){
@@ -259,18 +280,19 @@ dsRE <- plyr::rename(dsRE, replace=c("var"="varRE", "sd"="sdRE"))
 dsRE$Coefficient <- rownames(dsRE)
 
 dsRECov <- mREcov
-dsRECov <- plyr::rename(dsRECov, replace=c("X.Intercept."="intVarRE", "timec"="timecVarRE"))
+dsRECov <- plyr::rename(dsRECov, replace=c("X.Intercept."="intVarRE", "timec"="timecVarRE",, "timec2"="timec2VarRE", "timec3"="timec3VarRE"))
 dsRECov$Coefficient <- rownames(dsRECov)
 
 dsRECor <- mREcor
-dsRECor <- plyr::rename(dsRECor, replace=c("X.Intercept."="intSDRE", "timec"="timecSDRE"))
+dsRECor <- plyr::rename(dsRECor, replace=c("X.Intercept."="intSDRE", "timec"="timecSDRE","timec2"="timec2SDRE", "timec3"="timec3SDRE"))
 dsRECor$Coefficient <- rownames(dsRECor)
 
 dsDaddy <- merge(x=a, y=b, by="Coefficient", all=TRUE)
 dsDaddy <- merge(x=dsDaddy, y=dsRE, by="Coefficient", all=TRUE)
 dsDaddy <- merge(x=dsDaddy, y=dsRECov, by="Coefficient", all=TRUE)
 dsDaddy <- merge(x=dsDaddy, y=dsRECor, by="Coefficient", all=TRUE)
-
+dsDaddy$sigma<- sigma # residual SD, must be squared to get sigma squared
+dsDaddy$modelName<- modelName
 testit::assert("The join shouldn't add new records.",  rowCountBeforeJoin==nrow(a))
 testit::assert("The join shouldn't add new records.",  nrow(dsDaddy)==nrow(a))
 testit::assert("The join shouldn't add new records.",  nrow(dsDaddy)==nrow(b))
@@ -278,15 +300,17 @@ testit::assert("The join shouldn't add new records.",  nrow(dsDaddy)==nrow(b))
 dsmInfo<- data.frame(mInfo)
 dsFERE<- dsDaddy
 dsp<- data.frame(dsp)
+dsp$modelName<-modelName
 
 ############################
-## @knitr 
-modelNumber
-pathdsmInfo <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelNumber,"_mInfo.rds"))
-pathdsFERE  <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelNumber,"_FERE.rds"))
-pathdsp  <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelNumber,"_dsp.rds"))
+## @knitr saveModelResults
+modelName
+pathdsmInfo <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelName,"_mInfo.rds"))
+pathdsFERE  <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelName,"_FERE.rds"))
+pathdsp  <- file.path(getwd(),"Models/LCM/models/datasets",paste0(modelName,"_dsp.rds"))
 
 saveRDS(object=dsmInfo, file=pathdsmInfo, compress="xz")
 saveRDS(object=dsFERE, file=pathdsFERE, compress="xz")
 saveRDS(object=dsp, file=pathdsp, compress="xz")
 
+} # end of the for loop
