@@ -1,7 +1,9 @@
 rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. This is not called by knitr, because it's above the first chunk.
-#
-# run sequenceLCM.R if don't get some objcets
-emptyTheme <- theme_minimal() +
+
+require(ggplot2)
+require(dplyr)
+require(reshape2)
+emptyTheme <- ggplot2::theme_minimal() +
   theme(axis.text = element_blank()) +
   theme(axis.title = element_blank()) +
   theme(panel.grid = element_blank()) +
@@ -9,7 +11,7 @@ emptyTheme <- theme_minimal() +
   theme(axis.ticks.length = grid::unit(0, "cm"))
 
 
-
+# run sequenceLCM.R if don't get some objcets
 i<- "m6R3"
 pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
 m6R3_FERE<- readRDS(pathdsFERE)
@@ -42,7 +44,7 @@ ds
 
 ggplot(ds, aes(x=col, xmin=col-.5, xmax=col+.5, y=-row, ymin=-row-.5, ymax=-row+.5, label=label)) +
   geom_rect(aes(fill=value)) +
-  geom_text(na.rm=T, color="black", hjust=0, size=5, family="mono") +
+  geom_text(na.rm=T, color="black", hjust=.5, vjust=.5, size=5, family="mono") +
   emptyTheme +
   theme(legend.position="none")
 ggsave(filename="./Models/LCM/graphs/equationTiles.png", plot=last_plot())
