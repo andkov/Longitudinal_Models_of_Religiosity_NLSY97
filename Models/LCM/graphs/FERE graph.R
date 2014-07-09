@@ -7,7 +7,7 @@ m6R3_FERE<- readRDS(pathdsFERE)
 ds<- m6R3_FERE
 ds<- ds %>% dplyr::select( Coefficient, Estimate, Std.Error, t.value, sdRE,intVarRE, timecVarRE, timec2VarRE, sigma )
 head(ds,10)
-# I will enforce this order, it's importance
+# I will enforce this order, it's important
 target <- c("(Intercept)", "timec", "timec2", "timec3", "cohort",
             "timec:cohort", "timec2:cohort", "timec3:cohort")
 ds<-ds[match(target, ds$Coefficient),]
