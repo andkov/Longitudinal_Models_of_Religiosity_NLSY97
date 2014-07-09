@@ -332,7 +332,7 @@ dsp$tau11sd <- ifelse( is.na(dsp[,"tau11sd"]), 0, dsp[,"tau11sd"])
 dsp$tau22sd <- ifelse( is.na(dsp[,"tau22sd"]), 0, dsp[,"tau22sd"])
 # dsp$tau33sd <- ifelse( is.na(dsp[,"tau33sd"]), 0, dsp[,"tau33sd"])
 
- 
+?exists
 head(dsp)
 =======
 dsp$tau11sd <- pullRandomEffect(timeName="timec", tauName="tau11sd")
