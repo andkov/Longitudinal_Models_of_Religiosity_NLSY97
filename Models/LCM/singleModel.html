@@ -172,11 +172,11 @@ head(ds)</code></pre>
 <pre class="r"><code># Estimate the model
 modnum &lt;-lmer (attend ~ 
                1  + timec + timec2 + timec3
-       + cohort + cohort:timec  + cohort:timec2 # + cohort:timec3
+       + cohort + cohort:timec  #+ cohort:timec2 # + cohort:timec3
               + (1 + timec + timec2  | id),
              data = ds, REML=FALSE, 
              control=lmerControl(optCtrl=list(maxfun=20000)))</code></pre>
-<pre><code>Warning: Model failed to converge with max|grad| = 0.0699429 (tol = 0.002)</code></pre>
+<pre><code>Warning: Model failed to converge with max|grad| = 0.0777238 (tol = 0.002)</code></pre>
 <pre class="r"><code>model&lt;- modnum</code></pre>
 </div>
 <div id="model-results" class="section level1">
@@ -187,43 +187,41 @@ modnum &lt;-lmer (attend ~
 <p>The full model summary can be accessed by command:</p>
 <pre class="r"><code>summary(model) </code></pre>
 <pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
-Formula: attend ~ 1 + timec + timec2 + timec3 + cohort + cohort:timec +      cohort:timec2 + (1 + timec + timec2 | id)
+Formula: attend ~ 1 + timec + timec2 + timec3 + cohort + cohort:timec +      (1 + timec + timec2 | id)
    Data: ds
 Control: lmerControl(optCtrl = list(maxfun = 20000))
 
      AIC      BIC   logLik deviance df.resid 
-  1375.5   1434.2   -673.7   1347.5      478 
+  1375.5   1430.0   -674.7   1349.5      479 
 
 Scaled residuals: 
    Min     1Q Median     3Q    Max 
--3.097 -0.377 -0.090  0.320  4.600 
+-3.091 -0.390 -0.082  0.328  4.574 
 
 Random effects:
  Groups   Name        Variance Std.Dev. Corr       
- id       (Intercept) 2.535190 1.5922              
-          timec       0.137115 0.3703   -0.83      
-          timec2      0.000454 0.0213    0.77 -0.95
- Residual             0.577988 0.7603              
+ id       (Intercept) 2.600432 1.6126              
+          timec       0.145531 0.3815   -0.83      
+          timec2      0.000498 0.0223    0.77 -0.95
+ Residual             0.577985 0.7603              
 Number of obs: 492, groups: id, 41
 
 Fixed effects:
-              Estimate Std. Error t value
-(Intercept)    2.29935    0.44933    5.12
-timec         -0.33563    0.13922   -2.41
-timec2         0.05677    0.01983    2.86
-timec3        -0.00266    0.00110   -2.41
-cohort         0.43719    0.18434    2.37
-timec:cohort  -0.09458    0.04803   -1.97
-timec2:cohort  0.00464    0.00325    1.43
+             Estimate Std. Error t value
+(Intercept)   2.64733    0.37948    6.98
+timec        -0.46069    0.10910   -4.22
+timec2        0.06582    0.01882    3.50
+timec3       -0.00266    0.00110   -2.41
+cohort        0.25885    0.13549    1.91
+timec:cohort -0.03048    0.01699   -1.79
 
 Correlation of Fixed Effects:
-            (Intr) timec  timec2 timec3 cohort tmc:ch
-timec       -0.736                                   
-timec2       0.379 -0.815                            
-timec3      -0.122  0.551 -0.918                     
-cohort      -0.800  0.543 -0.217  0.000              
-timec:cohrt  0.646 -0.673  0.299  0.000 -0.807       
-timec2:chrt -0.543  0.630 -0.320  0.000  0.678 -0.935</code></pre>
+            (Intr) timec  timec2 timec3 cohort
+timec       -0.609                            
+timec2       0.262 -0.833                     
+timec3      -0.144  0.703 -0.967              
+cohort      -0.697  0.202  0.000  0.000       
+timec:cohrt  0.463 -0.304  0.000  0.000 -0.665</code></pre>
 <p>After studying</p>
 <pre class="r"><code>str(summary(model)$vcov@x)
 str(summary(model)$varcor)</code></pre>
@@ -233,8 +231,8 @@ str(summary(model)$varcor)</code></pre>
 <h2>Model formula</h2>
 <pre class="r"><code>model@call </code></pre>
 <pre><code>lmer(formula = attend ~ 1 + timec + timec2 + timec3 + cohort + 
-    cohort:timec + cohort:timec2 + (1 + timec + timec2 | id), 
-    data = ds, REML = FALSE, control = lmerControl(optCtrl = list(maxfun = 20000)))</code></pre>
+    cohort:timec + (1 + timec + timec2 | id), data = ds, REML = FALSE, 
+    control = lmerControl(optCtrl = list(maxfun = 20000)))</code></pre>
 </div>
 <div id="fit-and-information-indices" class="section level2">
 <h2>Fit and Information indices</h2>
@@ -245,7 +243,7 @@ mInfo[&quot;p&quot;]&lt;- model@devcomp$dims[&quot;p&quot;] # number of estimate
 mInfo[&quot;ids&quot;]&lt;- (summary(model))$ngrps # number of units on level-2, here: individuals
 mInfo</code></pre>
 <pre><code>     AIC      BIC   logLik deviance df.resid        N        p      ids 
-  1375.5   1434.2   -673.7   1347.5    478.0    492.0      7.0     41.0 </code></pre>
+  1375.5   1430.0   -674.7   1349.5    479.0    492.0      6.0     41.0 </code></pre>
 </div>
 <div id="random-effects-re" class="section level2">
 <h2>Random Effects (RE)</h2>
@@ -259,42 +257,42 @@ mRE$var&lt;- mRE$sd^2
 mRE&lt;-mRE[c(&quot;var&quot;,&quot;sd&quot;)]
 mRE</code></pre>
 <pre><code>                  var      sd
-(Intercept) 2.5351903 1.59223
-timec       0.1371151 0.37029
-timec2      0.0004544 0.02132</code></pre>
+(Intercept) 2.6004323 1.61259
+timec       0.1455313 0.38149
+timec2      0.0004985 0.02233</code></pre>
 <pre class="r"><code>mREcov</code></pre>
 <pre><code>            X.Intercept.     timec     timec2
-(Intercept)      2.53519 -0.490044  0.0261699
-timec           -0.49004  0.137115 -0.0074951
-timec2           0.02617 -0.007495  0.0004544</code></pre>
+(Intercept)      2.60043 -0.513474  0.0278655
+timec           -0.51347  0.145531 -0.0081042
+timec2           0.02787 -0.008104  0.0004985</code></pre>
 </div>
 <div id="extracting-re-for-each-individual" class="section level3">
 <h3>extracting RE for each individual</h3>
 <pre class="r"><code>RE&lt;- lme4:::ranef.merMod(model)$id 
 head(RE,6)</code></pre>
 <pre><code>   (Intercept)    timec    timec2
-1       0.3549 -0.22752  0.010254
-33      0.2347  0.06783 -0.006329
-34     -1.0101  0.12499 -0.009235
-35     -2.2250  0.34626 -0.019851
-37     -0.8468  0.12252 -0.008270
-38     -0.9975  0.10297 -0.008423</code></pre>
+1      0.22877 -0.19267  0.008214
+33    -0.04575  0.15234 -0.011696
+34    -0.73325  0.04679 -0.004558
+35    -2.09082  0.31074 -0.017867
+37    -1.12394  0.20507 -0.013459
+38    -1.13671  0.14570 -0.011178</code></pre>
 <pre class="r"><code># however
 cor(RE)  # in unadjusted RE estimates, not same as mRE</code></pre>
 <pre><code>            (Intercept)   timec  timec2
-(Intercept)      1.0000 -0.8404  0.8426
-timec           -0.8404  1.0000 -0.9710
-timec2           0.8426 -0.9710  1.0000</code></pre>
+(Intercept)      1.0000 -0.8442  0.8418
+timec           -0.8442  1.0000 -0.9711
+timec2           0.8418 -0.9711  1.0000</code></pre>
 <pre class="r"><code>var(RE)  # in unadjusted RE estimates, not same as mRE</code></pre>
-<pre><code>            (Intercept)    timec     timec2
-(Intercept)     2.34775 -0.43342  0.0226339
-timec          -0.43342  0.11330 -0.0057295
-timec2          0.02263 -0.00573  0.0003073</code></pre>
+<pre><code>            (Intercept)     timec     timec2
+(Intercept)     2.41106 -0.455341  0.0241825
+timec          -0.45534  0.120676 -0.0062409
+timec2          0.02418 -0.006241  0.0003423</code></pre>
 <pre class="r"><code>mRE</code></pre>
 <pre><code>                  var      sd
-(Intercept) 2.5351903 1.59223
-timec       0.1371151 0.37029
-timec2      0.0004544 0.02132</code></pre>
+(Intercept) 2.6004323 1.61259
+timec       0.1455313 0.38149
+timec2      0.0004985 0.02233</code></pre>
 </div>
 </div>
 <div id="fixed-effects-fe" class="section level2">
@@ -304,32 +302,30 @@ timec2      0.0004544 0.02132</code></pre>
 <pre class="r"><code># similar ways to extract FE estimates, #3 is the fullest
 FE&lt;- fixef(model)  
 FE # vector used in predition</code></pre>
-<pre><code>  (Intercept)         timec        timec2        timec3        cohort  timec:cohort timec2:cohort 
-     2.299355     -0.335631      0.056770     -0.002659      0.437194     -0.094576      0.004640 </code></pre>
+<pre><code> (Intercept)        timec       timec2       timec3       cohort timec:cohort 
+    2.647335    -0.460691     0.065823    -0.002659     0.258855    -0.030483 </code></pre>
 <pre class="r"><code>FEt&lt;- summary(model)$coefficients
 FEt # contains t-values that test the terms</code></pre>
-<pre><code>               Estimate Std. Error t value
-(Intercept)    2.299355   0.449335   5.117
-timec         -0.335631   0.139222  -2.411
-timec2         0.056770   0.019831   2.863
-timec3        -0.002659   0.001103  -2.411
-cohort         0.437194   0.184342   2.372
-timec:cohort  -0.094576   0.048030  -1.969
-timec2:cohort  0.004640   0.003252   1.427</code></pre>
+<pre><code>              Estimate Std. Error t value
+(Intercept)   2.647335   0.379478   6.976
+timec        -0.460691   0.109105  -4.222
+timec2        0.065823   0.018817   3.498
+timec3       -0.002659   0.001103  -2.411
+cohort        0.258855   0.135487   1.911
+timec:cohort -0.030483   0.016989  -1.794</code></pre>
 </div>
 <div id="matrix-of-fe" class="section level3">
 <h3>Matrix of FE</h3>
 <pre class="r"><code>mFE&lt;- (summary(model)$vcov@factors$correlation) # notice that this is object of 
 mFE</code></pre>
-<pre><code>7 x 7 Matrix of class &quot;corMatrix&quot;
-              (Intercept)   timec  timec2     timec3     cohort timec:cohort timec2:cohort
-(Intercept)        1.0000 -0.7356  0.3786 -1.215e-01 -8.005e-01    6.461e-01    -5.428e-01
-timec             -0.7356  1.0000 -0.8153  5.507e-01  5.433e-01   -6.732e-01     6.296e-01
-timec2             0.3786 -0.8153  1.0000 -9.179e-01 -2.170e-01    2.993e-01    -3.200e-01
-timec3            -0.1215  0.5507 -0.9179  1.000e+00 -2.665e-13    3.156e-13    -3.007e-13
-cohort            -0.8005  0.5433 -0.2170 -2.665e-13  1.000e+00   -8.071e-01     6.781e-01
-timec:cohort       0.6461 -0.6732  0.2993  3.156e-13 -8.071e-01    1.000e+00    -9.354e-01
-timec2:cohort     -0.5428  0.6296 -0.3200 -3.007e-13  6.781e-01   -9.354e-01     1.000e+00</code></pre>
+<pre><code>6 x 6 Matrix of class &quot;corMatrix&quot;
+             (Intercept)   timec     timec2     timec3     cohort timec:cohort
+(Intercept)       1.0000 -0.6089  2.615e-01 -1.439e-01 -6.967e-01    4.633e-01
+timec            -0.6089  1.0000 -8.327e-01  7.027e-01  2.021e-01   -3.038e-01
+timec2            0.2615 -0.8327  1.000e+00 -9.674e-01 -6.765e-15   -9.909e-14
+timec3           -0.1439  0.7027 -9.674e-01  1.000e+00 -1.086e-14    1.101e-13
+cohort           -0.6967  0.2021 -6.765e-15 -1.086e-14  1.000e+00   -6.650e-01
+timec:cohort      0.4633 -0.3038 -9.909e-14  1.101e-13 -6.650e-01    1.000e+00</code></pre>
 </div>
 </div>
 <div id="model-output" class="section level2">
@@ -341,20 +337,20 @@ cat(&quot;\014&quot;)</code></pre>
 dsp$id&lt;-getME(model,&quot;flist&quot;)$id # first level grouping factor, individual
 dsp$y&lt;-getME(model,&quot;y&quot;) # observed response vector
 head(dsp,13)</code></pre>
-<pre><code>   X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort id y
-1             1     0      0      0      1            0             0  1 1
-2             1     1      1      1      1            1             1  1 6
-3             1     2      4      8      1            2             4  1 2
-4             1     3      9     27      1            3             9  1 1
-5             1     4     16     64      1            4            16  1 1
-6             1     5     25    125      1            5            25  1 1
-7             1     6     36    216      1            6            36  1 1
-8             1     7     49    343      1            7            49  1 1
-9             1     8     64    512      1            8            64  1 1
-10            1     9     81    729      1            9            81  1 1
-11            1    10    100   1000      1           10           100  1 1
-12            1    11    121   1331      1           11           121  1 1
-13            1     0      0      0      0            0             0 33 2</code></pre>
+<pre><code>   X.Intercept. timec timec2 timec3 cohort timec.cohort id y
+1             1     0      0      0      1            0  1 1
+2             1     1      1      1      1            1  1 6
+3             1     2      4      8      1            2  1 2
+4             1     3      9     27      1            3  1 1
+5             1     4     16     64      1            4  1 1
+6             1     5     25    125      1            5  1 1
+7             1     6     36    216      1            6  1 1
+8             1     7     49    343      1            7  1 1
+9             1     8     64    512      1            8  1 1
+10            1     9     81    729      1            9  1 1
+11            1    10    100   1000      1           10  1 1
+12            1    11    121   1331      1           11  1 1
+13            1     0      0      0      0            0 33 2</code></pre>
 <div id="prediction-and-residuals" class="section level3">
 <h3>Prediction and Residuals</h3>
 <pre class="r"><code>cat(&quot;\014&quot;)</code></pre>
@@ -362,20 +358,20 @@ head(dsp,13)</code></pre>
 <pre class="r"><code>dsp$yHat&lt;- predict(model) # predicted values
 dsp$resid&lt;- lme4:::residuals.merMod(model)
 head(dsp,13)</code></pre>
-<pre><code>   X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort id y   yHat    resid
-1             1     0      0      0      1            0             0  1 1 3.0914 -2.09144
-2             1     1      1      1      1            1             1  1 6 2.5027  3.49728
-3             1     2      4      8      1            2             4  1 2 2.0414 -0.04136
-4             1     3      9     27      1            3             9  1 1 1.6914 -0.69142
-5             1     4     16     64      1            4            16  1 1 1.4369 -0.43693
-6             1     5     25    125      1            5            25  1 1 1.2619 -0.26194
-7             1     6     36    216      1            6            36  1 1 1.1505 -0.15050
-8             1     7     49    343      1            7            49  1 1 1.0866 -0.08664
-9             1     8     64    512      1            8            64  1 1 1.0544 -0.05441
-10            1     9     81    729      1            9            81  1 1 1.0379 -0.03785
-11            1    10    100   1000      1           10           100  1 1 1.0210 -0.02101
-12            1    11    121   1331      1           11           121  1 1 0.9879  0.01208
-13            1     0      0      0      0            0             0 33 2 2.5340 -0.53401</code></pre>
+<pre><code>   X.Intercept. timec timec2 timec3 cohort timec.cohort id y  yHat    resid
+1             1     0      0      0      1            0  1 1 3.135 -2.13496
+2             1     1      1      1      1            1  1 6 2.522  3.47750
+3             1     2      4      8      1            2  1 2 2.042 -0.04215
+4             1     3      9     27      1            3  1 1 1.678 -0.67797
+5             1     4     16     64      1            4  1 1 1.414 -0.41399
+6             1     5     25    125      1            5  1 1 1.234 -0.23425
+7             1     6     36    216      1            6  1 1 1.123 -0.12281
+8             1     7     49    343      1            7  1 1 1.064 -0.06370
+9             1     8     64    512      1            8  1 1 1.041 -0.04096
+10            1     9     81    729      1            9  1 1 1.039 -0.03864
+11            1    10    100   1000      1           10  1 1 1.041 -0.04079
+12            1    11    121   1331      1           11  1 1 1.031 -0.03144
+13            1     0      0      0      0            0 33 2 2.602 -0.60159</code></pre>
 <pre class="r"><code>identical ( dsp$y-dsp$yHat, dsp$resid) # check if adds up</code></pre>
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -387,22 +383,22 @@ head(dsp,13)</code></pre>
 <pre class="r"><code>cat(&quot;\014&quot;)</code></pre>
 <p></p>
 <pre class="r"><code>head(dsp)</code></pre>
-<pre><code>  X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort id y  yHat    resid
-1            1     0      0      0      1            0             0  1 1 3.091 -2.09144
-2            1     1      1      1      1            1             1  1 6 2.503  3.49728
-3            1     2      4      8      1            2             4  1 2 2.041 -0.04136
-4            1     3      9     27      1            3             9  1 1 1.691 -0.69142
-5            1     4     16     64      1            4            16  1 1 1.437 -0.43693
-6            1     5     25    125      1            5            25  1 1 1.262 -0.26194</code></pre>
+<pre><code>  X.Intercept. timec timec2 timec3 cohort timec.cohort id y  yHat    resid
+1            1     0      0      0      1            0  1 1 3.135 -2.13496
+2            1     1      1      1      1            1  1 6 2.522  3.47750
+3            1     2      4      8      1            2  1 2 2.042 -0.04215
+4            1     3      9     27      1            3  1 1 1.678 -0.67797
+5            1     4     16     64      1            4  1 1 1.414 -0.41399
+6            1     5     25    125      1            5  1 1 1.234 -0.23425</code></pre>
 <pre class="r"><code>dsp$gamma00&lt;- ifelse( is.na(FE[&quot;(Intercept)&quot;]),0,FE[&quot;(Intercept)&quot;])
 head(dsp)</code></pre>
-<pre><code>  X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort id y  yHat    resid gamma00
-1            1     0      0      0      1            0             0  1 1 3.091 -2.09144   2.299
-2            1     1      1      1      1            1             1  1 6 2.503  3.49728   2.299
-3            1     2      4      8      1            2             4  1 2 2.041 -0.04136   2.299
-4            1     3      9     27      1            3             9  1 1 1.691 -0.69142   2.299
-5            1     4     16     64      1            4            16  1 1 1.437 -0.43693   2.299
-6            1     5     25    125      1            5            25  1 1 1.262 -0.26194   2.299</code></pre>
+<pre><code>  X.Intercept. timec timec2 timec3 cohort timec.cohort id y  yHat    resid gamma00
+1            1     0      0      0      1            0  1 1 3.135 -2.13496   2.647
+2            1     1      1      1      1            1  1 6 2.522  3.47750   2.647
+3            1     2      4      8      1            2  1 2 2.042 -0.04215   2.647
+4            1     3      9     27      1            3  1 1 1.678 -0.67797   2.647
+5            1     4     16     64      1            4  1 1 1.414 -0.41399   2.647
+6            1     5     25    125      1            5  1 1 1.234 -0.23425   2.647</code></pre>
 <p>The effects that were not present in the model will be substituted with zeros.</p>
 <pre class="r"><code># cat(&quot;\014&quot;)
 # dsp&lt;- data.frame(getME(model,&quot;X&quot;)) # read back the input 
@@ -412,8 +408,8 @@ head(dsp)</code></pre>
 
 model@call</code></pre>
 <pre><code>lmer(formula = attend ~ 1 + timec + timec2 + timec3 + cohort + 
-    cohort:timec + cohort:timec2 + (1 + timec + timec2 | id), 
-    data = ds, REML = FALSE, control = lmerControl(optCtrl = list(maxfun = 20000)))</code></pre>
+    cohort:timec + (1 + timec + timec2 | id), data = ds, REML = FALSE, 
+    control = lmerControl(optCtrl = list(maxfun = 20000)))</code></pre>
 <pre class="r"><code>pullMainEffect &lt;- function (timeName){
   possibleNAEffect &lt;- FE[timeName]
   result &lt;- ifelse( is.na(rep(possibleNAEffect,nrow(dsp))), 0,
@@ -455,20 +451,20 @@ f.effects&lt;- c(&quot;gamma00&quot;,&quot;gamma01&quot;,&quot;gamma02&quot;,&qu
               &quot;gamma10&quot;,&quot;gamma11&quot;,&quot;gamma12&quot;,&quot;gamma13&quot;)
 dsp$yFE &lt;- rowSums (dsp[,colnames(dsp) %in% f.effects],na.rm=TRUE)
 head(dsp)</code></pre>
-<pre><code>  X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort id y  yHat    resid gamma00 gamma01 gamma02
-1            1     0      0      0      1            0             0  1 1 3.091 -2.09144   2.299  0.0000 0.00000
-2            1     1      1      1      1            1             1  1 6 2.503  3.49728   2.299 -0.3356 0.05677
-3            1     2      4      8      1            2             4  1 2 2.041 -0.04136   2.299 -0.6713 0.22708
-4            1     3      9     27      1            3             9  1 1 1.691 -0.69142   2.299 -1.0069 0.51093
-5            1     4     16     64      1            4            16  1 1 1.437 -0.43693   2.299 -1.3425 0.90832
-6            1     5     25    125      1            5            25  1 1 1.262 -0.26194   2.299 -1.6782 1.41925
-    gamma03 gamma10  gamma11 gamma12 gamma13   yFE
-1  0.000000  0.4372  0.00000 0.00000       0 2.737
-2 -0.002659  0.4372 -0.09458 0.00464       0 2.365
-3 -0.021276  0.4372 -0.18915 0.01856       0 2.100
-4 -0.071806  0.4372 -0.28373 0.04176       0 1.927
-5 -0.170207  0.4372 -0.37830 0.07424       0 1.828
-6 -0.332436  0.4372 -0.47288 0.11599       0 1.788</code></pre>
+<pre><code>  X.Intercept. timec timec2 timec3 cohort timec.cohort id y  yHat    resid gamma00 gamma01 gamma02   gamma03 gamma10
+1            1     0      0      0      1            0  1 1 3.135 -2.13496   2.647  0.0000 0.00000  0.000000  0.2589
+2            1     1      1      1      1            1  1 6 2.522  3.47750   2.647 -0.4607 0.06582 -0.002659  0.2589
+3            1     2      4      8      1            2  1 2 2.042 -0.04215   2.647 -0.9214 0.26329 -0.021276  0.2589
+4            1     3      9     27      1            3  1 1 1.678 -0.67797   2.647 -1.3821 0.59241 -0.071806  0.2589
+5            1     4     16     64      1            4  1 1 1.414 -0.41399   2.647 -1.8428 1.05317 -0.170207  0.2589
+6            1     5     25    125      1            5  1 1 1.234 -0.23425   2.647 -2.3035 1.64558 -0.332436  0.2589
+   gamma11 gamma12 gamma13   yFE
+1  0.00000       0       0 2.906
+2 -0.03048       0       0 2.478
+3 -0.06097       0       0 2.166
+4 -0.09145       0       0 1.953
+5 -0.12193       0       0 1.824
+6 -0.15241       0       0 1.763</code></pre>
 <p>Of particular interest is variable <strong>yFE</strong> which has several interpretations. It is:<br /> 0. the sum of all estimated fixed effects (gamma00:gammaKP) in (person x timepoint) cell<br /> 1. the overall model solution for the interindividual differences<br /> 2. the average intraindividual pattern<br /> 3. the prediction of the model with interindividual variability factored out, as opposed to <strong>yHat</strong>, generated using both fixed and random effect(s) coefficients.</p>
 <p>The deviations from this average trajectory will be recorded in <strong>RE</strong>, containing a column for each of the random effects estimated.</p>
 <pre class="r"><code># tau**sd - standard deviation, sqrt(tau00)
@@ -479,33 +475,33 @@ RE$id=rownames(RE)
 oldREnames&lt;- c (&quot;(Intercept)&quot;, &quot;timec&quot;, &quot;timec2&quot;, &quot;timec3&quot;)
 newREnames&lt;- c(&quot;tau00sd&quot;,&quot;tau11sd&quot;, &quot;tau22sd&quot;, &quot;tau33sd&quot;)
 for(i in 1:4)names(RE)[names(RE)==oldREnames[i]]=newREnames[i]
-# plyr::rename(RE,c(&quot;timecdfadf&quot;=&quot;timec&quot;))
+
 
 head(RE)</code></pre>
-<pre><code>   tau00sd  tau11sd   tau22sd id
-1   0.3549 -0.22752  0.010254  1
-33  0.2347  0.06783 -0.006329 33
-34 -1.0101  0.12499 -0.009235 34
-35 -2.2250  0.34626 -0.019851 35
-37 -0.8468  0.12252 -0.008270 37
-38 -0.9975  0.10297 -0.008423 38</code></pre>
+<pre><code>    tau00sd  tau11sd   tau22sd id
+1   0.22877 -0.19267  0.008214  1
+33 -0.04575  0.15234 -0.011696 33
+34 -0.73325  0.04679 -0.004558 34
+35 -2.09082  0.31074 -0.017867 35
+37 -1.12394  0.20507 -0.013459 37
+38 -1.13671  0.14570 -0.011178 38</code></pre>
 <pre class="r"><code># attach individual disturbances to dsp by id
 dsp&lt;- merge(dsp,RE, by=&quot;id&quot; )
 head(dsp)</code></pre>
-<pre><code>  id X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort y  yHat    resid gamma00 gamma01 gamma02
-1  1            1     0      0      0      1            0             0 1 3.091 -2.09144   2.299  0.0000 0.00000
-2  1            1     1      1      1      1            1             1 6 2.503  3.49728   2.299 -0.3356 0.05677
-3  1            1     2      4      8      1            2             4 2 2.041 -0.04136   2.299 -0.6713 0.22708
-4  1            1     3      9     27      1            3             9 1 1.691 -0.69142   2.299 -1.0069 0.51093
-5  1            1     4     16     64      1            4            16 1 1.437 -0.43693   2.299 -1.3425 0.90832
-6  1            1     5     25    125      1            5            25 1 1.262 -0.26194   2.299 -1.6782 1.41925
-    gamma03 gamma10  gamma11 gamma12 gamma13   yFE tau00sd tau11sd tau22sd
-1  0.000000  0.4372  0.00000 0.00000       0 2.737  0.3549 -0.2275 0.01025
-2 -0.002659  0.4372 -0.09458 0.00464       0 2.365  0.3549 -0.2275 0.01025
-3 -0.021276  0.4372 -0.18915 0.01856       0 2.100  0.3549 -0.2275 0.01025
-4 -0.071806  0.4372 -0.28373 0.04176       0 1.927  0.3549 -0.2275 0.01025
-5 -0.170207  0.4372 -0.37830 0.07424       0 1.828  0.3549 -0.2275 0.01025
-6 -0.332436  0.4372 -0.47288 0.11599       0 1.788  0.3549 -0.2275 0.01025</code></pre>
+<pre><code>  id X.Intercept. timec timec2 timec3 cohort timec.cohort y  yHat    resid gamma00 gamma01 gamma02   gamma03 gamma10
+1  1            1     0      0      0      1            0 1 3.135 -2.13496   2.647  0.0000 0.00000  0.000000  0.2589
+2  1            1     1      1      1      1            1 6 2.522  3.47750   2.647 -0.4607 0.06582 -0.002659  0.2589
+3  1            1     2      4      8      1            2 2 2.042 -0.04215   2.647 -0.9214 0.26329 -0.021276  0.2589
+4  1            1     3      9     27      1            3 1 1.678 -0.67797   2.647 -1.3821 0.59241 -0.071806  0.2589
+5  1            1     4     16     64      1            4 1 1.414 -0.41399   2.647 -1.8428 1.05317 -0.170207  0.2589
+6  1            1     5     25    125      1            5 1 1.234 -0.23425   2.647 -2.3035 1.64558 -0.332436  0.2589
+   gamma11 gamma12 gamma13   yFE tau00sd tau11sd  tau22sd
+1  0.00000       0       0 2.906  0.2288 -0.1927 0.008214
+2 -0.03048       0       0 2.478  0.2288 -0.1927 0.008214
+3 -0.06097       0       0 2.166  0.2288 -0.1927 0.008214
+4 -0.09145       0       0 1.953  0.2288 -0.1927 0.008214
+5 -0.12193       0       0 1.824  0.2288 -0.1927 0.008214
+6 -0.15241       0       0 1.763  0.2288 -0.1927 0.008214</code></pre>
 <pre class="r"><code>pullRandomEffect &lt;- function (timeName,tauName){
   possibleNAEffect &lt;- dsp[,tauName]
   result &lt;- ifelse( is.na(possibleNAEffect), 0,
@@ -515,43 +511,50 @@ head(dsp)</code></pre>
 
 # and produce predictions using the time effects 
 # note that tau00sd does not need transformation because it intercept ( *1)
-dsp$tau11sd &lt;- pullRandomEffect(timeName=&quot;timec&quot;, tauName=&quot;tau11sd&quot;)
-dsp$tau22sd &lt;- pullRandomEffect(timeName=&quot;timec2&quot;, tauName=&quot;tau22sd&quot;)
+# dsp$tau11sd &lt;- pullRandomEffect(timeName=&quot;timec&quot;, tauName=&quot;tau11sd&quot;)
+# dsp$tau22sd &lt;- pullRandomEffect(timeName=&quot;timec2&quot;, tauName=&quot;tau22sd&quot;)
 # dsp$tau33sd &lt;- pullRandomEffect(timeName=&quot;timec3&quot;, tauName=&quot;tau33sd&quot;)
-head(dsp)</code></pre>
-<pre><code>  id X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort y  yHat    resid gamma00 gamma01 gamma02
-1  1            1     0      0      0      1            0             0 1 3.091 -2.09144   2.299  0.0000 0.00000
-2  1            1     1      1      1      1            1             1 6 2.503  3.49728   2.299 -0.3356 0.05677
-3  1            1     2      4      8      1            2             4 2 2.041 -0.04136   2.299 -0.6713 0.22708
-4  1            1     3      9     27      1            3             9 1 1.691 -0.69142   2.299 -1.0069 0.51093
-5  1            1     4     16     64      1            4            16 1 1.437 -0.43693   2.299 -1.3425 0.90832
-6  1            1     5     25    125      1            5            25 1 1.262 -0.26194   2.299 -1.6782 1.41925
-    gamma03 gamma10  gamma11 gamma12 gamma13   yFE tau00sd tau11sd tau22sd
-1  0.000000  0.4372  0.00000 0.00000       0 2.737  0.3549  0.0000 0.00000
-2 -0.002659  0.4372 -0.09458 0.00464       0 2.365  0.3549 -0.2275 0.01025
-3 -0.021276  0.4372 -0.18915 0.01856       0 2.100  0.3549 -0.4550 0.04102
-4 -0.071806  0.4372 -0.28373 0.04176       0 1.927  0.3549 -0.6826 0.09229
-5 -0.170207  0.4372 -0.37830 0.07424       0 1.828  0.3549 -0.9101 0.16406
-6 -0.332436  0.4372 -0.47288 0.11599       0 1.788  0.3549 -1.1376 0.25635</code></pre>
+
+dsp$tau11sd &lt;- ifelse( is.na(dsp[,&quot;tau11sd&quot;]), 0, dsp[,&quot;tau11sd&quot;])
+dsp$tau22sd &lt;- ifelse( is.na(dsp[,&quot;tau22sd&quot;]), 0, dsp[,&quot;tau22sd&quot;])
+# dsp$tau33sd &lt;- ifelse( is.na(dsp[,&quot;tau33sd&quot;]), 0, dsp[,&quot;tau33sd&quot;])
+
+?exists</code></pre>
+<pre><code>starting httpd help server ... done</code></pre>
+<pre class="r"><code>head(dsp)</code></pre>
+<pre><code>  id X.Intercept. timec timec2 timec3 cohort timec.cohort y  yHat    resid gamma00 gamma01 gamma02   gamma03 gamma10
+1  1            1     0      0      0      1            0 1 3.135 -2.13496   2.647  0.0000 0.00000  0.000000  0.2589
+2  1            1     1      1      1      1            1 6 2.522  3.47750   2.647 -0.4607 0.06582 -0.002659  0.2589
+3  1            1     2      4      8      1            2 2 2.042 -0.04215   2.647 -0.9214 0.26329 -0.021276  0.2589
+4  1            1     3      9     27      1            3 1 1.678 -0.67797   2.647 -1.3821 0.59241 -0.071806  0.2589
+5  1            1     4     16     64      1            4 1 1.414 -0.41399   2.647 -1.8428 1.05317 -0.170207  0.2589
+6  1            1     5     25    125      1            5 1 1.234 -0.23425   2.647 -2.3035 1.64558 -0.332436  0.2589
+   gamma11 gamma12 gamma13   yFE tau00sd tau11sd  tau22sd
+1  0.00000       0       0 2.906  0.2288 -0.1927 0.008214
+2 -0.03048       0       0 2.478  0.2288 -0.1927 0.008214
+3 -0.06097       0       0 2.166  0.2288 -0.1927 0.008214
+4 -0.09145       0       0 1.953  0.2288 -0.1927 0.008214
+5 -0.12193       0       0 1.824  0.2288 -0.1927 0.008214
+6 -0.15241       0       0 1.763  0.2288 -0.1927 0.008214</code></pre>
 <p>Create the individual disturbance</p>
 <pre class="r"><code>r.effects&lt;- c(&quot;tau00sd&quot;,&quot;tau11sd&quot;,&quot;tau22sd&quot;,&quot;tau33sd&quot;)
 dsp$yRE &lt;- rowSums (dsp[,colnames(dsp) %in% r.effects],na.rm=TRUE)
 
 head(dsp)</code></pre>
-<pre><code>  id X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort y  yHat    resid gamma00 gamma01 gamma02
-1  1            1     0      0      0      1            0             0 1 3.091 -2.09144   2.299  0.0000 0.00000
-2  1            1     1      1      1      1            1             1 6 2.503  3.49728   2.299 -0.3356 0.05677
-3  1            1     2      4      8      1            2             4 2 2.041 -0.04136   2.299 -0.6713 0.22708
-4  1            1     3      9     27      1            3             9 1 1.691 -0.69142   2.299 -1.0069 0.51093
-5  1            1     4     16     64      1            4            16 1 1.437 -0.43693   2.299 -1.3425 0.90832
-6  1            1     5     25    125      1            5            25 1 1.262 -0.26194   2.299 -1.6782 1.41925
-    gamma03 gamma10  gamma11 gamma12 gamma13   yFE tau00sd tau11sd tau22sd      yRE
-1  0.000000  0.4372  0.00000 0.00000       0 2.737  0.3549  0.0000 0.00000  0.35489
-2 -0.002659  0.4372 -0.09458 0.00464       0 2.365  0.3549 -0.2275 0.01025  0.13763
-3 -0.021276  0.4372 -0.18915 0.01856       0 2.100  0.3549 -0.4550 0.04102 -0.05914
-4 -0.071806  0.4372 -0.28373 0.04176       0 1.927  0.3549 -0.6826 0.09229 -0.23539
-5 -0.170207  0.4372 -0.37830 0.07424       0 1.828  0.3549 -0.9101 0.16406 -0.39113
-6 -0.332436  0.4372 -0.47288 0.11599       0 1.788  0.3549 -1.1376 0.25635 -0.52637</code></pre>
+<pre><code>  id X.Intercept. timec timec2 timec3 cohort timec.cohort y  yHat    resid gamma00 gamma01 gamma02   gamma03 gamma10
+1  1            1     0      0      0      1            0 1 3.135 -2.13496   2.647  0.0000 0.00000  0.000000  0.2589
+2  1            1     1      1      1      1            1 6 2.522  3.47750   2.647 -0.4607 0.06582 -0.002659  0.2589
+3  1            1     2      4      8      1            2 2 2.042 -0.04215   2.647 -0.9214 0.26329 -0.021276  0.2589
+4  1            1     3      9     27      1            3 1 1.678 -0.67797   2.647 -1.3821 0.59241 -0.071806  0.2589
+5  1            1     4     16     64      1            4 1 1.414 -0.41399   2.647 -1.8428 1.05317 -0.170207  0.2589
+6  1            1     5     25    125      1            5 1 1.234 -0.23425   2.647 -2.3035 1.64558 -0.332436  0.2589
+   gamma11 gamma12 gamma13   yFE tau00sd tau11sd  tau22sd     yRE
+1  0.00000       0       0 2.906  0.2288 -0.1927 0.008214 0.04432
+2 -0.03048       0       0 2.478  0.2288 -0.1927 0.008214 0.04432
+3 -0.06097       0       0 2.166  0.2288 -0.1927 0.008214 0.04432
+4 -0.09145       0       0 1.953  0.2288 -0.1927 0.008214 0.04432
+5 -0.12193       0       0 1.824  0.2288 -0.1927 0.008214 0.04432
+6 -0.15241       0       0 1.763  0.2288 -0.1927 0.008214 0.04432</code></pre>
 <pre class="r"><code>ds&lt;- dsp %&gt;%
   dplyr::select(y,resid,yFE,yRE,yHat) %&gt;%
   dplyr::mutate(
@@ -563,183 +566,179 @@ head(dsp)</code></pre>
 all.equal(dsp$yHat1, dsp$yFERE)</code></pre>
 <pre><code>[1] TRUE</code></pre>
 <pre class="r"><code>head(ds,10)</code></pre>
-<pre><code>   y    resid   yFE      yRE  yHat yFERE residFERE   residDif
-1  1 -2.09144 2.737  0.35489 3.091 3.091  -2.09144  0.000e+00
-2  6  3.49728 2.365  0.13763 2.503 2.503   3.49728  8.882e-16
-3  2 -0.04136 2.100 -0.05914 2.041 2.041  -0.04136  0.000e+00
-4  1 -0.69142 1.927 -0.23539 1.691 1.691  -0.69142  2.220e-16
-5  1 -0.43693 1.828 -0.39113 1.437 1.437  -0.43693  0.000e+00
-6  1 -0.26194 1.788 -0.52637 1.262 1.262  -0.26194 -6.661e-16
-7  1 -0.15050 1.792 -0.64110 1.150 1.150  -0.15050 -4.441e-16
-8  1 -0.08664 1.822 -0.73532 1.087 1.087  -0.08664  4.441e-16
-9  1 -0.05441 1.863 -0.80904 1.054 1.054  -0.05441 -2.220e-16
-10 1 -0.03785 1.900 -0.86224 1.038 1.038  -0.03785  2.220e-16</code></pre>
+<pre><code>   y    resid   yFE     yRE  yHat yFERE residFERE   residDif
+1  1 -2.13496 2.906 0.04432 3.135 2.951   -1.9505 -1.845e-01
+2  6  3.47750 2.478 0.04432 2.522 2.522    3.4775 -4.441e-16
+3  2 -0.04215 2.166 0.04432 2.042 2.210   -0.2102  1.680e-01
+4  1 -0.67797 1.953 0.04432 1.678 1.998   -0.9976  3.196e-01
+5  1 -0.41399 1.824 0.04432 1.414 1.869   -0.8688  4.548e-01
+6  1 -0.23425 1.763 0.04432 1.234 1.808   -0.8078  5.735e-01
+7  1 -0.12281 1.754 0.04432 1.123 1.799   -0.7986  6.758e-01
+8  1 -0.06370 1.781 0.04432 1.064 1.825   -0.8254  7.617e-01
+9  1 -0.04096 1.828 0.04432 1.041 1.872   -0.8721  8.312e-01
+10 1 -0.03864 1.879 0.04432 1.039 1.923   -0.9228  8.842e-01</code></pre>
 <p>Getting the standard error of residuals</p>
 <pre class="r"><code>sigma&lt;-sigma(model) # std.error of scaled residuals 
 SDR&lt;-sd(dsp$resid) # st.deviation of the raw residuals, not scaled
 sigma</code></pre>
 <pre><code>[1] 0.7603</code></pre>
 <pre class="r"><code>SDR</code></pre>
-<pre><code>[1] 0.6901</code></pre>
+<pre><code>[1] 0.6892</code></pre>
 </div>
 <div id="list-of-availible-elements" class="section level2">
 <h2>List of availible elements</h2>
 <pre class="r"><code>summary(model)</code></pre>
 <pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
-Formula: attend ~ 1 + timec + timec2 + timec3 + cohort + cohort:timec +      cohort:timec2 + (1 + timec + timec2 | id)
+Formula: attend ~ 1 + timec + timec2 + timec3 + cohort + cohort:timec +      (1 + timec + timec2 | id)
    Data: ds
 Control: lmerControl(optCtrl = list(maxfun = 20000))
 
      AIC      BIC   logLik deviance df.resid 
-  1375.5   1434.2   -673.7   1347.5      478 
+  1375.5   1430.0   -674.7   1349.5      479 
 
 Scaled residuals: 
    Min     1Q Median     3Q    Max 
--3.097 -0.377 -0.090  0.320  4.600 
+-3.091 -0.390 -0.082  0.328  4.574 
 
 Random effects:
  Groups   Name        Variance Std.Dev. Corr       
- id       (Intercept) 2.535190 1.5922              
-          timec       0.137115 0.3703   -0.83      
-          timec2      0.000454 0.0213    0.77 -0.95
- Residual             0.577988 0.7603              
+ id       (Intercept) 2.600432 1.6126              
+          timec       0.145531 0.3815   -0.83      
+          timec2      0.000498 0.0223    0.77 -0.95
+ Residual             0.577985 0.7603              
 Number of obs: 492, groups: id, 41
 
 Fixed effects:
-              Estimate Std. Error t value
-(Intercept)    2.29935    0.44933    5.12
-timec         -0.33563    0.13922   -2.41
-timec2         0.05677    0.01983    2.86
-timec3        -0.00266    0.00110   -2.41
-cohort         0.43719    0.18434    2.37
-timec:cohort  -0.09458    0.04803   -1.97
-timec2:cohort  0.00464    0.00325    1.43
+             Estimate Std. Error t value
+(Intercept)   2.64733    0.37948    6.98
+timec        -0.46069    0.10910   -4.22
+timec2        0.06582    0.01882    3.50
+timec3       -0.00266    0.00110   -2.41
+cohort        0.25885    0.13549    1.91
+timec:cohort -0.03048    0.01699   -1.79
 
 Correlation of Fixed Effects:
-            (Intr) timec  timec2 timec3 cohort tmc:ch
-timec       -0.736                                   
-timec2       0.379 -0.815                            
-timec3      -0.122  0.551 -0.918                     
-cohort      -0.800  0.543 -0.217  0.000              
-timec:cohrt  0.646 -0.673  0.299  0.000 -0.807       
-timec2:chrt -0.543  0.630 -0.320  0.000  0.678 -0.935</code></pre>
+            (Intr) timec  timec2 timec3 cohort
+timec       -0.609                            
+timec2       0.262 -0.833                     
+timec3      -0.144  0.703 -0.967              
+cohort      -0.697  0.202  0.000  0.000       
+timec:cohrt  0.463 -0.304  0.000  0.000 -0.665</code></pre>
 <pre class="r"><code>VarCorr(model)</code></pre>
 <pre><code> Groups   Name        Std.Dev. Corr       
- id       (Intercept) 1.5922              
-          timec       0.3703   -0.83      
-          timec2      0.0213    0.77 -0.95
+ id       (Intercept) 1.6126              
+          timec       0.3815   -0.83      
+          timec2      0.0223    0.77 -0.95
  Residual             0.7603              </code></pre>
 <pre class="r"><code>mInfo # model information indices</code></pre>
 <pre><code>     AIC      BIC   logLik deviance df.resid        N        p      ids 
-  1375.5   1434.2   -673.7   1347.5    478.0    492.0      7.0     41.0 </code></pre>
+  1375.5   1430.0   -674.7   1349.5    479.0    492.0      6.0     41.0 </code></pre>
 <pre class="r"><code>RE # random effect corrections for each (person x timepoint)</code></pre>
-<pre><code>     tau00sd  tau11sd   tau22sd  id
-1    0.35489 -0.22752  0.010254   1
-33   0.23465  0.06783 -0.006329  33
-34  -1.01010  0.12499 -0.009235  34
-35  -2.22503  0.34626 -0.019851  35
-37  -0.84682  0.12252 -0.008270  37
-38  -0.99747  0.10297 -0.008423  38
-41  -1.53723  0.18702 -0.009668  41
-56   0.97762 -0.10695  0.007086  56
-60   1.92822 -0.10251 -0.002846  60
-75  -2.72867  0.86364 -0.025751  75
-76  -1.83050  0.26211 -0.015688  76
-78  -1.36442  0.19290 -0.013359  78
-86  -0.09847 -0.12700  0.004775  86
-89   2.51588 -0.78089  0.042726  89
-92  -2.42151  0.64213 -0.035303  92
-104 -1.06128  0.25174 -0.012555 104
-105 -1.40603  0.35477 -0.016031 105
-107  1.50803 -0.10622  0.007451 107
-108  1.74601 -0.35389  0.017926 108
-109  0.34719 -0.28353  0.017272 109
-110 -0.84028  0.09972 -0.002292 110
-114 -1.42029  0.25417 -0.013130 114
-122  0.91606 -0.35992  0.019855 122
-126 -0.29853  0.16918 -0.013248 126
-135 -1.43597  0.17795 -0.011525 135
-137  1.92268 -0.30317  0.024986 137
-138  1.62165 -0.52658  0.028657 138
-147 -1.09929  0.23768 -0.016332 147
-155  2.70611 -0.78623  0.041365 155
-156  0.41494 -0.08446  0.004402 156
-164 -0.81874  0.22575 -0.013802 164
-165  0.88590  0.05880 -0.001827 165
-166  0.16533  0.06288 -0.005319 166
-169  0.72552 -0.27796  0.016188 169
-170 -0.05917 -0.06204  0.005925 170
-176  3.10310  0.12310 -0.002630 176
-177 -0.36904  0.13959 -0.008795 177
-181  2.36843 -0.55490  0.025066 181
-182  1.91885 -0.30769  0.017150 182
-183 -0.66176  0.02165 -0.003187 183
-199 -1.83050  0.26211 -0.015688 199</code></pre>
+<pre><code>     tau00sd  tau11sd    tau22sd  id
+1    0.22877 -0.19267  8.214e-03   1
+33  -0.04575  0.15234 -1.170e-02  33
+34  -0.73325  0.04679 -4.558e-03  34
+35  -2.09082  0.31074 -1.787e-02  35
+37  -1.12394  0.20507 -1.346e-02  37
+38  -1.13671  0.14570 -1.118e-02  38
+41  -1.39446  0.14636 -7.216e-03  41
+56   0.98876 -0.11154  7.445e-03  56
+60   2.19379 -0.17393  1.215e-03  60
+75  -2.71280  0.85621 -2.513e-02  75
+76  -1.83312  0.26577 -1.608e-02  76
+78  -1.50694  0.23759 -1.629e-02  78
+86  -0.36681 -0.04972  6.571e-05  86
+89   2.41451 -0.76088  4.204e-02  89
+92  -2.30020  0.61434 -3.402e-02  92
+104 -1.33862  0.33441 -1.775e-02 104
+105 -1.26664  0.31614 -1.376e-02 105
+107  1.51801 -0.11011  7.747e-03 107
+108  2.03916 -0.44186  2.349e-02 108
+109  0.37069 -0.29553  1.831e-02 109
+110 -0.55159  0.01442  3.032e-03 110
+114 -1.41974  0.25593 -1.335e-02 114
+122  1.21576 -0.45182  2.578e-02 122
+126 -0.44611  0.21691 -1.646e-02 126
+135 -1.57542  0.22080 -1.429e-02 135
+137  1.67718 -0.23959  2.152e-02 137
+138  1.92665 -0.62166  3.487e-02 138
+147 -0.82973  0.16385 -1.205e-02 147
+155  2.46221 -0.72361  3.799e-02 155
+156  0.42406 -0.08784  4.651e-03 156
+164 -0.96221  0.27101 -1.679e-02 164
+165  0.61164  0.13963 -6.859e-03 165
+166  0.16452  0.06547 -5.611e-03 166
+169  0.88458 -0.32839  1.953e-02 169
+170  0.23366 -0.14982  1.147e-02 170
+176  3.10050  0.12675 -3.020e-03 176
+177 -0.64796  0.22321 -1.408e-02 177
+181  2.38423 -0.56228  2.568e-02 181
+182  2.21253 -0.39598  2.274e-02 182
+183 -0.93529  0.10204 -8.179e-03 183
+199 -1.83312  0.26577 -1.608e-02 199</code></pre>
 <pre class="r"><code>mRE  # variances and standard deviations of random effects</code></pre>
 <pre><code>                  var      sd
-(Intercept) 2.5351903 1.59223
-timec       0.1371151 0.37029
-timec2      0.0004544 0.02132</code></pre>
+(Intercept) 2.6004323 1.61259
+timec       0.1455313 0.38149
+timec2      0.0004985 0.02233</code></pre>
 <pre class="r"><code>mREcov # covariance matrix of Random Effects</code></pre>
 <pre><code>            X.Intercept.     timec     timec2
-(Intercept)      2.53519 -0.490044  0.0261699
-timec           -0.49004  0.137115 -0.0074951
-timec2           0.02617 -0.007495  0.0004544</code></pre>
+(Intercept)      2.60043 -0.513474  0.0278655
+timec           -0.51347  0.145531 -0.0081042
+timec2           0.02787 -0.008104  0.0004985</code></pre>
 <pre class="r"><code>mREcor # correlation  matrix of Random Effects</code></pre>
 <pre><code>            X.Intercept.   timec  timec2
-(Intercept)       1.0000 -0.8312  0.7711
-timec            -0.8312  1.0000 -0.9496
-timec2            0.7711 -0.9496  1.0000</code></pre>
+(Intercept)       1.0000 -0.8347  0.7740
+timec            -0.8347  1.0000 -0.9515
+timec2            0.7740 -0.9515  1.0000</code></pre>
 <pre class="r"><code>FEt # estimates of Fixed Effects, SE, t-value</code></pre>
-<pre><code>               Estimate Std. Error t value
-(Intercept)    2.299355   0.449335   5.117
-timec         -0.335631   0.139222  -2.411
-timec2         0.056770   0.019831   2.863
-timec3        -0.002659   0.001103  -2.411
-cohort         0.437194   0.184342   2.372
-timec:cohort  -0.094576   0.048030  -1.969
-timec2:cohort  0.004640   0.003252   1.427</code></pre>
+<pre><code>              Estimate Std. Error t value
+(Intercept)   2.647335   0.379478   6.976
+timec        -0.460691   0.109105  -4.222
+timec2        0.065823   0.018817   3.498
+timec3       -0.002659   0.001103  -2.411
+cohort        0.258855   0.135487   1.911
+timec:cohort -0.030483   0.016989  -1.794</code></pre>
 <pre class="r"><code>mFE # matrix of correlations among Fixed Effects</code></pre>
-<pre><code>7 x 7 Matrix of class &quot;corMatrix&quot;
-              (Intercept)   timec  timec2     timec3     cohort timec:cohort timec2:cohort
-(Intercept)        1.0000 -0.7356  0.3786 -1.215e-01 -8.005e-01    6.461e-01    -5.428e-01
-timec             -0.7356  1.0000 -0.8153  5.507e-01  5.433e-01   -6.732e-01     6.296e-01
-timec2             0.3786 -0.8153  1.0000 -9.179e-01 -2.170e-01    2.993e-01    -3.200e-01
-timec3            -0.1215  0.5507 -0.9179  1.000e+00 -2.665e-13    3.156e-13    -3.007e-13
-cohort            -0.8005  0.5433 -0.2170 -2.665e-13  1.000e+00   -8.071e-01     6.781e-01
-timec:cohort       0.6461 -0.6732  0.2993  3.156e-13 -8.071e-01    1.000e+00    -9.354e-01
-timec2:cohort     -0.5428  0.6296 -0.3200 -3.007e-13  6.781e-01   -9.354e-01     1.000e+00</code></pre>
+<pre><code>6 x 6 Matrix of class &quot;corMatrix&quot;
+             (Intercept)   timec     timec2     timec3     cohort timec:cohort
+(Intercept)       1.0000 -0.6089  2.615e-01 -1.439e-01 -6.967e-01    4.633e-01
+timec            -0.6089  1.0000 -8.327e-01  7.027e-01  2.021e-01   -3.038e-01
+timec2            0.2615 -0.8327  1.000e+00 -9.674e-01 -6.765e-15   -9.909e-14
+timec3           -0.1439  0.7027 -9.674e-01  1.000e+00 -1.086e-14    1.101e-13
+cohort           -0.6967  0.2021 -6.765e-15 -1.086e-14  1.000e+00   -6.650e-01
+timec:cohort      0.4633 -0.3038 -9.909e-14  1.101e-13 -6.650e-01    1.000e+00</code></pre>
 <pre class="r"><code>sigma # standard deviation of residual</code></pre>
 <pre><code>[1] 0.7603</code></pre>
 <pre class="r"><code>head(dsp,13) # input + output + residual + conditional</code></pre>
-<pre><code>    id X.Intercept. timec timec2 timec3 cohort timec.cohort timec2.cohort y   yHat    resid gamma00 gamma01 gamma02
-1    1            1     0      0      0      1            0             0 1 3.0914 -2.09144   2.299  0.0000 0.00000
-2    1            1     1      1      1      1            1             1 6 2.5027  3.49728   2.299 -0.3356 0.05677
-3    1            1     2      4      8      1            2             4 2 2.0414 -0.04136   2.299 -0.6713 0.22708
-4    1            1     3      9     27      1            3             9 1 1.6914 -0.69142   2.299 -1.0069 0.51093
-5    1            1     4     16     64      1            4            16 1 1.4369 -0.43693   2.299 -1.3425 0.90832
-6    1            1     5     25    125      1            5            25 1 1.2619 -0.26194   2.299 -1.6782 1.41925
-7    1            1     6     36    216      1            6            36 1 1.1505 -0.15050   2.299 -2.0138 2.04372
-8    1            1     7     49    343      1            7            49 1 1.0866 -0.08664   2.299 -2.3494 2.78172
-9    1            1     8     64    512      1            8            64 1 1.0544 -0.05441   2.299 -2.6851 3.63327
-10   1            1     9     81    729      1            9            81 1 1.0379 -0.03785   2.299 -3.0207 4.59836
-11   1            1    10    100   1000      1           10           100 1 1.0210 -0.02101   2.299 -3.3563 5.67699
-12   1            1    11    121   1331      1           11           121 1 0.9879  0.01208   2.299 -3.6919 6.86915
-13 104            1     0      0      0      0            0             0 1 1.2381 -0.23808   2.299  0.0000 0.00000
-     gamma03 gamma10  gamma11 gamma12 gamma13   yFE tau00sd tau11sd tau22sd      yRE
-1   0.000000  0.4372  0.00000 0.00000       0 2.737  0.3549  0.0000 0.00000  0.35489
-2  -0.002659  0.4372 -0.09458 0.00464       0 2.365  0.3549 -0.2275 0.01025  0.13763
-3  -0.021276  0.4372 -0.18915 0.01856       0 2.100  0.3549 -0.4550 0.04102 -0.05914
-4  -0.071806  0.4372 -0.28373 0.04176       0 1.927  0.3549 -0.6826 0.09229 -0.23539
-5  -0.170207  0.4372 -0.37830 0.07424       0 1.828  0.3549 -0.9101 0.16406 -0.39113
-6  -0.332436  0.4372 -0.47288 0.11599       0 1.788  0.3549 -1.1376 0.25635 -0.52637
-7  -0.574450  0.4372 -0.56746 0.16703       0 1.792  0.3549 -1.3651 0.36914 -0.64110
-8  -0.912205  0.4372 -0.66203 0.22735       0 1.822  0.3549 -1.5927 0.50245 -0.73532
-9  -1.361659  0.4372 -0.75661 0.29694       0 1.863  0.3549 -1.8202 0.65626 -0.80904
-10 -1.938769  0.4372 -0.85118 0.37582       0 1.900  0.3549 -2.0477 0.83058 -0.86224
-11 -2.659490  0.4372 -0.94576 0.46398       0 1.916  0.3549 -2.2752 1.02540 -0.89494
-12 -3.539782  0.4372 -1.04034 0.56141       0 1.895  0.3549 -2.5028 1.24074 -0.90713
-13  0.000000  0.4372  0.00000 0.00000       0 2.737 -1.0613  0.0000 0.00000 -1.06128</code></pre>
+<pre><code>    id X.Intercept. timec timec2 timec3 cohort timec.cohort y  yHat    resid gamma00 gamma01 gamma02   gamma03 gamma10
+1    1            1     0      0      0      1            0 1 3.135 -2.13496   2.647  0.0000 0.00000  0.000000  0.2589
+2    1            1     1      1      1      1            1 6 2.522  3.47750   2.647 -0.4607 0.06582 -0.002659  0.2589
+3    1            1     2      4      8      1            2 2 2.042 -0.04215   2.647 -0.9214 0.26329 -0.021276  0.2589
+4    1            1     3      9     27      1            3 1 1.678 -0.67797   2.647 -1.3821 0.59241 -0.071806  0.2589
+5    1            1     4     16     64      1            4 1 1.414 -0.41399   2.647 -1.8428 1.05317 -0.170207  0.2589
+6    1            1     5     25    125      1            5 1 1.234 -0.23425   2.647 -2.3035 1.64558 -0.332436  0.2589
+7    1            1     6     36    216      1            6 1 1.123 -0.12281   2.647 -2.7641 2.36963 -0.574450  0.2589
+8    1            1     7     49    343      1            7 1 1.064 -0.06370   2.647 -3.2248 3.22533 -0.912205  0.2589
+9    1            1     8     64    512      1            8 1 1.041 -0.04096   2.647 -3.6855 4.21268 -1.361659  0.2589
+10   1            1     9     81    729      1            9 1 1.039 -0.03864   2.647 -4.1462 5.33167 -1.938769  0.2589
+11   1            1    10    100   1000      1           10 1 1.041 -0.04079   2.647 -4.6069 6.58231 -2.659490  0.2589
+12   1            1    11    121   1331      1           11 1 1.031 -0.03144   2.647 -5.0676 7.96459 -3.539782  0.2589
+13 104            1     0      0      0      0            0 1 1.309 -0.30872   2.647  0.0000 0.00000  0.000000  0.2589
+    gamma11 gamma12 gamma13   yFE tau00sd tau11sd   tau22sd      yRE
+1   0.00000       0       0 2.906  0.2288 -0.1927  0.008214  0.04432
+2  -0.03048       0       0 2.478  0.2288 -0.1927  0.008214  0.04432
+3  -0.06097       0       0 2.166  0.2288 -0.1927  0.008214  0.04432
+4  -0.09145       0       0 1.953  0.2288 -0.1927  0.008214  0.04432
+5  -0.12193       0       0 1.824  0.2288 -0.1927  0.008214  0.04432
+6  -0.15241       0       0 1.763  0.2288 -0.1927  0.008214  0.04432
+7  -0.18290       0       0 1.754  0.2288 -0.1927  0.008214  0.04432
+8  -0.21338       0       0 1.781  0.2288 -0.1927  0.008214  0.04432
+9  -0.24386       0       0 1.828  0.2288 -0.1927  0.008214  0.04432
+10 -0.27435       0       0 1.879  0.2288 -0.1927  0.008214  0.04432
+11 -0.30483       0       0 1.917  0.2288 -0.1927  0.008214  0.04432
+12 -0.33531       0       0 1.928  0.2288 -0.1927  0.008214  0.04432
+13  0.00000       0       0 2.906 -1.3386  0.3344 -0.017754 -1.02196</code></pre>
 <pre class="r"><code># str(mFE)
 # mFE@x
 # mFE@Dimnames
