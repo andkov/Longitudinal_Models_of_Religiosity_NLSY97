@@ -1,33 +1,51 @@
+rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. This is not called by knitr, because it's above the first chunk.
+#
 # run sequenceLCM.R if don't get some objcets
+emptyTheme <- theme_minimal() +
+  theme(axis.text = element_blank()) +
+  theme(axis.title = element_blank()) +
+  theme(panel.grid = element_blank()) +
+  theme(panel.border = element_blank()) +
+  theme(axis.ticks.length = grid::unit(0, "cm"))
+
+
 
 i<- "m6R3"
 pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
 m6R3_FERE<- readRDS(pathdsFERE)
 
-ds<- m6R3_FERE
-ds<- ds %>% dplyr::select( Coefficient, Estimate, Std.Error, t.value, sdRE,intVarRE, timecVarRE, timec2VarRE, sigma )
-head(ds,10)
+dsWide<- m6R3_FERE
+dsWide<- dsWide %>% dplyr::select( Coefficient, Estimate, Std.Error, t.value, sdRE,intVarRE, timecVarRE, timec2VarRE, sigma )
+head(dsWide,10)
 # I will enforce this order, it's important
 target <- c("(Intercept)", "timec", "timec2", "timec3", "cohort",
             "timec:cohort", "timec2:cohort", "timec3:cohort")
-ds<-ds[match(target, ds$Coefficient),]
-ds
+dsWide<-dsWide[match(target, dsWide$Coefficient),]
+dsWide
 
 
-ds <- melt(ds, id.vars=("Coefficient")) 
+ds <- melt(dsWide, id.vars=("Coefficient"), value.name="value") 
 head(ds, 10)
 
 head(ds,20)
 roundingDigits<- 2
-ds <- ds %>% mutate(labels= as.character(round(value,roundingDigits)))
+# ds <- ds %>% mutate(label= as.character(round(value,roundingDigits))) #I don't think there's a need to use mutate here, but some people do.
+ds$label <- format(x=round(ds$value,roundingDigits), trim=FALSE)
+ds$label[is.na(ds$value)] <- ""
+# ds$label
+
 lt<- length(target) # legnth of target
 a<- rep(1,8)
 b<- c(a, a*2, a*3, a*4, a*5, a*6, a*7, a*8)
 ds <- ds %>% mutate(row= rep(c(1:lt),lt), col=b)
 ds
 
-
-
+ggplot(ds, aes(x=col, xmin=col-.5, xmax=col+.5, y=-row, ymin=-row-.5, ymax=-row+.5, label=label)) +
+  geom_rect(aes(fill=value)) +
+  geom_text(na.rm=T, color="black", hjust=0, size=5, family="mono") +
+  emptyTheme +
+  theme(legend.position="none")
+ggsave(filename="./Models/LCM/graphs/equationTiles.png", plot=last_plot())
 
 ###############################################################
 # # playground down there
