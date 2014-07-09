@@ -308,14 +308,22 @@ dsp<- merge(dsp,RE, by="id" )
 head(dsp)
 
 pullRandomEffect <- function (timeName,tauName){
-  possibleNAEffect <- dsp[,tauName]
-  result <- ifelse( is.na(possibleNAEffect), 0,
-                  possibleNAEffect*dsp[,timeName]) 
-  return(result)
+  variableMissing <- !(tauName %in% colnames(dsp))
+  if( variableMissing ) {
+    return( rep(0, times=nrow(dsp)) )
+  }
+  else {
+    possibleNAEffect <- dsp[,tauName]
+    result <- ifelse( is.na(possibleNAEffect), 0,
+                    possibleNAEffect*dsp[,timeName]) 
+    return(result)
+  }
 }
+# pullRandomEffect(timeName="timec3", tauName="tau33sd")
 
 # and produce predictions using the time effects 
 # note that tau00sd does not need transformation because it intercept ( *1)
+<<<<<<< HEAD
 # dsp$tau11sd <- pullRandomEffect(timeName="timec", tauName="tau11sd")
 # dsp$tau22sd <- pullRandomEffect(timeName="timec2", tauName="tau22sd")
 # dsp$tau33sd <- pullRandomEffect(timeName="timec3", tauName="tau33sd")
@@ -326,7 +334,15 @@ dsp$tau22sd <- ifelse( is.na(dsp[,"tau22sd"]), 0, dsp[,"tau22sd"])
 
 ?exists
 head(dsp)
+=======
+dsp$tau11sd <- pullRandomEffect(timeName="timec", tauName="tau11sd")
+dsp$tau22sd <- pullRandomEffect(timeName="timec2", tauName="tau22sd")
+dsp$tau33sd <- pullRandomEffect(timeName="timec3", tauName="tau33sd")
+>>>>>>> origin/master
 
+# dsp$tau11sd <- ifelse( is.na(dsp[,"tau11sd"]), 0, dsp[,"tau11sd"])
+# dsp$tau22sd <- ifelse( is.na(dsp[,"tau22sd"]), 0, dsp[,"tau22sd"])
+# dsp$tau33sd <- ifelse( is.na(dsp[,"tau33sd"]), 0, dsp[,"tau33sd"])
 
 ```
 
