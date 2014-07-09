@@ -62,6 +62,7 @@ aesDefs
 
 ```
 
+## Chapter name 1 
 ```{r}
 cat("\014") # clears console
 modelNumber<- "m10"
@@ -143,4 +144,11 @@ table(ds$sample, ds$race)/length(unique(ds$year)) # Sample BY Race counts
 ```{r m7R}
 
 ```
+
+
+```{r}
+m6R1
+```
+
+
 

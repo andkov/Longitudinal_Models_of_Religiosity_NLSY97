@@ -25,7 +25,7 @@ source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
 dsL<-readRDS("./Data/Derived/dsL.rds")
 source(file.path(getwd(),"Models/LCM/LCModels.R"))
 
-# a <- c("m5R") #, "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F")
+# a <- c("m0F") #, "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F")
 # for(i in a){
 # modelName<- i
 
@@ -70,6 +70,7 @@ length(unique(ds$timec))
 f<- as.formula(modelCall)
 model <-lmer (f, data = ds, REML=FALSE,
                control=lmerControl(optCtrl=list(maxfun=20000)))
+# model <- nlme::gls(attend ~ 1 + timec + timec2 + timec3, data=ds)
 summary(model)
 ############################
 ## @knitr mInfo
@@ -79,40 +80,6 @@ mInfo["p"]<- model@devcomp$dims["p"] # number of estimated parameters, verify
 mInfo["ids"]<- (summary(model))$ngrps # number of units on level-2, here: individuals
 mInfo<- c(mInfo, modelName)
 mInfo
-
-############################
-## @knitr mRE
-# extract RE covariance matrix
-mREcov<-  data.frame(     summary(model)$varcor$id   ) # covariance matrix of RE
-mREcor<-  data.frame(attr(summary(model)$varcor$id,"correlation")) # corrleation matrix of RE
-mRE<-   data.frame(sd= (attr(summary(model)$varcor$id,"stddev")))
-mRE$var<- mRE$sd^2
-mRE<-mRE[c("var","sd")]
-mRE
-mREcov
-
-############################
-## @knitr RE
-RE<- lme4:::ranef.merMod(model)$id 
-head(RE,6)
-# however
-cor(RE)  # in unadjusted RE estimates, not same as mRE
-var(RE)  # in unadjusted RE estimates, not same as mRE
-mRE
-
-############################
-## @knitr FE
-# similar ways to extract FE estimates, #3 is the fullest
-FE<- fixef(model)  
-FE # vector used in predition
-FEt<- summary(model)$coefficients
-FEt # contains t-values that test the terms
-
-
-############################
-## @knitr mFE
-mFE<- (summary(model)$vcov@factors$correlation) # notice that this is object of 
-mFE
 
 ############################
 ## @knitr dsp_recover_input
@@ -315,4 +282,4 @@ saveRDS(object=dsmInfo, file=pathdsmInfo, compress="xz")
 saveRDS(object=dsFERE, file=pathdsFERE, compress="xz")
 saveRDS(object=dsp, file=pathdsp, compress="xz")
 
-# } # end of the for loop
+} # end of the for loop

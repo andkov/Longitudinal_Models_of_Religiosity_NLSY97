@@ -42,7 +42,8 @@ opts_chunk$set(
 #   out.width = NULL,
   fig.path = 'figure_rmd/singleModel/',     
   dev = "png",
-  dpi = 100
+  dpi = 100,
+  comment="",
 )
 echoChunks <- FALSE
 warningChunks<- FALSE
@@ -59,8 +60,9 @@ aesDefs
 
 ```{r LoadData, echo=echoChunks, message=T}
 # select only respondence in the cross-sectional sample
-
+modelName<- "m4R2"
 ```
+
 # Model specification   
 The model is of the class
 ![LCM_Specification](../../images/WideSpecification_Guide.png)
