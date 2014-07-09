@@ -22,10 +22,46 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 ## @knitr TweakData
 
 ############################
-## @knitr AnalysisChunk01
+## @knitr modelSpecification
+.
+.
+.
+############################
+## @knitr m5F
+source(./..../)
+# grid dimentions
+1
+2,2
+
+
 
 ############################
-## @knitr AnalysisChunk02
+## @knitr m6F
 
 ############################
-## @knitr AnalysisChunk03
+## @knitr m7F
+.
+.
+.
+
+############################
+## @knitr m5R1
+
+############################
+## @knitr m6R1
+
+############################
+## @knitr m7R1
+
+.
+.
+.
+
+############################
+## @knitr m5R1
+
+############################
+## @knitr m6R1
+
+############################
+## @knitr m7R1

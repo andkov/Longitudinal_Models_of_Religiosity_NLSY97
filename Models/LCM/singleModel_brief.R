@@ -70,20 +70,20 @@ length(unique(ds$timec))
 ###################
 
 
-modelName <- "m7F"
+modelName <- "m2R3"
   # list of fixed models
 modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
                 "mFa", "mFb", "mFc", "mFd","mFe")
 modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1",
               "mR1a", "mR1b", "mR1c", "mR1d","mR1e")
-modelsR2 <- c("m0R2", "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
+modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
 
-modelsR3 <- c("m0R3", "m1R3", "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
+modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
 
-modelsR4 <- c("m0R4", "m1R4", "m2R4", "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
+modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
 
 allModels<- modelNamesLabels
-modelList<- c(modelsFE,modelsR1 )
+modelList<- modelsR4
 
 
 for(i in modelList){
@@ -129,7 +129,9 @@ sigma<- sigma(model) # standard deviation of residual
 
 a<- data.frame(FEt)
 a$Coefficient <- rownames(a)
+a<- plyr::rename(a,replace= c("Std..Error"="Std.Error"))
 rowCountBeforeJoin <- nrow(a)
+
 
 mFE<- (summary(model)$vcov@factors$correlation)
 b<- as.data.frame(matrix(mFE@x, ncol=length(mFE@Dimnames[[1]]), byrow=TRUE, dimnames=mFE@Dimnames))
@@ -140,10 +142,12 @@ dsRE <- plyr::rename(dsRE, replace=c("var"="varRE", "sd"="sdRE"))
 dsRE$Coefficient <- rownames(dsRE)
 
 dsRECov <- mREcov
+## - change here: if variables do not exist, create them anyway and populate with zeros
 dsRECov <- plyr::rename(dsRECov, replace=c("X.Intercept."="intVarRE", "timec"="timecVarRE","timec2"="timec2VarRE","timec3"="timec3VarRE"),warn_missing = FALSE)
 dsRECov$Coefficient <- rownames(dsRECov)
 
 dsRECor <- mREcor
+## - change here: if variables do not exist, create them anyway and populate with zeros
 dsRECor <- plyr::rename(dsRECor, replace=c("X.Intercept."="intSDRE", "timec"="timecSDRE", "timec2"="timec2SDRE", "timec3"="timec3SDRE"),warn_missing = FALSE)
 dsRECor$Coefficient <- rownames(dsRECor)
 
