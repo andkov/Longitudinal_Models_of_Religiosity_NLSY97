@@ -25,6 +25,9 @@ source("./Models/Descriptives/AesDefine.R"))
 dsL<-readRDS("./Data/Derived/dsL.rds")
 source("./Models/LCM/LCModels.R")
 
+
+
+
 ############################
 ## @knitr defineData
 numID<- 9022 # highest id value (max = 9022)
@@ -68,7 +71,24 @@ length(unique(ds$timec))
 # model<- nlme::gls(f, data=ds,method = "ML")
 # modelF<-model
 ###################
+# Read in different REDS files and join them all together
+pathDataDirectory <- file.path("./Models/LCM/models/datasets")
+# filenamePattern <- ".+\\.rds" #All RDS files
+filenamePattern <- "m.{1,}Info\\.rds" #All RDS files
 
+retrievedFilenames <- list.files(path=pathDataDirectory, pattern=filenamePattern)
+filePaths <- file.path(pathDataDirectory, retrievedFilenames)
+
+dsInfo <- readRDS(filePaths[1])
+for( i in 2:length(filePaths) ) {
+  # To debug, change the '6' to some number to isolate the problem: for( i in 2:6 ) {
+  # message("About to read", filePaths[i], "\\")
+  dsInfoSingle <- readRDS(filePaths[i])
+  dsInfo <- plyr::join(x=dsInfo, y=dsInfoSingle, by="Coefficient", type="left", match="all")
+  rm(dsInfoSingle)
+}
+
+###################
 
 modelName <- "m1R1"
 # list of fixed models
