@@ -83,10 +83,10 @@ modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
 modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
 
 allModels<- modelNamesLabels
-modelList<- modelsR4
+modelList<- modelsR1
 
 
-for(i in modelList){
+for(i in modelName){
   modelName<- i
   modelCall<- paste0("call_",modelName)
   f<- as.formula(modelCall)

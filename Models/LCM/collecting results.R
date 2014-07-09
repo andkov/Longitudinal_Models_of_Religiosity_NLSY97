@@ -93,7 +93,7 @@ getModels<- c("m7R3")
 getAll<- modelList
 
 
-for(i in modelList){
+for(i in allModels){
   modelName<- i
   pathdsmInfo <- file.path("./Models/LCM/models/datasets",paste0(i,"_mInfo.rds"))
   pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
@@ -124,6 +124,19 @@ for( i in 1:length(filePaths) ) {
   dsInfoSingle <- readRDS(filePaths[i])
   dsInfo <- plyr::join(x=dsInfo, y=dsInfoSingle, by="Coefficient", type="left", match="all")
   rm(dsInfoSingle)
+}
+
+###################
+# Read in different REDS files 
+pathDataDirectory <- file.path("./Models/LCM/models/datasets")
+# filenamePattern <- ".+\\.rds" #All RDS files
+filenamePattern <- "m.{1,}FERE\\.rds" #All RDS files
+retrievedFilenames <- list.files(path=pathDataDirectory, pattern=filenamePattern)
+filePaths <- file.path(pathDataDirectory, retrievedFilenames)
+dsFERE <- readRDS(filePaths[1])
+for( i in seq_along(filePaths)) {
+  dsFERESingle <-  readRDS(...)
+  lst_ds[[i]] <- dsFERESingle
 }
 
 
