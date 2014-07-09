@@ -170,11 +170,17 @@ length(unique(ds$timec))
 # Estimate the model
 modnum <-lmer (attend ~ 
                1  + timec + timec2 + timec3
-       + cohort + cohort:timec # + cohort:timec2 + cohort:timec3
-              + (1 + timec  | id),
+       + cohort + cohort:timec  #+ cohort:timec2 # + cohort:timec3
+              + (1 + timec + timec2  | id),
              data = ds, REML=FALSE, 
              control=lmerControl(optCtrl=list(maxfun=20000)))
-        
+```
+
+```
+Warning: Model failed to converge with max|grad| = 0.0777238 (tol = 0.002)
+```
+
+```r
 model<- modnum
 ```
 
@@ -190,40 +196,41 @@ summary(model)
 
 ```
 Linear mixed model fit by maximum likelihood  ['lmerMod']
-Formula: attend ~ 1 + timec + timec2 + timec3 + cohort + cohort:timec +      (1 + timec | id)
+Formula: attend ~ 1 + timec + timec2 + timec3 + cohort + cohort:timec +      (1 + timec + timec2 | id)
    Data: ds
 Control: lmerControl(optCtrl = list(maxfun = 20000))
 
      AIC      BIC   logLik deviance df.resid 
-    1394     1436     -687     1374      482 
+  1375.5   1430.0   -674.7   1349.5      479 
 
 Scaled residuals: 
    Min     1Q Median     3Q    Max 
--2.629 -0.491 -0.078  0.376  4.441 
+-3.091 -0.390 -0.082  0.328  4.574 
 
 Random effects:
- Groups   Name        Variance Std.Dev. Corr 
- id       (Intercept) 1.7088   1.307         
-          timec       0.0267   0.164    -0.72
- Residual             0.6445   0.803         
+ Groups   Name        Variance Std.Dev. Corr       
+ id       (Intercept) 2.600432 1.6126              
+          timec       0.145531 0.3815   -0.83      
+          timec2      0.000498 0.0223    0.77 -0.95
+ Residual             0.577985 0.7603              
 Number of obs: 492, groups: id, 41
 
 Fixed effects:
              Estimate Std. Error t value
-(Intercept)   2.46533    0.37385    6.59
-timec        -0.43522    0.10080   -4.32
-timec2        0.06582    0.01953    3.37
-timec3       -0.00266    0.00116   -2.28
-cohort        0.35213    0.15044    2.34
-timec:cohort -0.04354    0.01930   -2.26
+(Intercept)   2.64733    0.37948    6.98
+timec        -0.46069    0.10910   -4.22
+timec2        0.06582    0.01882    3.50
+timec3       -0.00266    0.00110   -2.41
+cohort        0.25885    0.13549    1.91
+timec:cohort -0.03048    0.01699   -1.79
 
 Correlation of Fixed Effects:
             (Intr) timec  timec2 timec3 cohort
-timec       -0.518                            
-timec2       0.181 -0.857                     
-timec3      -0.154  0.803 -0.984              
-cohort      -0.785  0.274  0.000  0.000       
-timec:cohrt  0.576 -0.374  0.000  0.000 -0.733
+timec       -0.609                            
+timec2       0.262 -0.833                     
+timec3      -0.144  0.703 -0.967              
+cohort      -0.697  0.202  0.000  0.000       
+timec:cohrt  0.463 -0.304  0.000  0.000 -0.665
 ```
 
 After studying 
@@ -245,7 +252,7 @@ model@call
 
 ```
 lmer(formula = attend ~ 1 + timec + timec2 + timec3 + cohort + 
-    cohort:timec + (1 + timec | id), data = ds, REML = FALSE, 
+    cohort:timec + (1 + timec + timec2 | id), data = ds, REML = FALSE, 
     control = lmerControl(optCtrl = list(maxfun = 20000)))
 ```
 
@@ -263,7 +270,7 @@ mInfo
 
 ```
      AIC      BIC   logLik deviance df.resid        N        p      ids 
-    1394     1436     -687     1374      482      492        6       41 
+  1375.5   1430.0   -674.7   1349.5    479.0    492.0      6.0     41.0 
 ```
 
 ## Random Effects (RE)
@@ -281,9 +288,10 @@ mRE
 ```
 
 ```
-                var     sd
-(Intercept) 1.70881 1.3072
-timec       0.02674 0.1635
+                  var      sd
+(Intercept) 2.6004323 1.61259
+timec       0.1455313 0.38149
+timec2      0.0004985 0.02233
 ```
 
 ```r
@@ -291,9 +299,10 @@ mREcov
 ```
 
 ```
-            X.Intercept.    timec
-(Intercept)       1.7088 -0.15385
-timec            -0.1538  0.02674
+            X.Intercept.     timec     timec2
+(Intercept)      2.60043 -0.513474  0.0278655
+timec           -0.51347  0.145531 -0.0081042
+timec2           0.02787 -0.008104  0.0004985
 ```
 
 ### extracting RE for each individual
@@ -304,13 +313,13 @@ head(RE,6)
 ```
 
 ```
-   (Intercept)     timec
-1       0.1427 -0.110025
-33      0.4208 -0.013628
-34     -0.7968  0.016958
-35     -1.8115  0.120826
-37     -0.6598  0.026282
-38     -0.7993  0.004015
+   (Intercept)    timec    timec2
+1      0.22877 -0.19267  0.008214
+33    -0.04575  0.15234 -0.011696
+34    -0.73325  0.04679 -0.004558
+35    -2.09082  0.31074 -0.017867
+37    -1.12394  0.20507 -0.013459
+38    -1.13671  0.14570 -0.011178
 ```
 
 ```r
@@ -319,9 +328,10 @@ cor(RE)  # in unadjusted RE estimates, not same as mRE
 ```
 
 ```
-            (Intercept)  timec
-(Intercept)       1.000 -0.706
-timec            -0.706  1.000
+            (Intercept)   timec  timec2
+(Intercept)      1.0000 -0.8442  0.8418
+timec           -0.8442  1.0000 -0.9711
+timec2           0.8418 -0.9711  1.0000
 ```
 
 ```r
@@ -329,9 +339,10 @@ var(RE)  # in unadjusted RE estimates, not same as mRE
 ```
 
 ```
-            (Intercept)    timec
-(Intercept)      1.5796 -0.13589
-timec           -0.1359  0.02345
+            (Intercept)     timec     timec2
+(Intercept)     2.41106 -0.455341  0.0241825
+timec          -0.45534  0.120676 -0.0062409
+timec2          0.02418 -0.006241  0.0003423
 ```
 
 ```r
@@ -339,9 +350,10 @@ mRE
 ```
 
 ```
-                var     sd
-(Intercept) 1.70881 1.3072
-timec       0.02674 0.1635
+                  var      sd
+(Intercept) 2.6004323 1.61259
+timec       0.1455313 0.38149
+timec2      0.0004985 0.02233
 ```
 
 ## Fixed Effects (FE)
@@ -357,7 +369,7 @@ FE # vector used in predition
 
 ```
  (Intercept)        timec       timec2       timec3       cohort timec:cohort 
-    2.465330    -0.435217     0.065823    -0.002659     0.352132    -0.043539 
+    2.647335    -0.460691     0.065823    -0.002659     0.258855    -0.030483 
 ```
 
 ```r
@@ -367,12 +379,12 @@ FEt # contains t-values that test the terms
 
 ```
               Estimate Std. Error t value
-(Intercept)   2.465330   0.373848   6.594
-timec        -0.435217   0.100799  -4.318
-timec2        0.065823   0.019526   3.371
-timec3       -0.002659   0.001165  -2.283
-cohort        0.352132   0.150438   2.341
-timec:cohort -0.043539   0.019297  -2.256
+(Intercept)   2.647335   0.379478   6.976
+timec        -0.460691   0.109105  -4.222
+timec2        0.065823   0.018817   3.498
+timec3       -0.002659   0.001103  -2.411
+cohort        0.258855   0.135487   1.911
+timec:cohort -0.030483   0.016989  -1.794
 ```
 
 ### Matrix of FE
@@ -385,12 +397,12 @@ mFE
 ```
 6 x 6 Matrix of class "corMatrix"
              (Intercept)   timec     timec2     timec3     cohort timec:cohort
-(Intercept)       1.0000 -0.5177  1.814e-01 -1.542e-01 -7.852e-01    5.758e-01
-timec            -0.5177  1.0000 -8.566e-01  8.032e-01  2.740e-01   -3.736e-01
-timec2            0.1814 -0.8566  1.000e+00 -9.844e-01 -1.246e-15    2.880e-14
-timec3           -0.1542  0.8032 -9.844e-01  1.000e+00  6.962e-16   -2.875e-14
-cohort           -0.7852  0.2740 -1.246e-15  6.962e-16  1.000e+00   -7.334e-01
-timec:cohort      0.5758 -0.3736  2.880e-14 -2.875e-14 -7.334e-01    1.000e+00
+(Intercept)       1.0000 -0.6089  2.615e-01 -1.439e-01 -6.967e-01    4.633e-01
+timec            -0.6089  1.0000 -8.327e-01  7.027e-01  2.021e-01   -3.038e-01
+timec2            0.2615 -0.8327  1.000e+00 -9.674e-01 -6.765e-15   -9.909e-14
+timec3           -0.1439  0.7027 -9.674e-01  1.000e+00 -1.086e-14    1.101e-13
+cohort           -0.6967  0.2021 -6.765e-15 -1.086e-14  1.000e+00   -6.650e-01
+timec:cohort      0.4633 -0.3038 -9.909e-14  1.101e-13 -6.650e-01    1.000e+00
 ```
 
 
@@ -443,20 +455,20 @@ head(dsp,13)
 ```
 
 ```
-   X.Intercept. timec timec2 timec3 cohort timec.cohort id y   yHat     resid
-1             1     0      0      0      1            0  1 1 2.9601 -1.960132
-2             1     1      1      1      1            1  1 6 2.4345  3.565485
-3             1     2      4      8      1            2  1 2 2.0246 -0.024587
-4             1     3      9     27      1            3  1 1 1.7144 -0.714391
-5             1     4     16     64      1            4  1 1 1.4880 -0.487971
-6             1     5     25    125      1            5  1 1 1.3294 -0.329369
-7             1     6     36    216      1            6  1 1 1.2226 -0.222628
-8             1     7     49    343      1            7  1 1 1.1518 -0.151792
-9             1     8     64    512      1            8  1 1 1.1009 -0.100904
-10            1     9     81    729      1            9  1 1 1.0540 -0.054006
-11            1    10    100   1000      1           10  1 1 0.9951  0.004858
-12            1    11    121   1331      1           11  1 1 0.9084  0.091646
-13            1     0      0      0      0            0 33 2 2.8862 -0.886172
+   X.Intercept. timec timec2 timec3 cohort timec.cohort id y  yHat    resid
+1             1     0      0      0      1            0  1 1 3.135 -2.13496
+2             1     1      1      1      1            1  1 6 2.522  3.47750
+3             1     2      4      8      1            2  1 2 2.042 -0.04215
+4             1     3      9     27      1            3  1 1 1.678 -0.67797
+5             1     4     16     64      1            4  1 1 1.414 -0.41399
+6             1     5     25    125      1            5  1 1 1.234 -0.23425
+7             1     6     36    216      1            6  1 1 1.123 -0.12281
+8             1     7     49    343      1            7  1 1 1.064 -0.06370
+9             1     8     64    512      1            8  1 1 1.041 -0.04096
+10            1     9     81    729      1            9  1 1 1.039 -0.03864
+11            1    10    100   1000      1           10  1 1 1.041 -0.04079
+12            1    11    121   1331      1           11  1 1 1.031 -0.03144
+13            1     0      0      0      0            0 33 2 2.602 -0.60159
 ```
 
 ```r
@@ -485,12 +497,12 @@ head(dsp)
 
 ```
   X.Intercept. timec timec2 timec3 cohort timec.cohort id y  yHat    resid
-1            1     0      0      0      1            0  1 1 2.960 -1.96013
-2            1     1      1      1      1            1  1 6 2.435  3.56549
-3            1     2      4      8      1            2  1 2 2.025 -0.02459
-4            1     3      9     27      1            3  1 1 1.714 -0.71439
-5            1     4     16     64      1            4  1 1 1.488 -0.48797
-6            1     5     25    125      1            5  1 1 1.329 -0.32937
+1            1     0      0      0      1            0  1 1 3.135 -2.13496
+2            1     1      1      1      1            1  1 6 2.522  3.47750
+3            1     2      4      8      1            2  1 2 2.042 -0.04215
+4            1     3      9     27      1            3  1 1 1.678 -0.67797
+5            1     4     16     64      1            4  1 1 1.414 -0.41399
+6            1     5     25    125      1            5  1 1 1.234 -0.23425
 ```
 
 ```r
@@ -500,12 +512,12 @@ head(dsp)
 
 ```
   X.Intercept. timec timec2 timec3 cohort timec.cohort id y  yHat    resid gamma00
-1            1     0      0      0      1            0  1 1 2.960 -1.96013   2.465
-2            1     1      1      1      1            1  1 6 2.435  3.56549   2.465
-3            1     2      4      8      1            2  1 2 2.025 -0.02459   2.465
-4            1     3      9     27      1            3  1 1 1.714 -0.71439   2.465
-5            1     4     16     64      1            4  1 1 1.488 -0.48797   2.465
-6            1     5     25    125      1            5  1 1 1.329 -0.32937   2.465
+1            1     0      0      0      1            0  1 1 3.135 -2.13496   2.647
+2            1     1      1      1      1            1  1 6 2.522  3.47750   2.647
+3            1     2      4      8      1            2  1 2 2.042 -0.04215   2.647
+4            1     3      9     27      1            3  1 1 1.678 -0.67797   2.647
+5            1     4     16     64      1            4  1 1 1.414 -0.41399   2.647
+6            1     5     25    125      1            5  1 1 1.234 -0.23425   2.647
 ```
 
 The effects that were not present in the model will be substituted with zeros. 
@@ -522,7 +534,7 @@ model@call
 
 ```
 lmer(formula = attend ~ 1 + timec + timec2 + timec3 + cohort + 
-    cohort:timec + (1 + timec | id), data = ds, REML = FALSE, 
+    cohort:timec + (1 + timec + timec2 | id), data = ds, REML = FALSE, 
     control = lmerControl(optCtrl = list(maxfun = 20000)))
 ```
 
@@ -572,19 +584,19 @@ head(dsp)
 
 ```
   X.Intercept. timec timec2 timec3 cohort timec.cohort id y  yHat    resid gamma00 gamma01 gamma02   gamma03 gamma10
-1            1     0      0      0      1            0  1 1 2.960 -1.96013   2.465  0.0000 0.00000  0.000000  0.3521
-2            1     1      1      1      1            1  1 6 2.435  3.56549   2.465 -0.4352 0.06582 -0.002659  0.3521
-3            1     2      4      8      1            2  1 2 2.025 -0.02459   2.465 -0.8704 0.26329 -0.021276  0.3521
-4            1     3      9     27      1            3  1 1 1.714 -0.71439   2.465 -1.3056 0.59241 -0.071806  0.3521
-5            1     4     16     64      1            4  1 1 1.488 -0.48797   2.465 -1.7409 1.05317 -0.170207  0.3521
-6            1     5     25    125      1            5  1 1 1.329 -0.32937   2.465 -2.1761 1.64558 -0.332436  0.3521
+1            1     0      0      0      1            0  1 1 3.135 -2.13496   2.647  0.0000 0.00000  0.000000  0.2589
+2            1     1      1      1      1            1  1 6 2.522  3.47750   2.647 -0.4607 0.06582 -0.002659  0.2589
+3            1     2      4      8      1            2  1 2 2.042 -0.04215   2.647 -0.9214 0.26329 -0.021276  0.2589
+4            1     3      9     27      1            3  1 1 1.678 -0.67797   2.647 -1.3821 0.59241 -0.071806  0.2589
+5            1     4     16     64      1            4  1 1 1.414 -0.41399   2.647 -1.8428 1.05317 -0.170207  0.2589
+6            1     5     25    125      1            5  1 1 1.234 -0.23425   2.647 -2.3035 1.64558 -0.332436  0.2589
    gamma11 gamma12 gamma13   yFE
-1  0.00000       0       0 2.817
-2 -0.04354       0       0 2.402
-3 -0.08708       0       0 2.102
-4 -0.13062       0       0 1.902
-5 -0.17415       0       0 1.785
-6 -0.21769       0       0 1.737
+1  0.00000       0       0 2.906
+2 -0.03048       0       0 2.478
+3 -0.06097       0       0 2.166
+4 -0.09145       0       0 1.953
+5 -0.12193       0       0 1.824
+6 -0.15241       0       0 1.763
 ```
 
 Of particular interest is variable **yFE** which has several interpretations. It is:      
