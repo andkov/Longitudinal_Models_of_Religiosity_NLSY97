@@ -18,6 +18,8 @@ source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
 ############################
 ## @knitr LoadData
 dsL<-readRDS("./Data/Derived/dsL.rds")
+source(file.path(getwd(),"Models/LCM/LCModels.R"))
+
 ############################
 ## @knitr TweakData
 
@@ -30,8 +32,12 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 ## @knitr m5F
 source(./..../)
 # grid dimentions
-1
-2,2
+> unitlay <-
+  grid.layout(3, 3,
+              widths=unit(c(1, 1, 2),
+                          c("inches", "null", "null")),
+              heights=unit(c(3, 1, 1),
+                           c("lines", "null", "null")))
 
 
 
