@@ -47,11 +47,6 @@ mainfont: Calibri
 ```
 
 # m0F 
-
-```
-Error: object 'timec' not found
-```
-
 ![plot of chunk m0F](sequence/m0F.png) 
 
 

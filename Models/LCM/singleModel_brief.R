@@ -302,9 +302,7 @@ for(i in allModels){
     
     b<- as.data.frame(mFE)
     b$Coefficient <- rownames(b)
-    
-#     browser()
-    
+        
     #TODO: finsh you rarchitect how files are created and retrieve, 
     #  please don't keep using this hack that adds the `timec` row to an Anova table (intentionally) missing that variable
     missingTime <- !("timec" %in% a$Coefficient)
@@ -422,6 +420,14 @@ for(i in allModels){
     dsp$tau11sd <- pullRandomEffect(timeName="timec", tauName="tau11sd")
     dsp$tau22sd <- pullRandomEffect(timeName="timec2", tauName="tau22sd")
     dsp$tau33sd <- pullRandomEffect(timeName="timec3", tauName="tau33sd")
+    
+    #TODO: fix this hack
+    missingTimeInDsp <- !("timec" %in% colnames(dsp))
+    if( missingTimeInDsp ) {
+      dsp$timec <- NA_real_
+    }
+    
+#     browser()
     head(dsp)
   } # close else
   
