@@ -10,10 +10,16 @@ emptyTheme <- ggplot2::theme_minimal() +
   theme(panel.border = element_blank()) +
   theme(axis.ticks.length = grid::unit(0, "cm"))
 
+paletteColor <- c("0"=NA, "2"="#7ebea5", "3"="tomato","99"=NA) #http://colrd.com/image-dna/23557/
+paletteFill <- c("0"=NA, "1"="#1c5f83", "3"="tomato", "99"=NA)
+
+borderCode <- c(0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,3,99,99,99,99,99,99,99)
+fillCode <- c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,99,99,99,99,99,99,99)
+
 
 # run sequenceLCM.R if don't get some objcets
 i<- "m6R3"
-pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
+pathdsFERE  <- file.path("./Models/LCM/models/datasets", paste0(i,"_FERE.rds"))
 m6R3_FERE<- readRDS(pathdsFERE)
 
 dsWide<- m6R3_FERE
@@ -32,9 +38,10 @@ head(ds, 10)
 head(ds,20)
 roundingDigits<- 2
 # ds <- ds %>% mutate(label= as.character(round(value,roundingDigits))) #I don't think there's a need to use mutate here, but some people do.
-ds$label <- format(x=round(ds$value,roundingDigits), trim=FALSE)
+ds$label <- sprintf("% .2f", ds$value) #format(x=round(ds$value,roundingDigits), trim=FALSE)
 ds$label[is.na(ds$value)] <- ""
-# ds$label
+ds$borderCode <- factor(ifelse(!is.na(ds$value), borderCode, 99))
+ds$fillCode <- factor(ifelse(!is.na(ds$value), fillCode, 99))
 
 lt<- length(target) # legnth of target
 a<- rep(1,8)
@@ -43,8 +50,10 @@ ds <- ds %>% mutate(row= rep(c(1:lt),lt), col=b)
 ds
 
 ggplot(ds, aes(x=col, xmin=col-.5, xmax=col+.5, y=-row, ymin=-row-.5, ymax=-row+.5, label=label)) +
-  geom_rect(aes(fill=value)) +
+  geom_rect(aes(color=borderCode, fill=fillCode)) +
   geom_text(na.rm=T, color="black", hjust=.5, vjust=.5, size=5, family="mono") +
+  scale_color_manual(values=paletteColor) +
+  scale_fill_manual(values=paletteFill) +
   emptyTheme +
   theme(legend.position="none")
 ggsave(filename="./Models/LCM/graphs/equationTiles.png", plot=last_plot())
