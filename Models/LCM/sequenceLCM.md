@@ -43,11 +43,20 @@ mainfont: Calibri
 # Model specification
 
 ```r
-############################
+####################################### models with FIXED only #####--F
 ```
 
-# m5F 
+# m0F 
+![plot of chunk m0F](sequence/m0F.png) 
 
+# m1F 
+![plot of chunk m1F](sequence/m1F.png) 
+
+# m2F 
+![plot of chunk m2F](sequence/m2F.png) 
+
+# m5F 
+![plot of chunk m5F](sequence/m5F.png) 
 
 # m6F 
 ![plot of chunk m6F](sequence/m6F.png) 
