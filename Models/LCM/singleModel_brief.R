@@ -27,7 +27,7 @@ source("./Models/LCM/LCModels.R")
 
 ############################
 ## @knitr defineData
-numID<- 2000 # highest id value (max = 9022)
+numID<- 500 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
@@ -87,7 +87,7 @@ modelList1<- c(modelsR1, modelsFE)
 modelList1<- c(modelsR2, modelsR3, modelsR4) 
 
 
-for(i in modelList){
+for(i in allModels){
   modelName<- i
   modelCall<- paste0("call_",modelName)
   f<- as.formula(modelCall)

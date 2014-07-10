@@ -37,12 +37,12 @@ opts_chunk$set(
   message = TRUE,
   comment = NA, 
   tidy = FALSE,
-#   fig.height = 4.8, 
-#   fig.width = 6.5, 
+  fig.height = 12, 
+  fig.width = 16, 
 #   out.width = NULL,
   fig.path = 'sequence/',     
-  dev = "png",
-  dpi = 100
+  dev = "png"
+  #, dpi = 300
 )
 echoChunks <- FALSE
 warningChunks<- FALSE
@@ -50,83 +50,63 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the chunks
 ```
 
-```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-aesDefs
+```{r LoadPackages, echo=echoChunks, message=F}
 ```
 
-```{r LoadPackages, echo=echoChunks, message=F}
+```{r LoadSources, echo=echoChunks, message=F}
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
 # select only respondence in the cross-sectional sample
-
 ```
 
 # Model specification
 ```{r modelSpecification}
 # general case goes here, along with sequence map
+```
 
+```{r assemble}
 ```
 
 # m5F 
-```{r m5F}
-
+```{r m5F, echo=echoChunks}
 ```
 
 # m6F 
-```{r m6F}
-
+```{r m6F, echo=echoChunks}
 ```
 
 # m7F 
-```{r m7F}
-
+```{r m7F, echo=echoChunks}
 ```
-.
-.
-.
-# m5R1 
-```{r m5F}
 
+## Add more here.
+
+# m5R1 
+```{r m5R1, echo=echoChunks}
 ```
 
 # m6R1 
-```{r m6F}
-
+```{r m6R1, echo=echoChunks}
 ```
 
 # m7R1 
-```{r m7F}
-
+```{r m7R1, echo=echoChunks}
 ```
-.
-.
-.
-# m5R2 
-```{r m5R2}
 
+## Add more here.
+
+# m5R2 
+```{r m5R2, echo=echoChunks}
 ```
 
 # m6R2 
-```{r m6R2}
-
+```{r m6R2, echo=echoChunks}
 ```
 
 # m7R2 
-```{r m7R2}
-
+```{r m7R2, echo=echoChunks}
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,13 +1,13 @@
 {
-    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Models/LCM/models/datasets",
+    "path" : "~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/Models/Descriptives",
     "sortOrder" : [
-        {
-            "ascending" : true,
-            "columnIndex" : 2
-        },
         {
             "ascending" : false,
             "columnIndex" : 4
+        },
+        {
+            "ascending" : true,
+            "columnIndex" : 2
         },
         {
             "ascending" : false,
