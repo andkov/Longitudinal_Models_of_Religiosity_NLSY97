@@ -46,7 +46,7 @@ BuildMosaic <- function( modelName ) {
   testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
   dsFERE <- lstModelOutcomes[modelName][[1]]
   gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
-  #   gLin <- Line(modelName)
+#   gLine <- Line(modelName)
   
   grid.newpage()
     
@@ -55,8 +55,8 @@ BuildMosaic <- function( modelName ) {
                         heights=unit(c(3, 1, 1), c("lines", "null", "null"))
   )
   pushViewport(viewport(layout=layout))
-  print(gTile, vp=vpLayout(2, 2)) #Y ~ X1 
-  print(gBar, vp=vpLayout(2, 3)) #Y ~ x2
+  print(gTile, vp=vpLayout(2, 3)) #Y ~ X1 
+  print(gBar, vp=vpLayout(3, 2)) #Y ~ x2
   
 
 popViewport(0)
@@ -73,38 +73,35 @@ BuildMosaic(modelName="m6F")
 
 ############################
 ## @knitr m7F
-.
-.
-.
+BuildMosaic(modelName="m7F")
+# .
+# .
+# .
 
 ############################
 ## @knitr m5R1
+BuildMosaic(modelName="m5R1")
 
 ############################
 ## @knitr m6R1
+BuildMosaic(modelName="m6R1")
 
 ############################
 ## @knitr m7R1
+BuildMosaic(modelName="m7R1")
 
-.
-.
-.
-
-############################
-## @knitr m5R1
+# .
+# .
+# .
 
 ############################
-## @knitr m6R1
+## @knitr m5R2
+BuildMosaic(modelName="m5R2")
 
 ############################
-## @knitr m7R1
+## @knitr m6R2
+BuildMosaic(modelName="m6R2")
 
-
-# source(./..../)
-# # grid dimentions
-# > unitlay <-
-#   grid.layout(3, 3,
-#               widths=unit(c(1, 1, 2),
-#                           c("inches", "null", "null")),
-#               heights=unit(c(3, 1, 1),
-#                            c("lines", "null", "null")))
+############################
+## @knitr m7R2
+BuildMosaic(modelName="m7R2")

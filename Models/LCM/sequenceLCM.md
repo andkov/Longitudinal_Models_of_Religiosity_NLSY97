@@ -52,7 +52,7 @@ BuildMosaic <- function( modelName ) {
   testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
   dsFERE <- lstModelOutcomes[modelName][[1]]
   gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
-  #   gLin <- Line(modelName)
+#   gLine <- Line(modelName)
   
   grid.newpage()
     
@@ -61,8 +61,8 @@ BuildMosaic <- function( modelName ) {
                         heights=unit(c(3, 1, 1), c("lines", "null", "null"))
   )
   pushViewport(viewport(layout=layout))
-  print(gTile, vp=vpLayout(2, 2)) #Y ~ X1 
-  print(gBar, vp=vpLayout(2, 3)) #Y ~ x2
+  print(gTile, vp=vpLayout(2, 3)) #Y ~ X1 
+  print(gBar, vp=vpLayout(3, 2)) #Y ~ x2
   
 
 popViewport(0)
@@ -72,92 +72,32 @@ popViewport(0)
 ```
 
 # m5F 
-
-```r
-# dsWide <- lstModelOutcomes["m5F"][[1]]
-BuildMosaic(modelName="m5F")
-```
-
 ![plot of chunk m5F](sequence/m5F.png) 
 
-```r
-############################
-```
-
 # m6F 
-
-```r
-BuildMosaic(modelName="m6F")
-```
-
 ![plot of chunk m6F](sequence/m6F.png) 
 
-```r
-############################
-```
-
 # m7F 
+![plot of chunk m7F](sequence/m7F.png) 
 
-```r
-.
-```
-
-```
-Error: object '.' not found
-```
-
-```r
-.
-```
-
-```
-Error: object '.' not found
-```
-
-```r
-.
-```
-
-```
-Error: object '.' not found
-```
-
-```r
-############################
-```
-Add more here.
+## Add more here.
 
 # m5R1 
-
-```r
-############################
-```
+![plot of chunk m5R1](sequence/m5R1.png) 
 
 # m6R1 
-
-```r
-############################
-```
+![plot of chunk m6R1](sequence/m6R1.png) 
 
 # m7R1 
+![plot of chunk m7R1](sequence/m7R1.png) 
 
-```r
-# source(./..../)
-# # grid dimentions
-# > unitlay <-
-#   grid.layout(3, 3,
-#               widths=unit(c(1, 1, 2),
-#                           c("inches", "null", "null")),
-#               heights=unit(c(3, 1, 1),
-#                            c("lines", "null", "null")))
-```
-Add more here.
+## Add more here.
 
 # m5R2 
-
+![plot of chunk m5R2](sequence/m5R2.png) 
 
 # m6R2 
-
+![plot of chunk m6R2](sequence/m6R2.png) 
 
 # m7R2 
-
+![plot of chunk m7R2](sequence/m7R2.png) 

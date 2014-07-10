@@ -37,12 +37,12 @@ opts_chunk$set(
   message = TRUE,
   comment = NA, 
   tidy = FALSE,
-#   fig.height = 4.8, 
-#   fig.width = 6.5, 
+  fig.height = 9, 
+  fig.width = 16, 
 #   out.width = NULL,
   fig.path = 'sequence/',     
-  dev = "png",
-  dpi = 100
+  dev = "png"
+  #, dpi = 300
 )
 echoChunks <- FALSE
 warningChunks<- FALSE
@@ -72,39 +72,41 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 ```
 
 # m5F 
-```{r m5F}
+```{r m5F, echo=echoChunks}
 ```
 
 # m6F 
-```{r m6F}
+```{r m6F, echo=echoChunks}
 ```
 
 # m7F 
-```{r m7F}
+```{r m7F, echo=echoChunks}
 ```
-Add more here.
+
+## Add more here.
 
 # m5R1 
-```{r m5R1}
+```{r m5R1, echo=echoChunks}
 ```
 
 # m6R1 
-```{r m6R1}
+```{r m6R1, echo=echoChunks}
 ```
 
 # m7R1 
-```{r m7R1}
+```{r m7R1, echo=echoChunks}
 ```
-Add more here.
+
+## Add more here.
 
 # m5R2 
-```{r m5R2}
+```{r m5R2, echo=echoChunks}
 ```
 
 # m6R2 
-```{r m6R2}
+```{r m6R2, echo=echoChunks}
 ```
 
 # m7R2 
-```{r m7R2}
+```{r m7R2, echo=echoChunks}
 ```
