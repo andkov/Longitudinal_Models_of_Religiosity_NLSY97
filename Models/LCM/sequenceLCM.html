@@ -191,30 +191,6 @@ hljs.initHighlightingOnLoad();
 <pre><code class="r">############################
 </code></pre>
 
-<pre><code class="r">BuildMosaic &lt;- function( modelName ) {
-  testit::assert(fact=&quot;The FERE object should be found in the appropriate list&quot;, modelName %in% names(lstModelOutcomes))
-  dsFERE &lt;- lstModelOutcomes[modelName][[1]]
-  gTile &lt;- BuildFERE(modelName=modelName, dsWide=dsFERE)
-  gLine &lt;- BuildLine(modelName)
-
-  grid.newpage()
-
-  layout &lt;- grid.layout(nrow=3, ncol=2,
-                        widths=unit(c(1, 2),c(&quot;null&quot;, &quot;null&quot;)),
-                        heights=unit(c(1, 1, 2), c(&quot;null&quot;, &quot;null&quot;, &quot;null&quot;))
-  )
-  pushViewport(viewport(layout=layout))
-  print(gTile, vp=viewport(layout.pos.row=2))
-  print(gLine, vp=vpLayout(3, 1))
-  print(gBar, vp=vpLayout(3, 2))
-
-
-popViewport(0)
-}
-
-############################
-</code></pre>
-
 <h1>m5F</h1>
 
 <pre><code>Warning: Removed 104 rows containing missing values (geom_path).

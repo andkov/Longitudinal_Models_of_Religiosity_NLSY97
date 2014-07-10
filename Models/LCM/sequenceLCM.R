@@ -25,6 +25,24 @@ source("./Models/Descriptives/AesDefine.R")
 
 vpLayout <- function(rowIndex, columnIndex) { return( viewport(layout.pos.row=rowIndex, layout.pos.col=columnIndex) ) }
 
+BuildMosaic <- function( modelName ) {
+  testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
+  dsFERE <- lstModelOutcomes[modelName][[1]]
+  gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
+  gLine <- BuildLine(modelName)
+  
+  grid.newpage()    
+  layout <- grid.layout(nrow=3, ncol=2,
+                        widths=unit(c(1, 2),c("null", "null")),
+                        heights=unit(c(1, 1, 2), c("null", "null", "null"))
+  )
+  pushViewport(viewport(layout=layout))
+  print(gTile, vp=viewport(layout.pos.row=2))
+  print(gLine, vp=vpLayout(3, 1))
+  print(gBar, vp=vpLayout(3, 2))
+  
+  popViewport(0)
+}
 ############################
 ## @knitr LoadData
 dsL<-readRDS("./Data/Derived/dsL.rds")
@@ -38,31 +56,6 @@ gBar <- BuildBar()
 
 ############################
 ## @knitr modelSpecification
-
-############################
-## @knitr assemble
-
-
-BuildMosaic <- function( modelName ) {
-  testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
-  dsFERE <- lstModelOutcomes[modelName][[1]]
-  gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
-  gLine <- BuildLine(modelName)
-  
-  grid.newpage()
-    
-  layout <- grid.layout(nrow=3, ncol=2,
-                        widths=unit(c(1, 2),c("null", "null")),
-                        heights=unit(c(1, 1, 2), c("null", "null", "null"))
-  )
-  pushViewport(viewport(layout=layout))
-  print(gTile, vp=viewport(layout.pos.row=2))
-  print(gLine, vp=vpLayout(3, 1))
-  print(gBar, vp=vpLayout(3, 2))
-  
-
-popViewport(0)
-}
 
 ############################
 ## @knitr m5F
@@ -91,7 +84,6 @@ BuildMosaic(modelName="m6R1")
 ############################
 ## @knitr m7R1
 BuildMosaic(modelName="m7R1")
-
 # .
 # .
 # .

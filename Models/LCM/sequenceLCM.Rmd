@@ -68,9 +68,6 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 # general case goes here, along with sequence map
 ```
 
-```{r assemble}
-```
-
 # m5F 
 ```{r m5F, echo=echoChunks}
 ```
