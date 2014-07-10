@@ -66,8 +66,7 @@ read_chunk("./Models/LCM/sequenceLCM_2.R") # the file to which knitr calls for t
 
 # Model specification
 ```{r modelSpecification}
-
-
+  
 ```
 
 # m0F 
