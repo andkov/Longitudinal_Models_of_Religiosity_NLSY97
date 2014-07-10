@@ -4,7 +4,6 @@ require(ggplot2)
 require(dplyr)
 require(reshape2)
 
-
 BuildBar <- function() {
   ###################
   # Read in different REDS files and join them all together
@@ -45,39 +44,27 @@ BuildBar <- function() {
                   "m6F", "m6R1", "m6R2", "m6R3", "m6R4",
                   "m7F", "m7R1", "m7R2", "m7R3", "m7R4",
                   "mFa", "mR1a", "mFb", "mR1b","mFc", "mR1c","mFd", "mR1d", "mFe", "mR1e"    
-                  )
-  
-  
+                  )  
   
   ### graph of comparative fit
   dsWide<-dsInfo
-  head(dsWide)
-  
   
   ds<- reshape2::melt(dsWide, id.vars=c('Coefficient'))
   ds<-plyr::rename(ds, replace = c( variable = "model"))
-  head(ds,10)
+
   ds<- ds %>% 
     dplyr::filter(Coefficient %in% c( "BIC","AIC","deviance")) 
-  head(ds,160)
-  ds$Coefficient<- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
-  ds$Coefficient<- factor(x=ds$Coefficient, levels=c("deviance","BIC","AIC"))
-  ds$Coefficient<- factor(x=ds$Coefficient, levels=c("BIC","deviance","AIC"))
-  ds$Coefficient<- factor(x=ds$Coefficient, levels=c("deviance","AIC","BIC"))
-  ds$Coefficient<- factor(x=ds$Coefficient, levels=c("AIC","deviance","BIC"))
-  # ds$Coefficient<- factor(x=ds$Coefficient, levels=c("AIC","BIC","deviance"))
   
-  head(ds,9)
+  ds$Coefficient<- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
+
   # possible pallets
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5")
   colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
   # colorFit <- c("BIC"="#bebada", "AIC"="#8dd3c7", "deviance"="#ffffb3") 
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#d95f02", "deviance"="#b2df8a")
-  
-  
+    
   p <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model))
-  p <- p + geom_bar( stat="identity", position="dodge", alpha=.5)
-                    
+  p <- p + geom_bar( stat="identity", position="dodge", alpha=.5)                    
   p<- p + scale_fill_manual(values=colorFit)
   p<- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   p<- p + scale_x_discrete(limits=modelList2)
