@@ -57,7 +57,11 @@ BuildBar <- function( modelName = NA ) {
   colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
   # colorFit <- c("BIC"="#bebada", "AIC"="#8dd3c7", "deviance"="#ffffb3") 
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#d95f02", "deviance"="#b2df8a")
+  
+  # floor <- 1000 #Watchout when AIC is negative
+  floor <- min(ds$value, na.rm=T)  
   longestBar <- max(ds$value, na.rm=T)  
+  ceiling <- longestBar* 1.05 * sign(longestBar) #Account for cases when AIC is negative
   
   barTheme <- theme_bw() +
     theme(axis.text = element_text(colour="gray40")) +
@@ -79,11 +83,11 @@ BuildBar <- function( modelName = NA ) {
     scale_x_discrete(limits=modelList2) +
     scale_y_continuous(label=scales::comma) +
     #Andrey:  almost never use `scale_zzzz()` to zoom.  It essentially deletes variables from the dataset, which can affect loess. p<- p + scale_y_continuous( limits = c(80000, 110000))
-    coord_cartesian(ylim=c(0, longestBar* 1.05 * sign(longestBar))) + #Account for cases when AIC is negative
+    coord_cartesian(ylim=c(floor, ceiling)) + 
     guides(fill=guide_legend(title=NULL)) + 
     barTheme +
     labs(x=NULL, y="Misfit")
   return( g )
 }
-# BuildBar()
+BuildBar()
 # BuildBar(modelName="m5F")

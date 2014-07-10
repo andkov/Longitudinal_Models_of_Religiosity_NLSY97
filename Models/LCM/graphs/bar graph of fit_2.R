@@ -3,7 +3,7 @@ require(ggplot2)
 require(dplyr)
 require(reshape2)
 
-# BuildBar <- function( modelName = NA ) {
+BuildBar <- function( modelName = NA ) {
   
   # Read in different REDS files and join them all together
   pathDataDirectory <- file.path("./Models/LCM/models/datasets")
@@ -42,10 +42,10 @@ require(reshape2)
                   "mFa", "mR1a", "mFb",  "mR1b", "mFc", "mR1c","mFd", "mR1d", "mFe", "mR1e"    
                   ) 
   mlstMap<-c(otherFE, modelsFE,modelsR1,otherR1 )
-### Assigners
-includeModels <- otherR1
-axisModels<- mlstMap
-###########################################################################################
+  ### Assigners
+  includeModels <- otherR1
+  axisModels<- mlstMap
+  ###########################################################################################
   dsWide <- dsInfo  
   ds <- reshape2::melt(dsWide, id.vars=c('Coefficient'))
   ds <- plyr::rename(ds, replace=c( variable = "model"))
@@ -62,7 +62,11 @@ axisModels<- mlstMap
   colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
   # colorFit <- c("BIC"="#bebada", "AIC"="#8dd3c7", "deviance"="#ffffb3") 
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#d95f02", "deviance"="#b2df8a")
+  
+  # floor <- 1000 #Watchout when AIC is negative
+  floor <- min(ds$value, na.rm=T)  
   longestBar <- max(ds$value, na.rm=T)  
+  ceiling <- longestBar* 1.05 * sign(longestBar) #Account for cases when AIC is negative
   
   barTheme <- theme_bw() +
     theme(axis.text = element_text(colour="gray40")) +
@@ -84,12 +88,11 @@ axisModels<- mlstMap
     scale_x_discrete(limits=axisModels) +
     scale_y_continuous(label=scales::comma) +
     #Andrey:  almost never use `scale_zzzz()` to zoom.  It essentially deletes variables from the dataset, which can affect loess. p<- p + scale_y_continuous( limits = c(80000, 110000))
-    coord_cartesian(ylim=c(0, longestBar* 1.05 * sign(longestBar))) + #Account for cases when AIC is negative
+    coord_cartesian(ylim=c(floor, ceiling)) + 
     guides(fill=guide_legend(title=NULL)) + 
     barTheme +
     labs(x=NULL, y="Misfit")
-g
-#   return( g )
-# }
+  return( g )
+}
 # BuildBar()
 # BuildBar(modelName="m5F")

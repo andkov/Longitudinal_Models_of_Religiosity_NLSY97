@@ -36,9 +36,10 @@ BuildMosaic <- function( modelName ) {
   gBar <- BuildBar(modelName=modelName)
   
   grid.newpage()    
+  #Defnie the relative proportions among the panels in the mosaic.
   layout <- grid.layout(nrow=3, ncol=2,
-                        widths=unit(c(1, 2),c("null", "null")),
-                        heights=unit(c(1, 1, 2), c("null", "null", "null"))
+                        widths=unit(c(.4, .6) ,c("null", "null")),
+                        heights=unit(c(.3, .2, .5), c("null", "null", "null"))
   )
   pushViewport(viewport(layout=layout))
   grid.raster(p, vp=viewport(layout.pos.row=1))
