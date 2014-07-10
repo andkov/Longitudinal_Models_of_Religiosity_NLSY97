@@ -60,6 +60,7 @@ names(lstModelOutcomes)
 
 ####################################### models with FIXED only #####--F
 ## @knitr m0F
+# dsWide <- lstModelOutcomes["m0F"][[1]]; modelName <- "m0F"
 BuildMosaic(modelName="m0F")
 
 ############################
