@@ -27,7 +27,7 @@ source("./Models/LCM/LCModels.R")
 
 ############################
 ## @knitr defineData
-numID<- 9022 # highest id value (max = 9022)
+numID<- 2000 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
@@ -70,7 +70,7 @@ length(unique(ds$timec))
 ###################
 
 
-modelName <- "m2R3"
+modelName <- "m6R3"
   # list of fixed models
 modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
                 "mFa", "mFb", "mFc", "mFd","mFe")
@@ -83,10 +83,11 @@ modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
 modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
 
 allModels<- modelNamesLabels
-modelList<- modelsR1
+modelList1<- c(modelsR1, modelsFE)
+modelList1<- c(modelsR2, modelsR3, modelsR4) 
 
 
-for(i in modelName){
+for(i in modelList){
   modelName<- i
   modelCall<- paste0("call_",modelName)
   f<- as.formula(modelCall)
@@ -109,7 +110,7 @@ mInfo<-summary(model)$AICtab
 mInfo["N"]<- model@devcomp$dims["N"] # number of datapoints, verify
 mInfo["p"]<- model@devcomp$dims["p"] # number of estimated parameters, verify
 mInfo["ids"]<- (summary(model))$ngrps # number of units on level-2, here: individuals
-mInfo<- c(mInfo, "modelName"=modelName)
+# mInfo<- c(mInfo, "modelName"=modelName)
 dsmInfo<-data.frame(mInfo)
 dsmInfo<- plyr::rename(dsmInfo,replace= c("mInfo"=modelName))
 dsmInfo$Coefficient <- rownames(dsmInfo)
@@ -156,12 +157,12 @@ dsFERE <- merge(x=dsFERE, y=dsRE, by="Coefficient", all=TRUE)
 dsFERE <- merge(x=dsFERE, y=dsRECov, by="Coefficient", all=TRUE)
 dsFERE <- merge(x=dsFERE, y=dsRECor, by="Coefficient", all=TRUE)
 dsFERE$sigma<- sigma # residual SD, must be squared to get sigma squared
-dsFERE$modelName<- modelName
+# dsFERE$modelName<- modelName
 testit::assert("The join shouldn't add new records.",  rowCountBeforeJoin==nrow(a))
 testit::assert("The join shouldn't add new records.",  nrow(dsFERE)==nrow(a))
 testit::assert("The join shouldn't add new records.",  nrow(dsFERE)==nrow(b))
 dsFERE$sigma<- sigma # residual SD, must be squared to get sigma squared
-dsFERE$modelName<-modelName
+# dsFERE$modelName<-modelName
 head(dsFERE)
 
 ## dsp ## - deconstructing predictions
@@ -287,7 +288,7 @@ ids<- length(unique(ds$id))
 df.resid<- N-p
 
 mInfo<- data.frame("AIC" = AIC, "BIC" = BIC, "logLik" = logLik, "deviance"=deviance,
-                   "df.resid"=df.resid, "N"=N, "p"=p, "ids"=ids, "modelName"=modelName)
+                   "df.resid"=df.resid, "N"=N, "p"=p, "ids"=ids)
 t<- t(mInfo)
 rownames(t)<-colnames(mInfo)
 dsmInfo<- data.frame(new=t)
@@ -322,7 +323,7 @@ dsFERE <- merge(x=dsFERE, y=dsRE, by="Coefficient", all=TRUE)
 dsFERE <- merge(x=dsFERE, y=dsRECov, by="Coefficient", all=TRUE)
 dsFERE <- merge(x=dsFERE, y=dsRECor, by="Coefficient", all=TRUE)
 dsFERE$sigma<- sigma # residual SD, must be squared to get sigma squared
-dsFERE$modelName<- modelName
+# dsFERE$modelName<- modelName
 testit::assert("The join shouldn't add new records.",  rowCountBeforeJoin==nrow(a))
 testit::assert("The join shouldn't add new records.",  nrow(dsFERE)==nrow(a))
 testit::assert("The join shouldn't add new records.",  nrow(dsFERE)==nrow(b))
