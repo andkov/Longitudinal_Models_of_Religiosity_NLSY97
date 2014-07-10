@@ -52,6 +52,7 @@ BuildMosaic <- function( modelName ) {
 #   #                            c("lines", "null", "null")))
 #   mosaic[1, 3] <- gTile
 #   mosaic[1, 4] <- gBar
+return(gTile)
 }
 
 ############################
@@ -63,7 +64,7 @@ BuildMosaic(modelName=modelName)
 ############################
 ## @knitr m6F
 modelName <- "m6F"
-dsWide <- lstModelOutcomes[modelName]
+BuildMosaic(modelName=modelName)
 
 ############################
 ## @knitr m7F

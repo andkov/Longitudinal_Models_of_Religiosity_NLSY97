@@ -40,7 +40,6 @@ BuildFERE <- function( modelName, dsWide ) {
   ds <- melt(dsWide, id.vars=("Coefficient"), value.name="value") 
   # head(ds, 10)
   
-  # head(ds,20)
   # roundingDigits<- 2
   # ds <- ds %>% mutate(label= as.character(round(value,roundingDigits))) #I don't think there's a need to use mutate here, but some people do.
   ds$label <- sprintf("% .2f", ds$value) #format(x=round(ds$value,roundingDigits), trim=FALSE)
@@ -48,13 +47,11 @@ BuildFERE <- function( modelName, dsWide ) {
   ds$borderCode <- factor(ifelse(!is.na(ds$value), borderCode, 99))
   ds$fillCode <- factor(ifelse(!is.na(ds$value), fillCode, 99))
   
-  lt<- length(target) # legnth of target
-  a<- rep(1, 8)
-  # b<- c(a, a*2, a*3, a*4, a*5, a*6, a*7, a*8)
-  b <- 
-  ds <- ds %>% mutate(row= rep(c(1:lt),lt), col=b)
-  # ds
-  
+  uniqueCoefficientCount <- 8
+  uniqueVariableCount <- length(unique(ds$variable))
+  ds$row <- rep(x=seq_len(uniqueCoefficientCount), times=uniqueVariableCount)
+  ds$col <- rep(x=seq_len(uniqueVariableCount), each=uniqueCoefficientCount)
+    
   # ggplot(ds, aes(x=col, xmin=col-.5, xmax=col+.5, y=-row, ymin=-row-.5, ymax=-row+.5, label=label)) +
   #   geom_rect(aes(color=borderCode, fill=fillCode)) +
   g <- ggplot(ds, aes(x=col,y=-row, label=label)) +
