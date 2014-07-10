@@ -1,11 +1,10 @@
 # rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. This is not called by knitr, because it's above the first chunk.
-
 require(ggplot2)
 require(dplyr)
 require(reshape2)
 
 BuildBar <- function( modelName = NA ) {
-  ###################
+  
   # Read in different REDS files and join them all together
   pathDataDirectory <- file.path("./Models/LCM/models/datasets")
   # filenamePattern <- ".+\\.rds" #All RDS files
@@ -23,19 +22,16 @@ BuildBar <- function( modelName = NA ) {
     rm(dsInfoSingle)
   }
   
-  modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F")
-  otherFE<- c("mFa", "mFb", "mFc", "mFd","mFe")
+  modelsFE <- c("m0F",  "m1F",  "m2F",  "m3F",  "m4F", "m5F", "m6F", "m7F")
+  otherFE <- c( "mFa",  "mFb",  "mFc",  "mFd",  "mFe")
   modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1")
-  otherR1<- c ("mR1a", "mR1b", "mR1c", "mR1d","mR1e")
+  otherR1 <- c ("mR1a", "mR1b", "mR1c", "mR1d", "mR1e")
   modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
+  modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")  
+  modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")  
+  modelList1 <- c(modelsFE, modelsR1, modelsR2, modelsR3, modelsR4, otherFE, otherR1)
   
-  modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
-  
-  modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
-  
-  modelList1<- c(modelsFE, modelsR1, modelsR2, modelsR3, modelsR4, otherFE, otherR1)
-  
-  modelList2<- c( "m0F", "m0R1", 
+  modelList2 <- c("m0F", "m0R1", 
                   "m1F", "m1R1", "m1R2",
                   "m2F", "m2R1", "m2R2", 
                   "m3F", "m3R1", "m3R2", "m3R3", "m3R4",
@@ -43,21 +39,18 @@ BuildBar <- function( modelName = NA ) {
                   "m5F", "m5R1", "m5R2", "m5R3", "m5R4",
                   "m6F", "m6R1", "m6R2", "m6R3", "m6R4",
                   "m7F", "m7R1", "m7R2", "m7R3", "m7R4",
-                  "mFa", "mR1a", "mFb", "mR1b","mFc", "mR1c","mFd", "mR1d", "mFe", "mR1e"    
+                  "mFa", "mR1a", "mFb",  "mR1b", "mFc", "mR1c","mFd", "mR1d", "mFe", "mR1e"    
                   )  
   
-  ### graph of comparative fit
-  dsWide<-dsInfo
-  
-  ds<- reshape2::melt(dsWide, id.vars=c('Coefficient'))
-  ds<-plyr::rename(ds, replace = c( variable = "model"))
+  dsWide <- dsInfo  
+  ds <- reshape2::melt(dsWide, id.vars=c('Coefficient'))
+  ds <- plyr::rename(ds, replace=c( variable = "model"))
 
   ds<- ds %>% 
     dplyr::filter(Coefficient %in% c( "BIC","AIC","deviance")) 
   
-  ds$Highlight <- (ds$model==modelName)
-  
-  ds$Coefficient<- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
+  ds$Highlight <- (ds$model==modelName)  
+  ds$Coefficient <- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
 
   # possible pallets
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5")
