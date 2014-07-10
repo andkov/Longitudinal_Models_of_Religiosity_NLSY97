@@ -50,83 +50,61 @@ options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the chunks
 ```
 
-```{r DeclareGlobals, echo=echoChunks, message=FALSE}
-aesDefs
+```{r LoadPackages, echo=echoChunks, message=F}
 ```
 
-```{r LoadPackages, echo=echoChunks, message=F}
+```{r LoadSources, echo=echoChunks, message=F}
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
 ```
 
 ```{r LoadData, echo=echoChunks, message=T}
 # select only respondence in the cross-sectional sample
-
 ```
 
 # Model specification
 ```{r modelSpecification}
 # general case goes here, along with sequence map
+```
 
+```{r assemble}
 ```
 
 # m5F 
 ```{r m5F}
-
 ```
 
 # m6F 
 ```{r m6F}
-
 ```
 
 # m7F 
 ```{r m7F}
-
 ```
-.
-.
-.
-# m5R1 
-```{r m5F}
+Add more here.
 
+# m5R1 
+```{r m5R1}
 ```
 
 # m6R1 
-```{r m6F}
-
+```{r m6R1}
 ```
 
 # m7R1 
-```{r m7F}
-
+```{r m7R1}
 ```
-.
-.
-.
+Add more here.
+
 # m5R2 
 ```{r m5R2}
-
 ```
 
 # m6R2 
 ```{r m6R2}
-
 ```
 
 # m7R2 
 ```{r m7R2}
-
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-

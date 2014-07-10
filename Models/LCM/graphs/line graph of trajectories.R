@@ -6,17 +6,17 @@ getModels<- c("m7R1")
 
 for(i in getModels){
   modelName<- i
-  pathdsmInfo <- file.path("./Models/LCM/models/datasets",paste0(i,"_mInfo.rds"))
-  pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
+  #   pathdsmInfo <- file.path("./Models/LCM/models/datasets",paste0(i,"_mInfo.rds"))
+  #   pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
   pathdsp  <- file.path("./Models/LCM/models/datasets",paste0(i,"_dsp.rds"))
-  mInfoTemp<- readRDS(pathdsmInfo)
-  FERETemp<- readRDS(pathdsFERE)
+  #   mInfoTemp<- readRDS(pathdsmInfo)
+  #   FERETemp<- readRDS(pathdsFERE)
   dspTemp<- readRDS(pathdsp)
   
-  assign(paste0(i,"_mInfo"),mInfoTemp)
-  assign(paste0(i,"_FERE"),FERETemp)
+  #   assign(paste0(i,"_mInfo"),mInfoTemp)
+  #   assign(paste0(i,"_FERE"),FERETemp)
   assign(paste0(i,"_dsp"),dspTemp)
-  rm(list = c("mInfoTemp", "FERETemp", "dspTemp"))
+  #   rm(list = c("mInfoTemp", "FERETemp", "dspTemp"))
 }
 
 
@@ -29,6 +29,7 @@ for(i in getModels){
 bgColour<-gray(.95)   # background color
 indLineSz<-.08        # individual line size
 indLineAl<-.06        # individual line alpha
+baseSize <- 20
 
 
 require(ggplot2)
