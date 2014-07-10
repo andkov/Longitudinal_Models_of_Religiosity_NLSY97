@@ -117,6 +117,7 @@ BuildMosaic(modelName="m7F")
 ########################################## models with 1 RANDOM #####--R1
 ## @knitr m0R1
 BuildMosaic(modelName="m0R1")
+# m0R1 <- readRDS("./Models/LCM/models/datasets/m0R1_dsp.rds")
 
 ## @knitr m1R1
 BuildMosaic(modelName="m1R1")
