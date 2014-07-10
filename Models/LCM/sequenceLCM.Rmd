@@ -1,5 +1,5 @@
 ---
-title: "Single model"
+title: "Model sequence report"
 output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
@@ -41,6 +41,7 @@ opts_chunk$set(
   fig.width = 16, 
 #   out.width = NULL,
   fig.path = 'sequence/',     
+  warning = FALSE,
   dev = "png"
   #, dpi = 300
 )
