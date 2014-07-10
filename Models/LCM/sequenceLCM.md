@@ -1,5 +1,5 @@
 ---
-title: "Single model"
+title: "Model sequence report"
 output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
@@ -48,85 +48,31 @@ mainfont: Calibri
 
 # m5F 
 
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
-![plot of chunk m5F](sequence/m5F.png) 
 
 # m6F 
-
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
 ![plot of chunk m6F](sequence/m6F.png) 
 
 # m7F 
-
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
 ![plot of chunk m7F](sequence/m7F.png) 
 
 ## Add more here.
 
 # m5R1 
-
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
 ![plot of chunk m5R1](sequence/m5R1.png) 
 
 # m6R1 
-
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
 ![plot of chunk m6R1](sequence/m6R1.png) 
 
 # m7R1 
-
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
 ![plot of chunk m7R1](sequence/m7R1.png) 
 
 ## Add more here.
 
 # m5R2 
-
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
 ![plot of chunk m5R2](sequence/m5R2.png) 
 
 # m6R2 
-
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
 ![plot of chunk m6R2](sequence/m6R2.png) 
 
 # m7R2 
-
-```
-Warning: Removed 104 rows containing missing values (geom_path).
-Warning: Removed 104 rows containing missing values (geom_path).
-```
-
 ![plot of chunk m7R2](sequence/m7R2.png) 
