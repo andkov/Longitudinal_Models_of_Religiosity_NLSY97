@@ -144,6 +144,8 @@ for( i in seq_along(retrievedFilenames) ) {
 }
 names(lst_ds) <- gsub(pattern="(.+)\\.rds", replacement="\\1", x=retrievedFilenames)
 
+saveRDS(lst_ds, file="./Models/LCM/models/datasets/ListOfModelOutcomes.rds", compress="xz")
+
 # lst_ds["m4R1_FERE"]
 # modelNames
 
