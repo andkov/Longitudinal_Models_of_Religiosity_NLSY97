@@ -4,8 +4,7 @@ require(ggplot2)
 require(dplyr)
 require(reshape2)
 
-BuildFERE <- function( modelName, dsWide ) {
-  
+BuildFERE <- function( modelName, dsWide ) {  
   emptyTheme <- ggplot2::theme_minimal() +
     theme(axis.text = element_blank()) +
     theme(axis.title = element_blank()) +
@@ -52,7 +51,8 @@ BuildFERE <- function( modelName, dsWide ) {
     scale_color_manual(values=paletteColor) +
     scale_fill_manual(values=paletteFill) +
     emptyTheme +
-    theme(legend.position="none")
+    theme(legend.position="none") +
+    labs(x=NULL, y=NULL)
   
   # ggsave(filename="./Models/LCM/graphs/equationTiles.png", plot=g)
   return( g )
