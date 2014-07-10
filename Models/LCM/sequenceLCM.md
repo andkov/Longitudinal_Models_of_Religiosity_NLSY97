@@ -47,7 +47,7 @@ mainfont: Calibri
 ```
 
 # m5F 
-
+![plot of chunk m5F](sequence/m5F.png) 
 
 # m6F 
 ![plot of chunk m6F](sequence/m6F.png) 

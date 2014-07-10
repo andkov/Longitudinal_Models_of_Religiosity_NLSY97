@@ -12,6 +12,7 @@ require(gridExtra)
 require(lme4)
 require(reshape2)
 require(testit)
+require(png)
 
 ############################
 ## @knitr LoadSources
@@ -22,6 +23,8 @@ source("./Models/LCM/graphs/line graph of trajectories.R") #Load the `BuildLine(
 ############################
 ## @knitr DeclareGlobals
 source("./Models/Descriptives/AesDefine.R")
+pathImage <- "./Models/LCM/graphs/sequenceMap/sequenceMap_wideModel.png"
+
 
 vpLayout <- function(rowIndex, columnIndex) { return( viewport(layout.pos.row=rowIndex, layout.pos.col=columnIndex) ) }
 
@@ -38,6 +41,7 @@ BuildMosaic <- function( modelName ) {
                         heights=unit(c(1, 1, 2), c("null", "null", "null"))
   )
   pushViewport(viewport(layout=layout))
+  grid.raster(p, vp=viewport(layout.pos.row=1))
   print(gTile, vp=viewport(layout.pos.row=2))
   print(gLine, vp=vpLayout(3, 1))
   print(gBar, vp=vpLayout(3, 2))
@@ -52,6 +56,7 @@ source("./Models/LCM/LCModels.R")
 lstModelOutcomes <- readRDS("./Models/LCM/models/datasets/ListOfModelOutcomes.rds")
 names(lstModelOutcomes)
 
+p <- png::readPNG(pathImage)
 ############################
 ## @knitr TweakData
 
