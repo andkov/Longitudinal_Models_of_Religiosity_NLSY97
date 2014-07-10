@@ -70,7 +70,7 @@ length(unique(ds$timec))
 # modelF<-model
 ###################
 
-modelName <- "m1F"
+# modelName <- "m1F"
   # list of fixed models
 modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
 # modelsFE <- c(  "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
@@ -85,6 +85,7 @@ allModels<- modelNamesLabels
 # modelList1<- c(modelsR1, modelsFE)
 # modelList1<- c(modelsR2, modelsR3, modelsR4) 
 # allModels <-  "m0F"
+# allModels <-  "m1F"
 
 for(i in allModels){
   modelName<- i
@@ -304,7 +305,8 @@ for(i in allModels){
     
 #     browser()
     
-    #Hack to add the `timec` row to an Anova table (intentionally) missing that variable
+    #TODO: finsh you rarchitect how files are created and retrieve, 
+    #  please don't keep using this hack that adds the `timec` row to an Anova table (intentionally) missing that variable
     missingTime <- !("timec" %in% a$Coefficient)
     if( missingTime ) {
       blankRowA <- a[1, ]
@@ -317,7 +319,9 @@ for(i in allModels){
       blankRowB[1, seq_len(ncol(b))] <- NA
       blankRowB[1, "Coefficient"] <- "timec"
       b <- plyr::rbind.fill(b, blankRowB)
+      b$timec <- c(NA, 1)
       rownames(b) <- b$Coefficient
+      b <- b[, c("(Intercept)", "timec", "Coefficient")]
     }
     
     rowCountBeforeJoin <- nrow(a)
