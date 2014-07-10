@@ -59,7 +59,8 @@ aesDefs
 
 ```{r LoadData, echo=echoChunks, message=T}
 # select only respondence in the cross-sectional sample
-
+dsL<-readRDS("./Data/Derived/dsL.rds")
+source("./Models/LCM/LCModels.R")
 ```
 
 ```{r MakeModel}

@@ -62,8 +62,8 @@ aesDefs
 
 ```{r LoadData, echo=echoChunks, message=T}
 # rm(list=ls(all=TRUE))  
-# dsL<-readRDS(file.path(getwd(),"Data/Derived/dsL.rds"))
-# source(file.path(getwd(),"Models/Descriptives/AesDefine.R"))
+dsL<-readRDS("./Data/Derived/dsL.rds")
+source("./Models/LCM/LCModels.R")
 ```
 
 Mapping church attendance in time   

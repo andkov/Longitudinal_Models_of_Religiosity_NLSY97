@@ -27,7 +27,7 @@ source("./Models/LCM/LCModels.R")
 
 ############################
 ## @knitr defineData
-numID<- 500 # highest id value (max = 9022)
+numID<- 9022 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
@@ -70,7 +70,7 @@ length(unique(ds$timec))
 ###################
 
 
-modelName <- "m6R3"
+modelName <- "m1F"
   # list of fixed models
 modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
                 "mFa", "mFb", "mFc", "mFd","mFe")

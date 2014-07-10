@@ -62,7 +62,8 @@ read_chunk("./Models/Descriptives/Descriptives.R") # the file to which knitr cal
 
 ```{r LoadData, echo=echoChunks, message=T}
 # select only respondence in the cross-sectional sample
-
+dsL<-readRDS("./Data/Derived/dsL.rds")
+source("./Models/LCM/LCModels.R")
 ```
 
 Labeling factors and exploring scales.   
@@ -178,7 +179,7 @@ ds<- dsL %>%
 print(ds)
 ```
 
-## Attendance  
+## Religiosity  
 
 NLSY97 asked to report church attendance (**attend**) for the past 12 months preceding the interview date. The response card offered a choice of 7 categories ordered by magnitude.  
 
@@ -200,6 +201,52 @@ p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
 p
 
 ```
+
+The records of church attendance begin in 2000, when the respondents were between 13 and 17 years of age. Although prior to 2000, there was another measure of religiosity, its small size and missingness issue prevented from using it as the second operationalization of the religiosity that would potentially extend the timeframe of the observed period to 15 years.
+
+```{r}
+ds<- dsL %.% dplyr::filter(year==2000)
+table(ds$attendF,ds$famrelF, useNA="always")
+```
+
+Attitudinal measures of religiosity also demonstrated a decrease in religiosity. In four rounds, 2002, 2005, 2008, and 2011 respondents were asked to evaluate with yes or no answers the following statements. The tables give counts for the cross-sample for better generalizability. Notice, that to ease working  with the negatively stated questions, the answers were recoded so that in all questions 1 represents higher religiosity and 0 indicates lower religiosity.
+
+### Values  
+I not need religion to have good values
+```{r}
+table(dsL$valuesF, dsL$year, useNA="always")
+table(dsL$valuesF, dsL$ageyear, useNA="always")
+```
+
+### To do  
+God has nothing to do what happens to me personally
+```{r}
+table(dsL$todoF, dsL$year, useNA="always")
+table(dsL$todoF, dsL$ageyear, useNA="always")
+```
+
+### Obeyed  
+I believe religious teachings are to be obeyed exactly as written in every situation 
+```{r}
+table(dsL$obeyedF, dsL$year, useNA="always")
+table(dsL$obeyedF, dsL$ageyear, useNA="always")
+```
+
+### Decisions
+I ask God to help me make decisions
+```{r}
+table(dsL$decisionsF, dsL$year, useNA="always")
+table(dsL$decisionsF, dsL$ageyear, useNA="always")
+```
+
+### Pray
+I pray more than once a day
+```{r}
+table(dsL$prayF, dsL$year, useNA="always")
+table(dsL$prayF, dsL$ageyear, useNA="always")
+```
+
+
 
 
 
