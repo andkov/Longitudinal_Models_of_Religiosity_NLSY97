@@ -49,8 +49,10 @@ b<- c(a, a*2, a*3, a*4, a*5, a*6, a*7, a*8)
 ds <- ds %>% mutate(row= rep(c(1:lt),lt), col=b)
 ds
 
-ggplot(ds, aes(x=col, xmin=col-.5, xmax=col+.5, y=-row, ymin=-row-.5, ymax=-row+.5, label=label)) +
-  geom_rect(aes(color=borderCode, fill=fillCode)) +
+# ggplot(ds, aes(x=col, xmin=col-.5, xmax=col+.5, y=-row, ymin=-row-.5, ymax=-row+.5, label=label)) +
+#   geom_rect(aes(color=borderCode, fill=fillCode)) +
+ggplot(ds, aes(x=col,y=-row, label=label)) +
+  geom_tile(aes(color=borderCode, fill=fillCode)) +
   geom_text(na.rm=T, color="black", hjust=.5, vjust=.5, size=5, family="mono") +
   scale_color_manual(values=paletteColor) +
   scale_fill_manual(values=paletteFill) +
