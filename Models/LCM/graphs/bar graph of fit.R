@@ -4,7 +4,7 @@ require(ggplot2)
 require(dplyr)
 require(reshape2)
 
-BuildBar <- function() {
+BuildBar <- function( modelName = NA ) {
   ###################
   # Read in different REDS files and join them all together
   pathDataDirectory <- file.path("./Models/LCM/models/datasets")
@@ -55,6 +55,8 @@ BuildBar <- function() {
   ds<- ds %>% 
     dplyr::filter(Coefficient %in% c( "BIC","AIC","deviance")) 
   
+  ds$Highlight <- (ds$model==modelName)
+  
   ds$Coefficient<- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
 
   # possible pallets
@@ -69,6 +71,7 @@ BuildBar <- function() {
     theme(axis.text.x = element_text(angle=90, hjust = 1)) +
     theme(axis.title = element_text(colour="gray40")) +
     theme(panel.border = element_rect(colour="gray80")) +
+    theme(panel.grid.major.x = element_blank()) +
     # theme(axis.ticks = element_line(colour="gray80")) +
     theme(axis.ticks.length = grid::unit(0, "cm")) +
     theme(legend.position=c(0,0), legend.justification=c(0,0)) +
@@ -77,7 +80,8 @@ BuildBar <- function() {
     theme(legend.text = element_text(colour = 'gray40'))
   
   g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model)) +
-    geom_bar( stat="identity", position="dodge", alpha=.2) +
+    geom_bar(stat="identity", position="identity", alpha=.1) + #This line draw the distant skyscrapers
+    geom_bar(data=ds[ds$Highlight, ], stat="identity", position="identity", alpha=.2) + #This line draw the skyskraper that pops out.
     scale_fill_manual(values=colorFit) +
     scale_x_discrete(limits=modelList2) +
     scale_y_continuous(label=scales::comma) +
@@ -88,4 +92,5 @@ BuildBar <- function() {
     labs(x=NULL, y="Misfit")
   return( g )
 }
-BuildBar()
+# BuildBar()
+# BuildBar(modelName="m5F")

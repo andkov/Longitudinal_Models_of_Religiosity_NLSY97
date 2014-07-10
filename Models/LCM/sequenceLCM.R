@@ -29,7 +29,8 @@ BuildMosaic <- function( modelName ) {
   testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
   dsFERE <- lstModelOutcomes[modelName][[1]]
   gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
-  gLine <- BuildLine(modelName)
+  gLine <- BuildLine(modelName=modelName)
+  gBar <- BuildBar(modelName=modelName)
   
   grid.newpage()    
   layout <- grid.layout(nrow=3, ncol=2,
@@ -50,7 +51,7 @@ source("./Models/LCM/LCModels.R")
 
 lstModelOutcomes <- readRDS("./Models/LCM/models/datasets/ListOfModelOutcomes.rds")
 names(lstModelOutcomes)
-gBar <- BuildBar()
+
 ############################
 ## @knitr TweakData
 
