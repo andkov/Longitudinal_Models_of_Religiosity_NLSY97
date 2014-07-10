@@ -135,14 +135,32 @@ retrievedFilenames <- list.files(path=pathDataDirectory, pattern=filenamePattern
 
 # dsFERE <- readRDS(filePaths[1])
 
+requireFieldsEvenIfNA <- c("sdRE", "intVarRE", "timecVarRE", "timec2VarRE", "timec3VarRE")
+
 lst_ds <- NULL
 for( i in seq_along(retrievedFilenames) ) {
   filePath <- filePaths <- file.path(pathDataDirectory, retrievedFilenames[i])
-  lst_ds[[i]] <- readRDS(filePath)
+  dsFERESingle <- readRDS(filePath)
+  
+  dsFERESingle <- plyr::rename(dsFERESingle, replace=c("Value"="Estimate"), warn_missing=FALSE)
+  
+  #TODO: convert this into a loop
+  if( !("sdRE" %in% colnames(dsFERESingle)) ) dsFERESingle$sdRE <- NA
+  if( !("intVarRE" %in% colnames(dsFERESingle)) ) dsFERESingle$intVarRE <- NA
+  if( !("timecVarRE" %in% colnames(dsFERESingle)) ) dsFERESingle$timecVarRE <- NA
+  if( !("timec2VarRE" %in% colnames(dsFERESingle)) ) dsFERESingle$timec2VarRE <- NA
+  if( !("timec3VarRE" %in% colnames(dsFERESingle)) ) dsFERESingle$timec3VarRE <- NA
+  #   for( requiredField in requireFieldsEvenIfNA ) {
+  #     if( !(requireField %in% colnames(dsFERESingle)) )
+  #       dsFERESingle[[requireField]] <- NA
+  #   }
+  
+  lst_ds[[i]] <- dsFERESingle
   
   rm(dsFERESingle)
 }
-names(lst_ds) <- gsub(pattern="(.+)\\.rds", replacement="\\1", x=retrievedFilenames)
+#names(lst_ds) <- gsub(pattern="(.+)\\.rds", replacement="\\1", x=retrievedFilenames)
+names(lst_ds) <- gsub(pattern="(.+)\\_FERE.rds", replacement="\\1", x=retrievedFilenames)
 
 saveRDS(lst_ds, file="./Models/LCM/models/datasets/ListOfModelOutcomes.rds", compress="xz")
 
