@@ -52,7 +52,7 @@ BuildMosaic <- function( modelName ) {
   testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
   dsFERE <- lstModelOutcomes[modelName][[1]]
   gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
-#   gLine <- Line(modelName)
+  gLine <- BuildLine(modelName)
   
   grid.newpage()
     
@@ -61,8 +61,9 @@ BuildMosaic <- function( modelName ) {
                         heights=unit(c(3, 1, 1), c("lines", "null", "null"))
   )
   pushViewport(viewport(layout=layout))
-  print(gTile, vp=vpLayout(2, 3)) #Y ~ X1 
-  print(gBar, vp=vpLayout(3, 2)) #Y ~ x2
+  print(gLine, vp=vpLayout(2, 2))
+  print(gTile, vp=vpLayout(2, 3))
+  print(gBar, vp=vpLayout(3, 2))
   
 
 popViewport(0)
@@ -72,32 +73,86 @@ popViewport(0)
 ```
 
 # m5F 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m5F](sequence/m5F.png) 
 
 # m6F 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m6F](sequence/m6F.png) 
 
 # m7F 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m7F](sequence/m7F.png) 
 
 ## Add more here.
 
 # m5R1 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m5R1](sequence/m5R1.png) 
 
 # m6R1 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m6R1](sequence/m6R1.png) 
 
 # m7R1 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m7R1](sequence/m7R1.png) 
 
 ## Add more here.
 
 # m5R2 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m5R2](sequence/m5R2.png) 
 
 # m6R2 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m6R2](sequence/m6R2.png) 
 
 # m7R2 
+
+```
+Warning: Removed 104 rows containing missing values (geom_path).
+Warning: Removed 104 rows containing missing values (geom_path).
+```
+
 ![plot of chunk m7R2](sequence/m7R2.png) 

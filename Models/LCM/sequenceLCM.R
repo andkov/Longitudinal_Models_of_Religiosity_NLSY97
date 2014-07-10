@@ -17,6 +17,7 @@ require(testit)
 ## @knitr LoadSources
 source("./Models/LCM/graphs/FERE graph.R") #Load the `BuildFERE()` function
 source("./Models/LCM/graphs/bar graph of fit.R") #Load the `BuildBar()` function
+source("./Models/LCM/graphs/line graph of trajectories.R") #Load the `BuildLine()` function
 
 ############################
 ## @knitr DeclareGlobals
@@ -46,7 +47,7 @@ BuildMosaic <- function( modelName ) {
   testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
   dsFERE <- lstModelOutcomes[modelName][[1]]
   gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
-#   gLine <- Line(modelName)
+  gLine <- BuildLine(modelName)
   
   grid.newpage()
     
@@ -55,8 +56,9 @@ BuildMosaic <- function( modelName ) {
                         heights=unit(c(3, 1, 1), c("lines", "null", "null"))
   )
   pushViewport(viewport(layout=layout))
-  print(gTile, vp=vpLayout(2, 3)) #Y ~ X1 
-  print(gBar, vp=vpLayout(3, 2)) #Y ~ x2
+  print(gLine, vp=vpLayout(2, 2))
+  print(gTile, vp=vpLayout(2, 3))
+  print(gBar, vp=vpLayout(3, 2))
   
 
 popViewport(0)
