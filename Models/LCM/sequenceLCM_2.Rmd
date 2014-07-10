@@ -70,7 +70,7 @@ read_chunk("./Models/LCM/sequenceLCM_2.R") # the file to which knitr calls for t
 ```
 
 # m0F 
-```{r m0F, echo=echoChunks}
+```{r m1F, echo=echoChunks}
 ```
 
 
