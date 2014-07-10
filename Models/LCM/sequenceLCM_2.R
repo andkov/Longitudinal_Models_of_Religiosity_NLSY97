@@ -65,7 +65,8 @@ BuildMosaic(modelName="m0F")
 
 ############################
 ## @knitr m1F
-BuildMosaic(modelName="m1F")#             m1F
+# dsWide <- lstModelOutcomes["m1F"][[1]]; modelName <- "m1F"
+BuildMosaic(modelName="m1F")#             
 
 ############################
 ## @knitr m2F

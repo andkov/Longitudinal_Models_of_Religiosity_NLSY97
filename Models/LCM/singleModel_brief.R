@@ -73,6 +73,7 @@ length(unique(ds$timec))
 modelName <- "m1F"
   # list of fixed models
 modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
+# modelsFE <- c(  "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
                 "mFa", "mFb", "mFc", "mFd","mFe")
 modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1",
               "mR1a", "mR1b", "mR1c", "mR1d","mR1e")
@@ -81,8 +82,9 @@ modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
 modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
 
 allModels<- modelNamesLabels
-modelList1<- c(modelsR1, modelsFE)
-modelList1<- c(modelsR2, modelsR3, modelsR4) 
+# modelList1<- c(modelsR1, modelsFE)
+# modelList1<- c(modelsR2, modelsR3, modelsR4) 
+# allModels <-  "m0F"
 
 for(i in allModels){
   modelName<- i
@@ -293,13 +295,32 @@ for(i in allModels){
     FEt<- summary(model)$tTable
     mFE<- (summary(model)$corBeta)
     sigma<-model$sigma # std.error of scaled residuals 
-    
+        
     a<- data.frame(FEt)
     a$Coefficient <- rownames(a)
-    rowCountBeforeJoin <- nrow(a)
     
     b<- as.data.frame(mFE)
     b$Coefficient <- rownames(b)
+    
+#     browser()
+    
+    #Hack to add the `timec` row to an Anova table (intentionally) missing that variable
+    missingTime <- !("timec" %in% a$Coefficient)
+    if( missingTime ) {
+      blankRowA <- a[1, ]
+      blankRowA[1, seq_len(ncol(a))] <- NA
+      blankRowA[1, "Coefficient"] <- "timec"
+      a <- plyr::rbind.fill(a, blankRowA)
+      rownames(a) <- a$Coefficient
+      
+      blankRowB <- b[1, ]
+      blankRowB[1, seq_len(ncol(b))] <- NA
+      blankRowB[1, "Coefficient"] <- "timec"
+      b <- plyr::rbind.fill(b, blankRowB)
+      rownames(b) <- b$Coefficient
+    }
+    
+    rowCountBeforeJoin <- nrow(a)
     
     dsRE <- data.frame( row.names=rownames(b),VarRE=rep(0,nrow(b)))
     dsRE$Coefficient <- rownames(dsRE)
