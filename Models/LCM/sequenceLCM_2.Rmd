@@ -66,45 +66,51 @@ read_chunk("./Models/LCM/sequenceLCM_2.R") # the file to which knitr calls for t
 
 # Model specification
 ```{r modelSpecification}
-# general case goes here, along with sequence map
+
+
 ```
 
-# m5F 
-```{r m5F, echo=echoChunks}
+# m0F 
+```{r m0F, echo=echoChunks}
 ```
 
-# m6F 
-```{r m6F, echo=echoChunks}
+
+# m1F 
+```{r m1F, echo=echoChunks}
 ```
 
-# m7F 
-```{r m7F, echo=echoChunks}
+
+# m2F 
+```{r m2F, echo=echoChunks}
+
 ```
 
-## Add more here.
 
-# m5R1 
-```{r m5R1, echo=echoChunks}
-```
 
-# m6R1 
-```{r m6R1, echo=echoChunks}
-```
 
-# m7R1 
-```{r m7R1, echo=echoChunks}
-```
 
-## Add more here.
 
-# m5R2 
-```{r m5R2, echo=echoChunks}
-```
 
-# m6R2 
-```{r m6R2, echo=echoChunks}
-```
 
-# m7R2 
-```{r m7R2, echo=echoChunks}
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
