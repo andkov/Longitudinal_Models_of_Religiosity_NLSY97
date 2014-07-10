@@ -1,10 +1,10 @@
 
 # Traditional reading in the files
-getModels<- c("m7R3")
-getAll<- modelList
+getModels<- c("m7R1")
 
 
-for(i in allModels){
+
+for(i in getModels){
   modelName<- i
   pathdsmInfo <- file.path("./Models/LCM/models/datasets",paste0(i,"_mInfo.rds"))
   pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))

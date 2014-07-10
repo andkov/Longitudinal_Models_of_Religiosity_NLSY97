@@ -132,16 +132,18 @@ pathDataDirectory <- file.path("./Models/LCM/models/datasets")
 # filenamePattern <- ".+\\.rds" #All RDS files
 filenamePattern <- "m.{1,}FERE\\.rds" #All RDS files
 retrievedFilenames <- list.files(path=pathDataDirectory, pattern=filenamePattern)
-filePaths <- file.path(pathDataDirectory, retrievedFilenames)
-dsFERE <- readRDS(filePaths[1])
-for( i in seq_along(filePaths)) {
-  dsFERESingle <-  readRDS(...)
-  lst_ds[[i]] <- dsFERESingle
+
+# dsFERE <- readRDS(filePaths[1])
+
+lst_ds <- NULL
+for( i in seq_along(retrievedFilenames) ) {
+  filePath <- filePaths <- file.path(pathDataDirectory, retrievedFilenames[i])
+  lst_ds[[i]] <- readRDS(filePath)
+  
+  rm(dsFERESingle)
 }
+names(lst_ds) <- gsub(pattern="(.+)\\.rds", replacement="\\1", x=retrievedFilenames)
 
-
-
-
-
-
+# lst_ds["m4R1_FERE"]
+# modelNames
 
