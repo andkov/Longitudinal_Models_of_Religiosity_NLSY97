@@ -18,15 +18,16 @@ BuildFERE <- function( modelName, dsWide ) {
   
   borderCode <- c(0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,3,99,99,99,99,99,99,99)
   fillCode <- c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,99,99,99,99,99,99,99)
-
-  columnNamesWide <- c("Coefficient", "Estimate", "Std.Error", "t.value", "sdRE", "intVarRE", "timecVarRE", "timec2VarRE", "timec3VarRE", "sigma")
-  dsWide <- dsWide[, columnNamesWide]
+  
+  columnNamesWide <- c("Estimate", "Std.Error", "t.value", "sdRE", "intVarRE", "timecVarRE", "timec2VarRE", "timec3VarRE", "sigma")
+  columnNamesWideWithCoefficient <- c("Coefficient", columnNamesWide)
+  dsWide2 <- dsWide[, columnNamesWideWithCoefficient]
 
   # I will enforce this order, it's important
   target <- c("(Intercept)", "timec", "timec2", "timec3", "cohort", "timec:cohort", "timec2:cohort", "timec3:cohort")
-  dsWide<-dsWide[match(target, dsWide$Coefficient), ]
+  dsWide2<-dsWide2[match(target, dsWide2$Coefficient), ]
 
-  ds <- melt(dsWide, id.vars=("Coefficient"), value.name="value") 
+  ds <- melt(dsWide2, id.vars=("Coefficient"), value.name="value") 
 
   ds$label <- sprintf("% .2f", ds$value) #format(x=round(ds$value,2), trim=FALSE)
   ds$label[is.na(ds$value)] <- ""
@@ -35,6 +36,12 @@ BuildFERE <- function( modelName, dsWide ) {
   uniqueVariableCount <- length(unique(ds$variable))
   ds$row <- rep(x=seq_len(uniqueCoefficientCount), times=uniqueVariableCount)
   ds$col <- rep(x=seq_len(uniqueVariableCount), each=uniqueCoefficientCount)
+  
+  dsHeaderColumn <- data.frame(label=columnNamesWide, row=0, col=seq_len(uniqueVariableCount))
+  dsHeaderRow <- data.frame(label=target, row=seq_along(target), col=0)
+  
+  ds <- plyr::rbind.fill(ds, dsHeaderColumn)
+  ds <- plyr::rbind.fill(ds, dsHeaderRow)
   
   ds$borderCode <- factor(ifelse(!is.na(ds$value), borderCode, 99))
   ds$fillCode <- factor(ifelse(!is.na(ds$value), fillCode, 99))
