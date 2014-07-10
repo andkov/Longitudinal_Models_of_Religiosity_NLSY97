@@ -1,3 +1,9 @@
+rm(list=ls(all=TRUE)) #Clear the memory of variables from previous run. This is not called by knitr, because it's above the first chunk.
+
+require(ggplot2)
+require(dplyr)
+require(reshape2)
+
 ###################
 # Read in different REDS files and join them all together
 pathDataDirectory <- file.path("./Models/LCM/models/datasets")
@@ -42,22 +48,22 @@ modelList2<- c( "m0F", "m0R1",
 
 
 ### graph of comparative fit
-ds<-dsInfo
-head(ds)
+dsWide<-dsInfo
+head(dsWide)
 
 
-ds<- reshape2::melt(ds,id.vars=c('Coefficient'))
+ds<- reshape2::melt(dsWide, id.vars=c('Coefficient'))
 ds<-plyr::rename(ds, replace = c( variable = "model"))
 head(ds,10)
 ds<- ds %>% 
   dplyr::filter(Coefficient %in% c( "BIC","AIC","deviance")) 
 head(ds,160)
-ds$Coefficient<- factor(c("BIC","AIC","deviance"))
-# ds$Coefficient<- factor(c("deviance","BIC","AIC"))
-# ds$Coefficient<- factor(c("BIC","deviance","AIC"))
-# ds$Coefficient<- factor(c("deviance","AIC","BIC"))
-# ds$Coefficient<- factor(c("AIC","deviance","BIC"))
-# ds$Coefficient<- factor(c("AIC","BIC","deviance"))
+ds$Coefficient<- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
+ds$Coefficient<- factor(x=ds$Coefficient, levels=c("deviance","BIC","AIC"))
+ds$Coefficient<- factor(x=ds$Coefficient, levels=c("BIC","deviance","AIC"))
+ds$Coefficient<- factor(x=ds$Coefficient, levels=c("deviance","AIC","BIC"))
+ds$Coefficient<- factor(x=ds$Coefficient, levels=c("AIC","deviance","BIC"))
+# ds$Coefficient<- factor(x=ds$Coefficient, levels=c("AIC","BIC","deviance"))
 
 head(ds,9)
 # possible pallets
@@ -75,3 +81,4 @@ p<- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
 p<- p + scale_x_discrete(limits=modelList2)
 # p<- p + scale_y_continuous( limits = c(80000, 110000))
 p
+
