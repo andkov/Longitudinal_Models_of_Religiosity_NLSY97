@@ -9,7 +9,7 @@ base::rm(list=base::ls(all=TRUE))
 
 #####################################
 ## @knitr DeclareGlobals
-pathCsv <- './UtilityScripts/PackageDependencyList.csv'
+pathCsv <- './Scripts/Utility/PackageDependencyList.csv'
 
 if( !file.exists(pathCsv)) 
   base::stop("The path `", pathCsv, "` was not found.  Make sure the working directory is set to the root of the repository.")
@@ -37,7 +37,7 @@ for( packageName in dsInstallFromCran$PackageName ) {
 rm(dsInstallFromCran, packageName)
 #####################################
 ## @knitr UpdateCranPackages
-utils::update.packages(ask="graphics", checkBuilt=TRUE)
+utils::update.packages(ask=FALSE, checkBuilt=TRUE)
 
 #####################################
 ## @knitr InstallDevtools
