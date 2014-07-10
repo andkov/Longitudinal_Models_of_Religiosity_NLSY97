@@ -61,7 +61,8 @@ BuildBar <- function( modelName = NA ) {
   # floor <- 1000 #Watchout when AIC is negative
   floor <- min(ds$value, na.rm=T)  
   longestBar <- max(ds$value, na.rm=T)  
-  ceiling <- longestBar* 1.05 * sign(longestBar) #Account for cases when AIC is negative
+  barHeight <- abs(longestBar - floor)
+  ceiling <- longestBar + barHeight * .05 * sign(longestBar) #Account for cases when AIC is negative
   
   barTheme <- theme_bw() +
     theme(axis.text = element_text(colour="gray40")) +
