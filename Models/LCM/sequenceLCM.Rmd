@@ -37,7 +37,7 @@ opts_chunk$set(
   message = TRUE,
   comment = NA, 
   tidy = FALSE,
-  fig.height = 9, 
+  fig.height = 12, 
   fig.width = 16, 
 #   out.width = NULL,
   fig.path = 'sequence/',     

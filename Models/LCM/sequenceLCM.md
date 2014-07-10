@@ -56,13 +56,13 @@ BuildMosaic <- function( modelName ) {
   
   grid.newpage()
     
-  layout <- grid.layout(nrow=3, ncol=3,
-                        widths=unit(c(1, 1, 2),c("inches", "null", "null")),
-                        heights=unit(c(3, 1, 1), c("lines", "null", "null"))
+  layout <- grid.layout(nrow=3, ncol=2,
+                        widths=unit(c(1, 2),c("null", "null")),
+                        heights=unit(c(1, 1, 2), c("null", "null", "null"))
   )
   pushViewport(viewport(layout=layout))
-  print(gLine, vp=vpLayout(2, 2))
-  print(gTile, vp=vpLayout(2, 3))
+  print(gTile, vp=viewport(layout.pos.row=2))
+  print(gLine, vp=vpLayout(3, 1))
   print(gBar, vp=vpLayout(3, 2))
   
 

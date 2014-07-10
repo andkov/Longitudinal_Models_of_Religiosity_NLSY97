@@ -28,15 +28,17 @@ BuildFERE <- function( modelName, dsWide ) {
   # dsWide<- m6R3_FERE
 
   #dsWide <- dsWide %>% dplyr::select( Coefficient, Estimate, Std.Error, t.value, sdRE,intVarRE, timecVarRE, timec2VarRE, sigma )
-  dsWide <- dsWide[, c("Coefficient", "Estimate", "Std.Error", "t.value", "sdRE", "intVarRE", "timecVarRE", "timec2VarRE", "timec3VarRE", "sigma")]
+  columnNamesWide <- c("Coefficient", "Estimate", "Std.Error", "t.value", "sdRE", "intVarRE", "timecVarRE", "timec2VarRE", "timec3VarRE", "sigma")
+  dsWide <- dsWide[, columnNamesWide]
 
   # head(dsWide,10)
   # I will enforce this order, it's important
   target <- c("(Intercept)", "timec", "timec2", "timec3", "cohort", "timec:cohort", "timec2:cohort", "timec3:cohort")
   dsWide<-dsWide[match(target, dsWide$Coefficient), ]
   # dsWide
-  
-  
+#   dsHeader <- dsWide
+#   dsWide2 <- 
+#   
   ds <- melt(dsWide, id.vars=("Coefficient"), value.name="value") 
   # head(ds, 10)
   
