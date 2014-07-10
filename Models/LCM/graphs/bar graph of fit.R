@@ -62,12 +62,30 @@ BuildBar <- function() {
   colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
   # colorFit <- c("BIC"="#bebada", "AIC"="#8dd3c7", "deviance"="#ffffb3") 
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#d95f02", "deviance"="#b2df8a")
-    
-  p <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model))
-  p <- p + geom_bar( stat="identity", position="dodge", alpha=.5)                    
-  p<- p + scale_fill_manual(values=colorFit)
-  p<- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  p<- p + scale_x_discrete(limits=modelList2)
-  # p<- p + scale_y_continuous( limits = c(80000, 110000))
-  return( p )
+  longestBar <- max(ds$value, na.rm=T)  
+  
+  barTheme <- theme_bw() +
+    theme(axis.text = element_text(colour="gray40")) +
+    theme(axis.text.x = element_text(angle=90, hjust = 1)) +
+    theme(axis.title = element_text(colour="gray40")) +
+    theme(panel.border = element_rect(colour="gray80")) +
+    # theme(axis.ticks = element_line(colour="gray80")) +
+    theme(axis.ticks.length = grid::unit(0, "cm")) +
+    theme(legend.position=c(0,0), legend.justification=c(0,0)) +
+    # theme(legend.background = element_rect(fill = '#99999933')) +
+    theme(legend.background = element_rect(fill = NA)) +
+    theme(legend.text = element_text(colour = 'gray40'))
+  
+  g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model)) +
+    geom_bar( stat="identity", position="dodge", alpha=.2) +
+    scale_fill_manual(values=colorFit) +
+    scale_x_discrete(limits=modelList2) +
+    scale_y_continuous(label=scales::comma) +
+    #Andrey:  almost never use `scale_zzzz()` to zoom.  It essentially deletes variables from the dataset, which can affect loess. p<- p + scale_y_continuous( limits = c(80000, 110000))
+    coord_cartesian(ylim=c(0, longestBar* 1.05 * sign(longestBar))) + #Account for cases when AIC is negative
+    guides(fill=guide_legend(title=NULL)) + 
+    barTheme +
+    labs(x=NULL, y="Misfit")
+  return( g )
 }
+BuildBar()
