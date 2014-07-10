@@ -27,7 +27,8 @@ source("./Models/LCM/LCModels.R")
 
 ############################
 ## @knitr defineData
-numID<- 9022 # highest id value (max = 9022)
+numID<- 200 # highest id value (max = 9022)
+# numID<- 9022 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
@@ -69,7 +70,6 @@ length(unique(ds$timec))
 # modelF<-model
 ###################
 
-
 modelName <- "m1F"
   # list of fixed models
 modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
@@ -77,29 +77,23 @@ modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
 modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1",
               "mR1a", "mR1b", "mR1c", "mR1d","mR1e")
 modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
-
 modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
-
 modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
 
 allModels<- modelNamesLabels
 modelList1<- c(modelsR1, modelsFE)
 modelList1<- c(modelsR2, modelsR3, modelsR4) 
 
-
 for(i in allModels){
-    modelName<- i
-    modelCall<- paste0("call_",modelName)
-    f<- as.formula(modelCall)
-    fixedModels<- !(modelName %in% modelsFE)
-  if(fixedModels){
+  modelName<- i
+  message("Running model ", modelName, " in singleModel_brief.R")
+  modelCall<- paste0("call_",modelName)
+  f<- as.formula(modelCall)
+  isRandomModel <- !(modelName %in% modelsFE)
+  if( isRandomModel ){
     ########################################################################################
     # if model is estimated by lmer() - with random effects
-    
-    # Estimate the model
-    
-    model <-lmer (f, data = ds, REML=FALSE,
-                  control=lmerControl(optCtrl=list(maxfun=20000)))
+    model <-lmer (f, data = ds, REML=FALSE, control=lmerControl(optCtrl=list(maxfun=20000)))
     
     ###########################
     # @knitr solveModel_lmer
@@ -132,7 +126,6 @@ for(i in allModels){
     a$Coefficient <- rownames(a)
     a<- plyr::rename(a,replace= c("Std..Error"="Std.Error"))
     rowCountBeforeJoin <- nrow(a)
-    
     
     mFE<- (summary(model)$vcov@factors$correlation)
     b<- as.data.frame(matrix(mFE@x, ncol=length(mFE@Dimnames[[1]]), byrow=TRUE, dimnames=mFE@Dimnames))
@@ -265,13 +258,12 @@ for(i in allModels){
     all.equal(dsp$yHat1, dsp$yFERE)
     dsp$modelName<-modelName
     
-    dsp<- data.frame(dsp)
-    
-    }
-    else{
+    dsp<- data.frame(dsp)    
+  }
+  else{
     ###########################################################################################
     ############################
-    ## @knitr solveModel_lmer
+    ## @knitr solveModel_gls
     # if model is estimaged with nlme::gls - fixed effects, but with correlated residuals/uniqual variances
     model<- nlme::gls(f, data=ds,method = "ML")
     
