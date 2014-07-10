@@ -61,7 +61,7 @@ BuildBar <- function( modelName = NA ) {
   
   barTheme <- theme_bw() +
     theme(axis.text = element_text(colour="gray40")) +
-    theme(axis.text.x = element_text(angle=90, hjust = 1)) +
+    theme(axis.text.x = element_text(angle=90, vjust = .5)) +
     theme(axis.title = element_text(colour="gray40")) +
     theme(panel.border = element_rect(colour="gray80")) +
     theme(panel.grid.major.x = element_blank()) +
