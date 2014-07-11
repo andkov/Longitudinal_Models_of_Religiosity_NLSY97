@@ -70,7 +70,7 @@ length(unique(ds$timec))
 # modelF<-model
 ###################
 
-customM <- "mFa"
+
   # list of fixed models
 modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
 # modelsFE <- c(  "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
@@ -87,8 +87,9 @@ allModels<- modelNamesLabels
 # allModels <-  "m0F"
 # allModels <-  "m1F"
 # allModels <-  "m0R1"
+allModels <-  "mFa"
 
-for(i in customM){
+for(i in allModels){
   modelName<- i
   message("Running model ", modelName, " in singleModel_brief.R at ", Sys.time())
   modelCall<- paste0("call_",modelName)
