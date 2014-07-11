@@ -1,5 +1,6 @@
 PackageName,OnCran,Install,GitHubUsername,Description
 colorspace,TRUE,TRUE,,"Explicit control over the HCL color scheme."
+dplyr,FALSE,TRUE,hadley,"Used in the C1 survival for sourcing gists."
 devtools,TRUE,TRUE,,"Used in the C1 survival for sourcing gists."
 digest,TRUE,TRUE,,"Creates SHA hashes for the recruiting database."
 evaluate,TRUE,TRUE,,"A package that Hadley et al use a lot in their packages.  It helps when things are passed by reference."
