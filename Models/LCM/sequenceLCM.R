@@ -30,6 +30,7 @@ vpLayout <- function(rowIndex, columnIndex) { return( viewport(layout.pos.row=ro
 
 PullAppropriatePng <- function( modelName ) {
   pathImage <- file.path(pathImageDirectory, paste0(modelName, ".png"))
+  testit::assert("The model's equation png was not found.", file.exists(pathImage))
   p <- png::readPNG(pathImage)
   return( p )
 }
@@ -65,7 +66,7 @@ dsL<-readRDS("./Data/Derived/dsL.rds")
 source("./Models/LCM/LCModels.R")
 
 lstModelOutcomes <- readRDS("./Models/LCM/models/datasets/ListOfModelOutcomes.rds")
-names(lstModelOutcomes)
+# names(lstModelOutcomes)
 
 # pEquations <- png::readPNG(pathImage)
 ############################
@@ -76,9 +77,6 @@ names(lstModelOutcomes)
 
 ############################
 ## @knitr TweakData
-
-############################
-## @knitr modelSpecification
 
 ####################################### models with FIXED only #####--F
 ## @knitr m0F
@@ -219,23 +217,23 @@ BuildMosaic(modelName="m6R4")
 BuildMosaic(modelName="m7R4")
 
 ######################################### other RANDOM  models #####--Ro
-## @knitr mRa
+## @knitr mR1a
 BuildMosaic(modelName="mR1a")
 
 ############################
-## @knitr mRb
+## @knitr mR1b
 BuildMosaic(modelName="mR1b")
 
 ############################
-## @knitr mRc
+## @knitr mR1c
 BuildMosaic(modelName="mR1c")
 
 ############################
-## @knitr mRd
+## @knitr mR1d
 BuildMosaic(modelName="mR1d")
 
 ############################
-## @knitr mRe
+## @knitr mR1e
 BuildMosaic(modelName="mR1e")
 
 ######################################### other FIXED models #####--Fo

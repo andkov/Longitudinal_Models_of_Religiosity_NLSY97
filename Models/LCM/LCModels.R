@@ -100,7 +100,7 @@ call_mR1d <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec + (1 | id)"
 call_mR1e <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec  + cohort:timec2 + (1 | id)"
 
 ### mFa ###
-call_mFa <- "attend ~ 1  + timec "
+call_mFa <- "attend ~ 1  + cohort "
 ### mFb ###
 call_mFb <- "attend ~ 1  + timec + cohort " 
 ### mFc ###

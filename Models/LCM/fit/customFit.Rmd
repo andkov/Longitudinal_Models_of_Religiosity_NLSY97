@@ -1,0 +1,429 @@
+---
+title: "Model sequence report"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    toc: yes
+    keep_md: false
+  md_document:
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_crop: no
+    fig_width: 8
+    highlight: haddock
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
+---
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 7, 
+  fig.width = 10, 
+#   out.width = NULL,
+  fig.path = 'figureRmd/',     
+  warning = FALSE,
+  dev = "png"
+  #, dpi = 300
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/LCM/fit/customFit.R") # the file to which knitr calls for the chunks
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadSources, echo=echoChunks, message=F}
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+# select only respondence in the cross-sectional sample
+```
+
+```{r loadRDS}
+
+modelsFE <- c("m0F",  "m1F",  "m2F",  "m3F",  "m4F", "m5F", "m6F", "m7F")
+modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1")
+modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
+modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")  
+modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")  
+otherFE <- c( "mFa",  "mFb",  "mFc",  "mFd",  "mFe")  
+otherR1 <- c ("mR1a", "mR1b", "mR1c", "mR1d", "mR1e")
+## Composite lists of models
+mOrder1 <- c(modelsFE, modelsR1, modelsR2, modelsR3, modelsR4, otherFE, otherR1)
+mOrder2 <- c("m0F", "m0R1", 
+             "m1F", "m1R1", "m1R2",
+             "m2F", "m2R1", "m2R2", 
+             "m3F", "m3R1", "m3R2", "m3R3", "m3R4",
+             "m4F", "m4R1", "m4R2", "m4R3", "m4R4",
+             "m5F", "m5R1", "m5R2", "m5R3", "m5R4",
+             "m6F", "m6R1", "m6R2", "m6R3", "m6R4",
+             "m7F", "m7R1", "m7R2", "m7R3", "m7R4",
+             "mFa", "mR1a", "mFb",  "mR1b", "mFc", 
+             "mR1c","mFd", "mR1d", "mFe", "mR1e")
+mOrder3<- c(otherFE,modelsFE, modelsR1,otherR1,modelsR2, modelsR3,modelsR4)
+# mOrder4<-
+
+orderFoR1o<- c("mFa", "mR1a", "mFb",  "mR1b", "mFc",
+             "mR1c","mFd", "mR1d", "mFe", "mR1e")
+
+orderFR1<- c( "m1F", "m1R1", 
+             "m2F", "m2R1",  
+             "m3F", "m3R1", 
+             "m4F", "m4R1",
+             "m5F", "m5R1", 
+             "m6F", "m6R1",
+             "m7F", "m7R1")
+
+orderR1R2 <- c( "m1R1", "m1R2",
+                "m2R1", "m2R2", 
+                "m3R1", "m3R2", 
+                "m4R1", "m4R2", 
+                "m5R1", "m5R2", 
+                "m6R1", "m6R2", 
+                "m7R1", "m7R2")
+
+```
+
+
+# all models
+```{r all}
+out<-c(
+#         modelsFE,
+#         modelsR1,
+#         modelsR2,
+#         modelsR3,
+# #         modelsR4,
+#         otherFE,
+#         otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c(mOrder3 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+# all models - sequential
+```{r all-s}
+out<-c(
+#         modelsFE,
+#         modelsR1,
+#         modelsR2,
+#         modelsR3,
+# #         modelsR4,
+#         otherFE,
+#         otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c(mOrder2 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+# Map view
+```{r mapView }
+out<-c(
+#         modelsFE,
+#         modelsR1,
+        modelsR2,
+        modelsR3,
+        modelsR4
+#         otherFE,
+#         otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c(otherFE,modelsFE, modelsR1, otherR1  )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+# FoFE
+```{r FoFE }
+out<-c(
+#         modelsFE,
+        modelsR1,
+        modelsR2,
+        modelsR3,
+        modelsR4,
+#         otherFE
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c(otherFE, modelsFE )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+# FoFE - interleave
+```{r FoFE-int }
+out<-c(
+#         modelsFE,
+        modelsR1,
+        modelsR2,
+        modelsR3,
+        modelsR4,
+#         otherFE
+        otherR1
+)
+excludeModels <- c(out)  
+custom1<- c("m0F", "mFa", "m1F", "mFb","mFc", "m2F", "m3F", "mFd", "m4F","mFe","m6F","m7F")
+axisModels  <- c(custom1)
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+# R1Ro
+```{r R1Ro }
+out<-c(
+        modelsFE,
+#         modelsR1,
+        modelsR2,
+        modelsR3,
+        modelsR4,
+        otherFE
+#         otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c( modelsR1, otherR1  )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+
+
+# Ro-R1-R2-R3-R4
+```{r RoR1R2R3R4 }
+out<-c(
+        modelsFE,
+#         modelsR1,
+#         modelsR2,
+#         modelsR3,
+#         modelsR4,
+        otherFE
+#         otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c(otherR1, modelsR1,modelsR2, modelsR3, modelsR4 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+# R1-R2-R3-R4
+```{r R1R2R3R4 }
+out<-c(
+        modelsFE,
+#         modelsR1,
+#         modelsR2,
+#         modelsR3,
+#         modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c(modelsR1,modelsR2, modelsR3, modelsR4 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+# R2-R3-R4
+```{r R2R3R4 }
+out<-c(
+        modelsFE,
+        modelsR1,
+#         modelsR2,
+#         modelsR3,
+#         modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c(modelsR2, modelsR3, modelsR4 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+# R3-R4
+```{r R3R4 }
+out<-c(
+        modelsFE,
+        modelsR1,
+        modelsR2,
+#         modelsR3,
+#         modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c(modelsR3, modelsR4 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+#  R4
+```{r R4 }
+out<-c(
+        modelsFE,
+        modelsR1,
+        modelsR2,
+        modelsR3,
+#         modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c( modelsR4 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+#  R3
+```{r R3 }
+out<-c(
+        modelsFE,
+        modelsR1,
+        modelsR2,
+#         modelsR3,
+        modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c( modelsR3 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+
+#  R2
+```{r R2 }
+out<-c(
+        modelsFE,
+        modelsR1,
+#         modelsR2,
+        modelsR3,
+        modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c( modelsR2 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+#  R1
+
+```{r R1 }
+out<-c(
+        modelsFE,
+#         modelsR1,
+        modelsR2,
+        modelsR3,
+        modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c( modelsR1 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+
+
+
+#  FoR1o
+```{r FoR1o }
+out<-c(
+        modelsFE,
+        modelsR1,
+        modelsR2,
+        modelsR3,
+        modelsR4
+#         otherFE,
+#         otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c( orderFoR1o )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+#  F-R1
+```{r F-R1 }
+out<-c(
+#         modelsFE,
+#         modelsR1,
+        modelsR2,
+        modelsR3,
+        modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c( orderFR1 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+
+#  R1-R2
+```{r R1-R2 }
+out<-c(
+        modelsFE,
+#         modelsR1,
+#         modelsR2,
+        modelsR3,
+        modelsR4,
+        otherFE,
+        otherR1
+)
+excludeModels <- c(out)  
+axisModels  <- c( orderR1R2 )
+source("./Models/LCM/fit/fitGraph.R")
+g
+```
+
+
+
+
+
+
+
+

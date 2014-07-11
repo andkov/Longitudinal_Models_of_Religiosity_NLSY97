@@ -90,6 +90,7 @@ BuildBar <- function( modelName = NA ) {
     guides(fill=guide_legend(title=NULL)) + 
     barTheme +
     labs(x=NULL, y="Misfit")
+  
   return( g )
 }
 BuildBar()
