@@ -1,5 +1,5 @@
 ---
-title: "Model sequence report"
+title: "Custom Fit"
 output:
   html_document:
     css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css

@@ -88,7 +88,7 @@ allModels<- modelNamesLabels
 # allModels <-  "m1F"
 # allModels <-  "m0R1"
 # allModels <-  "mFa"
-allModels <-  "mR1a"
+# allModels <-  "mR1a"
 
 for(i in allModels){
   modelName<- i
