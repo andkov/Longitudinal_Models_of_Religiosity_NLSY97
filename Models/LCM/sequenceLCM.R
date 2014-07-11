@@ -23,7 +23,7 @@ source("./Models/LCM/graphs/line graph of trajectories.R") #Load the `BuildLine(
 ############################
 ## @knitr DeclareGlobals
 source("./Models/Descriptives/AesDefine.R")
-pathImageDirectory <- "./Models/LCM/models/formula_images/"
+pathImageDirectory <- "./Models/LCM/models/formula_images"
 pathImage <- "./Models/LCM/graphs/sequenceMap/sequenceMap_wideModel.png"
 
 vpLayout <- function(rowIndex, columnIndex) { return( viewport(layout.pos.row=rowIndex, layout.pos.col=columnIndex) ) }
@@ -38,8 +38,8 @@ BuildMosaic <- function( modelName ) {
   testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
   dsFERE <- lstModelOutcomes[modelName][[1]]
   
-  pEquations <- png::readPNG(pathImage) #Replace this line with the one below it (toggle the comments).
-  #pEquations <- PullAppropriatePng(modelName=modelName)
+#   pEquations <- png::readPNG(pathImage) #Replace this line with the one below it (toggle the comments).
+  pEquations <- PullAppropriatePng(modelName=modelName)
   
   gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
   gLine <- BuildLine(modelName=modelName)
@@ -220,23 +220,23 @@ BuildMosaic(modelName="m7R4")
 
 ######################################### other RANDOM  models #####--Ro
 ## @knitr mRa
-BuildMosaic(modelName="mRa")
+BuildMosaic(modelName="mR1a")
 
 ############################
 ## @knitr mRb
-BuildMosaic(modelName="mRb")
+BuildMosaic(modelName="mR1b")
 
 ############################
 ## @knitr mRc
-BuildMosaic(modelName="mRc")
+BuildMosaic(modelName="mR1c")
 
 ############################
 ## @knitr mRd
-BuildMosaic(modelName="mRd")
+BuildMosaic(modelName="mR1d")
 
 ############################
 ## @knitr mRe
-BuildMosaic(modelName="mRe")
+BuildMosaic(modelName="mR1e")
 
 ######################################### other FIXED models #####--Fo
 ## @knitr mFa

@@ -64,195 +64,216 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 # select only respondence in the cross-sectional sample
 ```
 
-# Model specification
+# Model specification  
+General case of LCM and model sequence are defined  
 ```{r modelSpecification}
-![model sequence map](../../images/databox_slice.png)
+![model sequence map](../../images/WideSpecification_Guide.png)
+![model sequence map](../../images/ModelSequenceMap.png)
 ```
-
-# m0F 
+# Fixed Effect only models
+## m0F 
 ```{r m0F, echo=echoChunks}
 ```
 
-# m1F 
+## m1F 
 ```{r m1F, echo=echoChunks}
 ```
 
-# m2F 
+## m2F 
 ```{r m2F, echo=echoChunks}
 ```
 
-# m3F 
+## m3F 
 ```{r m3F, echo=echoChunks}
 ```
 
-# m4F 
+## m4F 
 ```{r m4F, echo=echoChunks}
 ```
 
-# m5F 
+## m5F 
 ```{r m5F, echo=echoChunks}
 ```
 
-# m6F 
+## m6F 
 ```{r m6F, echo=echoChunks}
 ```
 
-# m7F 
+## m7F 
 ```{r m7F, echo=echoChunks}
 ```
 
-# m1R1 
+# Models with 1 RandCoef
+
+## m1R1 
 ```{r m1R1, echo=echoChunks}
 ```
 
 
-# m2R1 
+## m2R1 
 ```{r m2R1, echo=echoChunks}
 ```
 
 
-# m3R1 
+## m3R1 
 ```{r m3R1, echo=echoChunks}
 ```
 
 
-# m4R1 
+## m4R1 
 ```{r m4R1, echo=echoChunks}
 ```
 
 
-# m5R1 
+## m5R1 
 ```{r m5R1, echo=echoChunks}
 ```
 
-# m6R1 
+## m6R1 
 ```{r m6R1, echo=echoChunks}
 ```
 
-# m7R1 
+## m7R1 
 ```{r m7R1, echo=echoChunks}
 ```
 
+# Models with 2 RandCoef
 
-# m1R2 
+## m1R2 
 ```{r m1R2, echo=echoChunks}
 ```
 
 
-# m2R2 
+## m2R2 
 ```{r m2R2, echo=echoChunks}
 ```
 
 
-# m3R2 
+## m3R2 
 ```{r m3R2, echo=echoChunks}
 ```
 
 
-# m4R2 
+## m4R2 
 ```{r m4R2, echo=echoChunks}
 ```
 
 
-# m5R2 
+## m5R2 
 ```{r m5R2, echo=echoChunks}
 ```
 
-# m6R2 
+## m6R2 
 ```{r m6R2, echo=echoChunks}
 ```
 
-# m7R2 
+## m7R2 
 ```{r m7R2, echo=echoChunks}
 ```
 
 
+# Models with 3 RandCoef
 
-
-# m2R3 
+## m2R3 
 ```{r m2R3, echo=echoChunks}
 ```
 
 
-# m3R3 
+## m3R3 
 ```{r m3R3, echo=echoChunks}
 ```
 
 
-# m4R3 
+## m4R3 
 ```{r m4R3, echo=echoChunks}
 ```
 
 
-# m5R3 
+## m5R3 
 ```{r m5R3, echo=echoChunks}
 ```
 
-# m6R3 
+## m6R3 
 ```{r m6R3, echo=echoChunks}
 ```
 
-# m7R3 
+## m7R3 
 ```{r m7R3, echo=echoChunks}
 ```
 
 
+# Models with 4 RandCoef
 
-
-# m3R4 
+## m3R4 
 ```{r m3R4, echo=echoChunks}
 ```
 
 
-# m4R4 
+## m4R4 
 ```{r m4R4, echo=echoChunks}
 ```
 
 
-# m5R4 
+## m5R4 
 ```{r m5R4, echo=echoChunks}
 ```
 
-# m6R4 
+## m6R4 
 ```{r m6R4, echo=echoChunks}
 ```
 
-# m7R4 
+## m7R4 
 ```{r m7R4, echo=echoChunks}
 ```
 
+# Experimental R1
 
-
-
-
-
-
-
-
-
-
-
-
-# mR1a 
+## mR1a 
 ```{r mR1a, echo=echoChunks}
 ```
 
-# mR1b 
+## mR1b 
 ```{r mR1b, echo=echoChunks}
 ```
 
 
-# mR1c 
+## mR1c 
 ```{r mR1c, echo=echoChunks}
 ```
 
 
-# mR1d 
+## mR1d 
 ```{r mR1d, echo=echoChunks}
 ```
 
 
-# mR1e 
+## mR1e 
 ```{r mR1e, echo=echoChunks}
+```
+
+
+# Experimental Fixed
+
+## mFa 
+```{r mFa, echo=echoChunks}
+```
+
+## mFb 
+```{r mFb, echo=echoChunks}
+```
+
+
+## mFc 
+```{r mFc, echo=echoChunks}
+```
+
+
+## mFd 
+```{r mFd, echo=echoChunks}
+```
+
+
+## mFe 
+```{r mFe, echo=echoChunks}
 ```
 
