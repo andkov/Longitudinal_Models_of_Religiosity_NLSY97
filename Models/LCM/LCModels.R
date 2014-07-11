@@ -89,7 +89,7 @@ call_m1F <- "attend ~ 1  + timec "
 call_m0F <- "attend ~ 1  "
 
 ### mRa ###
-call_mR1a <- "attend ~ 1  + timec + (1 | id)"
+call_mR1a <- "attend ~ 1  + cohort + (1 | id)"
 ### mRb ###
 call_mR1b <- "attend ~ 1  + timec + cohort + (1 | id)"
 ### mRc ###
