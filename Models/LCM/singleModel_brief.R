@@ -27,11 +27,11 @@ source("./Models/LCM/LCModels.R")
 
 ############################
 ## @knitr defineData
-numID<- 200 # highest id value (max = 9022)
-# numID<- 9022 # highest id value (max = 9022)
+# numID<- 200 # highest id value (max = 9022)
+numID<- 9022 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
-  dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
+  dplyr::filter(id < numID) %.% # 1:9022
   dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
   dplyr::filter(sample %in% c(1)) %.% # 0-Oversample; 1-Cross-Sectional
   dplyr::filter(race %in% c(4)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White
@@ -86,10 +86,11 @@ allModels<- modelNamesLabels
 # modelList1<- c(modelsR2, modelsR3, modelsR4) 
 # allModels <-  "m0F"
 # allModels <-  "m1F"
+# allModels <-  "m0R1"
 
 for(i in allModels){
   modelName<- i
-  message("Running model ", modelName, " in singleModel_brief.R")
+  message("Running model ", modelName, " in singleModel_brief.R at ", Sys.time())
   modelCall<- paste0("call_",modelName)
   f<- as.formula(modelCall)
   isRandomModel <- !(modelName %in% modelsFE)
@@ -420,16 +421,14 @@ for(i in allModels){
     dsp$tau11sd <- pullRandomEffect(timeName="timec", tauName="tau11sd")
     dsp$tau22sd <- pullRandomEffect(timeName="timec2", tauName="tau22sd")
     dsp$tau33sd <- pullRandomEffect(timeName="timec3", tauName="tau33sd")
-    
-    #TODO: fix this hack
-    missingTimeInDsp <- !("timec" %in% colnames(dsp))
-    if( missingTimeInDsp ) {
-      dsp$timec <- NA_real_
-    }
-    
-#     browser()
-    head(dsp)
   } # close else
+  
+  #TODO: fix this hack
+  missingTimeInDsp <- !("timec" %in% colnames(dsp))
+  if( missingTimeInDsp ) {
+    dsp$timec <- NA_real_
+  }
+  head(dsp)
   
   ###########################################################################################
   ## @knitr saveModelResults

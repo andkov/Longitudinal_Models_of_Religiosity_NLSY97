@@ -1,0 +1,191 @@
+---
+title: "Model sequence report"
+output:
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    toc: yes
+  md_document:
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_crop: no
+    fig_width: 8
+    highlight: haddock
+    latex_engine: xelatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    fig_width: 6.5
+mainfont: Calibri
+---
+
+<!--  Set the working directory to the repository's base directory; this assumes the report is nested inside of only one directory.-->
+```{r, echo=F, message=F} 
+require(knitr)
+opts_knit$set(root.dir='../../')  #Don't combine this call with any other chunk -especially one that uses file paths.
+
+```
+
+```{r set_options, echo=F, message=F}
+require(knitr)
+# getwd()
+opts_chunk$set(
+  results='show', 
+  message = TRUE,
+  comment = NA, 
+  tidy = FALSE,
+  fig.height = 12, 
+  fig.width = 14, 
+#   out.width = NULL,
+  fig.path = 'sequence/',     
+  warning = FALSE,
+  dev = "png"
+  #, dpi = 300
+)
+echoChunks <- FALSE
+warningChunks<- FALSE
+options(width=120) #So the output is 50% wider than the default.
+read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the chunks
+```
+
+```{r LoadPackages, echo=echoChunks, message=F}
+```
+
+```{r LoadSources, echo=echoChunks, message=F}
+```
+
+```{r DeclareGlobals, echo=echoChunks, message=FALSE}
+```
+
+```{r LoadData, echo=echoChunks, message=T}
+# select only respondence in the cross-sectional sample
+```
+
+# Model specification
+```{r modelSpecification}
+![model sequence map][model_sequence] 
+```
+
+# m0F 
+```{r m0F, echo=echoChunks}
+```
+
+# m1F 
+```{r m1F, echo=echoChunks}
+```
+
+# m2F 
+```{r m2F, echo=echoChunks}
+```
+
+# m3F 
+```{r m3F, echo=echoChunks}
+```
+
+# m4F 
+```{r m4F, echo=echoChunks}
+```
+
+# m5F 
+```{r m5F, echo=echoChunks}
+```
+
+# m6F 
+```{r m6F, echo=echoChunks}
+```
+
+# m7F 
+```{r m7F, echo=echoChunks}
+```
+
+# m1R1 
+```{r m1R1, echo=echoChunks}
+```
+
+
+# m2R1 
+```{r m2R1, echo=echoChunks}
+```
+
+
+# m3R1 
+```{r m3R1, echo=echoChunks}
+```
+
+
+# m4R1 
+```{r m4R1, echo=echoChunks}
+```
+
+
+# m5R1 
+```{r m5R1, echo=echoChunks}
+```
+
+# m6R1 
+```{r m6R1, echo=echoChunks}
+```
+
+# m7R1 
+```{r m7R1, echo=echoChunks}
+```
+
+
+# m1R2 
+```{r m1R2, echo=echoChunks}
+```
+
+
+# m2R2 
+```{r m2R2, echo=echoChunks}
+```
+
+
+# m3R2 
+```{r m3R2, echo=echoChunks}
+```
+
+
+# m4R2 
+```{r m4R2, echo=echoChunks}
+```
+
+
+# m5R2 
+```{r m5R2, echo=echoChunks}
+```
+
+# m6R2 
+```{r m6R2, echo=echoChunks}
+```
+
+# m7R2 
+```{r m7R2, echo=echoChunks}
+```
+
+# mR1a 
+```{r mR1a, echo=echoChunks}
+```
+
+# mR1b 
+```{r mR1b, echo=echoChunks}
+```
+
+
+# mR1c 
+```{r mR1c, echo=echoChunks}
+```
+
+
+# mR1d 
+```{r mR1d, echo=echoChunks}
+```
+
+
+# mR1e 
+```{r mR1e, echo=echoChunks}
+```
+

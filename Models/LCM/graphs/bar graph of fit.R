@@ -29,9 +29,9 @@ BuildBar <- function( modelName = NA ) {
   modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
   modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")  
   modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")  
-  modelList1 <- c(modelsFE, modelsR1, modelsR2, modelsR3, modelsR4, otherFE, otherR1)
-  
-  modelList2 <- c("m0F", "m0R1", 
+  ## Composite lists of models
+  mOrder1 <- c(modelsFE, modelsR1, modelsR2, modelsR3, modelsR4, otherFE, otherR1)
+  mOrder2 <- c("m0F", "m0R1", 
                   "m1F", "m1R1", "m1R2",
                   "m2F", "m2R1", "m2R2", 
                   "m3F", "m3R1", "m3R2", "m3R3", "m3R4",
@@ -41,14 +41,16 @@ BuildBar <- function( modelName = NA ) {
                   "m7F", "m7R1", "m7R2", "m7R3", "m7R4",
                   "mFa", "mR1a", "mFb",  "mR1b", "mFc", "mR1c","mFd", "mR1d", "mFe", "mR1e"    
                   )  
-  
+  excludeModels <- NA
+  axisModels  <- c(mOrder1)
+  ######################################
   dsWide <- dsInfo  
   ds <- reshape2::melt(dsWide, id.vars=c('Coefficient'))
   ds <- plyr::rename(ds, replace=c( variable = "model"))
 
   ds<- ds %>% 
     dplyr::filter(Coefficient %in% c( "BIC","AIC","deviance")) 
-  
+  ds<- ds[!(ds$model %in% excludeModels),] # exclude models from dataset
   ds$Highlight <- (ds$model==modelName)  
   ds$Coefficient <- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
 
@@ -61,7 +63,8 @@ BuildBar <- function( modelName = NA ) {
   # floor <- 1000 #Watchout when AIC is negative
   floor <- min(ds$value, na.rm=T)  
   longestBar <- max(ds$value, na.rm=T)  
-  ceiling <- longestBar* 1.05 * sign(longestBar) #Account for cases when AIC is negative
+  barHeight <- abs(longestBar - floor)
+  ceiling <- longestBar + barHeight * .05 * sign(longestBar)  #Account for cases when AIC is negative
   
   barTheme <- theme_bw() +
     theme(axis.text = element_text(colour="gray40")) +
@@ -80,7 +83,7 @@ BuildBar <- function( modelName = NA ) {
     geom_bar(stat="identity", position="identity", alpha=.1) + #This line draw the distant skyscrapers
     geom_bar(data=ds[ds$Highlight, ], stat="identity", position="identity", alpha=.2) + #This line draw the skyskraper that pops out.
     scale_fill_manual(values=colorFit) +
-    scale_x_discrete(limits=modelList2) +
+    scale_x_discrete(limits=mOrder1) +
     scale_y_continuous(label=scales::comma) +
     #Andrey:  almost never use `scale_zzzz()` to zoom.  It essentially deletes variables from the dataset, which can affect loess. p<- p + scale_y_continuous( limits = c(80000, 110000))
     coord_cartesian(ylim=c(floor, ceiling)) + 

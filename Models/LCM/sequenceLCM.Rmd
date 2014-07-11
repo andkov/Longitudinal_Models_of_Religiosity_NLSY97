@@ -66,7 +66,7 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 
 # Model specification
 ```{r modelSpecification}
-# general case goes here, along with sequence map
+![model sequence map](../../images/databox_slice.png)
 ```
 
 # m0F 
@@ -81,6 +81,14 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 ```{r m2F, echo=echoChunks}
 ```
 
+# m3F 
+```{r m3F, echo=echoChunks}
+```
+
+# m4F 
+```{r m4F, echo=echoChunks}
+```
+
 # m5F 
 ```{r m5F, echo=echoChunks}
 ```
@@ -93,7 +101,25 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 ```{r m7F, echo=echoChunks}
 ```
 
-## Add more here.
+# m1R1 
+```{r m1R1, echo=echoChunks}
+```
+
+
+# m2R1 
+```{r m2R1, echo=echoChunks}
+```
+
+
+# m3R1 
+```{r m3R1, echo=echoChunks}
+```
+
+
+# m4R1 
+```{r m4R1, echo=echoChunks}
+```
+
 
 # m5R1 
 ```{r m5R1, echo=echoChunks}
@@ -107,7 +133,26 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 ```{r m7R1, echo=echoChunks}
 ```
 
-## Add more here.
+
+# m1R2 
+```{r m1R2, echo=echoChunks}
+```
+
+
+# m2R2 
+```{r m2R2, echo=echoChunks}
+```
+
+
+# m3R2 
+```{r m3R2, echo=echoChunks}
+```
+
+
+# m4R2 
+```{r m4R2, echo=echoChunks}
+```
+
 
 # m5R2 
 ```{r m5R2, echo=echoChunks}
@@ -120,3 +165,94 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 # m7R2 
 ```{r m7R2, echo=echoChunks}
 ```
+
+
+
+
+# m2R3 
+```{r m2R3, echo=echoChunks}
+```
+
+
+# m3R3 
+```{r m3R3, echo=echoChunks}
+```
+
+
+# m4R3 
+```{r m4R3, echo=echoChunks}
+```
+
+
+# m5R3 
+```{r m5R3, echo=echoChunks}
+```
+
+# m6R3 
+```{r m6R3, echo=echoChunks}
+```
+
+# m7R3 
+```{r m7R3, echo=echoChunks}
+```
+
+
+
+
+# m3R4 
+```{r m3R4, echo=echoChunks}
+```
+
+
+# m4R4 
+```{r m4R4, echo=echoChunks}
+```
+
+
+# m5R4 
+```{r m5R4, echo=echoChunks}
+```
+
+# m6R4 
+```{r m6R4, echo=echoChunks}
+```
+
+# m7R4 
+```{r m7R4, echo=echoChunks}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+# mR1a 
+```{r mR1a, echo=echoChunks}
+```
+
+# mR1b 
+```{r mR1b, echo=echoChunks}
+```
+
+
+# mR1c 
+```{r mR1c, echo=echoChunks}
+```
+
+
+# mR1d 
+```{r mR1d, echo=echoChunks}
+```
+
+
+# mR1e 
+```{r mR1e, echo=echoChunks}
+```
+

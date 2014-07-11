@@ -23,14 +23,24 @@ source("./Models/LCM/graphs/line graph of trajectories.R") #Load the `BuildLine(
 ############################
 ## @knitr DeclareGlobals
 source("./Models/Descriptives/AesDefine.R")
+pathImageDirectory <- "./Models/LCM/models/formula_images/"
 pathImage <- "./Models/LCM/graphs/sequenceMap/sequenceMap_wideModel.png"
 
-
 vpLayout <- function(rowIndex, columnIndex) { return( viewport(layout.pos.row=rowIndex, layout.pos.col=columnIndex) ) }
+
+PullAppropriatePng <- function( modelName ) {
+  pathImage <- file.path(pathImageDirectory, paste0(modelName, ".png"))
+  p <- png::readPNG(pathImage)
+  return( p )
+}
 
 BuildMosaic <- function( modelName ) {
   testit::assert(fact="The FERE object should be found in the appropriate list", modelName %in% names(lstModelOutcomes))
   dsFERE <- lstModelOutcomes[modelName][[1]]
+  
+  pEquations <- png::readPNG(pathImage) #Replace this line with the one below it (toggle the comments).
+  #pEquations <- PullAppropriatePng(modelName=modelName)
+  
   gTile <- BuildFERE(modelName=modelName, dsWide=dsFERE)
   gLine <- BuildLine(modelName=modelName)
   gBar <- BuildBar(modelName=modelName)
@@ -42,7 +52,7 @@ BuildMosaic <- function( modelName ) {
                         heights=unit(c(.3, .2, .5), c("null", "null", "null"))
   )
   pushViewport(viewport(layout=layout))
-  grid.raster(p, vp=viewport(layout.pos.row=1))
+  grid.raster(pEquations, vp=viewport(layout.pos.row=1))
   print(gTile, vp=viewport(layout.pos.row=2))
   print(gLine, vp=vpLayout(3, 1))
   print(gBar, vp=vpLayout(3, 2))
@@ -57,7 +67,7 @@ source("./Models/LCM/LCModels.R")
 lstModelOutcomes <- readRDS("./Models/LCM/models/datasets/ListOfModelOutcomes.rds")
 names(lstModelOutcomes)
 
-p <- png::readPNG(pathImage)
+# pEquations <- png::readPNG(pathImage)
 ############################
 ## @knitr TweakData
 
@@ -107,6 +117,7 @@ BuildMosaic(modelName="m7F")
 ########################################## models with 1 RANDOM #####--R1
 ## @knitr m0R1
 BuildMosaic(modelName="m0R1")
+# m0R1 <- readRDS("./Models/LCM/models/datasets/m0R1_dsp.rds")
 
 ## @knitr m1R1
 BuildMosaic(modelName="m1R1")
