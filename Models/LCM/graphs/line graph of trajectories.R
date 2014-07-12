@@ -40,25 +40,30 @@ BuildLine <- function( modelName, baseSize=12 ) {
     ggplot2::theme(axis.ticks.length = grid::unit(0, "cm")) +
     ggplot2::theme(text = element_text(size =25)) +
     # ggplot2::theme(panel.background=element_rect(fill=bgColour,colour=NA)) +
-    ggplot2::theme(legend.position=c(.95,.90),legend.direction="vertical") +
-    ggplot2::theme(legend.background = element_rect(fill=NA)) +
-    ggplot2::theme(legend.text = element_text(size = 15),legend.title.align =(-3.3))# +
+  #   ggplot2::theme(legend.position=c(.95,.90),legend.direction="vertical") +
+  #   ggplot2::theme(legend.background = element_rect(fill=NA)) +
+  #   ggplot2::theme(legend.text = element_text(size = 15),legend.title.align =(-3.3))# +
     # ggplot2::theme(panel.grid = element_line(linetype = 1,size=rel(3)))
   
   ds<- dsp %>% dplyr::filter(id %in% c(1:500))
-  head(ds)
+# ds<- dsp
+#   head(ds)
+browser()
+# range(ds$attend, na.rm=T)
+# range(ds$timec, na.rm=T)
+
   p<- ggplot2::ggplot(ds, aes(x=timec, y=attend, group=id))
   # geoms
-  p<- p + geom_line(aes(x=timec,y=yHat),colour="red",alpha=indLineAl,size=indLineSz, na.rm=T)
-  p<- p + geom_line(aes(y=yFE), fill=NA, na.rm=T)
-  # scales
-  p <- p + scale_x_continuous(breaks=seq(0,10, 1),limits=c(0,10)) 
-  p <- p + scale_y_continuous(breaks=seq(0, 8, 1),limits=c(.5,8.5)) 
+#   p <- p + geom_point()
+  p <- p + geom_line(aes(x=timec,y=yHat),colour="red",alpha=indLineAl,size=indLineSz, na.rm=T)
+  p <- p + geom_line(aes(y=yFE), fill=NA, na.rm=T)
+  # scales & coordinates
+  p <- p + scale_x_continuous(breaks=seq(1, 11, 2)) 
+  p <- p + scale_y_continuous(breaks=seq(0, 8, 1)) 
+  p <- p + coord_cartesian(xlim=c(-.5, 11.5), ylim=c(.5, 8.5))
   # themes, guide, and annotations
   p <- p + themeLine 
-  p <- p + labs(title="How often have you attended a worship service (2000)?", 
-                x="Church attendance", 
-                y="Count")
+  p <- p + labs(title="How often have you attended a worship service?", x="Years Since 2000", y="Church Attendance")
   return( p )
 }
 # BuildLine("m5F")
