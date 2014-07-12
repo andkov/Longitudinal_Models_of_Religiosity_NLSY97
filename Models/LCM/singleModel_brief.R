@@ -28,7 +28,7 @@ source("./Models/LCM/LCModels2.R")
 ############################
 ## @knitr defineData
 # numID<- 200 # highest id value (max = 9022)
-numID<- 200 # highest id value (max = 9022)
+numID <- 9022 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id < numID) %>%

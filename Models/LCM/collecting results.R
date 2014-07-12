@@ -33,7 +33,7 @@ source("./Models/LCM/LCModels.R")
 numID<- 9022 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
-  dplyr::filter(id %in% c(1:numID)) %.% # 1:9022
+  dplyr::filter(id < numID) %.% # 1:9022
   dplyr::filter(year %in% c(2000:2011)) %.% # 1997:2011
   dplyr::filter(sample %in% c(1)) %.% # 0-Oversample; 1-Cross-Sectional
   dplyr::filter(race %in% c(4)) %.% # 1-Black; 2-Hispanis; 3-Mixed; 4-White

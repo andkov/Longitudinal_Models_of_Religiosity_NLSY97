@@ -6,29 +6,13 @@ require(reshape2)
 
 BuildLine <- function( modelName, baseSize=12 ) {
   # Traditional reading in the files
-  # getModels<- c("m7R1")
-  
-#   for(i in getModels){
-#     modelName<- i
-#     #   pathdsmInfo <- file.path("./Models/LCM/models/datasets",paste0(i,"_mInfo.rds"))
-#     #   pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
-#     pathdsp  <- file.path("./Models/LCM/models/datasets",paste0(i,"_dsp.rds"))
-#     #   mInfoTemp<- readRDS(pathdsmInfo)
-#     #   FERETemp<- readRDS(pathdsFERE)
-#     dspTemp<- readRDS(pathdsp)
-#     
-#     #   assign(paste0(i,"_mInfo"),mInfoTemp)
-#     #   assign(paste0(i,"_FERE"),FERETemp)
-#     assign(paste0(i,"_dsp"),dspTemp)
-#     #   rm(list = c("mInfoTemp", "FERETemp", "dspTemp"))
-#   }
   pathdsp  <- file.path("./Models/LCM/models/datasets", paste0(modelName,"_dsp.rds"))
   dsp <- readRDS(pathdsp)
 
   ###############################################
   ### graph of prediction
   
-  #bgColour<-gray(.95)   # background color
+  # bgColour<-gray(.95)   # background color
   indLineSz <-.08        # individual line size
   indLineAl <-.06        # individual line alpha
   
@@ -40,21 +24,17 @@ BuildLine <- function( modelName, baseSize=12 ) {
     ggplot2::theme(axis.ticks.length = grid::unit(0, "cm")) +
     ggplot2::theme(text = element_text(size =25)) #+
     # ggplot2::theme(panel.background=element_rect(fill=bgColour,colour=NA)) +
-  #   ggplot2::theme(legend.position=c(.95,.90),legend.direction="vertical") +
-  #   ggplot2::theme(legend.background = element_rect(fill=NA)) +
-  #   ggplot2::theme(legend.text = element_text(size = 15),legend.title.align =(-3.3))# +
+    # ggplot2::theme(legend.position=c(.95,.90),legend.direction="vertical") +
+    # ggplot2::theme(legend.background = element_rect(fill=NA)) +
+    # ggplot2::theme(legend.text = element_text(size = 15),legend.title.align =(-3.3))# +
     # ggplot2::theme(panel.grid = element_line(linetype = 1,size=rel(3)))
   
   ds<- dsp %>% dplyr::filter(id %in% c(1:500))
-# ds<- dsp
-#   head(ds)
-# browser()
-# range(ds$attend, na.rm=T)
-# range(ds$timec, na.rm=T)
+  # ds<- dsp
+  # head(ds)
 
   p<- ggplot2::ggplot(ds, aes(x=timec, y=attend, group=id))
   # geoms
-#   p <- p + geom_point()
   p <- p + geom_line(aes(x=timec,y=yHat),colour="red",alpha=indLineAl,size=indLineSz, na.rm=T)
   p <- p + geom_line(aes(y=yFE), fill=NA, na.rm=T)
   # scales & coordinates

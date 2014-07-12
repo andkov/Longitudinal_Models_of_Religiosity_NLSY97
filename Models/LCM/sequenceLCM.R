@@ -30,7 +30,6 @@ vpLayout <- function(rowIndex, columnIndex) { return( viewport(layout.pos.row=ro
 
 PullAppropriatePng <- function( modelName ) {
   pathImage <- file.path(pathImageDirectory, paste0(modelName, ".png"))
-  testit::assert("The model's equation png was not found.", file.exists(pathImage))
   p <- png::readPNG(pathImage)
   return( p )
 }
@@ -63,7 +62,7 @@ BuildMosaic <- function( modelName ) {
 ############################
 ## @knitr LoadData
 dsL<-readRDS("./Data/Derived/dsL.rds")
-source("./Models/LCM/LCModels2.R")
+source("./Models/LCM/LCModels.R")
 
 lstModelOutcomes <- readRDS("./Models/LCM/models/datasets/ListOfModelOutcomes.rds")
 # names(lstModelOutcomes)
@@ -77,6 +76,9 @@ lstModelOutcomes <- readRDS("./Models/LCM/models/datasets/ListOfModelOutcomes.rd
 
 ############################
 ## @knitr TweakData
+
+############################
+## @knitr modelSpecification
 
 ####################################### models with FIXED only #####--F
 ## @knitr m0F
@@ -111,36 +113,12 @@ BuildMosaic(modelName="m6F")
 ############################
 ## @knitr m7F
 BuildMosaic(modelName="m7F")
-#############################   i
-## @knitr mFa
-BuildMosaic(modelName="mFa")
-
-############################
-## @knitr mFb
-BuildMosaic(modelName="mFb")
-
-############################
-## @knitr mFc
-BuildMosaic(modelName="mFc")
-
-############################
-## @knitr mFf
-BuildMosaic(modelName="mFf") 
-
-############################
-## @knitr mFd
-BuildMosaic(modelName="mFd")
-
-############################
-## @knitr mFe
-BuildMosaic(modelName="mFe")
 
 ########################################## models with 1 RANDOM #####--R1
 ## @knitr m0R1
 BuildMosaic(modelName="m0R1")
 # m0R1 <- readRDS("./Models/LCM/models/datasets/m0R1_dsp.rds")
 
-############################
 ## @knitr m1R1
 BuildMosaic(modelName="m1R1")
 
@@ -167,30 +145,6 @@ BuildMosaic(modelName="m6R1")
 ############################
 ## @knitr m7R1
 BuildMosaic(modelName="m7R1")
-
-############################    i
-## @knitr mR1a
-BuildMosaic(modelName="mR1a")
-
-#############################
-## @knitr mR1b
-BuildMosaic(modelName="mR1b")
-
-############################
-## @knitr mR1c
-BuildMosaic(modelName="mR1c")
-
-############################
-## @knitr mR1f
-BuildMosaic(modelName="mR1f")
-
-############################
-## @knitr mR1d
-BuildMosaic(modelName="mR1d")
-
-############################
-## @knitr mR1e
-BuildMosaic(modelName="mR1e")
 
 ########################################## models with 2 RANDOM #####--R2
 ## @knitr m1R2
@@ -220,27 +174,6 @@ BuildMosaic(modelName="m6R2")
 ## @knitr m7R2
 BuildMosaic(modelName="m7R2")
 
-###################################### i
-## @knitr mR2b
-BuildMosaic(modelName="mR2b")
-
-############################
-## @knitr mR2c
-BuildMosaic(modelName="mR2c")
-
-############################
-## @knitr mR2f
-BuildMosaic(modelName="mR2f")
-
-############################
-## @knitr mR2d
-BuildMosaic(modelName="mR2d")
-
-############################
-## @knitr mR2e
-BuildMosaic(modelName="mR2e")
-
-
 ########################################### models with 3 RANDOM #####--R3
 ## @knitr m2R3
 BuildMosaic(modelName="m2R3")
@@ -265,21 +198,6 @@ BuildMosaic(modelName="m6R3")
 ## @knitr m7R3
 BuildMosaic(modelName="m7R3")
 
-
-###################################### i
-## @knitr mR3f
-BuildMosaic(modelName="mR3f")
-
-############################
-## @knitr mR3d
-BuildMosaic(modelName="mR3d")
-
-############################
-## @knitr mR3e
-BuildMosaic(modelName="mR3e")
-
-
-
 ########################################### models with 4 RANDOM #####--R4
 ## @knitr m3R4
 BuildMosaic(modelName="m3R4")
@@ -300,4 +218,42 @@ BuildMosaic(modelName="m6R4")
 ## @knitr m7R4
 BuildMosaic(modelName="m7R4")
 
+######################################### other RANDOM  models #####--Ro
+## @knitr mRa
+BuildMosaic(modelName="mR1a")
 
+############################
+## @knitr mRb
+BuildMosaic(modelName="mR1b")
+
+############################
+## @knitr mRc
+BuildMosaic(modelName="mR1c")
+
+############################
+## @knitr mRd
+BuildMosaic(modelName="mR1d")
+
+############################
+## @knitr mRe
+BuildMosaic(modelName="mR1e")
+
+######################################### other FIXED models #####--Fo
+## @knitr mFa
+BuildMosaic(modelName="mFa")
+
+############################
+## @knitr mFb
+BuildMosaic(modelName="mFb")
+
+############################
+## @knitr mFc
+BuildMosaic(modelName="mFc")
+
+############################
+## @knitr mFd
+BuildMosaic(modelName="mFd")
+
+############################
+## @knitr mFe
+BuildMosaic(modelName="mFe")

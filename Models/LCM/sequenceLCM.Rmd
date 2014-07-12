@@ -89,9 +89,7 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
     id, sample, race, byear,cohort, # Time Invariant variables
     year,
     age, timec,timec2,timec3, attend)  # Time Variant variables
-
 ```
-
 
 
 ## m0F -- Fixed only
@@ -134,7 +132,6 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```{r mFb, echo=echoChunks}
 ```
 
-
 ## mFc 
 ```{r mFc, echo=echoChunks}
 ```
@@ -147,7 +144,6 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```{r mFd, echo=echoChunks}
 ```
 
-
 ## mFe 
 ```{r mFe, echo=echoChunks}
 ```
@@ -156,21 +152,17 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```{r m1R1, echo=echoChunks}
 ```
 
-
 ## m2R1 
 ```{r m2R1, echo=echoChunks}
 ```
-
 
 ## m3R1 
 ```{r m3R1, echo=echoChunks}
 ```
 
-
 ## m4R1 
 ```{r m4R1, echo=echoChunks}
 ```
-
 
 ## m5R1 
 ```{r m5R1, echo=echoChunks}
@@ -184,7 +176,6 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```{r m7R1, echo=echoChunks}
 ```
 
-
 ## mR1a -- 
 ```{r mR1a, echo=echoChunks}
 ```
@@ -192,7 +183,6 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ## mR1b 
 ```{r mR1b, echo=echoChunks}
 ```
-
 
 ## mR1c 
 ```{r mR1c, echo=echoChunks}
@@ -202,37 +192,29 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```{r mR1f, echo=echoChunks}
 ```
 
-
 ## mR1d 
 ```{r mR1d, echo=echoChunks}
 ```
-
 
 ## mR1e 
 ```{r mR1e, echo=echoChunks}
 ```
 
-
-
 ## m1R2  -- 2 Random
 ```{r m1R2, echo=echoChunks}
 ```
-
 
 ## m2R2 
 ```{r m2R2, echo=echoChunks}
 ```
 
-
 ## m3R2 
 ```{r m3R2, echo=echoChunks}
 ```
 
-
 ## m4R2 
 ```{r m4R2, echo=echoChunks}
 ```
-
 
 ## m5R2 
 ```{r m5R2, echo=echoChunks}
@@ -266,21 +248,17 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```{r mR2e, echo=echoChunks}
 ```
 
-
 ## m2R3  -- 3 Random
 ```{r m2R3, echo=echoChunks}
 ```
-
 
 ## m3R3 
 ```{r m3R3, echo=echoChunks}
 ```
 
-
 ## m4R3 
 ```{r m4R3, echo=echoChunks}
 ```
-
 
 ## m5R3 
 ```{r m5R3, echo=echoChunks}
@@ -306,16 +284,13 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```{r mR3e, echo=echoChunks}
 ```
 
-
 ## m3R4  -- 4 Random
 ```{r m3R4, echo=echoChunks}
 ```
 
-
 ## m4R4 
 ```{r m4R4, echo=echoChunks}
 ```
-
 
 ## m5R4 
 ```{r m5R4, echo=echoChunks}
@@ -332,5 +307,3 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 # Model specification  
 General case of LCM and model sequence are defined as:    
 ![general form](../../images/general_form.png)
-
-
