@@ -64,8 +64,8 @@ read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the
 ```{r LoadData, echo=echoChunks, message=T}
 # select only respondence in the cross-sectional sample
 ```
-# About
-The origin of the data for the model  
+
+The data for the models was derived for the initial dataset **dsL**:  
 ```{r echo=TRUE, eval=FALSE,}
 numID<- 9022 # highest id value (max = 9022)
 ### Define the data that will populate the model
@@ -93,14 +93,8 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```
 
 
-# Model specification  
-General case of LCM and model sequence are defined  
-```{r modelSpecification}
-![model sequence map](../../images/WideSpecification_Guide.png)
-![model sequence map](../../images/ModelSequenceMap.png)
-```
 
-## m0F -- Fix Coef 
+## m0F -- Fixed only
 ```{r m0F, echo=echoChunks}
 ```
 
@@ -132,7 +126,7 @@ General case of LCM and model sequence are defined
 ```{r m7F, echo=echoChunks}
 ```
 
-## mFa  -- Experiment F
+## mFa --  
 ```{r mFa, echo=echoChunks}
 ```
 
@@ -158,7 +152,7 @@ General case of LCM and model sequence are defined
 ```{r mFe, echo=echoChunks}
 ```
 
-## m1R1 -- 1 Ran Coef
+## m1R1 -- 1 Random
 ```{r m1R1, echo=echoChunks}
 ```
 
@@ -191,7 +185,7 @@ General case of LCM and model sequence are defined
 ```
 
 
-## mR1a -- Experiment R1
+## mR1a -- 
 ```{r mR1a, echo=echoChunks}
 ```
 
@@ -220,7 +214,7 @@ General case of LCM and model sequence are defined
 
 
 
-## m1R2  -- 2 Ran Coef
+## m1R2  -- 2 Random
 ```{r m1R2, echo=echoChunks}
 ```
 
@@ -252,7 +246,7 @@ General case of LCM and model sequence are defined
 ```{r m7R2, echo=echoChunks}
 ```
 
-## mR2b - Experiment
+## mR2b --
 ```{r mR2b, echo=echoChunks}
 ```
 
@@ -273,7 +267,7 @@ General case of LCM and model sequence are defined
 ```
 
 
-## m2R3  -- 3 Ran Coef
+## m2R3  -- 3 Random
 ```{r m2R3, echo=echoChunks}
 ```
 
@@ -300,7 +294,7 @@ General case of LCM and model sequence are defined
 ```{r m7R3, echo=echoChunks}
 ```
 
-## mR3f - Experiment
+## mR3f --
 ```{r mR3f, echo=echoChunks}
 ```
 
@@ -313,7 +307,7 @@ General case of LCM and model sequence are defined
 ```
 
 
-## m3R4  -- 4 Ran Coef
+## m3R4  -- 4 Random
 ```{r m3R4, echo=echoChunks}
 ```
 
@@ -334,4 +328,9 @@ General case of LCM and model sequence are defined
 ## m7R4 
 ```{r m7R4, echo=echoChunks}
 ```
+
+# Model specification  
+General case of LCM and model sequence are defined as:    
+![general form](../../images/general_form.png)
+
 

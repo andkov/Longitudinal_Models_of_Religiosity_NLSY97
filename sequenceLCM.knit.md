@@ -71,7 +71,7 @@ General case of LCM and model sequence are defined
 ############################
 ```
 
-## m0F -- Fix Coef 
+## m0F -- Fixed only
 <img src="sequence/m0F.png" title="plot of chunk m0F" alt="plot of chunk m0F" width="1344" />
 
 ## m1F 
@@ -95,7 +95,7 @@ General case of LCM and model sequence are defined
 ## m7F 
 <img src="sequence/m7F.png" title="plot of chunk m7F" alt="plot of chunk m7F" width="1344" />
 
-## mFa  -- Experiment F
+## mFa --  
 <img src="sequence/mFa.png" title="plot of chunk mFa" alt="plot of chunk mFa" width="1344" />
 
 ## mFb 
@@ -106,16 +106,24 @@ General case of LCM and model sequence are defined
 <img src="sequence/mFc.png" title="plot of chunk mFc" alt="plot of chunk mFc" width="1344" />
 
 ## mFf 
+<img src="sequence/mFf.png" title="plot of chunk mFf" alt="plot of chunk mFf" width="1344" />
+
+## mFd 
+<img src="sequence/mFd.png" title="plot of chunk mFd" alt="plot of chunk mFd" width="1344" />
 
 
+## mFe 
+<img src="sequence/mFe.png" title="plot of chunk mFe" alt="plot of chunk mFe" width="1344" />
+
+## m1R1 -- 1 Random
+<img src="sequence/m1R1.png" title="plot of chunk m1R1" alt="plot of chunk m1R1" width="1344" />
 
 
+## m2R1 
+<img src="sequence/m2R1.png" title="plot of chunk m2R1" alt="plot of chunk m2R1" width="1344" />
 
 
-
-
-
-
+## m3R1 
 
 
 
