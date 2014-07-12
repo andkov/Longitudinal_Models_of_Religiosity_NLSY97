@@ -73,40 +73,40 @@ length(unique(ds$timec))
 
 ###################
 
-modelName <- "m1R1"
-# list of fixed models
-modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
-                "mFa", "mFb", "mFc", "mFd","mFe")
-modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1",
-              "mR1a", "mR1b", "mR1c", "mR1d","mR1e")
-modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
-
-modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
-
-modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
-
-allModels<- modelNamesLabels
-modelList<- c(modelsR3,modelsR4 )
-
-# Traditional reading in the files
-getModels<- c("m7R3")
-getAll<- modelList
-
-
-for(i in allModels){
-  modelName<- i
-  pathdsmInfo <- file.path("./Models/LCM/models/datasets",paste0(i,"_mInfo.rds"))
-  pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
-  pathdsp  <- file.path("./Models/LCM/models/datasets",paste0(i,"_dsp.rds"))
-  mInfoTemp<- readRDS(pathdsmInfo)
-  FERETemp<- readRDS(pathdsFERE)
-  dspTemp<- readRDS(pathdsp)
-  
-  assign(paste0(i,"_mInfo"),mInfoTemp)
-  assign(paste0(i,"_FERE"),FERETemp)
-  assign(paste0(i,"_dsp"),dspTemp)
-  rm(list = c("mInfoTemp", "FERETemp", "dspTemp"))
-}
+# modelName <- "m1R1"
+# # list of fixed models
+# modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
+#                 "mFa", "mFb", "mFc", "mFd","mFe")
+# modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1",
+#               "mR1a", "mR1b", "mR1c", "mR1d","mR1e")
+# modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
+# 
+# modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
+# 
+# modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
+# 
+# allModels<- modelNamesLabels
+# 
+# 
+# # Traditional reading in the files
+# getModels<- c("m7R3")
+# getAll<- modelList
+# 
+# 
+# for(i in allModels){
+#   modelName<- i
+#   pathdsmInfo <- file.path("./Models/LCM/models/datasets",paste0(i,"_mInfo.rds"))
+#   pathdsFERE  <- file.path("./Models/LCM/models/datasets",paste0(i,"_FERE.rds"))
+#   pathdsp  <- file.path("./Models/LCM/models/datasets",paste0(i,"_dsp.rds"))
+#   mInfoTemp<- readRDS(pathdsmInfo)
+#   FERETemp<- readRDS(pathdsFERE)
+#   dspTemp<- readRDS(pathdsp)
+#   
+#   assign(paste0(i,"_mInfo"),mInfoTemp)
+#   assign(paste0(i,"_FERE"),FERETemp)
+#   assign(paste0(i,"_dsp"),dspTemp)
+#   rm(list = c("mInfoTemp", "FERETemp", "dspTemp"))
+# }
 
 ###################
 # Read in different REDS files and join them all together

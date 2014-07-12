@@ -22,26 +22,20 @@ BuildBar <- function( modelName = NA ) {
     rm(dsInfoSingle)
   }
   
-  modelsFE <- c("m0F",  "m1F",  "m2F",  "m3F",  "m4F", "m5F", "m6F", "m7F")
-  otherFE <- c( "mFa",  "mFb",  "mFc",  "mFd",  "mFe")
-  modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1")
-  otherR1 <- c ("mR1a", "mR1b", "mR1c", "mR1d", "mR1e")
-  modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
-  modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")  
-  modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")  
+  mF<-   c("m0F",  "m1F",  "m2F",  "m3F",  "m4F",    "m5F",    "m6F",    "m7F")
+  mFi<-  c("mFa",  "mFb",  "mFc",  "mFf",  "mFd",    "mFe")
+  mR1<-  c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1",   "m5R1",   "m6R1",   "m7R1") 
+  mR1i<- c("mR1a", "mR1b", "mR1c", "mR1f", "mR1d",   "mR1e") 
+  mR2<-  c("m1R2", "m2R2", "m3R2", "m4R2", "m5R2",   "m6R2",   "m7R2")
+  mR2i<- c("mR2b", "mR2c", "mR2f", "mR2d", "mR2e")
+  mR3<-  c("m2R3", "m3R3", "m4R3", "m5R3", "m6R3",   "m7R3")              
+  mR3i<- c("mR3f", "mR3d", "mR3e")
+  mR4<-  c("m3R4", "m4R4", "m5R4", "m6R4", "m7R4")   
+  
   ## Composite lists of models
-  mOrder1 <- c(modelsFE, modelsR1, modelsR2, modelsR3, modelsR4, otherFE, otherR1)
-  mOrder2 <- c("m0F", "m0R1", 
-                  "m1F", "m1R1", "m1R2",
-                  "m2F", "m2R1", "m2R2", 
-                  "m3F", "m3R1", "m3R2", "m3R3", "m3R4",
-                  "m4F", "m4R1", "m4R2", "m4R3", "m4R4",
-                  "m5F", "m5R1", "m5R2", "m5R3", "m5R4",
-                  "m6F", "m6R1", "m6R2", "m6R3", "m6R4",
-                  "m7F", "m7R1", "m7R2", "m7R3", "m7R4",
-                  "mFa", "mR1a", "mFb",  "mR1b", "mFc", "mR1c","mFd", "mR1d", "mFe", "mR1e"    
-                  )  
-  excludeModels <- NA
+  mOrder1 <- c(mF, mFi, mR1, mR1i, mR2, mR2i, mR3, mR3i, mR4)
+
+  excludeModels <- NA # c(mF, mFi)
   axisModels  <- c(mOrder1)
   ######################################
   dsWide <- dsInfo  

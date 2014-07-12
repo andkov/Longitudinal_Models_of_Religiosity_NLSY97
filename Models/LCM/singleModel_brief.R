@@ -23,12 +23,12 @@ source("./Models/Descriptives/AesDefine.R")
 ############################
 ## @knitr LoadData
 dsL<-readRDS("./Data/Derived/dsL.rds")
-source("./Models/LCM/LCModels.R")
+source("./Models/LCM/LCModels2.R")
 
 ############################
 ## @knitr defineData
 # numID<- 200 # highest id value (max = 9022)
-numID<- 9022 # highest id value (max = 9022)
+numID<- 200 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id < numID) %>%
@@ -71,16 +71,6 @@ length(unique(ds$timec))
 ###################
 
 
-  # list of fixed models
-modelsFE <- c(  "m0F", "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
-# modelsFE <- c(  "m1F", "m2F", "m3F", "m4F", "m5F", "m6F", "m7F",
-                "mFa", "mFb", "mFc", "mFd","mFe")
-modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1",
-              "mR1a", "mR1b", "mR1c", "mR1d","mR1e")
-modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
-modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")
-modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")
-
 allModels<- modelNamesLabels
 # modelList1<- c(modelsR1, modelsFE)
 # modelList1<- c(modelsR2, modelsR3, modelsR4) 
@@ -89,13 +79,15 @@ allModels<- modelNamesLabels
 # allModels <-  "m0R1"
 # allModels <-  "mFa"
 # allModels <-  "mR1a"
+# allModels <-   mR2i
+fixedOnly <- c(mF, mFi)
 
 for(i in allModels){
   modelName<- i
   message("Running model ", modelName, " in singleModel_brief.R at ", Sys.time())
   modelCall<- paste0("call_",modelName)
   f<- as.formula(modelCall)
-  isRandomModel <- !(modelName %in% modelsFE)
+  isRandomModel <- !(modelName %in% fixedOnly)
   if( isRandomModel ){
     ########################################################################################
     # if model is estimated by lmer() - with random effects

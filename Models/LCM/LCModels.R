@@ -88,21 +88,50 @@ call_m1F <- "attend ~ 1  + timec "
 ### m0F ###
 call_m0F <- "attend ~ 1  "
 
-### mRa ###
+
+
+
+### mR3f ###
+call_mR3f <- "attend ~ 1  + timec + timec2 + cohort + (1 + timec + timec2| id)" 
+### mR3c ###
+call_mR3c <- "attend ~ 1  + timec + cohort + cohort:timec + (1 + timec | id)"
+### mR3d ###
+call_mR3d <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec + (1 + timec + timec2 | id)"
+### mR3e ###
+call_mR3e <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec  + cohort:timec2 + (1 + timec + timec2| id)"
+
+
+### mR2b ###
+call_mR2b <- "attend ~ 1  + timec + cohort + (1 + timec | id)"
+### mR2f ###
+call_mR2f <- "attend ~ 1  + timec + timec2 + cohort + (1 + timec | id)" 
+### mR2c ###
+call_mR2c <- "attend ~ 1  + timec + cohort + cohort:timec + (1 + timec | id)"
+### mR2d ###
+call_mR2d <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec + (1 + timec | id)"
+### mR2e ###
+call_mR2e <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec  + cohort:timec2 + (1 + timec | id)"
+
+
+### mR1a ###
 call_mR1a <- "attend ~ 1  + cohort + (1 | id)"
-### mRb ###
+### mR1b ###
 call_mR1b <- "attend ~ 1  + timec + cohort + (1 | id)"
-### mRc ###
+### mR1f ###
+call_mR1f <- "attend ~ 1  + timec + timec2 + cohort + (1 | id)" 
+### mR1c ###
 call_mR1c <- "attend ~ 1  + timec + cohort + cohort:timec + (1 | id)"
-### mRd ###
+### mR1d ###
 call_mR1d <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec + (1 | id)"
-### mRe ###
+### mR1e ###
 call_mR1e <- "attend ~ 1  + timec + timec2 + cohort + cohort:timec  + cohort:timec2 + (1 | id)"
 
 ### mFa ###
 call_mFa <- "attend ~ 1  + cohort "
 ### mFb ###
 call_mFb <- "attend ~ 1  + timec + cohort " 
+### mFf ###
+call_mFf <- "attend ~ 1  + timec + timec2 + cohort " 
 ### mFc ###
 call_mFc <- "attend ~ 1  + timec + cohort + cohort:timec "
 ### mFd ###
