@@ -345,8 +345,12 @@ for(i in allModels){
     ## dsp ## - deconstructing predictions
     # modelF<-model
     # model<-modelF
+    #TODO: my guess is it's better/safer to start with a (trimmed/narrowed ds), then merge the dsp variables of yHad and residual
+    # dsNarrow <- ds[, c("id", "timec")]
+    
     dsp<-(lm(f, data=ds))$model
     dsp$id<- ds$id
+    dsp$timec <- ds$timec
     dsp$yHat<- fitted(model)
     dsp$resid<- residuals(model)
     head(dsp,13)    
@@ -421,6 +425,9 @@ for(i in allModels){
   #TODO: fix this hack
   missingTimeInDsp <- !("timec" %in% colnames(dsp))
   if( missingTimeInDsp ) {
+#     dsTimeOnly <- ds[]
+    #TODO: the 'timec' variable needs to be merged into the dsp dataset, using the ds dataset.
+    #  However, there's not a good set of variables to match on.
     dsp$timec <- NA_real_
   }
   head(dsp)
