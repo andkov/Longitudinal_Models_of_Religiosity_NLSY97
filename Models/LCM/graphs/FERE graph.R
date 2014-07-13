@@ -12,7 +12,7 @@ BuildFERE <- function( modelName, dsWide ) {
     theme(panel.border = element_blank()) +
     theme(axis.ticks.length = grid::unit(0, "cm"))
   
-  paletteColor <- c("0"=NA, "2"="#33ff33", "3"="tomato","99"=NA) #http://colrd.com/image-dna/23557/
+  paletteColor <- c("0"=NA, "2"="#008000", "3"="tomato","99"=NA) #http://colrd.com/image-dna/23557/
   paletteFill <- c("0"=NA, "1"="#5cbddd", "3"="tomato", "99"=NA)
   
   borderCode <- c(
@@ -66,7 +66,7 @@ BuildFERE <- function( modelName, dsWide ) {
   ds$fillCode <- factor(ifelse(!is.na(ds$value), fillCode, 99))
     
   g <- ggplot(ds, aes(x=col,y=-row, label=label)) +
-    geom_tile(aes(color=borderCode, fill=fillCode), size=1.2) +
+    geom_tile(aes(color=borderCode, fill=fillCode), size=1) +
     geom_text(na.rm=T, color="black", hjust=.5, vjust=.5, size=5, family="mono") +
     scale_color_manual(values=paletteColor) +
     scale_fill_manual(values=paletteFill) +

@@ -29,7 +29,7 @@ BuildLine <- function( modelName, baseSize=11 ) {
     # ggplot2::theme(legend.text = element_text(size = 15),legend.title.align =(-3.3))# +
     # ggplot2::theme(panel.grid = element_line(linetype = 1,size=rel(3)))
   
-  ds<- dsp %>% dplyr::filter(id %in% c(1:9022))
+  ds<- dsp %>% dplyr::filter(id %in% c(1:10))
   # ds<- dsp
   # head(ds)
 
