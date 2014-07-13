@@ -12,11 +12,31 @@ BuildFERE <- function( modelName, dsWide ) {
     theme(panel.border = element_blank()) +
     theme(axis.ticks.length = grid::unit(0, "cm"))
   
-  paletteColor <- c("0"=NA, "2"="#7ebea5", "3"="tomato","99"=NA) #http://colrd.com/image-dna/23557/
+  paletteColor <- c("0"=NA, "2"="#33ff33", "3"="tomato","99"=NA) #http://colrd.com/image-dna/23557/
   paletteFill <- c("0"=NA, "1"="#5cbddd", "3"="tomato", "99"=NA)
   
-  borderCode <- c(0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,0,0,0,0,99,99,99,99,3,99,99,99,99,99,99,99)
-  fillCode <- c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,3,3,3,99,99,99,99,3,99,99,99,99,99,99,99)
+  borderCode <- c(
+    0,0,0,0,2,2,2,2,
+    0,0,0,0,2,2,2,2,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0
+  )
+  fillCode <- c(
+    1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,
+    0,0,0,0,0,0,0,0,
+    3,3,3,3,0,0,0,0,
+    3,3,3,3,0,0,0,0,
+    3,3,3,3,0,0,0,0,
+    3,3,3,3,0,0,0,0,
+    3,3,3,3,0,0,0,0,
+    3,0,0,0,0,0,0,0
+  )
   
   columnNamesWide <- c("Estimate", "Std.Error", "t.value", "sdRE", "intVarRE", "timecVarRE", "timec2VarRE", "timec3VarRE", "sigma")
   columnNamesWideWithCoefficient <- c("Coefficient", columnNamesWide)
@@ -25,7 +45,7 @@ BuildFERE <- function( modelName, dsWide ) {
   # I will enforce this order, it's important
   target <- c("(Intercept)", "timec", "timec2", "timec3", "cohort", "timec:cohort", "timec2:cohort", "timec3:cohort")
   dsWide2<-dsWide2[match(target, dsWide2$Coefficient), ]
-
+  dsWide2[2:(length(dsWide2)-2),"sigma"]<- NA # remove unnecessary values from sigma
   ds <- melt(dsWide2, id.vars=("Coefficient"), value.name="value") 
 
   ds$label <- sprintf("% .2f", ds$value) #format(x=round(ds$value,2), trim=FALSE)
@@ -46,7 +66,7 @@ BuildFERE <- function( modelName, dsWide ) {
   ds$fillCode <- factor(ifelse(!is.na(ds$value), fillCode, 99))
     
   g <- ggplot(ds, aes(x=col,y=-row, label=label)) +
-    geom_tile(aes(color=borderCode, fill=fillCode)) +
+    geom_tile(aes(color=borderCode, fill=fillCode), size=1.2) +
     geom_text(na.rm=T, color="black", hjust=.5, vjust=.5, size=5, family="mono") +
     scale_color_manual(values=paletteColor) +
     scale_fill_manual(values=paletteFill) +
