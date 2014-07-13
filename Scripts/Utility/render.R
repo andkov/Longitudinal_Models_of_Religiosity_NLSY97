@@ -1,5 +1,5 @@
 rm(list=ls(all=TRUE))  #Clear the variables from previous runs.
-pathReport<-   base::file.path("./Models/Appendix.Rmd")
+pathReport<-   base::file.path("./Models/LCM/sequenceLCM.Rmd")
 library(dplyr)
 
   rmarkdown::render(input = pathReport, 
