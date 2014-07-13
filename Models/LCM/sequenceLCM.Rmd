@@ -305,5 +305,5 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 ```
 
 # Model specification  
-General case of LCM and model sequence are defined as:    
+The general case for the latent curve models used in the study is:    
 ![general form](../../images/general_form.png)

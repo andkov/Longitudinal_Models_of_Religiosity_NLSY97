@@ -77,172 +77,224 @@ lstModelOutcomes <- readRDS("./Models/LCM/models/datasets/ListOfModelOutcomes.rd
 ############################
 ## @knitr TweakData
 
-############################
-## @knitr modelSpecification
-
 ####################################### models with FIXED only #####--F
 ## @knitr m0F
 # dsWide <- lstModelOutcomes["m0F"][[1]]; modelName <- "m0F"
 BuildMosaic(modelName="m0F")
 
+############################
 ## @knitr m1F
 # dsWide <- lstModelOutcomes["m1F"][[1]]; modelName <- "m1F"
 BuildMosaic(modelName="m1F")#             
 
+############################
 ## @knitr m2F
 BuildMosaic(modelName="m2F")
 
+############################
 ## @knitr m3F
 BuildMosaic(modelName="m3F")
 
+############################
 ## @knitr m4F
 BuildMosaic(modelName="m4F")
 
+############################
 ## @knitr m5F
 BuildMosaic(modelName="m5F")
 
+############################
 ## @knitr m6F
 BuildMosaic(modelName="m6F")
 
+############################
 ## @knitr m7F
 BuildMosaic(modelName="m7F")
+#############################   i
+## @knitr mFa
+BuildMosaic(modelName="mFa")
+
+############################
+## @knitr mFb
+BuildMosaic(modelName="mFb")
+
+############################
+## @knitr mFc
+BuildMosaic(modelName="mFc")
+
+############################
+## @knitr mFf
+BuildMosaic(modelName="mFf") 
+
+############################
+## @knitr mFd
+BuildMosaic(modelName="mFd")
+
+############################
+## @knitr mFe
+BuildMosaic(modelName="mFe")
 
 ########################################## models with 1 RANDOM #####--R1
 ## @knitr m0R1
 BuildMosaic(modelName="m0R1")
 # m0R1 <- readRDS("./Models/LCM/models/datasets/m0R1_dsp.rds")
 
+############################
 ## @knitr m1R1
 BuildMosaic(modelName="m1R1")
 
+############################
 ## @knitr m2R1
 BuildMosaic(modelName="m2R1")
 
+############################
 ## @knitr m3R1
 BuildMosaic(modelName="m3R1")
 
+############################
 ## @knitr m4R1
 BuildMosaic(modelName="m4R1")
 
+############################
 ## @knitr m5R1
 BuildMosaic(modelName="m5R1")
 
+############################
 ## @knitr m6R1
 BuildMosaic(modelName="m6R1")
 
+############################
 ## @knitr m7R1
 BuildMosaic(modelName="m7R1")
+
+############################    i
+## @knitr mR1a
+BuildMosaic(modelName="mR1a")
+
+#############################
+## @knitr mR1b
+BuildMosaic(modelName="mR1b")
+
+############################
+## @knitr mR1c
+BuildMosaic(modelName="mR1c")
+
+############################
+## @knitr mR1f
+BuildMosaic(modelName="mR1f")
+
+############################
+## @knitr mR1d
+BuildMosaic(modelName="mR1d")
+
+############################
+## @knitr mR1e
+BuildMosaic(modelName="mR1e")
 
 ########################################## models with 2 RANDOM #####--R2
 ## @knitr m1R2
 BuildMosaic(modelName="m1R2")
 
+############################
 ## @knitr m2R2
 BuildMosaic(modelName="m2R2")
 
+############################
 ## @knitr m3R2
 BuildMosaic(modelName="m3R2")
 
+############################
 ## @knitr m4R2
 BuildMosaic(modelName="m4R2")
 
+############################
 ## @knitr m5R2
 BuildMosaic(modelName="m5R2")
 
+############################
 ## @knitr m6R2
 BuildMosaic(modelName="m6R2")
 
+############################
 ## @knitr m7R2
 BuildMosaic(modelName="m7R2")
 
-########################################### models with 3 RANDOM #####--R3
-
+###################################### i
 ## @knitr mR2b
-BuildMosaic(modelName="mR2b") ############### Will added.  Make sure it's in the right spot
+BuildMosaic(modelName="mR2b")
 
+############################
 ## @knitr mR2c
-BuildMosaic(modelName="mR2c") ############### Will added.  Make sure it's in the right spot
+BuildMosaic(modelName="mR2c")
 
+############################
 ## @knitr mR2f
-BuildMosaic(modelName="mR2f") ############### Will added.  Make sure it's in the right spot
+BuildMosaic(modelName="mR2f")
 
+############################
 ## @knitr mR2d
-BuildMosaic(modelName="mR2d") ############### Will added.  Make sure it's in the right spot
+BuildMosaic(modelName="mR2d")
 
+############################
 ## @knitr mR2e
-BuildMosaic(modelName="mR2e") ############### Will added.  Make sure it's in the right spot
+BuildMosaic(modelName="mR2e")
 
 
-
-
+########################################### models with 3 RANDOM #####--R3
 ## @knitr m2R3
 BuildMosaic(modelName="m2R3")
 
+############################
 ## @knitr m3R3
 BuildMosaic(modelName="m3R3")
 
+############################
 ## @knitr m4R3
 BuildMosaic(modelName="m4R3")
 
+############################
 ## @knitr m5R3
 BuildMosaic(modelName="m5R3")
 
+############################
 ## @knitr m6R3
 BuildMosaic(modelName="m6R3")
 
+############################
 ## @knitr m7R3
 BuildMosaic(modelName="m7R3")
 
-########################################### models with 4 RANDOM #####--R4
+
+###################################### i
 ## @knitr mR3f
-BuildMosaic(modelName="mR3f") ############### Will added.  Make sure it's in the right spot
+BuildMosaic(modelName="mR3f")
 
+############################
 ## @knitr mR3d
-BuildMosaic(modelName="mR3d") ############### Will added.  Make sure it's in the right spot
+BuildMosaic(modelName="mR3d")
 
+############################
 ## @knitr mR3e
-BuildMosaic(modelName="mR3e") ############### Will added.  Make sure it's in the right spot
+BuildMosaic(modelName="mR3e")
 
+
+
+########################################### models with 4 RANDOM #####--R4
+## @knitr m3R4
+BuildMosaic(modelName="m3R4")
+
+############################
 ## @knitr m4R4
 BuildMosaic(modelName="m4R4")
 
+############################
 ## @knitr m5R4
 BuildMosaic(modelName="m5R4")
 
+############################
 ## @knitr m6R4
 BuildMosaic(modelName="m6R4")
 
+############################
 ## @knitr m7R4
 BuildMosaic(modelName="m7R4")
-
-######################################### other RANDOM  models #####--Ro
-## @knitr mR1a
-BuildMosaic(modelName="mR1a")
-
-## @knitr mR1b
-BuildMosaic(modelName="mR1b")
-
-## @knitr mR1c
-BuildMosaic(modelName="mR1c")
-
-## @knitr mR1d
-BuildMosaic(modelName="mR1d")
-
-## @knitr mR1e
-BuildMosaic(modelName="mR1e")
-
-######################################### other FIXED models #####--Fo
-## @knitr mFa
-BuildMosaic(modelName="mFa")
-
-## @knitr mFb
-BuildMosaic(modelName="mFb")
-
-## @knitr mFc
-BuildMosaic(modelName="mFc")
-
-## @knitr mFd
-BuildMosaic(modelName="mFd")
-
-## @knitr mFe
-BuildMosaic(modelName="mFe")
