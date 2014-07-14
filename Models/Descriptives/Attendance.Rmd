@@ -320,6 +320,44 @@ p <- p + ggplot2::theme(axis.text.x = element_blank())
 p
 ```
 
+
+### Race and attendance for each year
+```{r attend_race_2011, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
+ds<- dsL %.%
+  dplyr::filter(year %in% c(2011), !is.na(attend), race !=3) %.%   # comment out to count NA in the total
+  dplyr::group_by(sampleF,yearF,raceF,attendF) %.%
+  dplyr::summarize(count = n()) %.%
+  dplyr::mutate(total = sum(count),
+                percent= count/total)
+# canvas
+p<- ggplot( ds, aes(x=attendF, y=percent, fill=attendF)) 
+# geoms
+p<- p+ geom_bar(stat="identity")
+p<- p+ facet_grid(sampleF ~ raceF)
+p<- p+ geom_text(aes(label=round(percent,2)), position=position_dodge(.9), vjust=-.2, size=3.5)
+# scales
+
+p<- p+ scale_fill_manual(values = attendCol8,na.value=NACol)
+p<- p+ scale_y_continuous(limits=c(0, .3),
+                          breaks=c(0,.1,.2,.3,.4,.5))
+# # annotations
+p<- p + guides(fill = guide_legend(reverse=FALSE, title="Response category")) 
+p<- p + guides(color = FALSE) 
+p<-  p+ labs(title = "In the past year(2000), how often have you attended a worship service?",
+             x="Church attendance",
+             y="Proportion of total")
+# # themes
+p <- p + ggplot2::theme_bw()
+p <- p + ggplot2::theme_bw(base_size=baseSize)
+p <- p + ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) 
+p <- p + ggplot2::theme(axis.text=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40"))
+p <- p + ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80"))
+p <- p + ggplot2::theme(axis.ticks.length = grid::unit(0, "cm"))
+p <- p + ggplot2::theme(axis.text.x = element_blank())
+p
+```
+
 ### Race and attendance for each age bin
 ```{r attend_race_16, echo=F, message=F, warning=F, fig.height=5, fig.width=10}
 t<- 16

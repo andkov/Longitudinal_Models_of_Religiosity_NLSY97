@@ -14,7 +14,9 @@ BuildLine <- function( modelName, baseSize=11 ) {
   
   # bgColour<-gray(.95)   # background color
   indLineSz <-.08        # individual line size
+#   indLineSz <-.5        # individual line size
   indLineAl <-.06        # individual line alpha
+#   indLineAl <-1        # individual line alpha
   
   themeLine <- ggplot2::theme_bw(base_size=baseSize) +
     ggplot2::theme(title=ggplot2::element_text(colour="gray20",size = 12)) +
@@ -29,7 +31,7 @@ BuildLine <- function( modelName, baseSize=11 ) {
     # ggplot2::theme(legend.text = element_text(size = 15),legend.title.align =(-3.3))# +
     # ggplot2::theme(panel.grid = element_line(linetype = 1,size=rel(3)))
   
-  ds<- dsp %>% dplyr::filter(id %in% c(1:10))
+  ds<- dsp %>% dplyr::filter(id %in% c(1:9022))
   # ds<- dsp
   # head(ds)
 
@@ -44,8 +46,10 @@ BuildLine <- function( modelName, baseSize=11 ) {
   # themes, guide, and annotations
   p <- p + themeLine 
   p <- p + labs(title="How often have you attended a worship service?", x="Years Since 2000", y="Church Attendance")
-  return( p )
+#   ggsave(filename="./Models/LCM/graphs/text/m7F_2.png", plot=p, width =5 , height =4) # uncomment to produce graph in lines below the function
+    return( p )
+
 }
-# BuildLine("m5F")
+# BuildLine("m7F")
 # BuildLine("m7R1")
 # BuildLine("m7R2")
