@@ -1,15 +1,6 @@
 ---
 title: "Custom Fit"
 output:
-  html_document:
-    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig.retina: 2
-    fig_width: 8
-    toc: yes
-    keep_md: false
-  md_document:
-    toc: yes
-    toc_depth: 3
   pdf_document:
     fig_crop: no
     fig_width: 8
@@ -18,6 +9,15 @@ output:
     number_sections: yes
     toc: yes
     toc_depth: 3
+  md_document:
+    toc: yes
+    toc_depth: 3
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    keep_md: no
+    toc: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
@@ -44,7 +44,7 @@ opts_chunk$set(
   fig.path = 'figureRmd/',     
   warning = FALSE,
   dev = "png"
-  #, dpi = 300
+  , dpi = 400
 )
 echoChunks <- FALSE
 warningChunks<- FALSE
