@@ -39,12 +39,12 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(ave(!is.na(attend), id, FUN = all)) %>% # only complete trajectories
   dplyr::mutate( # compute new variables
     age= year-byear, # definition of age to be used in the model    
-    timec=year-2000, # metric of time is rounds of NSLY97 in years, centered at 2000
-    timec2= timec^2, 
-    timec3= timec^3,
-    #         timec= age-16, # metric of time is bilogical age in years, centered at 16
-    #         timec2= timec^2,
-    #         timec3= timec^3,# 
+#     timec=year-2000, # metric of time is rounds of NSLY97 in years, centered at 2000
+#     timec2= timec^2, 
+#     timec3= timec^3,
+            timec= age-16, # metric of time is bilogical age in years, centered at 16
+            timec2= timec^2,
+            timec3= timec^3,# 
     cohort=byear-1980) %>% # age difference, years younger (unit - 1 cohort away)
   dplyr::select( # assemble the dataset for modeling
     id, sample, race, byear,cohort, # Time Invariant variables
@@ -60,12 +60,12 @@ sum(is.na(ds$attend)) # NA in the dataset
 length(unique(ds$timec))
 
 ## FOR TESTING ###
-# flmer<- as.formula(call_m5R1)
+# flmer<- as.formula(call_m3R1)
 # model <-lmer (flmer, data = ds, REML=FALSE,
 #               control=lmerControl(optCtrl=list(maxfun=20000)))
 # modelR<-model
-# 
-# fnlme<- as.formula(call_m4F)
+# # 
+# fnlme<- as.formula(call_m3F)
 # model<- nlme::gls(fnlme, data=ds,method = "ML")
 # modelF<-model
 ###################
