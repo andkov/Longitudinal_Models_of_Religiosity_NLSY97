@@ -30,6 +30,11 @@ opts_knit$set(root.dir='../../../')  #Don't combine this call with any other chu
 
 ```
 
+<!-- This report uses ALL THREE individual graphs:
+     - FERE grid
+     - bar graph of fit
+     - line graph of trajectories -->
+
 ```{r set_options, echo=F, message=F}
 require(knitr)
 # getwd()
