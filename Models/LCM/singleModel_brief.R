@@ -60,7 +60,7 @@ sum(is.na(ds$attend)) # NA in the dataset
 length(unique(ds$timec))
 
 ## FOR TESTING ###
-# flmer<- as.formula(call_m3R1)
+flmer<- as.formula(call_m3R1)
 # model <-lmer (flmer, data = ds, REML=FALSE,
 #               control=lmerControl(optCtrl=list(maxfun=20000)))
 # modelR<-model
@@ -99,6 +99,7 @@ for(i in allModels){
     ## mInfo ##
     # model<- modelR
     mInfo<-summary(model)$AICtab
+    mInfo<- sort(mInfo,decreasing = T) # helps with the bar graph of fit, places BIC-AIC-dev
     mInfo["N"]<- model@devcomp$dims["N"] # number of datapoints, verify
     mInfo["p"]<- model@devcomp$dims["p"] # number of estimated parameters, verify
     mInfo["ids"]<- (summary(model))$ngrps # number of units on level-2, here: individuals
@@ -277,7 +278,7 @@ for(i in allModels){
     ids<- length(unique(ds$id))
     df.resid<- N-p
     
-    mInfo<- data.frame("AIC" = AIC, "BIC" = BIC, "logLik" = logLik, "deviance"=deviance,
+    mInfo<- data.frame("BIC" = BIC, "AIC" = AIC, "deviance"=deviance, "logLik" = logLik, 
                        "df.resid"=df.resid, "N"=N, "p"=p, "ids"=ids)
     t<- t(mInfo)
     rownames(t)<-colnames(mInfo)
