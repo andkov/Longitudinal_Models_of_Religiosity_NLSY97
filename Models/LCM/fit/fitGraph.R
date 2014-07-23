@@ -31,7 +31,8 @@ ds$Coefficient <- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
 
 # possible pallets
 # colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5")
-colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
+# colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
+colorFit <- c("BIC"="blue", "AIC"="red", "deviance"="grey") 
 # colorFit <- c("BIC"="#bebada", "AIC"="#8dd3c7", "deviance"="#ffffb3") 
 # colorFit <- c("BIC"="#8da0cb", "AIC"="#d95f02", "deviance"="#b2df8a")
 
@@ -55,7 +56,7 @@ barTheme <- theme_bw() +
   theme(legend.text = element_text(colour = 'gray40'))
 
 g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model)) +
-  geom_bar(stat="identity", position="identity", alpha=.1) + #This line draw the distant skyscrapers
+  geom_bar(stat="identity", position="identity", alpha=1) + #This line draw the distant skyscrapers
   geom_bar(data=ds[ds$Highlight, ], stat="identity", position="identity", alpha=.2) + #This line draw the skyskraper that pops out.
   scale_fill_manual(values=colorFit) +
   scale_x_discrete(limits=axisModels) +

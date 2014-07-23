@@ -51,7 +51,8 @@ BuildBar <- function( modelName = NA ) {
   
   # possible pallets
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5")
-  colorFit <- c("BIC"="plum", "AIC"="goldenrod", "deviance"="lavender")
+#   colorFit <- c("BIC"="plum", "AIC"="goldenrod", "deviance"="lavender")
+colorFit <- c("BIC"="blue", "AIC"="red", "deviance"="grey") 
   # colorFit <- c("BIC"="#bebada", "AIC"="#8dd3c7", "deviance"="#ffffb3") 
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#d95f02", "deviance"="#b2df8a")
   
