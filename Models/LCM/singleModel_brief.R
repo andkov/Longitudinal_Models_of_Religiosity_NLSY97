@@ -28,7 +28,7 @@ source("./Models/LCM/LCModels2.R")
 ############################
 ## @knitr defineData
 # numID<- 200 # highest id value (max = 9022)
-numID <- 9022 # highest id value (max = 9022)
+numID <- 1000 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id < numID) %>%
@@ -45,7 +45,7 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
             timec= age-16, # metric of time is bilogical age in years, centered at 16
             timec2= timec^2,
             timec3= timec^3,# 
-    cohort=byear-1980) %>% # age difference, years younger (unit - 1 cohort away)
+    cohort=byear-1980-1) %>% # age difference, years younger (unit - 1 cohort away)
   dplyr::select( # assemble the dataset for modeling
     id, sample, race, byear,cohort, # Time Invariant variables
     year,

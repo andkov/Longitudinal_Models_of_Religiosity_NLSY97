@@ -1,15 +1,6 @@
 ---
 title: "Custom Fit"
 output:
-  html_document:
-    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
-    fig.retina: 2
-    fig_width: 8
-    toc: yes
-    keep_md: false
-  md_document:
-    toc: yes
-    toc_depth: 3
   pdf_document:
     fig_crop: no
     fig_width: 8
@@ -18,6 +9,15 @@ output:
     number_sections: yes
     toc: yes
     toc_depth: 3
+  md_document:
+    toc: yes
+    toc_depth: 3
+  html_document:
+    css: ~/GitHub/Longitudinal_Models_of_Religiosity_NLSY97/www/css/thesis.css
+    fig.retina: 2
+    fig_width: 8
+    keep_md: no
+    toc: yes
   word_document:
     fig_width: 6.5
 mainfont: Calibri
@@ -44,7 +44,7 @@ opts_chunk$set(
   fig.path = 'figureRmd/',     
   warning = FALSE,
   dev = "png"
-  #, dpi = 300
+  , dpi = 400
 )
 echoChunks <- FALSE
 warningChunks<- FALSE
@@ -65,365 +65,260 @@ read_chunk("./Models/LCM/fit/customFit.R") # the file to which knitr calls for t
 # select only respondence in the cross-sectional sample
 ```
 
-```{r loadRDS}
+```{r loadRDS, echo=echoChunks}
+# string definitions should be copied from "LCModels.R" file
+  mF<-   c("m0F",  "m1F",  "m2F",  "m3F",  "m4F",    "m5F",    "m6F",    "m7F")
+  mFi<-  c("mFa",  "mFb",  "mFc",  "mFf",  "mFd",    "mFe")
+  mR1<-  c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1",   "m5R1",   "m6R1",   "m7R1") 
+  mR1i<- c("mR1a", "mR1b", "mR1c", "mR1f", "mR1d",   "mR1e") 
+  mR2<-  c("m1R2", "m2R2", "m3R2", "m4R2", "m5R2",   "m6R2",   "m7R2")
+  mR2i<- c("mR2b", "mR2c", "mR2f", "mR2d", "mR2e")
+  mR3<-  c("m2R3", "m3R3", "m4R3", "m5R3", "m6R3",   "m7R3")              
+  mR3i<- c("mR3f", "mR3d", "mR3e")
+  mR4<-  c("m3R4", "m4R4", "m5R4", "m6R4", "m7R4")   
+#  Composite lists of models
+  mOrder1 <- c(mF, mFi, mR1, mR1i, mR2, mR2i, mR3, mR3i, mR4)
+  FF <- c(mF, mFi)
+  R1 <- c(mR1, mR1i)
+  R2 <- c(mR2, mR2i)
+  R3 <- c(mR3, mR3i)
+  R4 <- mR4
 
-modelsFE <- c("m0F",  "m1F",  "m2F",  "m3F",  "m4F", "m5F", "m6F", "m7F")
-modelsR1 <- c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1", "m5R1", "m6R1", "m7R1")
-modelsR2 <- c(        "m1R2", "m2R2", "m3R2", "m4R2", "m5R2", "m6R2", "m7R2")
-modelsR3 <- c(                "m2R3", "m3R3", "m4R3", "m5R3", "m6R3", "m7R3")  
-modelsR4 <- c(                        "m3R4", "m4R4", "m5R4", "m6R4", "m7R4")  
-otherFE <- c( "mFa",  "mFb",  "mFc",  "mFd",  "mFe")  
-otherR1 <- c ("mR1a", "mR1b", "mR1c", "mR1d", "mR1e")
-## Composite lists of models
-mOrder1 <- c(modelsFE, modelsR1, modelsR2, modelsR3, modelsR4, otherFE, otherR1)
-mOrder2 <- c("m0F", "m0R1", 
-             "m1F", "m1R1", "m1R2",
-             "m2F", "m2R1", "m2R2", 
-             "m3F", "m3R1", "m3R2", "m3R3", "m3R4",
-             "m4F", "m4R1", "m4R2", "m4R3", "m4R4",
-             "m5F", "m5R1", "m5R2", "m5R3", "m5R4",
-             "m6F", "m6R1", "m6R2", "m6R3", "m6R4",
-             "m7F", "m7R1", "m7R2", "m7R3", "m7R4",
-             "mFa", "mR1a", "mFb",  "mR1b", "mFc", 
-             "mR1c","mFd", "mR1d", "mFe", "mR1e")
-mOrder3<- c(otherFE,modelsFE, modelsR1,otherR1,modelsR2, modelsR3,modelsR4)
-# mOrder4<-
+  F_row <- c("m0F", "m1F", "m2F", "m3F", 
+             "mFa", "mFb", "mFf", "m4F", 
+                    "mFc", "mFd", "m5F", 
+                           "mFe", "m6F", 
+                                  "m7F")
+  F_col <- c("m0F", "mFa", 
+             "m1F", "mFb", "mFc", 
+             "m2F", "mFf", "mFd", "mFe", 
+             "m3F", "m4F", "m5F", "m6F", "m7F")
 
-orderFoR1o<- c("mFa", "mR1a", "mFb",  "mR1b", "mFc",
-             "mR1c","mFd", "mR1d", "mFe", "mR1e")
+  R1_row <- c("m0R1", "m1R1", "m2R1", "m3R1", 
+              "mR1a", "mR1b", "mR1f", "m4R1", 
+                      "mR1c", "mR1d", "m5R1", 
+                              "mR1e", "m6R1", 
+                                      "m7R1")
+  R1_col <- c("m0R1", "mR1a", 
+              "m1R1", "mR1b",  "mR1c", 
+              "m2R1", "mR1f",  "mR1d", "mR1e", 
+              "m3R1", "m4R1",  "m5R1", "m6R1", "m7R1")
 
-orderFR1<- c( "m1F", "m1R1", 
-             "m2F", "m2R1",  
-             "m3F", "m3R1", 
-             "m4F", "m4R1",
-             "m5F", "m5R1", 
-             "m6F", "m6R1",
-             "m7F", "m7R1")
+  R2_row <- c(        "m1R2", "m2R2", "m3R2", 
+                      "mR2b", "mR2f", "m4R2", 
+                      "mR2c", "mR2d", "m5R2", 
+                              "mR2e", "m6R2", 
+                                      "m7R2")
+  R2_col <- c( 
+              "m1R2", "mR2b",  "mR2c", 
+              "m2R2", "mR2f",  "mR2d", "mR2e", 
+              "m3R2", "m4R2",  "m5R2", "m6R2", "m7R2")
+              
+  R3_row <- c(                "m2R3", "m3R3", 
+                              "mR3f", "m4R3", 
+                              "mR3d", "m5R3", 
+                              "mR3e", "m6R3", 
+                                      "m7R3")
+  R3_col <- c( 
+              
+              "m2R3", "mR3f",  "mR3d", "mR3e", 
+              "m3R3", "m4R3",  "m5R3", "m6R3", "m7R3")
 
-orderR1R2 <- c( "m1R1", "m1R2",
-                "m2R1", "m2R2", 
-                "m3R1", "m3R2", 
-                "m4R1", "m4R2", 
-                "m5R1", "m5R2", 
-                "m6R1", "m6R2", 
-                "m7R1", "m7R2")
+  R4_row <- c(                        "m3R4", 
+                                      "m4R4", 
+                                      "m5R4", 
+                                      "m6R4", 
+                                      "m7R4")
+  R4_col <- c( 
+              
+              
+              "m3R4", "m4R4",  "m5R4", "m6R4", "m7R4")
 
 ```
 
 
-# all models
-```{r all}
+# All models 
+
+```{r allModels, echo=echoChunks, results="hide"}
 out<-c(
-#         modelsFE,
-#         modelsR1,
-#         modelsR2,
-#         modelsR3,
-# #         modelsR4,
-#         otherFE,
-#         otherR1
+#         mF,  mFi,
+#         mR1,  mR1i,
+#         mR2,  mR2i,
+#         mR3,  mR3i,
+#         mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c(mOrder3 )
+axisModels  <-mOrder1
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
-# all models - sequential
-```{r all-s}
+There are total of 54 distinct models, which can be organized into 4 groups:  
+
++ models with fixed effects only
++ models with 1 random term
++ models with 2 random terms
++ models with 3 random temrs
+
+The following layout helps understand how each of the models was constructed. The columns count the number of terms  on the first level, the rows shows what predictors are added to the second level. Replace the stars in the name of the model with **F** for models with only the fixed effects  and **R1**, **R2**, **R3**, and **R4**  for models with the corresponding number of random terms in the second level. 
+
+![grid](../../../images/sequenceGrid.png)
+
+
+# Models w/ fixed only
+![grid_F](../../../images/grid_F.png)
+
+## F by row
+```{r F_row, echo=echoChunks, results="hide"}
 out<-c(
-#         modelsFE,
-#         modelsR1,
-#         modelsR2,
-#         modelsR3,
-# #         modelsR4,
-#         otherFE,
-#         otherR1
+#         mF,  mFi,
+        mR1,  mR1i,
+        mR2,  mR2i,
+        mR3,  mR3i,
+        mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c(mOrder2 )
+axisModels  <-F_row
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
-
-# Map view
-```{r mapView }
+## F by column
+```{r F_col, echo=echoChunks, results="hide" }
 out<-c(
-#         modelsFE,
-#         modelsR1,
-        modelsR2,
-        modelsR3,
-        modelsR4
-#         otherFE,
-#         otherR1
+#         mF,  mFi,
+        mR1,  mR1i,
+        mR2,  mR2i,
+        mR3,  mR3i,
+        mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c(otherFE,modelsFE, modelsR1, otherR1  )
+axisModels  <- F_col
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
+# Models w/ 1 random
+![grid_R1](../../../images/grid_R1.png)
 
-# FoFE
-```{r FoFE }
+## R1 by row
+```{r R1_row, echo=echoChunks, results="hide"}
 out<-c(
-#         modelsFE,
-        modelsR1,
-        modelsR2,
-        modelsR3,
-        modelsR4,
-#         otherFE
-        otherR1
+        mF,  mFi,
+#         mR1,  mR1i,
+        mR2,  mR2i,
+        mR3,  mR3i,
+        mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c(otherFE, modelsFE )
+axisModels  <-R1_row
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
-# FoFE - interleave
-```{r FoFE-int }
+## R1 by column
+```{r R1_col, echo=echoChunks, results="hide"}
 out<-c(
-#         modelsFE,
-        modelsR1,
-        modelsR2,
-        modelsR3,
-        modelsR4,
-#         otherFE
-        otherR1
+        mF,  mFi,
+#         mR1,  mR1i,
+        mR2,  mR2i,
+        mR3,  mR3i,
+        mR4
 )
 excludeModels <- c(out)  
-custom1<- c("m0F", "mFa", "m1F", "mFb","mFc", "m2F", "m3F", "mFd", "m4F","mFe","m6F","m7F")
-axisModels  <- c(custom1)
+axisModels  <-R1_col
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
-# R1Ro
-```{r R1Ro }
+# Models w/ 2 random
+![grid_F](../../../images/grid_R2.png)
+
+## R2 by row
+```{r R2_row, echo=echoChunks, results="hide"}
 out<-c(
-        modelsFE,
-#         modelsR1,
-        modelsR2,
-        modelsR3,
-        modelsR4,
-        otherFE
-#         otherR1
+        mF,  mFi,
+        mR1,  mR1i,
+#         mR2,  mR2i,
+        mR3,  mR3i,
+        mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c( modelsR1, otherR1  )
+axisModels  <-R2_row
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
-
-
-
-# Ro-R1-R2-R3-R4
-```{r RoR1R2R3R4 }
+## R2 by column
+```{r R2_col, echo=echoChunks, results="hide"}
 out<-c(
-        modelsFE,
-#         modelsR1,
-#         modelsR2,
-#         modelsR3,
-#         modelsR4,
-        otherFE
-#         otherR1
+        mF,  mFi,
+        mR1,  mR1i,
+#         mR2,  mR2i,
+        mR3,  mR3i,
+        mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c(otherR1, modelsR1,modelsR2, modelsR3, modelsR4 )
-source("./Models/LCM/fit/fitGraph.R")
-g
-```
-
-
-# R1-R2-R3-R4
-```{r R1R2R3R4 }
-out<-c(
-        modelsFE,
-#         modelsR1,
-#         modelsR2,
-#         modelsR3,
-#         modelsR4,
-        otherFE,
-        otherR1
-)
-excludeModels <- c(out)  
-axisModels  <- c(modelsR1,modelsR2, modelsR3, modelsR4 )
-source("./Models/LCM/fit/fitGraph.R")
-g
-```
-
-
-# R2-R3-R4
-```{r R2R3R4 }
-out<-c(
-        modelsFE,
-        modelsR1,
-#         modelsR2,
-#         modelsR3,
-#         modelsR4,
-        otherFE,
-        otherR1
-)
-excludeModels <- c(out)  
-axisModels  <- c(modelsR2, modelsR3, modelsR4 )
-source("./Models/LCM/fit/fitGraph.R")
-g
-```
-
-# R3-R4
-```{r R3R4 }
-out<-c(
-        modelsFE,
-        modelsR1,
-        modelsR2,
-#         modelsR3,
-#         modelsR4,
-        otherFE,
-        otherR1
-)
-excludeModels <- c(out)  
-axisModels  <- c(modelsR3, modelsR4 )
-source("./Models/LCM/fit/fitGraph.R")
-g
-```
-
-
-#  R4
-```{r R4 }
-out<-c(
-        modelsFE,
-        modelsR1,
-        modelsR2,
-        modelsR3,
-#         modelsR4,
-        otherFE,
-        otherR1
-)
-excludeModels <- c(out)  
-axisModels  <- c( modelsR4 )
-source("./Models/LCM/fit/fitGraph.R")
-g
-```
-
-
-#  R3
-```{r R3 }
-out<-c(
-        modelsFE,
-        modelsR1,
-        modelsR2,
-#         modelsR3,
-        modelsR4,
-        otherFE,
-        otherR1
-)
-excludeModels <- c(out)  
-axisModels  <- c( modelsR3 )
+axisModels  <-R2_col
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
 
 
-#  R2
-```{r R2 }
+# Models w/ 3 random
+![grid_R3](../../../images/grid_R3.png)
+
+## R3 by row
+```{r R3_row, echo=echoChunks, results="hide"}
 out<-c(
-        modelsFE,
-        modelsR1,
-#         modelsR2,
-        modelsR3,
-        modelsR4,
-        otherFE,
-        otherR1
+        mF,  mFi,
+        mR1,  mR1i,
+        mR2,  mR2i,
+#         mR3,  mR3i,
+        mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c( modelsR2 )
+axisModels  <-R3_row
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
-#  R1
-
-```{r R1 }
+## R3 by column
+```{r R3_col, echo=echoChunks, results="hide"}
 out<-c(
-        modelsFE,
-#         modelsR1,
-        modelsR2,
-        modelsR3,
-        modelsR4,
-        otherFE,
-        otherR1
+        mF,  mFi,
+        mR1,  mR1i,
+        mR2,  mR2i,
+#         mR3,  mR3i,
+        mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c( modelsR1 )
-source("./Models/LCM/fit/fitGraph.R")
-g
-```
-
-
-
-
-
-#  FoR1o
-```{r FoR1o }
-out<-c(
-        modelsFE,
-        modelsR1,
-        modelsR2,
-        modelsR3,
-        modelsR4
-#         otherFE,
-#         otherR1
-)
-excludeModels <- c(out)  
-axisModels  <- c( orderFoR1o )
-source("./Models/LCM/fit/fitGraph.R")
-g
-```
-
-
-#  F-R1
-```{r F-R1 }
-out<-c(
-#         modelsFE,
-#         modelsR1,
-        modelsR2,
-        modelsR3,
-        modelsR4,
-        otherFE,
-        otherR1
-)
-excludeModels <- c(out)  
-axisModels  <- c( orderFR1 )
+axisModels  <-R3_col
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
 
 
-#  R1-R2
-```{r R1-R2 }
+# Models w/ 4 random
+![grid_R4](../../../images/grid_R4.png)
+
+## R4 by row
+```{r R4_row, echo=echoChunks, results="hide"}
 out<-c(
-        modelsFE,
-#         modelsR1,
-#         modelsR2,
-        modelsR3,
-        modelsR4,
-        otherFE,
-        otherR1
+        mF,  mFi,
+        mR1,  mR1i,
+        mR2,  mR2i,
+        mR3,  mR3i
+#         mR4
 )
 excludeModels <- c(out)  
-axisModels  <- c( orderR1R2 )
+axisModels  <-R4
 source("./Models/LCM/fit/fitGraph.R")
 g
 ```
 
 
-
-
-
-
-
-
+# General form
+![general form](../../../images/general_form.png)
