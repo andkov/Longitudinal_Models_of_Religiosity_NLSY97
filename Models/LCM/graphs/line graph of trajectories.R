@@ -40,12 +40,12 @@ BuildLine <- function( modelName, baseSize=11 ) {
   p <- p + geom_line(aes(x=timec,y=yHat),colour="red",alpha=indLineAl,size=indLineSz, na.rm=T)
   p <- p + geom_line(aes(y=yFE), fill=NA, na.rm=T)
   # scales & coordinates
-  p <- p + scale_x_continuous(breaks=c(0:11)) 
+  p <- p + scale_x_continuous(breaks=c(0:15)) 
   p <- p + scale_y_continuous(breaks=seq(0, 8, 1)) 
-  p <- p + coord_cartesian(xlim=c(-.5, 11.5), ylim=c(.5, 8.5))
+  p <- p + coord_cartesian(xlim=c(-.5, 15.5), ylim=c(.5, 8.5))
   # themes, guide, and annotations
   p <- p + themeLine 
-  p <- p + labs(title="How often have you attended a worship service?", x="Years Since 2000", y="Church Attendance")
+  p <- p + labs(title="How often have you attended a worship service?", x="Years past the age of 16", y="Church Attendance")
 #   ggsave(filename="./Models/LCM/graphs/text/m7F_2.png", plot=p, width =5 , height =4) # uncomment to produce graph in lines below the function
     return( p )
 
