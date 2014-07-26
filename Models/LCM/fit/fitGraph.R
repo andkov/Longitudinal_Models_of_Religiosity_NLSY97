@@ -17,8 +17,7 @@ for( i in 1:length(filePaths) ) {
 }
 
 
-
-
+# take data produced by model estimation
 dsWide <- dsInfo  
 ds <- reshape2::melt(dsWide, id.vars=c('Coefficient'))
 ds <- plyr::rename(ds, replace=c( variable = "model"))
@@ -28,6 +27,8 @@ ds<- ds %>%
 ds<- ds[!(ds$model %in% excludeModels),] # exclude models from dataset
 ds$Highlight <- (ds$model==modelName)  
 ds$Coefficient <- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
+ds$pretty<- format(round(ds$value,2), nsmall = 1,big.mark = ",")
+
 
 # possible pallets
 
@@ -54,13 +55,15 @@ barTheme <- theme_bw() +
   theme(legend.background = element_rect(fill = NA)) +
   theme(legend.text = element_text(colour = 'gray40'))
 
-g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model)) +
-  geom_bar(stat="identity", position="identity", alpha=1) + #This line draw the distant skyscrapers
+# g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model)) +
+g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, color= Coefficient, group=model)) +
+  geom_bar(stat="identity", position="identity", alpha=0) + #This line draw the distant skyscrapers
   geom_bar(data=ds[ds$Highlight, ], stat="identity", position="identity", alpha=.2) + #This line draw the skyskraper that pops out.
   scale_fill_manual(values=colorFit) +
   scale_x_discrete(limits=axisModels) +
   scale_y_continuous(label=scales::comma) +
   #Andrey:  almost never use `scale_zzzz()` to zoom.  It essentially deletes variables from the dataset, which can affect loess. p<- p + scale_y_continuous( limits = c(80000, 110000))
+  geom_text(aes(label=value), vjust=-0.2) +
   coord_cartesian(ylim=c(floor, ceiling)) + 
   guides(fill=guide_legend(title=NULL)) + 
   barTheme +
