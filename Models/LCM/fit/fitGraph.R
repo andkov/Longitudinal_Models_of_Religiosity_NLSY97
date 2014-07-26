@@ -30,11 +30,10 @@ ds$Highlight <- (ds$model==modelName)
 ds$Coefficient <- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
 
 # possible pallets
-# colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5")
-# colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
-colorFit <- c("BIC"="blue", "AIC"="red", "deviance"="grey") 
-# colorFit <- c("BIC"="#bebada", "AIC"="#8dd3c7", "deviance"="#ffffb3") 
-# colorFit <- c("BIC"="#8da0cb", "AIC"="#d95f02", "deviance"="#b2df8a")
+
+# colorFit <- c("BIC"="blue", "AIC"="red", "deviance"="grey")
+colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5") # Colorbrewer, 3 cat, qualit, colorblind and print friendly
+
 
 # floor <- 1000 #Watchout when AIC is negative
 floor <- min(ds$value, na.rm=T)  
