@@ -28,7 +28,7 @@ source("./Models/LCM/LCModels2.R")
 ############################
 ## @knitr defineData
 # numID<- 200 # highest id value (max = 9022)
-numID <- 1000 # highest id value (max = 9022)
+numID <- 9022 # highest id value (max = 9022)
 ### Define the data that will populate the model
 ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
   dplyr::filter(id < numID) %>%
@@ -60,7 +60,7 @@ sum(is.na(ds$attend)) # NA in the dataset
 length(unique(ds$timec))
 
 ## FOR TESTING ###
-flmer<- as.formula(call_m3R1)
+# flmer<- as.formula(call_m3R1)
 # model <-lmer (flmer, data = ds, REML=FALSE,
 #               control=lmerControl(optCtrl=list(maxfun=20000)))
 # modelR<-model
@@ -91,7 +91,7 @@ for(i in allModels){
   if( isRandomModel ){
     ########################################################################################
     # if model is estimated by lmer() - with random effects
-    model <-lmer (f, data = ds, REML=FALSE, control=lmerControl(optCtrl=list(maxfun=20000)))
+    model <-lmer (f, data = ds, REML=FALSE, control=lmerControl(optCtrl=list(maxfun=200000)))
     
     ###########################
     # @knitr solveModel_lmer
