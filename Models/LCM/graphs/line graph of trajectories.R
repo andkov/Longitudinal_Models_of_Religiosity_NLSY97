@@ -24,7 +24,7 @@ BuildLine <- function( modelName, baseSize=11 ) {
     ggplot2::theme(axis.title=ggplot2::element_text(colour="gray40")) +
     ggplot2::theme(panel.border = ggplot2::element_rect(colour="gray80")) +
     ggplot2::theme(axis.ticks.length = grid::unit(0, "cm")) +
-    ggplot2::theme(text = element_text(size =20)) #+
+    ggplot2::theme(text = element_text(size =18)) #+
     # ggplot2::theme(panel.background=element_rect(fill=bgColour,colour=NA)) +
     # ggplot2::theme(legend.position=c(.95,.90),legend.direction="vertical") +
     # ggplot2::theme(legend.background = element_rect(fill=NA)) +

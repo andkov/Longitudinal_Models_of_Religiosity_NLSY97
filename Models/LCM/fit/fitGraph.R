@@ -40,31 +40,36 @@ colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5") # Colorbre
 floor <- min(ds$value, na.rm=T)  
 longestBar <- max(ds$value, na.rm=T)  
 barHeight <- abs(longestBar - floor)
-ceiling <- longestBar + barHeight * .05 * sign(longestBar)  #Account for cases when AIC is negative
+ceiling <- longestBar + barHeight * .2 * sign(longestBar)  #Account for cases when AIC is negative
 
 barTheme <- theme_bw() +
-  theme(axis.text = element_text(colour="gray40")) +
-  theme(axis.text.x = element_text(angle=90, vjust = .5)) +
+  theme(axis.text = element_text(colour="gray40", size=15)) +
+  theme(axis.text.x = element_text(angle=0, vjust = .5)) +
   theme(axis.title = element_text(colour="gray40")) +
   theme(panel.border = element_rect(colour="gray80")) +
   theme(panel.grid.major.x = element_blank()) +
   # theme(axis.ticks = element_line(colour="gray80")) +
   theme(axis.ticks.length = grid::unit(0, "cm")) +
-  theme(legend.position=c(0,0), legend.justification=c(0,0)) +
+  theme(legend.position=c(.85,.8), legend.justification=c(0,0)) +
   # theme(legend.background = element_rect(fill = '#99999933')) +
   theme(legend.background = element_rect(fill = NA)) +
   theme(legend.text = element_text(colour = 'gray40'))
 
 # g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model)) +
-g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, color= Coefficient, group=model)) +
-  geom_bar(stat="identity", position="identity", alpha=0) + #This line draw the distant skyscrapers
-  geom_bar(data=ds[ds$Highlight, ], stat="identity", position="identity", alpha=.2) + #This line draw the skyskraper that pops out.
+g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, color= Coefficient, fill=Coefficient)) +
+  geom_bar(aes(fill=Coefficient),stat="identity", position="dodge", alpha=.5) + #This line draw the distant skyscrapers
+#   geom_bar(data=ds[ds$Highlight, ], stat="identity", position="identity", alpha=.2) + #This line draw the skyskraper that pops out.
+ 
   scale_fill_manual(values=colorFit) +
+  scale_color_manual(values=colorFit) +  
   scale_x_discrete(limits=axisModels) +
   scale_y_continuous(label=scales::comma) +
+  
   #Andrey:  almost never use `scale_zzzz()` to zoom.  It essentially deletes variables from the dataset, which can affect loess. p<- p + scale_y_continuous( limits = c(80000, 110000))
-  geom_text(aes(label=value), vjust=-0.2) +
+  geom_text(aes(label=pretty), hjust=0, angle=90, position=position_dodge(width=1)) +
   coord_cartesian(ylim=c(floor, ceiling)) + 
-  guides(fill=guide_legend(title=NULL)) + 
+  guides(fill=guide_legend(title=NULL), color=FALSE) + 
   barTheme +
   labs(x=NULL, y="Misfit")
+
+g

@@ -53,6 +53,7 @@ opts_chunk$set(
 )
 echoChunks <- FALSE
 warningChunks<- FALSE
+messageChunks<- FALSE
 options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/LCM/fit/customFit.R") # the file to which knitr calls for the chunks
 ```
@@ -72,90 +73,81 @@ read_chunk("./Models/LCM/fit/customFit.R") # the file to which knitr calls for t
 
 ```{r loadRDS, echo=echoChunks}
 # string definitions should be copied from "LCModels.R" file
-  mF<-   c("m0F",  "m1F",  "m2F",  "m3F",  "m4F",    "m5F",    "m6F",    "m7F")
-  mFi<-  c("mFa",  "mFb",  "mFc",  "mFf",  "mFd",    "mFe")
-  mR1<-  c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1",   "m5R1",   "m6R1",   "m7R1") 
-  mR1i<- c("mR1a", "mR1b", "mR1c", "mR1f", "mR1d",   "mR1e") 
-  mR2<-  c("m1R2", "m2R2", "m3R2", "m4R2", "m5R2",   "m6R2",   "m7R2")
-  mR2i<- c("mR2b", "mR2c", "mR2f", "mR2d", "mR2e")
-  mR3<-  c("m2R3", "m3R3", "m4R3", "m5R3", "m6R3",   "m7R3")              
-  mR3i<- c("mR3f", "mR3d", "mR3e")
-  mR4<-  c("m3R4", "m4R4", "m5R4", "m6R4", "m7R4")   
+mF<-   c("m0F",  "m1F",  "m2F",  "m3F",  "m4F",    "m5F",    "m6F",    "m7F")
+mFi<-  c("mFa",  "mFb",  "mFc",  "mFf",  "mFd",    "mFe")
+mR1<-  c("m0R1", "m1R1", "m2R1", "m3R1", "m4R1",   "m5R1",   "m6R1",   "m7R1") 
+mR1i<- c("mR1a", "mR1b", "mR1c", "mR1f", "mR1d",   "mR1e") 
+mR2<-  c("m1R2", "m2R2", "m3R2", "m4R2", "m5R2",   "m6R2",   "m7R2")
+mR2i<- c("mR2b", "mR2c", "mR2f", "mR2d", "mR2e")
+mR3<-  c("m2R3", "m3R3", "m4R3", "m5R3", "m6R3",   "m7R3")              
+mR3i<- c("mR3f", "mR3d", "mR3e")
+mR4<-  c("m3R4", "m4R4", "m5R4", "m6R4", "m7R4")   
 #  Composite lists of models
-  mOrder1 <- c(mF, mFi, mR1, mR1i, mR2, mR2i, mR3, mR3i, mR4)
-  FF <- c(mF, mFi)
-  R1 <- c(mR1, mR1i)
-  R2 <- c(mR2, mR2i)
-  R3 <- c(mR3, mR3i)
-  R4 <- mR4
+mOrder1 <- c(mF, mFi, mR1, mR1i, mR2, mR2i, mR3, mR3i, mR4)
+FF <- c(mF, mFi)
+R1 <- c(mR1, mR1i)
+R2 <- c(mR2, mR2i)
+R3 <- c(mR3, mR3i)
+R4 <- mR4
 
-  F_row <- c("m0F", "m1F", "m2F", "m3F", 
-             "mFa", "mFb", "mFf", "m4F", 
-                    "mFc", "mFd", "m5F", 
-                           "mFe", "m6F", 
-                                  "m7F")
-  F_col <- c("m0F", "mFa", 
-             "m1F", "mFb", "mFc", 
-             "m2F", "mFf", "mFd", "mFe", 
-             "m3F", "m4F", "m5F", "m6F", "m7F")
+F_row <- c("m0F", "m1F", "m2F", "m3F", 
+           "mFa", "mFb", "mFf", "m4F", 
+           "mFc", "mFd", "m5F", 
+           "mFe", "m6F", 
+           "m7F")
+F_col <- c("m0F", "mFa", 
+           "m1F", "mFb", "mFc", 
+           "m2F", "mFf", "mFd", "mFe", 
+           "m3F", "m4F", "m5F", "m6F", "m7F")
 
-  R1_row <- c("m0R1", "m1R1", "m2R1", "m3R1", 
-              "mR1a", "mR1b", "mR1f", "m4R1", 
-                      "mR1c", "mR1d", "m5R1", 
-                              "mR1e", "m6R1", 
-                                      "m7R1")
-  R1_col <- c("m0R1", "mR1a", 
-              "m1R1", "mR1b",  "mR1c", 
-              "m2R1", "mR1f",  "mR1d", "mR1e", 
-              "m3R1", "m4R1",  "m5R1", "m6R1", "m7R1")
+R1_row <- c("m0R1", "m1R1", "m2R1", "m3R1", 
+            "mR1a", "mR1b", "mR1f", "m4R1", 
+            "mR1c", "mR1d", "m5R1", 
+            "mR1e", "m6R1", 
+            "m7R1")
+R1_col <- c("m0R1", "mR1a", 
+            "m1R1", "mR1b",  "mR1c", 
+            "m2R1", "mR1f",  "mR1d", "mR1e", 
+            "m3R1", "m4R1",  "m5R1", "m6R1", "m7R1")
 
-  R2_row <- c(        "m1R2", "m2R2", "m3R2", 
-                      "mR2b", "mR2f", "m4R2", 
-                      "mR2c", "mR2d", "m5R2", 
-                              "mR2e", "m6R2", 
-                                      "m7R2")
-  R2_col <- c( 
-              "m1R2", "mR2b",  "mR2c", 
-              "m2R2", "mR2f",  "mR2d", "mR2e", 
-              "m3R2", "m4R2",  "m5R2", "m6R2", "m7R2")
-              
-  R3_row <- c(                "m2R3", "m3R3", 
-                              "mR3f", "m4R3", 
-                              "mR3d", "m5R3", 
-                              "mR3e", "m6R3", 
-                                      "m7R3")
-  R3_col <- c( 
-              
-              "m2R3", "mR3f",  "mR3d", "mR3e", 
-              "m3R3", "m4R3",  "m5R3", "m6R3", "m7R3")
+R2_row <- c(        "m1R2", "m2R2", "m3R2", 
+                    "mR2b", "mR2f", "m4R2", 
+                    "mR2c", "mR2d", "m5R2", 
+                    "mR2e", "m6R2", 
+                    "m7R2")
+R2_col <- c( 
+  "m1R2", "mR2b",  "mR2c", 
+  "m2R2", "mR2f",  "mR2d", "mR2e", 
+  "m3R2", "m4R2",  "m5R2", "m6R2", "m7R2")
 
-  R4_row <- c(                        "m3R4", 
-                                      "m4R4", 
-                                      "m5R4", 
-                                      "m6R4", 
-                                      "m7R4")
-  R4_col <- c( 
-              
-              
-              "m3R4", "m4R4",  "m5R4", "m6R4", "m7R4")
+R3_row <- c(                "m2R3", "m3R3", 
+                            "mR3f", "m4R3", 
+                            "mR3d", "m5R3", 
+                            "mR3e", "m6R3", 
+                            "m7R3")
+R3_col <- c( 
+  
+  "m2R3", "mR3f",  "mR3d", "mR3e", 
+  "m3R3", "m4R3",  "m5R3", "m6R3", "m7R3")
+
+R4_row <- c(                        "m3R4", 
+                                    "m4R4", 
+                                    "m5R4", 
+                                    "m6R4", 
+                                    "m7R4")
+R4_col <- c( 
+  
+  
+  "m3R4", "m4R4",  "m5R4", "m6R4", "m7R4")
+
 
 ```
 
 
 # All models 
 
-```{r allModels, echo=echoChunks, results="hide"}
-out<-c(
-#         mF,  mFi,
-#         mR1,  mR1i,
-#         mR2,  mR2i,
-#         mR3,  mR3i,
-#         mR4
-)
-excludeModels <- c(out)  
-axisModels  <-mOrder1
-source("./Models/LCM/fit/fitGraph.R")
-g
+```{r allModels, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
+BuildBar()
 ```
 
 There are total of 54 distinct models, which can be organized into 4 groups:  
@@ -174,7 +166,7 @@ The following layout helps understand how each of the models was constructed. Th
 ![grid_F](../../../images/grid_F.png)
 
 ## F by row
-```{r F_row, echo=echoChunks, results="hide"}
+```{r F_row, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
 out<-c(
 #         mF,  mFi,
         mR1,  mR1i,
@@ -189,7 +181,7 @@ g
 ```
 
 ## F by column
-```{r F_col, echo=echoChunks, results="hide" }
+```{r F_col, echo=echoChunks, results="hide" , warning=warningChunks, message=messageChunks}
 out<-c(
 #         mF,  mFi,
         mR1,  mR1i,
@@ -207,7 +199,7 @@ g
 ![grid_R1](../../../images/grid_R1.png)
 
 ## R1 by row
-```{r R1_row, echo=echoChunks, results="hide"}
+```{r R1_row, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
 out<-c(
         mF,  mFi,
 #         mR1,  mR1i,
@@ -222,7 +214,7 @@ g
 ```
 
 ## R1 by column
-```{r R1_col, echo=echoChunks, results="hide"}
+```{r R1_col, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
 out<-c(
         mF,  mFi,
 #         mR1,  mR1i,
@@ -240,7 +232,7 @@ g
 ![grid_F](../../../images/grid_R2.png)
 
 ## R2 by row
-```{r R2_row, echo=echoChunks, results="hide"}
+```{r R2_row, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
 out<-c(
         mF,  mFi,
         mR1,  mR1i,
@@ -255,7 +247,7 @@ g
 ```
 
 ## R2 by column
-```{r R2_col, echo=echoChunks, results="hide"}
+```{r R2_col, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
 out<-c(
         mF,  mFi,
         mR1,  mR1i,
@@ -275,7 +267,7 @@ g
 ![grid_R3](../../../images/grid_R3.png)
 
 ## R3 by row
-```{r R3_row, echo=echoChunks, results="hide"}
+```{r R3_row, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
 out<-c(
         mF,  mFi,
         mR1,  mR1i,
@@ -290,7 +282,7 @@ g
 ```
 
 ## R3 by column
-```{r R3_col, echo=echoChunks, results="hide"}
+```{r R3_col, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
 out<-c(
         mF,  mFi,
         mR1,  mR1i,
@@ -310,7 +302,7 @@ g
 ![grid_R4](../../../images/grid_R4.png)
 
 ## R4 by row
-```{r R4_row, echo=echoChunks, results="hide"}
+```{r R4_row, echo=echoChunks, results="hide", warning=warningChunks, message=messageChunks}
 out<-c(
         mF,  mFi,
         mR1,  mR1i,
