@@ -72,4 +72,4 @@ g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, color= Coefficie
   barTheme +
   labs(x=NULL, y="Misfit")
 
-g
+# g
