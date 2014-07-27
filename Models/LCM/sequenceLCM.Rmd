@@ -48,6 +48,7 @@ opts_chunk$set(
 )
 echoChunks <- FALSE
 warningChunks<- FALSE
+messageChunks<- FALSE
 options(width=120) #So the output is 50% wider than the default.
 read_chunk("./Models/LCM/sequenceLCM.R") # the file to which knitr calls for the chunks
 ```
@@ -93,215 +94,215 @@ ds<- dsL %>%  # chose conditions to apply in creating dataset for modeling
 
 
 ## m0F -- Fixed only
-```{r m0F, echo=echoChunks}
+```{r m0F, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m1F 
-```{r m1F, echo=echoChunks}
+```{r m1F, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m2F 
-```{r m2F, echo=echoChunks}
+```{r m2F, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m3F 
-```{r m3F, echo=echoChunks}
+```{r m3F, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m4F 
-```{r m4F, echo=echoChunks}
+```{r m4F, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m5F 
-```{r m5F, echo=echoChunks}
+```{r m5F, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m6F 
-```{r m6F, echo=echoChunks}
+```{r m6F, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m7F 
-```{r m7F, echo=echoChunks}
+```{r m7F, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mFa --  
-```{r mFa, echo=echoChunks}
+```{r mFa, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mFb 
-```{r mFb, echo=echoChunks}
+```{r mFb, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mFc 
-```{r mFc, echo=echoChunks}
+```{r mFc, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mFf 
-```{r mFf, echo=echoChunks}
+```{r mFf, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mFd 
-```{r mFd, echo=echoChunks}
+```{r mFd, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mFe 
-```{r mFe, echo=echoChunks}
+```{r mFe, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m1R1 -- 1 Random
-```{r m1R1, echo=echoChunks}
+```{r m1R1, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m2R1 
-```{r m2R1, echo=echoChunks}
+```{r m2R1, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m3R1 
-```{r m3R1, echo=echoChunks}
+```{r m3R1, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m4R1 
-```{r m4R1, echo=echoChunks}
+```{r m4R1, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m5R1 
-```{r m5R1, echo=echoChunks}
+```{r m5R1, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m6R1 
-```{r m6R1, echo=echoChunks}
+```{r m6R1, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m7R1 
-```{r m7R1, echo=echoChunks}
+```{r m7R1, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR1a -- 
-```{r mR1a, echo=echoChunks}
+```{r mR1a, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR1b 
-```{r mR1b, echo=echoChunks}
+```{r mR1b, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR1c 
-```{r mR1c, echo=echoChunks}
+```{r mR1c, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR1f 
-```{r mR1f, echo=echoChunks}
+```{r mR1f, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR1d 
-```{r mR1d, echo=echoChunks}
+```{r mR1d, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR1e 
-```{r mR1e, echo=echoChunks}
+```{r mR1e, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m1R2  -- 2 Random
-```{r m1R2, echo=echoChunks}
+```{r m1R2, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m2R2 
-```{r m2R2, echo=echoChunks}
+```{r m2R2, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m3R2 
-```{r m3R2, echo=echoChunks}
+```{r m3R2, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m4R2 
-```{r m4R2, echo=echoChunks}
+```{r m4R2, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m5R2 
-```{r m5R2, echo=echoChunks}
+```{r m5R2, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m6R2 
-```{r m6R2, echo=echoChunks}
+```{r m6R2, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m7R2 
-```{r m7R2, echo=echoChunks}
+```{r m7R2, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR2b --
-```{r mR2b, echo=echoChunks}
+```{r mR2b, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR2c 
-```{r mR2c, echo=echoChunks}
+```{r mR2c, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR2f 
-```{r mR2f, echo=echoChunks}
+```{r mR2f, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR2d 
-```{r mR2d, echo=echoChunks}
+```{r mR2d, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR2e 
-```{r mR2e, echo=echoChunks}
+```{r mR2e, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m2R3  -- 3 Random
-```{r m2R3, echo=echoChunks}
+```{r m2R3, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m3R3 
-```{r m3R3, echo=echoChunks}
+```{r m3R3, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m4R3 
-```{r m4R3, echo=echoChunks}
+```{r m4R3, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m5R3 
-```{r m5R3, echo=echoChunks}
+```{r m5R3, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m6R3 
-```{r m6R3, echo=echoChunks}
+```{r m6R3, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m7R3 
-```{r m7R3, echo=echoChunks}
+```{r m7R3, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR3f --
-```{r mR3f, echo=echoChunks}
+```{r mR3f, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR3d 
-```{r mR3d, echo=echoChunks}
+```{r mR3d, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## mR3e 
-```{r mR3e, echo=echoChunks}
+```{r mR3e, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m3R4  -- 4 Random
-```{r m3R4, echo=echoChunks}
+```{r m3R4, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m4R4 
-```{r m4R4, echo=echoChunks}
+```{r m4R4, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m5R4 
-```{r m5R4, echo=echoChunks}
+```{r m5R4, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m6R4 
-```{r m6R4, echo=echoChunks}
+```{r m6R4, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 ## m7R4 
-```{r m7R4, echo=echoChunks}
+```{r m7R4, echo=echoChunks, warning=warningChunks, message=messageChunks}
 ```
 
 # Model specification  
