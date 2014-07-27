@@ -34,23 +34,35 @@ BuildBar <- function( modelName = NA ) {
   
   ## Composite lists of models
   mOrder1 <- c(mF, mFi, mR1, mR1i, mR2, mR2i, mR3, mR3i, mR4)
-
+  
   excludeModels <- NA # c(mF, mFi)
   axisModels  <- c(mOrder1)
   ######################################
   dsWide <- dsInfo  
   ds <- reshape2::melt(dsWide, id.vars=c('Coefficient'))
   ds <- plyr::rename(ds, replace=c( variable = "model"))
-
+  
   ds<- ds %>% 
     dplyr::filter(Coefficient %in% c( "BIC","AIC","deviance")) 
   ds<- ds[!(ds$model %in% excludeModels),] # exclude models from dataset
   ds$Highlight <- (ds$model==modelName)  
-  ds$Coefficient <- factor(x=ds$Coefficient, levels=c("BIC","AIC","deviance"))
-
+  ds$Coefficient <- factor(x=ds$Coefficient, levels=c("BIC"="BIC","AIC"="AIC","deviance"="deviance"))
+  ds$pretty<- format(round(ds$value,1), nsmall = 1,big.mark = ",")
+  
+  ds<- ds %>% dplyr::filter(Coefficient=="deviance")  
+  
+  #   # comparing numeric values of fit indices.
+  #   aic<- as.numeric(as.vector(as.matrix(dsWide[dsWide$Coefficient=="AIC",])))
+  #   bic<- as.numeric(as.vector(as.matrix(dsWide[dsWide$Coefficient=="BIC",])))
+  #   dev<- as.numeric(as.vector(as.matrix(dsWide[dsWide$Coefficient=="deviance",])))
+  
   # possible pallets
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5")
-  colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
+  #   colorFit <- c("BIC"="plum", "AIC"="goldenrod", "deviance"="lavender")
+  # colorFit <- c("BIC"="blue", "AIC"="tomato", "deviance"="yellow")
+  # colorFit <- c("BIC"="blue", "AIC"="red", "deviance"="grey") 
+  #66c2a5
+  colorFit <- c("BIC"="#8da0cb", "AIC"="#fc8d62", "deviance"="#66c2a5") # Colorbrewer, 3 cat, qualit, colorblind and print friendly
   # colorFit <- c("BIC"="#bebada", "AIC"="#8dd3c7", "deviance"="#ffffb3") 
   # colorFit <- c("BIC"="#8da0cb", "AIC"="#d95f02", "deviance"="#b2df8a")
   
@@ -58,34 +70,36 @@ BuildBar <- function( modelName = NA ) {
   floor <- min(ds$value, na.rm=T)  
   longestBar <- max(ds$value, na.rm=T)  
   barHeight <- abs(longestBar - floor)
-  ceiling <- longestBar + barHeight * .05 * sign(longestBar)  #Account for cases when AIC is negative
+  ceiling <- longestBar + barHeight * .2 * sign(longestBar)  #Account for cases when AIC is negative
   
   barTheme <- theme_bw() +
     theme(axis.text = element_text(colour="gray40")) +
-    theme(axis.text.x = element_text(angle=90, vjust = .5)) +
+    theme(axis.text.x = element_text(angle=90, vjust = .5, size=10)) +
     theme(axis.title = element_text(colour="gray40")) +
     theme(panel.border = element_rect(colour="gray80")) +
     theme(panel.grid.major.x = element_blank()) +
     # theme(axis.ticks = element_line(colour="gray80")) +
     theme(axis.ticks.length = grid::unit(0, "cm")) +
-    theme(legend.position=c(0,0), legend.justification=c(0,0)) +
+    theme(legend.position=c(.85,.8), legend.justification=c(0,0)) +
     # theme(legend.background = element_rect(fill = '#99999933')) +
     theme(legend.background = element_rect(fill = NA)) +
     theme(legend.text = element_text(colour = 'gray40'))
   
-  g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, group=model)) +
-    geom_bar(stat="identity", position="identity", alpha=.1) + #This line draw the distant skyscrapers
-    geom_bar(data=ds[ds$Highlight, ], stat="identity", position="identity", alpha=.2) + #This line draw the skyskraper that pops out.
+  g <- ggplot2::ggplot(ds, aes(x= reorder(model, value), y=value, fill= Coefficient, color= Coefficient, group=model)) +
+    geom_bar(stat="identity", position="identity", alpha=.5, color=NA) + #This line draw the distant skyscrapers
+    geom_bar(data=ds[ds$Highlight, ], stat="identity", position="identity", alpha=1) + #This line draw the skyskraper that pops out.
     scale_fill_manual(values=colorFit) +
+    scale_color_manual(values=colorFit) +  
     scale_x_discrete(limits=mOrder1) +
     scale_y_continuous(label=scales::comma) +
     #Andrey:  almost never use `scale_zzzz()` to zoom.  It essentially deletes variables from the dataset, which can affect loess. p<- p + scale_y_continuous( limits = c(80000, 110000))
+    geom_text(aes(label=pretty), hjust=0, angle=90, alpha=1, position=position_dodge(width=1),size=3) +
     coord_cartesian(ylim=c(floor, ceiling)) + 
-    guides(fill=guide_legend(title=NULL)) + 
+    guides(fill=guide_legend(title=NULL), color=FALSE) + 
     barTheme +
     labs(x=NULL, y="Misfit")
   
   return( g )
 }
 # BuildBar()
-# BuildBar(modelName="m5F")
+# BuildBar(modelName="mR2e")
