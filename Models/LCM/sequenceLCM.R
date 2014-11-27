@@ -24,7 +24,7 @@ source("./Models/LCM/graphs/line graph of trajectories.R") #Load the `BuildLine(
 ## @knitr DeclareGlobals
 source("./Models/Descriptives/AesDefine.R")
 pathImageDirectory <- "./Models/LCM/models/formula_images"
-pathImage <- "./Models/LCM/graphs/sequenceMap/sequenceMap_wideModel.png"
+
 
 vpLayout <- function(rowIndex, columnIndex) { return( viewport(layout.pos.row=rowIndex, layout.pos.col=columnIndex) ) }
 
