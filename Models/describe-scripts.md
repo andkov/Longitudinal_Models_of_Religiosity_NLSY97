@@ -30,5 +30,47 @@ Sources the following files:
 </br>
     - LCModels.R *(specifications of models as gls/lmer syntax)*  
 
+Uses function **BuildMosaic** to combine individuals graphs into a complex manifestation of each model.
+
+Renaming scheme:                 
+			   LCMsequence => sequence
+               FERE-graph  => graph-FERE  
+          bar graph of fit => graph-FIT  
+line graph of trajectories => graph-PREDICT  
+
+                  LCModels => model-SPECIFY 
+         singleModel_brief => model-ESTIMATE
+		 
+		 
+## Specify statistical models
+
+The script **model-SPECIFY.r**  contains model specifications of models as gls/lmer syntax.
+
+
+		 
+## Estimate model solution
+
+The script **model-ESTIMATION.R**  contains the loop that cycles through all available model definition. Includes the following operations:   
+ 1. defines the dataset to model @knitr defineData 
+			</br>
+ 2a. use lme4::lmer to estimate (if a model contains     random effects)
+ 2b. use nlme::gls  to estimate (if a model contains only fixed effects)
+			</br>	
+ 3. Post-process model solution and save datasets:
+	- dsmInfo.rds  *model fit and information indices*  
+	- dsFERE.rds  *fixed (FE) and random effects (RE) descriptors*  
+	- dsp.rds *predicted values from the model*  
+
+
+## Collect model solutions
+
+The script **model-COLLECT-SOLUTIONS.R** aggregates models results produces by the *model-ESTIMATION.r* script 
+
+
+## Creating fit graph 
+
+Scripts **customFit.R(md)** create bar graphs of fit for all models in the sequence.
+
+
 
 	
